@@ -4,6 +4,7 @@ import me.chill.database.TargetChannel
 import me.chill.database.getChannel
 import me.chill.database.removeServer
 import me.chill.exception.TaigaException
+import me.chill.gifs.lost
 import me.chill.utility.general.getDateTime
 import me.chill.utility.jda.embed
 import me.chill.utility.jda.send
@@ -39,5 +40,5 @@ private fun memberLeaveEmbed(member: Member) =
 		title = "Member leave"
 		color = red
 		description = "${member.effectiveName}#${member.user.discriminator}::${member.asMention} left the server"
-		thumbnail = "https://media.giphy.com/media/RMq8fDCPs57Mc/giphy.gif"
+		thumbnail = lost
 	}

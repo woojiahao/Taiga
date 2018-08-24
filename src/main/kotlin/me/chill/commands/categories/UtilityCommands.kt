@@ -3,6 +3,7 @@ package me.chill.commands.categories
 import me.chill.commands.container.ContainerKeys
 import me.chill.commands.container.command
 import me.chill.commands.container.commands
+import me.chill.gifs.*
 import me.chill.utility.green
 import me.chill.utility.jda.embed
 import me.chill.utility.jda.send
@@ -44,15 +45,15 @@ private fun pingEmbed(latency: Long): MessageEmbed? {
 	when {
 		latency < 30 -> {
 			color = green
-			thumbnail = "https://media.giphy.com/media/YzpFZyKJhQbew/giphy.gif"
+			thumbnail = happy
 		}
 		latency < 60 -> {
 			color = yellow
-			thumbnail = "https://media.giphy.com/media/QQDGBVCAlbsxq/giphy.gif"
+			thumbnail = clap
 		}
 		latency > 90 -> {
 			color = red
-			thumbnail = "https://media.giphy.com/media/eSdh2tT2vz5NS/giphy.gif"
+			thumbnail = noWay
 		}
 	}
 
@@ -69,7 +70,7 @@ private fun inviteEmbed() =
 		title = "Invite Taiga"
 		description = "[Invite me](https://discordapp.com/oauth2/authorize?client_id=482340927709511682&scope=bot&permissions=8) to your server!"
 		color = green
-		thumbnail = "https://media.giphy.com/media/mnQezxw2sPYM8/giphy.gif"
+		thumbnail = fondling
 	}
 
 private fun sourceEmbed() =
@@ -77,5 +78,5 @@ private fun sourceEmbed() =
 		title = "Source Code"
 		description = "[GitHub repository](https://github.com/woojiahao/Taiga)"
 		color = green
-		thumbnail = "http://degrassi.wikia.com/wiki/File:Ryuuji-toradora.gif"
+		thumbnail = serve
 	}
