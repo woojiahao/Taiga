@@ -12,6 +12,8 @@ private val gson = GsonBuilder().create()
 
 private const val configPath = "${configDir}/${configFile}"
 
+fun isHerokuRunning() = System.getenv("PREFIX") != null
+
 fun loadConfigurations(): Configuration? {
 	val configFile = File(configPath)
 	return if (!configFile.exists()) {
