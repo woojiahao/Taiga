@@ -13,3 +13,5 @@ buildNumber.properties
 
 *.iml
 .idea/
+
+config/
