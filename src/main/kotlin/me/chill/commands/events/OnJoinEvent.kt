@@ -11,6 +11,8 @@ import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent
 import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent
 import net.dv8tion.jda.core.hooks.ListenerAdapter
+import java.text.SimpleDateFormat
+import java.util.*
 
 // todo: allow customization of roles that is assigned on join
 class OnJoinEvent : ListenerAdapter() {
@@ -30,7 +32,9 @@ class OnJoinEvent : ListenerAdapter() {
 
 		val serverId = event.guild.id
 		val defaultChannelId = event.guild.defaultChannel!!.id
+		val dateTime = SimpleDateFormat("dd-MM-yyyy_HHmmss").format(Calendar.getInstance().time)
 
+		println("Joined ${event.guild.name}::$serverId on $dateTime")
 		addServer(serverId, defaultChannelId)
 	}
 }
