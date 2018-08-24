@@ -2,11 +2,13 @@ package me.chill.commands.events
 
 import me.chill.database.TargetChannel
 import me.chill.database.getChannel
+import me.chill.database.removeServer
 import me.chill.exception.TaigaException
 import me.chill.utility.embed
 import me.chill.utility.red
 import me.chill.utility.send
 import net.dv8tion.jda.core.entities.Member
+import net.dv8tion.jda.core.events.guild.GuildLeaveEvent
 import net.dv8tion.jda.core.events.guild.member.GuildMemberLeaveEvent
 import net.dv8tion.jda.core.hooks.ListenerAdapter
 
@@ -19,6 +21,14 @@ class OnLeaveEvent : ListenerAdapter() {
 
 		val loggingChannel = event.guild.getTextChannelById(getChannel(TargetChannel.Logging, serverId))
 		loggingChannel.send(memberLeaveEmbed(member))
+	}
+
+	override fun onGuildLeave(event: GuildLeaveEvent?) {
+		if (event == null) throw TaigaException("Event object was null during bot leave")
+
+		val serverId = event.guild.id
+
+		removeServer(serverId)
 	}
 }
 

@@ -1,5 +1,6 @@
 package me.chill.database
 
+import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -16,6 +17,14 @@ fun addServer(serverId: String, defaultChannelId: String) {
 			it[joinChannelId] = defaultChannelId
 			it[loggingChannelId] = defaultChannelId
 			it[suggestionChannelId] = defaultChannelId
+		}
+	}
+}
+
+fun removeServer(serverId: String) {
+	transaction {
+		ChannelAssignment.deleteWhere {
+			ChannelAssignment.serverId eq serverId
 		}
 	}
 }
