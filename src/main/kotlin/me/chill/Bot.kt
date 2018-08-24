@@ -1,6 +1,6 @@
 package me.chill
 
-import me.chill.configurations.loadConfigurations
+import 	me.chill.configurations.loadConfigurations
 import me.chill.credentials.Credentials
 import net.dv8tion.jda.core.AccountType
 import net.dv8tion.jda.core.JDA
