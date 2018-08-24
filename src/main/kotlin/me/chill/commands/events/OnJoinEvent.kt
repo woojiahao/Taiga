@@ -4,7 +4,6 @@ import me.chill.database.TargetChannel
 import me.chill.database.addServer
 import me.chill.database.getChannel
 import me.chill.exception.TaigaException
-import me.chill.utility.cyan
 import me.chill.utility.embed
 import me.chill.utility.green
 import me.chill.utility.send
@@ -33,7 +32,6 @@ class OnJoinEvent : ListenerAdapter() {
 		val defaultChannelId = event.guild.defaultChannel!!.id
 
 		addServer(serverId, defaultChannelId)
-		event.guild.getTextChannelById(defaultChannelId).send(botJoinEmbed(event.guild.name))
 	}
 }
 
@@ -52,23 +50,4 @@ private fun newMemberJoinEmbed(member: Member) =
 			inline = false
 		}
 		thumbnail = member.user.avatarUrl
-	}
-
-private fun botJoinEmbed(serverName: String) =
-	embed {
-		title = "Hello $serverName"
-		color = cyan
-		field {
-			title = "Greetings"
-			description = "So happy to be here! I am Taiga, a bot made by <@302385772718325760>"
-			inline = false
-		}
-		field {
-			title = "Support"
-			description =
-				"- [Development server](https://discord.gg/xtDNfyw)\n" +
-				"- [GitHub repository](https://github.com/woojiahao/Taiga)\n" +
-				"- [Invite link](https://discordapp.com/oauth2/authorize?client_id=482340927709511682&scope=bot&permissions=8)"
-		}
-		thumbnail = "https://media.giphy.com/media/SpzdWtMmREEaA/giphy.gif"
 	}
