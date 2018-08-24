@@ -7,6 +7,8 @@ Taiga is an administration discord bot, based around best girl, [Taiga Aisaka](h
 
 She is created by Chill#4048 using [Kotlin](https://kotlinlang.org/) and is hosted for development at her [development server](https://discord.gg/xtDNfyw)
 
+Invite her to your server using [this link](https://discordapp.com/oauth2/authorize?client_id=482340927709511682&scope=bot&permissions=8)
+
 Her default prefix is `?`
 
 ## Setting up
