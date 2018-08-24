@@ -15,6 +15,7 @@ class Credentials(configuration: Configuration?) {
 			token = System.getenv("BOT_TOKEN")
 			database = System.getenv("JDBC_DATABASE_URL")
 			prefix = System.getenv("PREFIX")
+
 			if (token == null) throw TaigaException("Set a token environment variable in Heroku to proceed")
 			if (database == null) throw TaigaException("Set up Heroku Postgres to proceed")
 			if (prefix == null) throw TaigaException("Set a prefix environment variable in Heroku to proceed")
