@@ -1,4 +1,4 @@
-package me.chill.utility
+package me.chill.utility.jda
 
 import me.chill.utility.embed.EmbedCreator
 import net.dv8tion.jda.core.entities.MessageChannel

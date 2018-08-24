@@ -4,15 +4,14 @@ import me.chill.database.TargetChannel
 import me.chill.database.addServer
 import me.chill.database.getChannel
 import me.chill.exception.TaigaException
-import me.chill.utility.embed
+import me.chill.utility.general.getDateTime
 import me.chill.utility.green
-import me.chill.utility.send
+import me.chill.utility.jda.embed
+import me.chill.utility.jda.send
 import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent
 import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent
 import net.dv8tion.jda.core.hooks.ListenerAdapter
-import java.text.SimpleDateFormat
-import java.util.*
 
 // todo: allow customization of roles that is assigned on join
 class OnJoinEvent : ListenerAdapter() {
@@ -32,9 +31,8 @@ class OnJoinEvent : ListenerAdapter() {
 
 		val serverId = event.guild.id
 		val defaultChannelId = event.guild.defaultChannel!!.id
-		val dateTime = SimpleDateFormat("dd-MM-yyyy_HHmmss").format(Calendar.getInstance().time)
 
-		println("Joined ${event.guild.name}::$serverId on $dateTime")
+		println("Joined ${event.guild.name}::$serverId on ${getDateTime()}")
 		addServer(serverId, defaultChannelId)
 	}
 }
