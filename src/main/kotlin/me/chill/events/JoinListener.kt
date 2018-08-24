@@ -27,41 +27,43 @@ class JoinListener : ListenerAdapter() {
 		val serverId = event.guild.id
 		val defaultChannelId = event.guild.defaultChannel!!.id
 
-		addServer(serverId, defaultChannelId)
+//		addServer(serverId, defaultChannelId)
 		event.guild.getTextChannelById(defaultChannelId).send(botJoinEmbed(event.guild.name))
 	}
 }
 
 private fun newMemberJoinEmbed(event: GuildMemberJoinEvent) =
 	embed {
-		setTitle("Member join")
-		setColor(16559701)
-		addField(
-			"Minori senses a disturbance in the force",
-			"Minori spots ${event.member.asMention}(${event.member.effectiveName}#${event.member.user.discriminator})",
-			false
-		)
-		addField(
-			"Getting started",
-			"Read the #rules-and-info",
-			false
-		)
-		setThumbnail(event.member.user.avatarUrl)
+		title = "Member join"
+		color = 16559701
+		field {
+			title = "Minori senses a disturbance in the force"
+			description = "Minori spots ${event.member.asMention}(${event.member.effectiveName}#${event.member.user.discriminator})"
+			inline = false
+		}
+		field {
+			title = "Getting started"
+			description = "Read the #rules-and-info"
+			inline = false
+		}
+		thumbnail = event.member.user.avatarUrl
 	}
 
 private fun botJoinEmbed(serverName: String) =
 	embed {
-		setTitle("Hello $serverName")
-		setColor(5635287)
-		addField(
-			"Greetings",
-			"So happy to be here! I am Taiga, a bot made by <@302385772718325760>",
-			false
-		)
-		addField(
-			"Support",
-			"My GitHub repository: <https://github.com/woojiahao/Taiga>",
-			false
-		)
-		setThumbnail("https://media.giphy.com/media/SpzdWtMmREEaA/giphy.gif")
+		title = "Hello $serverName"
+		color = 5635287
+		field {
+			title = "Greetings"
+			description = "So happy to be here! I am Taiga, a bot made by <@302385772718325760>"
+			inline = false
+		}
+		field {
+			title = "Support"
+			description =
+				"- [Development server](https://discord.gg/xtDNfyw)\n" +
+				"- [GitHub repository](https://github.com/woojiahao/Taiga)\n" +
+				"- [Invite link](https://discordapp.com/oauth2/authorize?client_id=482340927709511682&scope=bot&permissions=8)"
+		}
+		thumbnail = "https://media.giphy.com/media/SpzdWtMmREEaA/giphy.gif"
 	}
