@@ -12,7 +12,7 @@ private val gson = GsonBuilder().create()
 
 private const val configPath = "${configDir}/${configFile}"
 
-fun isHerokuRunning() = System.getenv("PREFIX") != null
+fun isHerokuRunning() = System.getenv("BOT_TOKEN") != null
 
 fun loadConfigurations(): Configuration? {
 	val configFile = File(configPath)
