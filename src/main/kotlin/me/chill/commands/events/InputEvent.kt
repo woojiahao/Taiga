@@ -1,5 +1,6 @@
-package me.chill.commands
+package me.chill.commands.events
 
+import me.chill.commands.container.Command
 import me.chill.commands.container.CommandContainer
 import me.chill.credential.Credentials
 import me.chill.exception.TaigaException
@@ -11,9 +12,11 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent
 import net.dv8tion.jda.core.hooks.ListenerAdapter
 import java.util.*
 
-class InputListener(private val jda: JDA, private val credentials: Credentials) : ListenerAdapter() {
+class InputEvent(private val jda: JDA, private val credentials: Credentials) : ListenerAdapter() {
 	override fun onMessageReceived(event: MessageReceivedEvent?) {
 		if (event == null) throw TaigaException("Event object was null during message receive")
+
+		if (event.member.user.isBot) return
 
 		val message = event.message.contentRaw
 		val messageChannel = event.channel
@@ -27,7 +30,11 @@ class InputListener(private val jda: JDA, private val credentials: Credentials) 
 			arguments = Arrays.copyOfRange(commandParts, 1, commandParts.size)
 		}
 
-		if (!CommandContainer.findCommand(command)) messageChannel.send(invalidCommandEmbed(command))
+		if (!CommandContainer.hasCommand(command)) messageChannel.send(invalidCommandEmbed(command))
+		else {
+			val c: Command = CommandContainer.getCommand(command) as Command
+			c.execute(jda, event.guild, event.member, event.channel, arguments)
+		}
 	}
 }
 

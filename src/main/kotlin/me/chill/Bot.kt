@@ -1,6 +1,7 @@
 package me.chill
 
-import me.chill.commands.InputListener
+import me.chill.commands.container.CommandContainer
+import me.chill.commands.events.InputEvent
 import me.chill.commands.events.OnJoinEvent
 import me.chill.commands.events.OnLeaveEvent
 import me.chill.configuration.isHerokuRunning
@@ -23,9 +24,11 @@ fun main(args: Array<String>) {
 
 	setupDatabase(credentials.database!!)
 
+	val commandContainer = CommandContainer()
+
 	val jda: JDA = JDABuilder(AccountType.BOT)
 		.setStatus(OnlineStatus.ONLINE)
 		.setToken(credentials.token)
 		.build()
-	jda.addEventListener(OnJoinEvent(), OnLeaveEvent(), InputListener(jda, credentials))
+	jda.addEventListener(OnJoinEvent(), OnLeaveEvent(), InputEvent(jda, credentials))
 }
