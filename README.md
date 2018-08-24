@@ -1,9 +1,18 @@
-# Taiga
-Discord administration bot made with Kotlin and JDA based around [Taiga Aisaka](http://tora-dora.wikia.com/wiki/Taiga_Aisaka)
+# Table of contents:
+1. [About Taiga](https://github.com/woojiahao/Taiga#about-taiga)
+2. [Setting up](https://github.com/woojiahao/Taiga#setting-up)
+
+***
+
+## About Taiga
+Taiga is an administration discord bot, based around best girl, [Taiga Aisaka](http://tora-dora.wikia.com/wiki/Taiga_Aisaka)
+
+She is created by Chill#4048 using [Kotlin](https://kotlinlang.org/) and is hosted for development at her [development server](https://discord.gg/xtDNfyw)
+
+Her default prefix is `?`
 
 ## Setting up
-Taiga can be run as a local instance and through Heroku
-
+Taiga can be run as a [local instance](https://github.com/woojiahao/Taiga#local-instance) and through [Heroku](https://github.com/woojiahao/Taiga#heroku-instance)
 ### Local instance
 #### Pre-requisites:
 1. [Java 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
