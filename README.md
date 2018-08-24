@@ -2,8 +2,6 @@
 1. [About Taiga](https://github.com/woojiahao/Taiga#about-taiga)
 2. [Setting up](https://github.com/woojiahao/Taiga#setting-up)
 
-***
-
 ## About Taiga
 Taiga is an administration discord bot, based around best girl, [Taiga Aisaka](http://tora-dora.wikia.com/wiki/Taiga_Aisaka)
 
