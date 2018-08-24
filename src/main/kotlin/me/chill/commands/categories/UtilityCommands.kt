@@ -28,6 +28,13 @@ fun utilityCommands() = commands {
 			messageChannel.send(inviteEmbed())
 		}
 	}
+
+	command("source") {
+		behavior {
+			val messageChannel = args[ContainerKeys.Channel] as MessageChannel
+			messageChannel.send(sourceEmbed())
+		}
+	}
 }
 
 private fun pingEmbed(latency: Long): MessageEmbed? {
@@ -63,4 +70,12 @@ private fun inviteEmbed() =
 		description = "[Invite me](https://discordapp.com/oauth2/authorize?client_id=482340927709511682&scope=bot&permissions=8) to your server!"
 		color = green
 		thumbnail = "https://media.giphy.com/media/mnQezxw2sPYM8/giphy.gif"
+	}
+
+private fun sourceEmbed() =
+	embed {
+		title = "Source Code"
+		description = "[GitHub repository](https://github.com/woojiahao/Taiga)"
+		color = green
+		thumbnail = "http://degrassi.wikia.com/wiki/File:Ryuuji-toradora.gif"
 	}
