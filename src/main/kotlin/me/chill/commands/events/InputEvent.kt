@@ -16,7 +16,7 @@ class InputEvent(private val jda: JDA, private val credentials: Credentials) : L
 	override fun onMessageReceived(event: MessageReceivedEvent?) {
 		if (event == null) throw TaigaException("Event object was null during message receive")
 
-		if (event.member.user.isBot) return
+		if (event.member!!.user.isBot) return
 
 		val message = event.message.contentRaw
 		val messageChannel = event.channel

@@ -4,6 +4,7 @@ import me.chill.commands.container.ContainerKeys
 import me.chill.commands.container.command
 import me.chill.commands.container.commands
 import me.chill.gifs.*
+import me.chill.utility.blue
 import me.chill.utility.green
 import me.chill.utility.jda.embed
 import me.chill.utility.jda.send
@@ -69,7 +70,7 @@ private fun inviteEmbed() =
 	embed {
 		title = "Invite Taiga"
 		description = "[Invite me](https://discordapp.com/oauth2/authorize?client_id=482340927709511682&scope=bot&permissions=8) to your server!"
-		color = green
+		color = blue
 		thumbnail = fondling
 	}
 
@@ -77,6 +78,6 @@ private fun sourceEmbed() =
 	embed {
 		title = "Source Code"
 		description = "[GitHub repository](https://github.com/woojiahao/Taiga)"
-		color = green
+		color = blue
 		thumbnail = serve
 	}
