@@ -1,5 +1,6 @@
 package me.chill.commands.container
 
+import me.chill.commands.categories.administrationCommands
 import me.chill.commands.categories.moderationCommands
 import me.chill.commands.categories.utilityCommands
 
@@ -7,6 +8,7 @@ class CommandContainer {
 	init {
 		utilityCommands()
 		moderationCommands()
+		administrationCommands()
 	}
 
 	companion object {
