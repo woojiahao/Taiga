@@ -1,4 +1,4 @@
-package me.chill.configurations
+package me.chill.configuration
 
 import com.google.gson.GsonBuilder
 import com.google.gson.stream.JsonReader

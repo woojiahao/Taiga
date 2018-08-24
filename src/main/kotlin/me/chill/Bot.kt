@@ -1,10 +1,11 @@
 package me.chill
 
-import me.chill.configurations.isHerokuRunning
-import me.chill.configurations.loadConfigurations
-import me.chill.credentials.Credentials
+import me.chill.commands.events.OnJoinEvent
+import me.chill.commands.events.OnLeaveEvent
+import me.chill.configuration.isHerokuRunning
+import me.chill.configuration.loadConfigurations
+import me.chill.credential.Credentials
 import me.chill.database.setupDatabase
-import me.chill.events.JoinListener
 import net.dv8tion.jda.core.AccountType
 import net.dv8tion.jda.core.JDA
 import net.dv8tion.jda.core.JDABuilder
@@ -15,7 +16,7 @@ fun main(args: Array<String>) {
 		Credentials(null)
 	} else {
 		val configurations = loadConfigurations() ?: return
-		Credentials (configurations)
+		Credentials(configurations)
 	}
 
 	setupDatabase(credentials.database!!)
@@ -23,7 +24,6 @@ fun main(args: Array<String>) {
 	val jda: JDA = JDABuilder(AccountType.BOT)
 		.setStatus(OnlineStatus.ONLINE)
 		.setToken(credentials.token)
-		.addEventListener(JoinListener())
+		.addEventListener(OnJoinEvent(), OnLeaveEvent())
 		.build()
 }
-
