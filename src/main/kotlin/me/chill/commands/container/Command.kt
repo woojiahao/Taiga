@@ -6,32 +6,32 @@ import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.entities.MessageChannel
 
 class Command(var name: String) {
-	var args: MutableMap<String, Any?> = mutableMapOf()
+	var args: MutableMap<ContainerKeys, Any?> = mutableMapOf()
 		private set
-	private var action: (Command.(Map<String, Any?>) -> Unit)? = null
+	private var action: (Command.(Map<ContainerKeys, Any?>) -> Unit)? = null
 
 	init {
-		args["jda"] = null
-		args["guild"] = null
-		args["invoker"] = null
-		args["originalMessageChannel"] = null
-		args["input"] = null
+		args[ContainerKeys.Jda] = null
+		args[ContainerKeys.Guild] = null
+		args[ContainerKeys.Invoker] = null
+		args[ContainerKeys.Channel] = null
+		args[ContainerKeys.Input] = null
 	}
 
 	fun expects(vararg args: Any) {
-		this.args["input"] = args
+		this.args[ContainerKeys.Input] = args
 	}
 
-	fun behavior(func: Command.(Map<String, Any?>) -> Unit) {
+	fun behavior(func: Command.(Map<ContainerKeys, Any?>) -> Unit) {
 		action = func
 	}
 
 	fun execute(jda: JDA, guild: Guild, invoker: Member, originalMessageChannel: MessageChannel, input: Array<String>?) {
-		args["jda"] = jda
-		args["guild"] = guild
-		args["invoker"] = invoker
-		args["originalMessageChannel"] = originalMessageChannel
-		args["input"] = input
+		args[ContainerKeys.Jda] = jda
+		args[ContainerKeys.Guild] = guild
+		args[ContainerKeys.Invoker] = invoker
+		args[ContainerKeys.Channel] = originalMessageChannel
+		args[ContainerKeys.Input] = input
 		this.action!!(args)
 	}
 }
