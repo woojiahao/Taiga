@@ -1,7 +1,6 @@
 package me.chill.commands.categories
 
 import me.chill.commands.container.CommandContainer
-import me.chill.commands.container.ContainerKeys
 import me.chill.commands.container.command
 import me.chill.commands.container.commands
 import me.chill.gifs.*
@@ -11,15 +10,13 @@ import me.chill.utility.jda.embed
 import me.chill.utility.jda.send
 import me.chill.utility.red
 import me.chill.utility.yellow
-import net.dv8tion.jda.core.JDA
-import net.dv8tion.jda.core.entities.MessageChannel
 import net.dv8tion.jda.core.entities.MessageEmbed
 
 fun utilityCommands() = commands {
 	command("ping") {
 		execute {
-			val messageChannel = args[ContainerKeys.Channel] as MessageChannel
-			val jda = args[ContainerKeys.Jda] as JDA
+			val messageChannel = getChannel()
+			val jda = getJDA()
 			val latency = jda.ping
 			messageChannel.send(pingEmbed(latency))
 		}
@@ -27,22 +24,22 @@ fun utilityCommands() = commands {
 
 	command("invite") {
 		execute {
-			val messageChannel = args[ContainerKeys.Channel] as MessageChannel
+			val messageChannel = getChannel()
 			messageChannel.send(inviteEmbed())
 		}
 	}
 
 	command("source") {
 		execute {
-			val messageChannel = args[ContainerKeys.Channel] as MessageChannel
+			val messageChannel = getChannel()
 			messageChannel.send(sourceEmbed())
 		}
 	}
 
 	command("commands") {
 		execute {
-			val channel = args[ContainerKeys.Channel] as MessageChannel
-			val jda = args[ContainerKeys.Jda] as JDA
+			val channel = getChannel()
+			val jda = getJDA()
 
 			val commands = CommandContainer.getCommandNames()
 			val botIcon = jda.selfUser.avatarUrl

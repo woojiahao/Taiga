@@ -1,6 +1,5 @@
 package me.chill.commands.categories
 
-import me.chill.commands.container.ContainerKeys.*
 import me.chill.commands.container.command
 import me.chill.commands.container.commands
 import me.chill.database.TargetChannel
@@ -19,8 +18,8 @@ fun administrationCommands() = commands {
 	command("setlog") {
 		expects(String)
 		execute {
-			val channel = args[Channel] as MessageChannel
-			val guild = args[Guild] as Guild
+			val channel = getChannel()
+			val guild = getGuild()
 
 			setChannel(TargetChannel.Logging, channel, guild)
 		}
@@ -29,8 +28,8 @@ fun administrationCommands() = commands {
 	command("setjoin") {
 		expects(String)
 		execute {
-			val channel = args[Channel] as MessageChannel
-			val guild = args[Guild] as Guild
+			val channel = getChannel()
+			val guild = getGuild()
 
 			setChannel(TargetChannel.Join, channel, guild)
 		}
@@ -39,8 +38,8 @@ fun administrationCommands() = commands {
 	command("setsuggestion") {
 		expects(String)
 		execute {
-			val channel = args[Channel] as MessageChannel
-			val guild = args[Guild] as Guild
+			val channel = getChannel()
+			val guild = getGuild()
 
 			setChannel(TargetChannel.Suggestion, channel, guild)
 		}
@@ -48,8 +47,8 @@ fun administrationCommands() = commands {
 
 	command("roles") {
 		execute {
-			val channel = args[Channel] as MessageChannel
-			val guild = args[Guild] as Guild
+			val channel = getChannel()
+			val guild = getGuild()
 
 			val roles = guild.roles
 			channel.send(listRolesEmbed(guild, roles))
@@ -59,9 +58,9 @@ fun administrationCommands() = commands {
 	command("assign") {
 		expects(String, String)
 		execute {
-			val channel = args[Channel] as MessageChannel
-			val guild = args[Guild] as Guild
-			val arguments = args[Input] as Array<String>
+			val channel = getChannel()
+			val guild = getGuild()
+			val arguments = getArguments()
 
 			assignRole(guild, channel, arguments[0], arguments[1])
 		}
@@ -70,9 +69,9 @@ fun administrationCommands() = commands {
 	command("unassign") {
 		expects(String, String)
 		execute {
-			val channel = args[Channel] as MessageChannel
-			val guild = args[Guild] as Guild
-			val arguments = args[Input] as Array<String>
+			val channel = getChannel()
+			val guild = getGuild()
+			val arguments = getArguments()
 
 			removeRole(guild, channel, arguments[0], arguments[1])
 		}

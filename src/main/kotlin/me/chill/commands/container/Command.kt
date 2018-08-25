@@ -34,4 +34,10 @@ class Command(var name: String) {
 		args[ContainerKeys.Input] = input
 		this.action!!(args)
 	}
+
+	fun getGuild() = args[ContainerKeys.Guild] as Guild
+	fun getInvoker() = args[ContainerKeys.Invoker] as Member
+	fun getChannel() = args[ContainerKeys.Channel] as MessageChannel
+	fun getArguments() = args[ContainerKeys.Input] as Array<String>
+	fun getJDA() = args[ContainerKeys.Jda] as JDA
 }
