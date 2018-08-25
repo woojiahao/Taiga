@@ -46,5 +46,10 @@ fun viewPermissions(serverId: String): MutableMap<String, String> {
 	return commandMap
 }
 
+fun getPermission(commandName: String, serverId: String) =
+	transaction {
+		Permission.select { selectKey(serverId, commandName) }.first()[Permission.permission]
+	}
+
 private fun selectKey(serverId: String, commandName: String) =
 	(Permission.serverId eq serverId) and (Permission.commandName eq commandName)
