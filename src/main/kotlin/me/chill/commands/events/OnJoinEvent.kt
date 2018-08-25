@@ -7,6 +7,7 @@ import me.chill.exception.TaigaException
 import me.chill.utility.general.getDateTime
 import me.chill.utility.green
 import me.chill.utility.jda.embed
+import me.chill.utility.jda.printMember
 import me.chill.utility.jda.send
 import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent
@@ -43,7 +44,7 @@ private fun newMemberJoinEmbed(member: Member) =
 		color = green
 		field {
 			title = "Minori senses a disturbance in the force"
-			description = "Minori spots ${member.asMention}(${member.effectiveName}#${member.user.discriminator})"
+			description = "Minori spots ${printMember(member)}"
 			inline = false
 		}
 		field {
