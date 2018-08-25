@@ -12,34 +12,60 @@ import net.dv8tion.jda.core.entities.MessageChannel
 
 fun assignRole(guild: Guild, channel: MessageChannel,
 			   roleId: String, targetId: String) {
+	if (!preChecking(guild, channel, roleId, targetId)) return
+
 	val role = guild.getRoleById(roleId)
-	if (role == null) {
-		channel.send(assignFailureEmbed("Role: **$roleId** does not exist in **${guild.name}**"))
-		return
-	}
-
-	if (role.position >= guild.getRolesByName("Taiga", false)[0].position) {
-		channel.send(assignFailureEmbed("Unable to assign role: **${role.name}** as it is higher level than me!"))
-		return
-	}
-
 	val member = guild.getMemberById(targetId)
-	if (member == null) {
-		channel.send(assignFailureEmbed("Member: **$targetId** does not exist in **${guild.name}**"))
-		return
-	}
 
 	if (member.roles.contains(role)) {
-		channel.send(assignFailureEmbed("Member: ${printMember(member)} already has role: **${role.name}**"))
+		channel.send(roleOperationFailureEmbed("Member: ${printMember(member)} already has role: **${role.name}**"))
 		return
 	}
 
 	guild.controller.addSingleRoleToMember(member, role).complete()
-	channel.send(assignSuccessEmbed("Successfully assigned role: **${role.name}** to ${printMember(member)}"))
+	channel.send(roleOperationSuccessEmbed("Successfully assigned role: **${role.name}** to ${printMember(member)}"))
 }
 
-private fun assignStatusEmbed(title: String, message: String,
-							  color: Int, thumbnail: String) =
+fun removeRole(guild: Guild, channel: MessageChannel,
+			   roleId: String, targetId: String) {
+	if (!preChecking(guild, channel, roleId, targetId)) return
+
+	val role = guild.getRoleById(roleId)
+	val member = guild.getMemberById(targetId)
+
+	if (!member.roles.contains(role)) {
+		channel.send(roleOperationFailureEmbed("Member: ${printMember(member)} does not have role: **${role.name}**"))
+		return
+	}
+
+	guild.controller.removeSingleRoleFromMember(member, role).complete()
+	channel.send(roleOperationSuccessEmbed("Successfully removed role: **${role.name}** from ${printMember(member)}"))
+}
+
+private fun preChecking(guild: Guild, channel: MessageChannel,
+						roleId: String, targetId: String): Boolean {
+	val role = guild.getRoleById(roleId)
+	if (role == null) {
+		channel.send(roleOperationFailureEmbed("Role: **$roleId** does not exist in **${guild.name}**"))
+		return false
+	}
+
+	if (role.position >= guild.getRolesByName("Taiga", false)[0].position) {
+		channel.send(roleOperationFailureEmbed("Unable to assign role: **${role.name}** as it is higher level than me!"))
+		return false
+	}
+
+	val member = guild.getMemberById(targetId)
+	if (member == null) {
+		channel.send(roleOperationFailureEmbed("Member: **$targetId** does not exist in **${guild.name}**"))
+		return false
+	}
+
+	return true
+}
+
+private fun roleOperationStatusEmbed(title: String, message: String,
+									 color: Int, thumbnail: String) =
 	embed {
 		this.title = title
 		this.description = message
@@ -47,8 +73,8 @@ private fun assignStatusEmbed(title: String, message: String,
 		this.thumbnail = thumbnail
 	}
 
-private fun assignSuccessEmbed(message: String) =
-	assignStatusEmbed("Role assignment success", message, green, happy)
+private fun roleOperationSuccessEmbed(message: String) =
+	roleOperationStatusEmbed("Role Operation Success!", message, green, happy)
 
-private fun assignFailureEmbed(message: String) =
-	assignStatusEmbed("Role assignment failed", message, red, shock)
+private fun roleOperationFailureEmbed(message: String) =
+	roleOperationStatusEmbed("Role Operation Failed!", message, red, shock)

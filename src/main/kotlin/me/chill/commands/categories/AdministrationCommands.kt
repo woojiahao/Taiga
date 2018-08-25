@@ -10,6 +10,7 @@ import me.chill.utility.green
 import me.chill.utility.jda.embed
 import me.chill.utility.jda.send
 import me.chill.utility.roles.assignRole
+import me.chill.utility.roles.removeRole
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.MessageChannel
 import net.dv8tion.jda.core.entities.Role
@@ -63,6 +64,17 @@ fun administrationCommands() = commands {
 			val arguments = args[Input] as Array<String>
 
 			assignRole(guild, channel, arguments[0], arguments[1])
+		}
+	}
+
+	command("unassign") {
+		expects(String, String)
+		behavior {
+			val channel = args[Channel] as MessageChannel
+			val guild = args[Guild] as Guild
+			val arguments = args[Input] as Array<String>
+
+			removeRole(guild, channel, arguments[0], arguments[1])
 		}
 	}
 }
