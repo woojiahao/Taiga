@@ -26,21 +26,26 @@ fun permissionCommands() = commands {
 			val guild = args[ContainerKeys.Guild] as Guild
 			val channel = args[ContainerKeys.Channel] as MessageChannel
 
-			val highestRole = guild.roles[0].id
-
-			val assignedPermissions = viewPermissions(guild.id)
-			val commandNames = CommandContainer.getCommandNames()
-
-			val permissionMap = mutableMapOf<String, String>()
-			permissionMap.putAll(assignedPermissions)
-			commandNames.forEach { command ->
-				if (!assignedPermissions.keys.contains(command)) permissionMap[command] = highestRole
-			}
-
+			val permissionMap = generatePermissionsMap(guild)
 			val permissionsList = generatePermissionsList(guild, permissionMap.toSortedMap())
 			channel.send(listPermissionsEmbed(guild, permissionsList))
 		}
 	}
+}
+
+private fun generatePermissionsMap(guild: Guild): MutableMap<String, String> {
+	val highestRole = guild.roles[0].id
+
+	val assignedPermissions = viewPermissions(guild.id)
+	val commandNames = CommandContainer.getCommandNames()
+
+	val permissionMap = mutableMapOf<String, String>()
+	permissionMap.putAll(assignedPermissions)
+	commandNames.forEach { command ->
+		if (!assignedPermissions.keys.contains(command)) permissionMap[command] = highestRole
+	}
+
+	return permissionMap
 }
 
 private fun generatePermissionsList(guild: Guild, permissionMap: Map<String, String>) =
