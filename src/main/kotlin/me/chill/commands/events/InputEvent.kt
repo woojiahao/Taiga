@@ -20,7 +20,7 @@ class InputEvent(private val jda: JDA, private val credentials: Credentials) : L
 
 		if (event.member!!.user.isBot) return
 
-		val message = event.message.contentRaw
+		val message = event.message.contentRaw.trim()
 		val messageChannel = event.channel
 
 		if (!message.startsWith(credentials.prefix!!)) return
@@ -32,17 +32,20 @@ class InputEvent(private val jda: JDA, private val credentials: Credentials) : L
 			arguments = Arrays.copyOfRange(commandParts, 1, commandParts.size)
 		}
 
-		if (!CommandContainer.hasCommand(command)) messageChannel.send(invalidCommandEmbed(command))
-		else {
-			val c: Command = CommandContainer.getCommand(command) as Command
-			val expectedArgsSize = (c.args[ContainerKeys.Input] as Array<*>).size
-			if (arguments.size != expectedArgsSize) {
-				messageChannel.send(insufficientArgumentsEmbed(c.name, expectedArgsSize, arguments.size))
-				return
-			}
-
-			c.run(jda, event.guild, event.member, messageChannel, arguments)
+		if (!CommandContainer.hasCommand(command)) {
+			messageChannel.send(invalidCommandEmbed(command))
+			return
 		}
+
+		val c: Command = CommandContainer.getCommand(command) as Command
+		val expectedArgsSize = (c.args[ContainerKeys.Input] as Array<*>).size
+
+		if (arguments.size != expectedArgsSize) {
+			messageChannel.send(insufficientArgumentsEmbed(c.name, expectedArgsSize, arguments.size))
+			return
+		}
+
+		c.run(jda, event.guild, event.member, messageChannel, arguments)
 	}
 }
 

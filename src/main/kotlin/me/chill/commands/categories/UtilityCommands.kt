@@ -1,5 +1,6 @@
 package me.chill.commands.categories
 
+import me.chill.commands.container.CommandContainer
 import me.chill.commands.container.ContainerKeys
 import me.chill.commands.container.command
 import me.chill.commands.container.commands
@@ -37,7 +38,28 @@ fun utilityCommands() = commands {
 			messageChannel.send(sourceEmbed())
 		}
 	}
+
+	command("commands") {
+		execute {
+			val channel = args[ContainerKeys.Channel] as MessageChannel
+			val jda = args[ContainerKeys.Jda] as JDA
+
+			val commands = CommandContainer.commands.map { command -> command.name }.toTypedArray()
+			val botIcon = jda.selfUser.avatarUrl
+			channel.send(listCommandsEmbed(commands, botIcon))
+		}
+	}
 }
+
+private fun listCommandsEmbed(commandNames: Array<String>, avatarUrl: String) =
+	embed {
+		title = "Commands"
+		description = commandNames.sorted().joinToString("\n") {
+			"- $it"
+		}
+		color = green
+		thumbnail = avatarUrl
+	}
 
 private fun pingEmbed(latency: Long): MessageEmbed? {
 	var color: Int? = null
