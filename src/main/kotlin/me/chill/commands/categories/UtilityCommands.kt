@@ -60,7 +60,7 @@ private fun pingEmbed(latency: Long): MessageEmbed? {
 
 	return embed {
 		title = "Pong! \uD83C\uDFD3"
-		description = "Ping took ${latency}s"
+		description = "Ping took **${latency}ms**"
 		this.color = pingEmbed@color
 		this.thumbnail = pingEmbed@thumbnail
 	}
