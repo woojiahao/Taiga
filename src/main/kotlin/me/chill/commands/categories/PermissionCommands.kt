@@ -37,7 +37,7 @@ fun permissionCommands() = commands {
 				if (!assignedPermissions.keys.contains(command)) permissionMap[command] = highestRole
 			}
 
-			val permissionsList = generatePermissionsList(guild, permissionMap)
+			val permissionsList = generatePermissionsList(guild, permissionMap.toSortedMap())
 			channel.send(listPermissionsEmbed(guild, permissionsList))
 		}
 	}
