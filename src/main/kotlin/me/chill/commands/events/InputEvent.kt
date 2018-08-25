@@ -2,8 +2,10 @@ package me.chill.commands.events
 
 import me.chill.commands.container.Command
 import me.chill.commands.container.CommandContainer
+import me.chill.commands.container.ContainerKeys
 import me.chill.credential.Credentials
 import me.chill.exception.TaigaException
+import me.chill.gifs.shock
 import me.chill.utility.jda.embed
 import me.chill.utility.jda.send
 import me.chill.utility.red
@@ -25,7 +27,7 @@ class InputEvent(private val jda: JDA, private val credentials: Credentials) : L
 
 		val commandParts = message.substring(credentials.prefix!!.length).split(" ").toTypedArray()
 		val command = commandParts[0]
-		var arguments: Array<String>? = null
+		var arguments: Array<String> = emptyArray()
 		if (commandParts.size > 1) {
 			arguments = Arrays.copyOfRange(commandParts, 1, commandParts.size)
 		}
@@ -33,15 +35,29 @@ class InputEvent(private val jda: JDA, private val credentials: Credentials) : L
 		if (!CommandContainer.hasCommand(command)) messageChannel.send(invalidCommandEmbed(command))
 		else {
 			val c: Command = CommandContainer.getCommand(command) as Command
-			c.execute(jda, event.guild, event.member, event.channel, arguments)
+			val expectedArgsSize = (c.args[ContainerKeys.Input] as Array<*>).size
+			if (arguments.size != expectedArgsSize) {
+				messageChannel.send(insufficientArgumentsEmbed(c.name, expectedArgsSize, arguments.size))
+				return
+			}
+
+			c.run(jda, event.guild, event.member, messageChannel, arguments)
 		}
 	}
 }
 
+private fun insufficientArgumentsEmbed(commandName: String, expected: Int, actual: Int) =
+	embed {
+		title = "Insufficient Arguments"
+		description = "Command: **$commandName** requires **$expected** arguments, you gave **$actual** arguments"
+		color = red
+		thumbnail = shock
+	}
+
 private fun invalidCommandEmbed(command: String) =
 	embed {
-		title = "Invalid command"
+		title = "Invalid Command"
 		description = "Command: **$command** does not exist"
 		color = red
-		thumbnail = "https://media.giphy.com/media/13yhFGZbYxO2YM/giphy.gif"
+		thumbnail = shock
 	}

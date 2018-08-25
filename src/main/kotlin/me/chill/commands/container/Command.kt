@@ -15,22 +15,22 @@ class Command(var name: String) {
 		args[ContainerKeys.Guild] = null
 		args[ContainerKeys.Invoker] = null
 		args[ContainerKeys.Channel] = null
-		args[ContainerKeys.Input] = null
+		args[ContainerKeys.Input] = emptyArray<String>()
 	}
 
 	fun expects(vararg args: Any) {
 		this.args[ContainerKeys.Input] = args
 	}
 
-	fun behavior(func: Command.(Map<ContainerKeys, Any?>) -> Unit) {
+	fun execute(func: Command.(Map<ContainerKeys, Any?>) -> Unit) {
 		action = func
 	}
 
-	fun execute(jda: JDA, guild: Guild, invoker: Member, originalMessageChannel: MessageChannel, input: Array<String>?) {
+	fun run(jda: JDA, guild: Guild, invoker: Member, messageChannel: MessageChannel, input: Array<String>?) {
 		args[ContainerKeys.Jda] = jda
 		args[ContainerKeys.Guild] = guild
 		args[ContainerKeys.Invoker] = invoker
-		args[ContainerKeys.Channel] = originalMessageChannel
+		args[ContainerKeys.Channel] = messageChannel
 		args[ContainerKeys.Input] = input
 		this.action!!(args)
 	}

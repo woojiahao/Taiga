@@ -16,7 +16,7 @@ import net.dv8tion.jda.core.entities.MessageEmbed
 
 fun utilityCommands() = commands {
 	command("ping") {
-		behavior {
+		execute {
 			val messageChannel = args[ContainerKeys.Channel] as MessageChannel
 			val jda = args[ContainerKeys.Jda] as JDA
 			val latency = jda.ping
@@ -25,14 +25,14 @@ fun utilityCommands() = commands {
 	}
 
 	command("invite") {
-		behavior {
+		execute {
 			val messageChannel = args[ContainerKeys.Channel] as MessageChannel
 			messageChannel.send(inviteEmbed())
 		}
 	}
 
 	command("source") {
-		behavior {
+		execute {
 			val messageChannel = args[ContainerKeys.Channel] as MessageChannel
 			messageChannel.send(sourceEmbed())
 		}

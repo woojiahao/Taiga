@@ -18,7 +18,7 @@ import net.dv8tion.jda.core.entities.Role
 fun administrationCommands() = commands {
 	command("setlog") {
 		expects(String)
-		behavior {
+		execute {
 			val channel = args[Channel] as MessageChannel
 			val guild = args[Guild] as Guild
 
@@ -28,7 +28,7 @@ fun administrationCommands() = commands {
 
 	command("setjoin") {
 		expects(String)
-		behavior {
+		execute {
 			val channel = args[Channel] as MessageChannel
 			val guild = args[Guild] as Guild
 
@@ -38,7 +38,7 @@ fun administrationCommands() = commands {
 
 	command("setsuggestion") {
 		expects(String)
-		behavior {
+		execute {
 			val channel = args[Channel] as MessageChannel
 			val guild = args[Guild] as Guild
 
@@ -47,7 +47,7 @@ fun administrationCommands() = commands {
 	}
 
 	command("roles") {
-		behavior {
+		execute {
 			val channel = args[Channel] as MessageChannel
 			val guild = args[Guild] as Guild
 
@@ -58,7 +58,7 @@ fun administrationCommands() = commands {
 
 	command("assign") {
 		expects(String, String)
-		behavior {
+		execute {
 			val channel = args[Channel] as MessageChannel
 			val guild = args[Guild] as Guild
 			val arguments = args[Input] as Array<String>
@@ -69,7 +69,7 @@ fun administrationCommands() = commands {
 
 	command("unassign") {
 		expects(String, String)
-		behavior {
+		execute {
 			val channel = args[Channel] as MessageChannel
 			val guild = args[Guild] as Guild
 			val arguments = args[Input] as Array<String>
@@ -92,7 +92,7 @@ private fun listRolesEmbed(guild: Guild, roles: List<Role>) =
 private fun channelSetEmbed(targetChannel: TargetChannel, channelName: String, guildName: String) =
 	embed {
 		title = "Channel assigned"
-		description = "${targetChannel.name} channel has been assigned to #${channelName} in **${guildName}**"
+		description = "${targetChannel.name} channel has been assigned to #$channelName in **$guildName**"
 		color = green
 		thumbnail = happy
 	}

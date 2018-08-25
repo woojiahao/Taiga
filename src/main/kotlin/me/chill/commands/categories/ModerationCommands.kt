@@ -11,7 +11,7 @@ import net.dv8tion.jda.core.entities.MessageHistory
 fun moderationCommands() = commands {
 	command("nuke") {
 		expects(Int)
-		behavior {
+		execute {
 			val messageChannel = args[ContainerKeys.Channel] as MessageChannel
 			val arguments = args[ContainerKeys.Input] as Array<String>?
 			val guild = args[ContainerKeys.Guild] as Guild
