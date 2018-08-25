@@ -44,7 +44,7 @@ fun utilityCommands() = commands {
 			val channel = args[ContainerKeys.Channel] as MessageChannel
 			val jda = args[ContainerKeys.Jda] as JDA
 
-			val commands = CommandContainer.commands.map { command -> command.name }.toTypedArray()
+			val commands = CommandContainer.getCommandNames()
 			val botIcon = jda.selfUser.avatarUrl
 			channel.send(listCommandsEmbed(commands, botIcon))
 		}
