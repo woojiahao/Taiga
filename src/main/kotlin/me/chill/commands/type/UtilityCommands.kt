@@ -103,7 +103,9 @@ private fun inviteEmbed() =
 private fun sourceEmbed() =
 	embed {
 		title = "Source Code"
-		description = "[GitHub repository](https://github.com/woojiahao/Taiga)"
+		description =
+			"- [GitHub repository](https://github.com/woojiahao/Taiga)\n" +
+			"- [Wiki](https://github.com/woojiahao/Taiga/wiki)"
 		color = blue
 		thumbnail = serve
 	}

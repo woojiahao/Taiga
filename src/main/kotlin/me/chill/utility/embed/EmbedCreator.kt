@@ -6,8 +6,9 @@ import net.dv8tion.jda.core.entities.MessageEmbed
 class EmbedCreator {
 	private val fields = mutableListOf<EmbedField>()
 
-	var color: Int? = null
+	private var footer: EmbedFooter? = null
 
+	var color: Int? = null
 	var title: String? = null
 	var thumbnail: String? = null
 	var author: String? = null
@@ -20,6 +21,12 @@ class EmbedCreator {
 		fields.add(embedField)
 	}
 
+	fun footer(create: EmbedFooter.() -> Unit) {
+		val embedFooter = EmbedFooter()
+		embedFooter.create()
+		footer = embedFooter
+	}
+
 	fun build(): MessageEmbed? {
 		val builder = EmbedBuilder()
 
@@ -30,6 +37,8 @@ class EmbedCreator {
 		if (author != null) builder.setAuthor(author)
 		if (description != null) builder.setDescription(description)
 		if (image != null) builder.setImage(image)
+
+		if (footer != null) builder.setFooter(footer!!.message, footer!!.iconUrl)
 
 		fields.forEach {
 			builder.addField(it.title, it.description, it.inline)
