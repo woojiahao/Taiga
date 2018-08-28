@@ -7,11 +7,10 @@ import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.entities.MessageChannel
 import net.dv8tion.jda.core.entities.MessageEmbed
 
-class Command(var name: String) {
+class Command(var name: String, val category: String) {
 	var args: MutableMap<ContainerKeys, Any?> = mutableMapOf()
 		private set
 	private var action: (Command.(Map<ContainerKeys, Any?>) -> Unit)? = null
-	var category: String
 
 	init {
 		args[ContainerKeys.Jda] = null
@@ -19,8 +18,6 @@ class Command(var name: String) {
 		args[ContainerKeys.Invoker] = null
 		args[ContainerKeys.Channel] = null
 		args[ContainerKeys.Input] = emptyArray<String>()
-
-		category = ""
 	}
 
 	fun expects(vararg args: Any) {

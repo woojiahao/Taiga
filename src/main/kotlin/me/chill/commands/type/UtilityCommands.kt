@@ -1,8 +1,7 @@
 package me.chill.commands.type
 
+import me.chill.commands.framework.CommandCategory
 import me.chill.commands.framework.CommandContainer
-import me.chill.commands.framework.CommandSet
-import me.chill.commands.framework.command
 import me.chill.commands.framework.commands
 import me.chill.gifs.*
 import me.chill.utility.blue
@@ -12,8 +11,9 @@ import me.chill.utility.red
 import me.chill.utility.yellow
 import net.dv8tion.jda.core.entities.MessageEmbed
 
-@CommandSet
+@CommandCategory
 fun utilityCommands() = commands {
+	name = "Utility"
 	command("ping") {
 		execute {
 			val jda = getJDA()
@@ -77,8 +77,8 @@ private fun pingEmbed(latency: Long): MessageEmbed? {
 	return embed {
 		title = "Pong! \uD83C\uDFD3"
 		description = "Ping took **${latency}ms**"
-		this.color = pingEmbed@color
-		this.thumbnail = pingEmbed@thumbnail
+		this.color = pingEmbed@ color
+		this.thumbnail = pingEmbed@ thumbnail
 	}
 }
 

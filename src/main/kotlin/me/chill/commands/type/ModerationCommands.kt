@@ -1,12 +1,12 @@
 package me.chill.commands.type
 
-import me.chill.commands.framework.CommandSet
-import me.chill.commands.framework.command
+import me.chill.commands.framework.CommandCategory
 import me.chill.commands.framework.commands
 import net.dv8tion.jda.core.entities.MessageHistory
 
-@CommandSet
+@CommandCategory
 fun moderationCommands() = commands {
+	name = "Moderation"
 	command("nuke") {
 		expects(Int)
 		execute {

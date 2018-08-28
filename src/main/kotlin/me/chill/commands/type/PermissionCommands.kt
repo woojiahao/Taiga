@@ -1,20 +1,19 @@
 package me.chill.commands.type
 
+import me.chill.commands.framework.CommandCategory
 import me.chill.commands.framework.CommandContainer
-import me.chill.commands.framework.CommandSet
-import me.chill.commands.framework.command
 import me.chill.commands.framework.commands
 import me.chill.database.*
 import me.chill.gifs.happy
 import me.chill.gifs.shock
 import me.chill.utility.green
 import me.chill.utility.jda.embed
-import me.chill.utility.jda.send
 import me.chill.utility.red
 import net.dv8tion.jda.core.entities.Guild
 
-@CommandSet
+@CommandCategory
 fun permissionCommands() = commands {
+	name = "Permission"
 	command("setpermission") {
 		expects(String, String)
 		execute {

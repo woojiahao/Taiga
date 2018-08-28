@@ -1,7 +1,6 @@
 package me.chill.commands.type
 
-import me.chill.commands.framework.CommandSet
-import me.chill.commands.framework.command
+import me.chill.commands.framework.CommandCategory
 import me.chill.commands.framework.commands
 import me.chill.database.TargetChannel
 import me.chill.database.editChannel
@@ -15,8 +14,9 @@ import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.MessageChannel
 import net.dv8tion.jda.core.entities.Role
 
-@CommandSet
+@CommandCategory
 fun administrationCommands() = commands {
+	name = "Administration"
 	command("setlog") {
 		expects(String)
 		execute {
