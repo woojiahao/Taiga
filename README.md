@@ -12,6 +12,8 @@ Invite her to your server using [this link](https://discordapp.com/oauth2/author
 
 Her default prefix is `?`
 
+You can learn more about Taiga in the [wiki](https://github.com/woojiahao/Taiga/wiki)
+
 ## Setting up
 Taiga can be run as a [local instance](https://github.com/woojiahao/Taiga#local-instance) and through [Heroku](https://github.com/woojiahao/Taiga#heroku-instance)
 ### Local instance
