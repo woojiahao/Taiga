@@ -30,7 +30,7 @@ class CommandContainer private constructor() {
 	}
 }
 
-fun commands(create: CommandSet.() -> Unit) {
+inline fun commands(create: CommandSet.() -> Unit) {
 	val set = CommandSet()
 	set.create()
 	CommandContainer.commandSets.add(set)

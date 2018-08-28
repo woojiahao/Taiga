@@ -4,7 +4,7 @@ class CommandSet {
 	val commands = mutableListOf<Command>()
 	var name = "Empty"
 
-	fun command(name: String, create: Command.() -> Unit) {
+	inline fun command(name: String, create: Command.() -> Unit) {
 		val command = Command(name, this.name)
 		command.create()
 		commands.add(command)

@@ -9,6 +9,7 @@ import me.chill.database.hasPermission
 import me.chill.exception.TaigaException
 import me.chill.gifs.noWay
 import me.chill.gifs.shock
+import me.chill.logging.normalLog
 import me.chill.utility.jda.embed
 import me.chill.utility.jda.send
 import me.chill.utility.red
@@ -59,6 +60,7 @@ class InputEvent(private val jda: JDA, private val credentials: Credentials) : L
 		}
 
 		c.run(jda, event.guild, event.member, messageChannel, arguments)
+		normalLog(c)
 	}
 }
 

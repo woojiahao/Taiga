@@ -17,3 +17,5 @@ fun embed(create: EmbedCreator.() -> Unit): MessageEmbed? {
 }
 
 fun printMember(member: Member) = "${member.asMention}(${member.effectiveName}#${member.user.discriminator})"
+
+fun printChannel(channel: MessageChannel) = "${channel.name}(${channel.id})"
