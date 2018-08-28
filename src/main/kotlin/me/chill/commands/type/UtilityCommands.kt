@@ -8,7 +8,6 @@ import me.chill.gifs.*
 import me.chill.utility.blue
 import me.chill.utility.green
 import me.chill.utility.jda.embed
-import me.chill.utility.jda.send
 import me.chill.utility.red
 import me.chill.utility.yellow
 import net.dv8tion.jda.core.entities.MessageEmbed
@@ -17,35 +16,31 @@ import net.dv8tion.jda.core.entities.MessageEmbed
 fun utilityCommands() = commands {
 	command("ping") {
 		execute {
-			val messageChannel = getChannel()
 			val jda = getJDA()
 			val latency = jda.ping
-			messageChannel.send(pingEmbed(latency))
+			respond(pingEmbed(latency))
 		}
 	}
 
 	command("invite") {
 		execute {
-			val messageChannel = getChannel()
-			messageChannel.send(inviteEmbed())
+			respond(inviteEmbed())
 		}
 	}
 
 	command("source") {
 		execute {
-			val messageChannel = getChannel()
-			messageChannel.send(sourceEmbed())
+			respond(sourceEmbed())
 		}
 	}
 
 	command("commands") {
 		execute {
-			val channel = getChannel()
 			val jda = getJDA()
 
 			val commands = CommandContainer.getCommandNames()
 			val botIcon = jda.selfUser.avatarUrl
-			channel.send(listCommandsEmbed(commands, botIcon))
+			respond(listCommandsEmbed(commands, botIcon))
 		}
 	}
 }

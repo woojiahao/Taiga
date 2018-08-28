@@ -1,14 +1,17 @@
 package me.chill.commands.framework
 
+import me.chill.utility.jda.send
 import net.dv8tion.jda.core.JDA
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.entities.MessageChannel
+import net.dv8tion.jda.core.entities.MessageEmbed
 
 class Command(var name: String) {
 	var args: MutableMap<ContainerKeys, Any?> = mutableMapOf()
 		private set
 	private var action: (Command.(Map<ContainerKeys, Any?>) -> Unit)? = null
+	var category: String
 
 	init {
 		args[ContainerKeys.Jda] = null
@@ -16,6 +19,8 @@ class Command(var name: String) {
 		args[ContainerKeys.Invoker] = null
 		args[ContainerKeys.Channel] = null
 		args[ContainerKeys.Input] = emptyArray<String>()
+
+		category = ""
 	}
 
 	fun expects(vararg args: Any) {
@@ -40,4 +45,7 @@ class Command(var name: String) {
 	fun getChannel() = args[ContainerKeys.Channel] as MessageChannel
 	fun getArguments() = args[ContainerKeys.Input] as Array<String>
 	fun getJDA() = args[ContainerKeys.Jda] as JDA
+
+	fun respond(embed: MessageEmbed?) = getChannel().send(embed)
+	fun respond(message: String) = getChannel().send(message)
 }

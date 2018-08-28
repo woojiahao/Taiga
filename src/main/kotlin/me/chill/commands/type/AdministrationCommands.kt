@@ -49,11 +49,10 @@ fun administrationCommands() = commands {
 
 	command("roles") {
 		execute {
-			val channel = getChannel()
 			val guild = getGuild()
 
 			val roles = guild.roles
-			channel.send(listRolesEmbed(guild, roles))
+			respond(listRolesEmbed(guild, roles))
 		}
 	}
 

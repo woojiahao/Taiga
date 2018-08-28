@@ -19,7 +19,6 @@ fun permissionCommands() = commands {
 		expects(String, String)
 		execute {
 			val arguments = getArguments()
-			val channel = getChannel()
 			val guild = getGuild()
 
 			val roles = guild.roles
@@ -29,12 +28,12 @@ fun permissionCommands() = commands {
 			val roleId = arguments[1]
 
 			if (!CommandContainer.hasCommand(commandName)) {
-				channel.send(setPermissionFailureEmbed("Command: **$commandName** does not exist"))
+				respond(setPermissionFailureEmbed("Command: **$commandName** does not exist"))
 				return@execute
 			}
 
 			if (guild.getRoleById(roleId) == null) {
-				channel.send(setPermissionFailureEmbed("Role: **$roleId** does not exist on **${guild.name}**"))
+				respond(setPermissionFailureEmbed("Role: **$roleId** does not exist on **${guild.name}**"))
 				return@execute
 			}
 
@@ -48,7 +47,7 @@ fun permissionCommands() = commands {
 					addPermission(commandName, serverId, roleId)
 				}
 			}
-			channel.send(
+			respond(
 				setPermissionSuccessEmbed("Command: **$commandName** has been assigned to **${guild.getRoleById(roleId).name}**")
 			)
 		}
@@ -57,11 +56,10 @@ fun permissionCommands() = commands {
 	command("viewpermissions") {
 		execute {
 			val guild = getGuild()
-			val channel = getChannel()
 
 			val permissionMap = generatePermissionsMap(guild)
 			val permissionsList = generatePermissionsList(guild, permissionMap.toSortedMap())
-			channel.send(listPermissionsEmbed(guild, permissionsList))
+			respond(listPermissionsEmbed(guild, permissionsList))
 		}
 	}
 }
