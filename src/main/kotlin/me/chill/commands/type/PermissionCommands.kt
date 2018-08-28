@@ -1,8 +1,9 @@
-package me.chill.commands.categories
+package me.chill.commands.type
 
-import me.chill.commands.container.CommandContainer
-import me.chill.commands.container.command
-import me.chill.commands.container.commands
+import me.chill.commands.framework.CommandContainer
+import me.chill.commands.framework.CommandSet
+import me.chill.commands.framework.command
+import me.chill.commands.framework.commands
 import me.chill.database.*
 import me.chill.gifs.happy
 import me.chill.gifs.shock
@@ -12,6 +13,7 @@ import me.chill.utility.jda.send
 import me.chill.utility.red
 import net.dv8tion.jda.core.entities.Guild
 
+@CommandSet
 fun permissionCommands() = commands {
 	command("setpermission") {
 		expects(String, String)

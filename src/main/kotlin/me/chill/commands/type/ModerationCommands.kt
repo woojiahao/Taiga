@@ -1,10 +1,11 @@
-package me.chill.commands.categories
+package me.chill.commands.type
 
-import me.chill.commands.container.command
-import me.chill.commands.container.commands
+import me.chill.commands.framework.CommandSet
+import me.chill.commands.framework.command
+import me.chill.commands.framework.commands
 import net.dv8tion.jda.core.entities.MessageHistory
 
-
+@CommandSet
 fun moderationCommands() = commands {
 	command("nuke") {
 		expects(Int)

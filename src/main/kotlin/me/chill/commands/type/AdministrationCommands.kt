@@ -1,7 +1,8 @@
-package me.chill.commands.categories
+package me.chill.commands.type
 
-import me.chill.commands.container.command
-import me.chill.commands.container.commands
+import me.chill.commands.framework.CommandSet
+import me.chill.commands.framework.command
+import me.chill.commands.framework.commands
 import me.chill.database.TargetChannel
 import me.chill.database.editChannel
 import me.chill.gifs.happy
@@ -14,6 +15,7 @@ import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.MessageChannel
 import net.dv8tion.jda.core.entities.Role
 
+@CommandSet
 fun administrationCommands() = commands {
 	command("setlog") {
 		expects(String)

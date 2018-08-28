@@ -1,8 +1,8 @@
 package me.chill.commands.events
 
-import me.chill.commands.container.Command
-import me.chill.commands.container.CommandContainer
-import me.chill.commands.container.ContainerKeys
+import me.chill.commands.framework.Command
+import me.chill.commands.framework.CommandContainer
+import me.chill.commands.framework.ContainerKeys
 import me.chill.credential.Credentials
 import me.chill.database.getPermission
 import me.chill.database.hasPermission

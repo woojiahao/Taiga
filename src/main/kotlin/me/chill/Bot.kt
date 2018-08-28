@@ -1,9 +1,9 @@
 package me.chill
 
-import me.chill.commands.container.CommandContainer
 import me.chill.commands.events.InputEvent
 import me.chill.commands.events.OnJoinEvent
 import me.chill.commands.events.OnLeaveEvent
+import me.chill.commands.framework.CommandContainer
 import me.chill.configuration.isHerokuRunning
 import me.chill.configuration.loadConfigurations
 import me.chill.credential.Credentials
@@ -24,7 +24,7 @@ fun main(args: Array<String>) {
 
 	setupDatabase(credentials.database!!)
 
-	val commandContainer = CommandContainer()
+	val commandContainer = CommandContainer.loadContainer()
 
 	val jda: JDA = JDABuilder(AccountType.BOT)
 		.setStatus(OnlineStatus.ONLINE)

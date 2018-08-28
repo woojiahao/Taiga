@@ -1,8 +1,9 @@
-package me.chill.commands.categories
+package me.chill.commands.type
 
-import me.chill.commands.container.CommandContainer
-import me.chill.commands.container.command
-import me.chill.commands.container.commands
+import me.chill.commands.framework.CommandContainer
+import me.chill.commands.framework.CommandSet
+import me.chill.commands.framework.command
+import me.chill.commands.framework.commands
 import me.chill.gifs.*
 import me.chill.utility.blue
 import me.chill.utility.green
@@ -12,6 +13,7 @@ import me.chill.utility.red
 import me.chill.utility.yellow
 import net.dv8tion.jda.core.entities.MessageEmbed
 
+@CommandSet
 fun utilityCommands() = commands {
 	command("ping") {
 		execute {

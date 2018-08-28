@@ -1,4 +1,4 @@
-package me.chill.commands.container
+package me.chill.commands.framework
 
 import net.dv8tion.jda.core.JDA
 import net.dv8tion.jda.core.entities.Guild
