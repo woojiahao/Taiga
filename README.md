@@ -1,6 +1,7 @@
 # Table of contents:
 1. [About Taiga](https://github.com/woojiahao/Taiga#about-taiga)
 2. [Setting up](https://github.com/woojiahao/Taiga#setting-up)
+3. [Credits](https://github.com/woojiahao/Taiga#credits)
 
 ## About Taiga
 Taiga is an administration discord bot, based around best girl, [Taiga Aisaka](http://tora-dora.wikia.com/wiki/Taiga_Aisaka)
@@ -18,7 +19,7 @@ Taiga can be run as a [local instance](https://github.com/woojiahao/Taiga#local-
 1. [Java 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 2. [Maven](https://maven.apache.org/) 
 3. [Git](https://git-scm.com/downloads)
-4. Database of your choosing
+4. [PostgreSQL](https://www.postgresql.org/docs/9.3/static/tutorial-install.html)
 
 #### Steps:
 1. Clone this repository
@@ -97,3 +98,9 @@ Taiga can be run as a [local instance](https://github.com/woojiahao/Taiga#local-
 	```bash
 	$ heroku ps:scale worker=1
 	```
+
+## Credits
+Taiga's command framework is heavily inspired by Fox#0001's HotBot.
+
+* [HotBot's Repository](https://gitlab.com/Aberrantfox/hotbot)
+* [HotBot in action](https://discord.gg/programming)s
