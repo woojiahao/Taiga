@@ -18,7 +18,6 @@ import net.dv8tion.jda.core.entities.Role
 fun administrationCommands() = commands {
 	name = "Administration"
 	command("setlog") {
-		expects(String)
 		execute {
 			val channel = getChannel()
 			val guild = getGuild()
@@ -28,7 +27,6 @@ fun administrationCommands() = commands {
 	}
 
 	command("setjoin") {
-		expects(String)
 		execute {
 			val channel = getChannel()
 			val guild = getGuild()
@@ -38,7 +36,6 @@ fun administrationCommands() = commands {
 	}
 
 	command("setsuggestion") {
-		expects(String)
 		execute {
 			val channel = getChannel()
 			val guild = getGuild()
