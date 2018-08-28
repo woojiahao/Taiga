@@ -11,4 +11,6 @@ class CommandSet {
 	}
 
 	fun hasCommand(command: String) = commands.stream().anyMatch { it.name == command }
+
+	fun getCommandNames() = commands.map { it.name }.toTypedArray().sortedArray()
 }

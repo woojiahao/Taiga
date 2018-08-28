@@ -12,20 +12,15 @@ class CommandContainer private constructor() {
 	}
 
 	companion object {
-		private val commandSets = mutableListOf<CommandSet>()
+		val commandSets = mutableListOf<CommandSet>()
 
 		fun loadContainer() = CommandContainer()
 
-		fun addSet(set: CommandSet) = commandSets.add(set)
+		fun hasCommand(command: String) = commandSets.stream().anyMatch { it.hasCommand(command) }
 
-		fun hasCommand(command: String) =
-			commandSets.stream().anyMatch { it.hasCommand(command) }
+		fun getCommand(command: String) = createCommandList().stream().filter { it.name == command }.toArray()[0]!!
 
-		fun getCommand(command: String) =
-			createCommandList().stream().filter { it.name == command }.toArray()[0]!!
-
-		fun getCommandNames() =
-			createCommandList().map { command -> command.name }.toTypedArray()
+		fun getCommandNames() = createCommandList().map { it.name }.toTypedArray()
 
 		private fun createCommandList(): MutableList<Command> {
 			val commandsFlattened = mutableListOf<Command>()
@@ -38,5 +33,5 @@ class CommandContainer private constructor() {
 fun commands(create: CommandSet.() -> Unit) {
 	val set = CommandSet()
 	set.create()
-	CommandContainer.addSet(set)
+	CommandContainer.commandSets.add(set)
 }

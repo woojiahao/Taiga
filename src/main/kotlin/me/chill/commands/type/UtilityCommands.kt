@@ -2,6 +2,7 @@ package me.chill.commands.type
 
 import me.chill.commands.framework.CommandCategory
 import me.chill.commands.framework.CommandContainer
+import me.chill.commands.framework.CommandSet
 import me.chill.commands.framework.commands
 import me.chill.gifs.*
 import me.chill.utility.blue
@@ -36,23 +37,32 @@ fun utilityCommands() = commands {
 
 	command("commands") {
 		execute {
-			val jda = getJDA()
-
-			val commands = CommandContainer.getCommandNames()
-			val botIcon = jda.selfUser.avatarUrl
-			respond(listCommandsEmbed(commands, botIcon))
+			respond(
+				listCommandsEmbed(
+					CommandContainer.commandSets,
+					getJDA().selfUser.avatarUrl
+				)
+			)
 		}
 	}
 }
 
-private fun listCommandsEmbed(commandNames: Array<String>, avatarUrl: String) =
+private fun listCommandsEmbed(commandSets: List<CommandSet>, avatarUrl: String) =
 	embed {
 		title = "Commands"
-		description = commandNames.sorted().joinToString("\n") {
-			"- $it"
-		}
 		color = green
 		thumbnail = avatarUrl
+		commandSets.forEach { set ->
+			field {
+				title = set.name
+				description = set
+					.getCommandNames()
+					.joinToString("\n") { commandName ->
+						"- $commandName"
+					}
+				inline = false
+			}
+		}
 	}
 
 private fun pingEmbed(latency: Long): MessageEmbed? {
