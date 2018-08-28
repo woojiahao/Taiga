@@ -12,6 +12,7 @@ import net.dv8tion.jda.core.AccountType
 import net.dv8tion.jda.core.JDA
 import net.dv8tion.jda.core.JDABuilder
 import net.dv8tion.jda.core.OnlineStatus
+import net.dv8tion.jda.core.entities.Game
 
 // todo: add a command to dm all server owners if there is a problem detected
 fun main(args: Array<String>) {
@@ -29,6 +30,7 @@ fun main(args: Array<String>) {
 	val jda: JDA = JDABuilder(AccountType.BOT)
 		.setStatus(OnlineStatus.ONLINE)
 		.setToken(credentials.token)
+		.setGame(Game.playing("${credentials.prefix}help"))
 		.build()
 	jda.addEventListener(OnJoinEvent(), OnLeaveEvent(), InputEvent(jda, credentials))
 }
