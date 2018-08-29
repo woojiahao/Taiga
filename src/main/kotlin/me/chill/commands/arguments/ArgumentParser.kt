@@ -18,6 +18,7 @@ fun parseArguments(command: Command, guild: Guild, args: Array<String>): Boolean
 				ArgumentType.UserId -> UserIdArgument()
 				ArgumentType.ChannelId -> ChannelIdArgument()
 				ArgumentType.RoleId -> RoleIdArgument()
+				ArgumentType.CommandName -> CommandNameArgument()
 			}
 		)
 	}

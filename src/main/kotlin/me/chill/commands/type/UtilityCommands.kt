@@ -1,9 +1,7 @@
 package me.chill.commands.type
 
-import me.chill.commands.framework.CommandCategory
-import me.chill.commands.framework.CommandContainer
-import me.chill.commands.framework.CommandSet
-import me.chill.commands.framework.commands
+import me.chill.commands.arguments.ArgumentType.CommandName
+import me.chill.commands.framework.*
 import me.chill.utility.jda.embed
 import me.chill.utility.settings.*
 import net.dv8tion.jda.core.entities.MessageEmbed
@@ -41,7 +39,25 @@ fun utilityCommands() = commands {
 			)
 		}
 	}
+
+	command("help") {
+		expects(CommandName)
+		execute {
+			val commandName = getArguments()[0] as String
+			respond(commandInfoEmbed(CommandContainer.getCommand(commandName)))
+		}
+	}
 }
+
+private fun commandInfoEmbed(command: Command) =
+	embed {
+		title = "Help - ${command.name}"
+		color = green
+		field {
+			title = "Syntax"
+			description = "$command"
+		}
+	}
 
 private fun listCommandsEmbed(commandSets: List<CommandSet>, avatarUrl: String) =
 	embed {

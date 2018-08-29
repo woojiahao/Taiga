@@ -3,6 +3,7 @@ package me.chill.commands.framework
 import me.chill.commands.arguments.ArgumentType
 import me.chill.commands.arguments.ArgumentType.Sentence
 import me.chill.commands.framework.ContainerKey.*
+import me.chill.credentials
 import me.chill.exception.TaigaException
 import me.chill.utility.jda.send
 import net.dv8tion.jda.core.JDA
@@ -59,4 +60,17 @@ class Command(var name: String, val category: String) {
 
 	fun respond(embed: MessageEmbed?) = getChannel().send(embed)
 	fun respond(message: String) = getChannel().send(message)
+
+	override fun toString() =
+		StringBuilder()
+			.append(
+				"`${credentials!!.prefix}$name ")
+			.append(
+				getArgumentList()
+					.joinToString(" ") {
+						"{ ${it.name} }"
+					}
+			)
+			.append("`")
+			.toString()
 }

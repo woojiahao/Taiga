@@ -4,7 +4,7 @@ import me.chill.commands.arguments.ArgumentType
 import me.chill.commands.arguments.parseArguments
 import me.chill.commands.framework.Command
 import me.chill.commands.framework.CommandContainer
-import me.chill.credential.Credentials
+import me.chill.credentials
 import me.chill.database.getPermission
 import me.chill.database.hasPermission
 import me.chill.exception.TaigaException
@@ -21,7 +21,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent
 import net.dv8tion.jda.core.hooks.ListenerAdapter
 import java.util.*
 
-class InputEvent(private val jda: JDA, private val credentials: Credentials) : ListenerAdapter() {
+class InputEvent(private val jda: JDA) : ListenerAdapter() {
 	override fun onMessageReceived(event: MessageReceivedEvent?) {
 		if (event == null) throw TaigaException("Event object was null during message receive")
 
@@ -32,9 +32,9 @@ class InputEvent(private val jda: JDA, private val credentials: Credentials) : L
 		val server = event.guild
 		val invoker = server.getMemberById(event.author.id)
 
-		if (!message.startsWith(credentials.prefix!!)) return
+		if (!message.startsWith(credentials!!.prefix!!)) return
 
-		val commandParts = message.substring(credentials.prefix!!.length).split(" ").toTypedArray()
+		val commandParts = message.substring(credentials!!.prefix!!.length).split(" ").toTypedArray()
 		val command = commandParts[0]
 
 		if (!CommandContainer.hasCommand(command)) {
@@ -76,7 +76,7 @@ class InputEvent(private val jda: JDA, private val credentials: Credentials) : L
 
 		if (c.getArgumentList().isNotEmpty()) {
 			if (!parseArguments(c, server, arguments)) {
-				messageChannel.send(invalidArgumentsEmbed(credentials.prefix, c.name))
+				messageChannel.send(invalidArgumentsEmbed(credentials!!.prefix, c.name))
 				return
 			}
 		}

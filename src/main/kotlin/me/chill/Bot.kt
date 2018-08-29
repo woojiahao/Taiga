@@ -15,22 +15,23 @@ import net.dv8tion.jda.core.OnlineStatus
 import net.dv8tion.jda.core.entities.Game
 
 // todo: add a command to dm all server owners if there is a problem detected
+var credentials: Credentials? = null
 fun main(args: Array<String>) {
-	val credentials = if (isHerokuRunning()) {
+	credentials = if (isHerokuRunning()) {
 		Credentials(null)
 	} else {
 		val configurations = loadConfigurations() ?: return
 		Credentials(configurations)
 	}
 
-	setupDatabase(credentials.database!!)
+	setupDatabase(credentials!!.database!!)
 
 	val commandContainer = CommandContainer.loadContainer()
 
 	val jda: JDA = JDABuilder(AccountType.BOT)
 		.setStatus(OnlineStatus.ONLINE)
-		.setToken(credentials.token)
-		.setGame(Game.playing("${credentials.prefix}help"))
+		.setToken(credentials!!.token)
+		.setGame(Game.playing("${credentials!!.prefix}help"))
 		.build()
-	jda.addEventListener(OnJoinEvent(), OnLeaveEvent(), InputEvent(jda, credentials))
+	jda.addEventListener(OnJoinEvent(), OnLeaveEvent(), InputEvent(jda))
 }
