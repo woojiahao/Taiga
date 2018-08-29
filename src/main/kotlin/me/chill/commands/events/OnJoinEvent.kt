@@ -1,9 +1,6 @@
 package me.chill.commands.events
 
-import me.chill.database.TargetChannel
-import me.chill.database.addServer
-import me.chill.database.getChannel
-import me.chill.database.getOnJoinRole
+import me.chill.database.*
 import me.chill.exception.TaigaException
 import me.chill.utility.general.getDateTime
 import me.chill.utility.jda.embed
@@ -27,7 +24,7 @@ class OnJoinEvent : ListenerAdapter() {
 		val member = event.member
 
 		joinChannel.send(newMemberJoinEmbed(member))
-		assignRole(server, joinChannel, getOnJoinRole(serverId), member.user.id, true)
+		if (hasOnJoinRole(serverId)) assignRole(server, joinChannel, getOnJoinRole(serverId), member.user.id, true)
 	}
 
 	override fun onGuildJoin(event: GuildJoinEvent?) {
