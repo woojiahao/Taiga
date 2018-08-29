@@ -4,11 +4,9 @@ import me.chill.commands.arguments.ArgumentType
 import me.chill.commands.arguments.ArgumentType.RoleId
 import me.chill.commands.framework.CommandCategory
 import me.chill.commands.framework.commands
-import me.chill.database.editOnJoinRole
-import me.chill.database.getOnJoinRole
-import me.chill.database.hasOnJoinRole
-import me.chill.database.setOnJoinRole
+import me.chill.database.*
 import me.chill.utility.jda.embed
+import me.chill.utility.jda.successEmbed
 import me.chill.utility.roles.assignRole
 import me.chill.utility.roles.removeRole
 import me.chill.utility.settings.clap
@@ -59,7 +57,7 @@ fun roleCommands() = commands {
 					val roleId = getOnJoinRole(guild.id)
 					"New members will be assigned **${guild.getRoleById(roleId).name}** on join"
 				}
-			respond(getOnJoinRoleEmbed(message))
+			respond(successEmbed("Member On Join", message, serve))
 		}
 	}
 
@@ -72,29 +70,39 @@ fun roleCommands() = commands {
 
 			val serverId = guild.id
 
+			if (roleId == guild.getRolesByName("@everyone", false)[0].id) {
+
+			}
+
 			if (hasOnJoinRole(serverId)) editOnJoinRole(serverId, roleId)
 			else setOnJoinRole(serverId, roleId)
 
-			respond(setOnJoinRoleEmbed(guild.getRoleById(roleId).name))
+			respond(
+				successEmbed(
+					"Member On Join",
+					"New members will be assigned **{guild.getRoleById(roleId).name)** on join",
+					clap
+				)
+			)
+		}
+	}
+
+	command("clearjoinrole") {
+		execute {
+			val server = getGuild()
+			val serverId = server.id
+			respond(successEmbed(
+				"Member On Join",
+				if (!hasOnJoinRole(serverId)) {
+					"**${server.name}** currently does not have an auto-assigned role for new members"
+				} else {
+					removeOnJoinRole(serverId)
+					"New members will now no longer be assigned a default role"
+				}
+			))
 		}
 	}
 }
-
-private fun setOnJoinRoleEmbed(roleName: String) =
-	embed {
-		title = "Member On Join"
-		color = green
-		thumbnail = clap
-		description = "New members will be assigned **$roleName** on join"
-	}
-
-private fun getOnJoinRoleEmbed(message: String) =
-	embed {
-		title = "Member On Join"
-		color = green
-		description = message
-		thumbnail = serve
-	}
 
 private fun listRolesEmbed(guild: Guild, roles: List<Role>) =
 	embed {
