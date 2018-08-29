@@ -9,7 +9,7 @@ fun setupDatabase(databaseUrl: String) {
 	Database.connect(databaseUrl, "org.postgresql.Driver")
 
 	transaction {
-		SchemaUtils.create(ChannelAssignment, Permission)
+		SchemaUtils.create(ChannelAssignment, Permission, OnJoinRole)
 	}
 }
 
@@ -24,4 +24,9 @@ object Permission : Table() {
 	val commandName = varchar("command_name", 50).primaryKey()
 	val serverId = varchar("server_id", 20).primaryKey()
 	val permission = varchar("permission", 20).primaryKey()
+}
+
+object OnJoinRole : Table() {
+	val serverId = varchar("server_id", 20).primaryKey()
+	val roleId = varchar("role_id", 20)
 }
