@@ -1,6 +1,6 @@
 package me.chill.commands.type
 
-import me.chill.commands.arguments.ArgumentType.CommandName
+import me.chill.commands.arguments.ArgumentType
 import me.chill.commands.framework.*
 import me.chill.utility.jda.embed
 import me.chill.utility.settings.*
@@ -41,7 +41,7 @@ fun utilityCommands() = commands {
 	}
 
 	command("help") {
-		expects(CommandName)
+		expects(ArgumentType.Word)
 		execute {
 			val commandName = getArguments()[0] as String
 			respond(commandInfoEmbed(CommandContainer.getCommand(commandName)))

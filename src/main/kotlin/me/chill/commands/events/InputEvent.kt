@@ -42,7 +42,7 @@ class InputEvent(private val jda: JDA) : ListenerAdapter() {
 			return
 		}
 
-		val c = CommandContainer.getCommand(command) as Command
+		val c = CommandContainer.getCommand(command)
 		var arguments: Array<String> = emptyArray()
 		if (commandParts.size > 1) {
 			val argTypes = c.getArgumentList()
@@ -70,13 +70,13 @@ class InputEvent(private val jda: JDA) : ListenerAdapter() {
 
 		val expectedArgsSize = c.getArgumentList().size
 		if (arguments.size != expectedArgsSize) {
-			messageChannel.send(insufficientArgumentsEmbed(c.name, expectedArgsSize, arguments.size))
+			messageChannel.send(insufficientArgumentsEmbed(c, expectedArgsSize, arguments.size))
 			return
 		}
 
 		if (c.getArgumentList().isNotEmpty()) {
 			if (!parseArguments(c, server, arguments)) {
-				messageChannel.send(invalidArgumentsEmbed(credentials!!.prefix, c.name))
+				messageChannel.send(invalidArgumentsEmbed(credentials!!.prefix, c))
 				return
 			}
 		}
@@ -110,16 +110,23 @@ private fun checkPermissions(commandName: String, server: Guild, invoker: Member
 	return true
 }
 
-private fun invalidArgumentsEmbed(prefix: String?, commandName: String) =
+// todo: link the learn more to the wiki when it's been setup
+private fun invalidArgumentsEmbed(prefix: String?, command: Command) =
 	embed {
 		title = "Invalid Arguments"
-		description = "Invalid arguments passed to the command: **$commandName**"
+		description = "Invalid arguments passed to the command: **${command.name}**"
 		color = red
 		thumbnail = shock
 
 		field {
-			title = "How to rectify?"
-			description = "Use the `${prefix}help $commandName` to learn about the command"
+			title = "Syntax"
+			description = "$command"
+			inline = false
+		}
+
+		field {
+			title = "Learn more"
+			description = "Use the `${prefix}help ${command.name}` to learn more about the command"
 			inline = false
 		}
 	}
@@ -132,12 +139,23 @@ private fun insufficientPermissionEmbed(commandName: String) =
 		thumbnail = noWay
 	}
 
-private fun insufficientArgumentsEmbed(commandName: String, expected: Int, actual: Int) =
+private fun insufficientArgumentsEmbed(command: Command, expected: Int, actual: Int) =
 	embed {
 		title = "Insufficient Arguments"
-		description = "Command: **$commandName** requires **$expected** arguments, you gave **$actual** arguments"
 		color = red
 		thumbnail = shock
+
+		field {
+			title = "Arguments"
+			description = "Command: **${command.name}** requires **$expected** arguments, you gave **$actual** arguments"
+			inline = false
+		}
+
+		field {
+			title = "Syntax"
+			description = "$command"
+			inline = false
+		}
 	}
 
 private fun invalidCommandEmbed(command: String) =

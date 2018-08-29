@@ -18,12 +18,11 @@ fun parseArguments(command: Command, guild: Guild, args: Array<String>): Boolean
 				ArgumentType.UserId -> UserIdArgument()
 				ArgumentType.ChannelId -> ChannelIdArgument()
 				ArgumentType.RoleId -> RoleIdArgument()
-				ArgumentType.CommandName -> CommandNameArgument()
 			}
 		)
 	}
 
 	return checks
 		.zip(args)
-		.none { it.first.check(guild, it.second) }
+		.all { it.first.check(guild, it.second) }
 }

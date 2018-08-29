@@ -58,22 +58,18 @@ fun administrationCommands() = commands {
 	command("assign") {
 		expects(RoleId, UserId)
 		execute {
-			val channel = getChannel()
-			val guild = getGuild()
 			val arguments = getArguments()
 
-			assignRole(guild, channel, roleId = arguments[0] as String, targetId = arguments[1] as String)
+			assignRole(getGuild(), getChannel(), roleId = arguments[0] as String, targetId = arguments[1] as String)
 		}
 	}
 
 	command("unassign") {
 		expects(RoleId, UserId)
 		execute {
-			val channel = getChannel()
-			val guild = getGuild()
 			val arguments = getArguments()
 
-			removeRole(guild, channel, roleId = arguments[0] as String, targetId = arguments[1] as String)
+			removeRole(getGuild(), getChannel(), roleId = arguments[0] as String, targetId = arguments[1] as String)
 		}
 	}
 }
