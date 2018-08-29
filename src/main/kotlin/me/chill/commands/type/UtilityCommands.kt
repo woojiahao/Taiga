@@ -5,6 +5,7 @@ import me.chill.commands.framework.*
 import me.chill.utility.general.getDateTime
 import me.chill.utility.jda.embed
 import me.chill.utility.jda.printMember
+import me.chill.utility.jda.simpleEmbed
 import me.chill.utility.settings.*
 import net.dv8tion.jda.core.OnlineStatus
 import net.dv8tion.jda.core.entities.Guild
@@ -23,13 +24,29 @@ fun utilityCommands() = commands {
 
 	command("invite") {
 		execute {
-			respond(inviteEmbed())
+			respond(
+				simpleEmbed(
+					"Invites",
+					"- [Invite me to your server!](https://discordapp.com/oauth2/authorize?client_id=482340927709511682&scope=bot&permissions=8)\n" +
+						"- [Join my development server](https://discord.gg/xtDNfyw)",
+					fondling,
+					blue
+				)
+			)
 		}
 	}
 
 	command("source") {
 		execute {
-			respond(sourceEmbed())
+			respond(
+				simpleEmbed(
+					"Sources",
+					"- [GitHub repository](https://github.com/woojiahao/Taiga)\n" +
+						"- [Wiki](https://github.com/woojiahao/Taiga/wiki)",
+					serve,
+					blue
+				)
+			)
 		}
 	}
 
@@ -163,21 +180,3 @@ private fun pingEmbed(latency: Long): MessageEmbed? {
 		this.thumbnail = pingEmbed@ thumbnail
 	}
 }
-
-private fun inviteEmbed() =
-	embed {
-		title = "Invite Taiga"
-		description = "[Invite me](https://discordapp.com/oauth2/authorize?client_id=482340927709511682&scope=bot&permissions=8) to your server!"
-		color = blue
-		thumbnail = fondling
-	}
-
-private fun sourceEmbed() =
-	embed {
-		title = "Source Code"
-		description =
-			"- [GitHub repository](https://github.com/woojiahao/Taiga)\n" +
-			"- [Wiki](https://github.com/woojiahao/Taiga/wiki)"
-		color = blue
-		thumbnail = serve
-	}

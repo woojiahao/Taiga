@@ -7,10 +7,9 @@ import me.chill.commands.framework.CommandContainer
 import me.chill.commands.framework.commands
 import me.chill.database.*
 import me.chill.utility.jda.embed
+import me.chill.utility.jda.failureEmbed
+import me.chill.utility.jda.successEmbed
 import me.chill.utility.settings.green
-import me.chill.utility.settings.happy
-import me.chill.utility.settings.red
-import me.chill.utility.settings.shock
 import net.dv8tion.jda.core.entities.Guild
 import org.apache.commons.lang3.text.WordUtils
 
@@ -30,12 +29,12 @@ fun permissionCommands() = commands {
 			val roleId = arguments[1] as String
 
 			if (!CommandContainer.hasCommand(commandName)) {
-				respond(setPermissionFailureEmbed("Command: **$commandName** does not exist"))
-				return@execute
-			}
-
-			if (guild.getRoleById(roleId) == null) {
-				respond(setPermissionFailureEmbed("Role: **$roleId** does not exist on **${guild.name}**"))
+				respond(
+					failureEmbed(
+						"Set Command Permission Failiure!",
+						"Command: **$commandName** does not exist"
+					)
+				)
 				return@execute
 			}
 
@@ -50,7 +49,9 @@ fun permissionCommands() = commands {
 				}
 			}
 			respond(
-				setPermissionSuccessEmbed("Command: **$commandName** has been assigned to **${guild.getRoleById(roleId).name}**")
+				successEmbed(
+					"Set Command Permission Success!",
+					"Command: **$commandName** has been assigned to **${guild.getRoleById(roleId).name}**")
 			)
 		}
 	}
@@ -74,12 +75,12 @@ fun permissionCommands() = commands {
 			val roleId = arguments[1] as String
 
 			if (!CommandContainer.hasCategory(categoryName)) {
-				respond(setPermissionFailureEmbed("Category: **$categoryName** does not exist"))
-				return@execute
-			}
-
-			if (guild.getRoleById(roleId) == null) {
-				respond(setPermissionFailureEmbed("Role: **$roleId** does not exist on **${guild.name}**"))
+				respond(
+					failureEmbed(
+						"Set Category Permission Failure",
+						"Category: **$categoryName** does not exist"
+					)
+				)
 				return@execute
 			}
 
@@ -98,26 +99,13 @@ fun permissionCommands() = commands {
 				}
 			}
 			respond(
-				setPermissionSuccessEmbed("All commands in **$categoryName** has been assigned to **${guild.getRoleById(roleId).name}**")
+				successEmbed(
+					"Set Category Permission Success!",
+					"All commands in **$categoryName** has been assigned to **${guild.getRoleById(roleId).name}**")
 			)
 		}
 	}
 }
-
-private fun setPermissionStatusEmbed(status: String, color: Int,
-									 thumbnail: String, message: String) =
-	embed {
-		title = "Set Permission $status!"
-		this.color = color
-		description = message
-		this.thumbnail = thumbnail
-	}
-
-private fun setPermissionSuccessEmbed(message: String) =
-	setPermissionStatusEmbed("Success", green, happy, message)
-
-private fun setPermissionFailureEmbed(message: String) =
-	setPermissionStatusEmbed("Failed", red, shock, message)
 
 private fun generatePermission(commandName: String, guild: Guild) =
 	if (hasPermission(commandName, guild.id)) Pair(commandName, getPermission(commandName, guild.id))
