@@ -1,17 +1,17 @@
 package me.chill.utility.roles
 
-import me.chill.utility.settings.happy
-import me.chill.utility.settings.shock
-import me.chill.utility.settings.green
 import me.chill.utility.jda.embed
 import me.chill.utility.jda.printMember
 import me.chill.utility.jda.send
+import me.chill.utility.settings.green
+import me.chill.utility.settings.happy
 import me.chill.utility.settings.red
+import me.chill.utility.settings.shock
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.MessageChannel
 
 fun assignRole(guild: Guild, channel: MessageChannel,
-			   roleId: String, targetId: String) {
+			   roleId: String, targetId: String, silent: Boolean = false) {
 	if (!preChecking(guild, channel, roleId, targetId)) return
 
 	val role = guild.getRoleById(roleId)
@@ -23,7 +23,7 @@ fun assignRole(guild: Guild, channel: MessageChannel,
 	}
 
 	guild.controller.addSingleRoleToMember(member, role).complete()
-	channel.send(roleOperationSuccessEmbed("Successfully assigned role: **${role.name}** to ${printMember(member)}"))
+	if (!silent) channel.send(roleOperationSuccessEmbed("Successfully assigned role: **${role.name}** to ${printMember(member)}"))
 }
 
 fun removeRole(guild: Guild, channel: MessageChannel,

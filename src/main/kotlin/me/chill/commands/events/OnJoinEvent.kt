@@ -3,28 +3,31 @@ package me.chill.commands.events
 import me.chill.database.TargetChannel
 import me.chill.database.addServer
 import me.chill.database.getChannel
+import me.chill.database.getOnJoinRole
 import me.chill.exception.TaigaException
 import me.chill.utility.general.getDateTime
-import me.chill.utility.settings.green
 import me.chill.utility.jda.embed
 import me.chill.utility.jda.printMember
 import me.chill.utility.jda.send
+import me.chill.utility.roles.assignRole
+import me.chill.utility.settings.green
 import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent
 import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent
 import net.dv8tion.jda.core.hooks.ListenerAdapter
 
-// todo: allow customization of roles that is assigned on join
 class OnJoinEvent : ListenerAdapter() {
 	override fun onGuildMemberJoin(event: GuildMemberJoinEvent?) {
 		if (event == null) throw TaigaException("Event object was null during member join")
 
-		val serverId = event.guild.id
+		val server = event.guild
+		val serverId = server.id
 		val joinChannelId = getChannel(TargetChannel.Join, serverId)
 		val joinChannel = event.jda.getTextChannelById(joinChannelId)
 		val member = event.member
 
 		joinChannel.send(newMemberJoinEmbed(member))
+		assignRole(server, joinChannel, getOnJoinRole(serverId), member.user.id, true)
 	}
 
 	override fun onGuildJoin(event: GuildJoinEvent?) {
