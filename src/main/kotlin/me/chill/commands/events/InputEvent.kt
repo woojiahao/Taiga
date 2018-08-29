@@ -102,9 +102,7 @@ private fun checkPermissions(commandName: String, server: Guild, invoker: Member
 	} else {
 		val highestRolePosition = server.roles[0].position
 		val canInvoke = invoker.roles.isNotEmpty() && invoker.roles[0].position >= highestRolePosition
-		if (!(invoker.isOwner || canInvoke)) {
-			return false
-		}
+		if (!(invoker.isOwner || canInvoke)) return false
 	}
 
 	return true
