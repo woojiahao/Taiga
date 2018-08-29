@@ -12,6 +12,7 @@ import me.chill.utility.settings.happy
 import me.chill.utility.settings.red
 import me.chill.utility.settings.shock
 import net.dv8tion.jda.core.entities.Guild
+import org.apache.commons.lang3.text.WordUtils
 
 @CommandCategory
 fun permissionCommands() = commands {
@@ -57,6 +58,48 @@ fun permissionCommands() = commands {
 	command("viewpermissions") {
 		execute {
 			respond(listPermissionsEmbed(getGuild()))
+		}
+	}
+
+	command("setpermissioncategory") {
+		expects(Word, RoleId)
+		execute {
+			val arguments = getArguments()
+			val guild = getGuild()
+
+			val roles = guild.roles
+			val serverId = guild.id
+
+			val categoryName = WordUtils.capitalize(arguments[0] as String)
+			val roleId = arguments[1] as String
+
+			if (!CommandContainer.hasCategory(categoryName)) {
+				respond(setPermissionFailureEmbed("Category: **$categoryName** does not exist"))
+				return@execute
+			}
+
+			if (guild.getRoleById(roleId) == null) {
+				respond(setPermissionFailureEmbed("Role: **$roleId** does not exist on **${guild.name}**"))
+				return@execute
+			}
+
+			val highestRole = roles[0].id
+			val commandSet = CommandContainer.getSet(categoryName)
+			commandSet.commands.forEach { command ->
+				val commandName = command.name
+				if (roleId == highestRole) {
+					removePermission(commandName, serverId)
+				} else {
+					if (hasPermission(commandName, serverId)) {
+						editPermission(commandName, serverId, roleId)
+					} else {
+						addPermission(commandName, serverId, roleId)
+					}
+				}
+			}
+			respond(
+				setPermissionSuccessEmbed("All commands in **$categoryName** has been assigned to **${guild.getRoleById(roleId).name}**")
+			)
 		}
 	}
 }

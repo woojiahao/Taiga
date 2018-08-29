@@ -23,6 +23,7 @@
 		<gson.version>2.8.5</gson.version>
 		<exposed.version>0.10.4</exposed.version>
 		<reflections.version>0.9.11</reflections.version>
+		<wordutils.version>3.0</wordutils.version>
 
 		<main.class>me.chill.BotKt</main.class>
 	</properties>
@@ -90,6 +91,12 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>42.2.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${wordutils.version}</version>
 		</dependency>
 	</dependencies>
 

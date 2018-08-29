@@ -18,6 +18,10 @@ class CommandContainer private constructor() {
 
 		fun hasCommand(command: String) = commandSets.stream().anyMatch { it.hasCommand(command) }
 
+		fun hasCategory(category: String) = commandSets.stream().anyMatch { it.name == category }
+
+		fun getSet(category: String) = commandSets.stream().filter { it.name == category }.toArray()[0]!! as CommandSet
+
 		fun getCommand(command: String) = createCommandList().stream().filter { it.name == command }.toArray()[0]!! as Command
 
 		fun getCommandNames() = createCommandList().map { it.name }.toTypedArray()
