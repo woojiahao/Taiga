@@ -1,4 +1,4 @@
-package me.chill.gifs
+package me.chill.utility.settings
 
 val blush = "https://media.giphy.com/media/6CBGoJnEBbEWs/giphy.gif"
 val blush2 = "https://media.giphy.com/media/4RK7EnRhtkat2/giphy.gif"

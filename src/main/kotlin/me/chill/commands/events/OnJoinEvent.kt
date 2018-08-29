@@ -5,7 +5,7 @@ import me.chill.database.addServer
 import me.chill.database.getChannel
 import me.chill.exception.TaigaException
 import me.chill.utility.general.getDateTime
-import me.chill.utility.green
+import me.chill.utility.settings.green
 import me.chill.utility.jda.embed
 import me.chill.utility.jda.printMember
 import me.chill.utility.jda.send

@@ -4,11 +4,11 @@ import me.chill.commands.framework.CommandCategory
 import me.chill.commands.framework.CommandContainer
 import me.chill.commands.framework.commands
 import me.chill.database.*
-import me.chill.gifs.happy
-import me.chill.gifs.shock
-import me.chill.utility.green
+import me.chill.utility.settings.happy
+import me.chill.utility.settings.shock
+import me.chill.utility.settings.green
 import me.chill.utility.jda.embed
-import me.chill.utility.red
+import me.chill.utility.settings.red
 import net.dv8tion.jda.core.entities.Guild
 
 @CommandCategory

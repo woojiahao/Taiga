@@ -4,8 +4,8 @@ import me.chill.commands.framework.CommandCategory
 import me.chill.commands.framework.commands
 import me.chill.database.TargetChannel
 import me.chill.database.editChannel
-import me.chill.gifs.happy
-import me.chill.utility.green
+import me.chill.utility.settings.happy
+import me.chill.utility.settings.green
 import me.chill.utility.jda.embed
 import me.chill.utility.jda.send
 import me.chill.utility.roles.assignRole

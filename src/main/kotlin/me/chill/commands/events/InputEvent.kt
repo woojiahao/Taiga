@@ -7,12 +7,12 @@ import me.chill.credential.Credentials
 import me.chill.database.getPermission
 import me.chill.database.hasPermission
 import me.chill.exception.TaigaException
-import me.chill.gifs.noWay
-import me.chill.gifs.shock
+import me.chill.utility.settings.noWay
+import me.chill.utility.settings.shock
 import me.chill.logging.normalLog
 import me.chill.utility.jda.embed
 import me.chill.utility.jda.send
-import me.chill.utility.red
+import me.chill.utility.settings.red
 import net.dv8tion.jda.core.JDA
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member

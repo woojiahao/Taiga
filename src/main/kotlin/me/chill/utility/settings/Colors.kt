@@ -1,4 +1,4 @@
-package me.chill.utility
+package me.chill.utility.settings
 
 val red = 16135992
 val blue = 2707594

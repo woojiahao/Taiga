@@ -4,12 +4,8 @@ import me.chill.commands.framework.CommandCategory
 import me.chill.commands.framework.CommandContainer
 import me.chill.commands.framework.CommandSet
 import me.chill.commands.framework.commands
-import me.chill.gifs.*
-import me.chill.utility.blue
-import me.chill.utility.green
 import me.chill.utility.jda.embed
-import me.chill.utility.red
-import me.chill.utility.yellow
+import me.chill.utility.settings.*
 import net.dv8tion.jda.core.entities.MessageEmbed
 
 @CommandCategory
