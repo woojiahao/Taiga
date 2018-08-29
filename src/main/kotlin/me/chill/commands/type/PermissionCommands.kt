@@ -56,11 +56,7 @@ fun permissionCommands() = commands {
 
 	command("viewpermissions") {
 		execute {
-			val guild = getGuild()
-
-			val permissionMap = generatePermissionsMap(guild)
-			val permissionsList = generatePermissionsList(guild, permissionMap.toSortedMap())
-			respond(listPermissionsEmbed(guild, permissionsList))
+			respond(listPermissionsEmbed(getGuild()))
 		}
 	}
 }
@@ -80,31 +76,31 @@ private fun setPermissionSuccessEmbed(message: String) =
 private fun setPermissionFailureEmbed(message: String) =
 	setPermissionStatusEmbed("Failed", red, shock, message)
 
-private fun generatePermissionsMap(guild: Guild): MutableMap<String, String> {
-	val highestRole = guild.roles[0].id
+private fun generatePermission(commandName: String, guild: Guild) =
+	if (hasPermission(commandName, guild.id)) Pair(commandName, getPermission(commandName, guild.id))
+	else Pair(commandName, guild.roles[0].id)
 
-	val assignedPermissions = viewPermissions(guild.id)
-	val commandNames = CommandContainer.getCommandNames()
 
-	val permissionMap = mutableMapOf<String, String>()
-	permissionMap.putAll(assignedPermissions)
-	commandNames.forEach { command ->
-		if (!assignedPermissions.keys.contains(command)) permissionMap[command] = highestRole
-	}
-
-	return permissionMap
-}
-
-private fun generatePermissionsList(guild: Guild, permissionMap: Map<String, String>) =
-	permissionMap
-		.map { "**${it.key}** :: ${guild.getRoleById(it.value).name}" }
+private fun generatePermissionsList(guild: Guild, commandNames: Array<String>) =
+	commandNames
+		.map {
+			val permission = generatePermission(it, guild)
+			"${permission.first} :: ${guild.getRoleById(permission.second).name}"
+		}
 		.joinToString("\n") { "- $it" }
 
 
-private fun listPermissionsEmbed(guild: Guild, message: String) =
+private fun listPermissionsEmbed(guild: Guild) =
 	embed {
 		title = "${guild.name} Permissions"
 		color = green
 		thumbnail = guild.iconUrl
-		description = message
+
+		CommandContainer.commandSets.forEach {
+			field {
+				title = it.name
+				description = generatePermissionsList(guild, it.getCommandNames())
+				inline = false
+			}
+		}
 	}
