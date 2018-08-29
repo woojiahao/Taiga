@@ -1,5 +1,6 @@
 package me.chill.commands.type
 
+import me.chill.commands.arguments.ArgumentType.Integer
 import me.chill.commands.framework.CommandCategory
 import me.chill.commands.framework.commands
 import net.dv8tion.jda.core.entities.MessageHistory
@@ -8,11 +9,11 @@ import net.dv8tion.jda.core.entities.MessageHistory
 fun moderationCommands() = commands {
 	name = "Moderation"
 	command("nuke") {
-		expects(Int)
+		expects(Integer)
 		execute {
 			val messageChannel = getChannel()
 			val arguments = getArguments()
-			val numberToNuke = Integer.parseInt(arguments[0])
+			val numberToNuke = arguments[0] as Int
 			val guild = getGuild()
 
 			val messages = MessageHistory(messageChannel)

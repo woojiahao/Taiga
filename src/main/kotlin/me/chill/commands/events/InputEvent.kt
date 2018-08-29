@@ -1,18 +1,19 @@
 package me.chill.commands.events
 
+import me.chill.commands.arguments.ArgumentType
+import me.chill.commands.arguments.parseArguments
 import me.chill.commands.framework.Command
 import me.chill.commands.framework.CommandContainer
-import me.chill.commands.framework.ContainerKeys
 import me.chill.credential.Credentials
 import me.chill.database.getPermission
 import me.chill.database.hasPermission
 import me.chill.exception.TaigaException
-import me.chill.utility.settings.noWay
-import me.chill.utility.settings.shock
 import me.chill.logging.normalLog
 import me.chill.utility.jda.embed
 import me.chill.utility.jda.send
+import me.chill.utility.settings.noWay
 import me.chill.utility.settings.red
+import me.chill.utility.settings.shock
 import net.dv8tion.jda.core.JDA
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member
@@ -35,10 +36,6 @@ class InputEvent(private val jda: JDA, private val credentials: Credentials) : L
 
 		val commandParts = message.substring(credentials.prefix!!.length).split(" ").toTypedArray()
 		val command = commandParts[0]
-		var arguments: Array<String> = emptyArray()
-		if (commandParts.size > 1) {
-			arguments = Arrays.copyOfRange(commandParts, 1, commandParts.size)
-		}
 
 		if (!CommandContainer.hasCommand(command)) {
 			messageChannel.send(invalidCommandEmbed(command))
@@ -46,6 +43,24 @@ class InputEvent(private val jda: JDA, private val credentials: Credentials) : L
 		}
 
 		val c = CommandContainer.getCommand(command) as Command
+		var arguments: Array<String> = emptyArray()
+		if (commandParts.size > 1) {
+			val argTypes = c.getArgumentList()
+			arguments = if (argTypes.contains(ArgumentType.Sentence)) {
+				val sentenceArgPosition = argTypes.indexOf(ArgumentType.Sentence)
+				val sentence = Arrays
+					.copyOfRange(
+						commandParts,
+						sentenceArgPosition + 1,
+						commandParts.size)
+					.joinToString(" ")
+				val tempArgs = Arrays.copyOfRange(commandParts, 1, sentenceArgPosition + 1).toMutableList()
+				tempArgs.add(sentence)
+				tempArgs.toTypedArray()
+			} else {
+				Arrays.copyOfRange(commandParts, 1, commandParts.size)
+			}
+		}
 
 		val commandName = c.name
 		if (!checkPermissions(commandName, server, invoker)) {
@@ -53,10 +68,17 @@ class InputEvent(private val jda: JDA, private val credentials: Credentials) : L
 			return
 		}
 
-		val expectedArgsSize = (c.args[ContainerKeys.Input] as Array<*>).size
+		val expectedArgsSize = c.getArgumentList().size
 		if (arguments.size != expectedArgsSize) {
 			messageChannel.send(insufficientArgumentsEmbed(c.name, expectedArgsSize, arguments.size))
 			return
+		}
+
+		if (c.getArgumentList().isNotEmpty()) {
+			if (!parseArguments(c, server, arguments)) {
+				messageChannel.send(invalidArgumentsEmbed(credentials.prefix, c.name))
+				return
+			}
 		}
 
 		c.run(jda, event.guild, event.member, messageChannel, arguments)
@@ -87,6 +109,20 @@ private fun checkPermissions(commandName: String, server: Guild, invoker: Member
 
 	return true
 }
+
+private fun invalidArgumentsEmbed(prefix: String?, commandName: String) =
+	embed {
+		title = "Invalid Arguments"
+		description = "Invalid arguments passed to the command: **$commandName**"
+		color = red
+		thumbnail = shock
+
+		field {
+			title = "How to rectify?"
+			description = "Use the `${prefix}help $commandName` to learn about the command"
+			inline = false
+		}
+	}
 
 private fun insufficientPermissionEmbed(commandName: String) =
 	embed {

@@ -1,9 +1,10 @@
 package me.chill.commands.framework
 
-enum class ContainerKeys {
+enum class ContainerKey {
 	Jda,
-	Guild,
+	Server,
 	Invoker,
 	Channel,
-	Input
+	Input,
+	ArgumentTypes
 }

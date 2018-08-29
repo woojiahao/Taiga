@@ -1,21 +1,23 @@
 package me.chill.commands.type
 
+import me.chill.commands.arguments.ArgumentType.RoleId
+import me.chill.commands.arguments.ArgumentType.Word
 import me.chill.commands.framework.CommandCategory
 import me.chill.commands.framework.CommandContainer
 import me.chill.commands.framework.commands
 import me.chill.database.*
-import me.chill.utility.settings.happy
-import me.chill.utility.settings.shock
-import me.chill.utility.settings.green
 import me.chill.utility.jda.embed
+import me.chill.utility.settings.green
+import me.chill.utility.settings.happy
 import me.chill.utility.settings.red
+import me.chill.utility.settings.shock
 import net.dv8tion.jda.core.entities.Guild
 
 @CommandCategory
 fun permissionCommands() = commands {
 	name = "Permission"
 	command("setpermission") {
-		expects(String, String)
+		expects(Word, RoleId)
 		execute {
 			val arguments = getArguments()
 			val guild = getGuild()
@@ -23,8 +25,8 @@ fun permissionCommands() = commands {
 			val roles = guild.roles
 			val serverId = guild.id
 
-			val commandName = arguments[0]
-			val roleId = arguments[1]
+			val commandName = arguments[0] as String
+			val roleId = arguments[1] as String
 
 			if (!CommandContainer.hasCommand(commandName)) {
 				respond(setPermissionFailureEmbed("Command: **$commandName** does not exist"))

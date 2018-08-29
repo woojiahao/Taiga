@@ -1,15 +1,17 @@
 package me.chill.commands.type
 
+import me.chill.commands.arguments.ArgumentType.RoleId
+import me.chill.commands.arguments.ArgumentType.UserId
 import me.chill.commands.framework.CommandCategory
 import me.chill.commands.framework.commands
 import me.chill.database.TargetChannel
 import me.chill.database.editChannel
-import me.chill.utility.settings.happy
-import me.chill.utility.settings.green
 import me.chill.utility.jda.embed
 import me.chill.utility.jda.send
 import me.chill.utility.roles.assignRole
 import me.chill.utility.roles.removeRole
+import me.chill.utility.settings.green
+import me.chill.utility.settings.happy
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.MessageChannel
 import net.dv8tion.jda.core.entities.Role
@@ -54,24 +56,24 @@ fun administrationCommands() = commands {
 	}
 
 	command("assign") {
-		expects(String, String)
+		expects(RoleId, UserId)
 		execute {
 			val channel = getChannel()
 			val guild = getGuild()
 			val arguments = getArguments()
 
-			assignRole(guild, channel, arguments[0], arguments[1])
+			assignRole(guild, channel, roleId = arguments[0] as String, targetId = arguments[1] as String)
 		}
 	}
 
 	command("unassign") {
-		expects(String, String)
+		expects(RoleId, UserId)
 		execute {
 			val channel = getChannel()
 			val guild = getGuild()
 			val arguments = getArguments()
 
-			removeRole(guild, channel, arguments[0], arguments[1])
+			removeRole(guild, channel, roleId = arguments[0] as String, targetId = arguments[1] as String)
 		}
 	}
 }
