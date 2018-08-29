@@ -13,7 +13,7 @@ fun moderationCommands() = commands {
 		execute {
 			val messageChannel = getChannel()
 			val arguments = getArguments()
-			val numberToNuke = arguments[0] as Int
+			val numberToNuke = (arguments[0] as String).toInt()
 			val guild = getGuild()
 
 			val messages = MessageHistory(messageChannel)
