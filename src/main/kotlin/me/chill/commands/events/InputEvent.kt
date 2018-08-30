@@ -8,13 +8,14 @@ import me.chill.credentials
 import me.chill.database.getPermission
 import me.chill.database.hasPermission
 import me.chill.exception.TaigaException
+import me.chill.json.help.getSyntax
 import me.chill.logging.normalLog
-import me.chill.utility.embed
-import me.chill.utility.failureEmbed
-import me.chill.utility.send
 import me.chill.settings.noWay
 import me.chill.settings.red
 import me.chill.settings.shock
+import me.chill.utility.embed
+import me.chill.utility.failureEmbed
+import me.chill.utility.send
 import net.dv8tion.jda.core.JDA
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member
@@ -139,7 +140,7 @@ private fun invalidArgumentsEmbed(command: Command, errMsg: String) =
 
 		field {
 			title = "Syntax"
-			description = "$command"
+			description = command.getSyntax()
 			inline = false
 		}
 
@@ -159,7 +160,7 @@ private fun insufficientArgumentsEmbed(command: Command, expected: Int, actual: 
 
 		field {
 			title = "Syntax"
-			description = "$command"
+			description = command.getSyntax()
 			inline = false
 		}
 	}

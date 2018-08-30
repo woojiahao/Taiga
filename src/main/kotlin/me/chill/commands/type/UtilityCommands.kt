@@ -1,13 +1,11 @@
 package me.chill.commands.type
 
-import me.chill.commandInfo
 import me.chill.commands.arguments.types.Word
-import me.chill.commands.framework.CommandCategory
-import me.chill.commands.framework.CommandContainer
-import me.chill.commands.framework.CommandSet
-import me.chill.commands.framework.commands
-import me.chill.credentials
-import me.chill.json.help.CommandInfo
+import me.chill.commands.framework.*
+import me.chill.json.help.getCategory
+import me.chill.json.help.getDescription
+import me.chill.json.help.getExample
+import me.chill.json.help.getSyntax
 import me.chill.settings.*
 import me.chill.utility.embed
 import me.chill.utility.getDateTime
@@ -70,8 +68,7 @@ fun utilityCommands() = commands {
 	command("help") {
 		expects(Word())
 		execute {
-			val commandName = getArguments()[0] as String
-			respond(commandInfoEmbed(commandInfo!!.first { info -> info.name == commandName }))
+			respond(commandInfoEmbed(CommandContainer.getCommand(getArguments()[0] as String)))
 		}
 	}
 
@@ -132,18 +129,18 @@ private fun serverInfoEmbed(guild: Guild) =
 		}
 	}
 
-private fun commandInfoEmbed(commandInfo: CommandInfo) =
+private fun commandInfoEmbed(command: Command) =
 	embed {
-		title = "${commandInfo.category} - ${commandInfo.name}"
+		title = "${command.getCategory()} - ${command.name}"
 		color = cyan
-		description = commandInfo.description
+		description = command.getDescription()
 		field {
 			title = "Syntax"
-			description = "`${credentials!!.prefix}${commandInfo.syntax}`"
+			description = command.getSyntax()
 		}
 		field {
 			title = "Example"
-			description = "`${credentials!!.prefix}${commandInfo.example}`"
+			description = command.getExample()
 		}
 	}
 
