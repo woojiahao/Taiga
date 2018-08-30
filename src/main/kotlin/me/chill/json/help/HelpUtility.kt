@@ -29,10 +29,10 @@ fun loadHelp(): List<CommandInfo> {
 
 fun findCommand(commandName: String) = commandInfo!!.first { info -> info.name == commandName }
 
-fun Command.getSyntax() = "${credentials!!.prefix}${findCommand(name).syntax}"
+val Command.syntax get() = "${credentials!!.prefix}${findCommand(name).syntax}"
 
-fun Command.getExample() = "${credentials!!.prefix}${findCommand(name).example}"
+val Command.example get() = "${credentials!!.prefix}${findCommand(name).example}"
 
-fun Command.getCategory() = findCommand(name).category
+val Command.category get() = findCommand(name).category
 
-fun Command.getDescription() = findCommand(name).description
+val Command.description get() = findCommand(name).description

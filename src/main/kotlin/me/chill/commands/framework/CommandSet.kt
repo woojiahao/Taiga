@@ -5,7 +5,7 @@ class CommandSet {
 	var name = "Empty"
 
 	inline fun command(name: String, create: Command.() -> Unit) {
-		val command = Command(name, this.name)
+		val command = Command(name)
 		command.create()
 		commands.add(command)
 	}

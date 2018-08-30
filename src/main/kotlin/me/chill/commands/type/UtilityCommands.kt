@@ -2,10 +2,10 @@ package me.chill.commands.type
 
 import me.chill.commands.arguments.types.Word
 import me.chill.commands.framework.*
-import me.chill.json.help.getCategory
-import me.chill.json.help.getDescription
-import me.chill.json.help.getExample
-import me.chill.json.help.getSyntax
+import me.chill.json.help.category
+import me.chill.json.help.description
+import me.chill.json.help.example
+import me.chill.json.help.syntax
 import me.chill.settings.*
 import me.chill.utility.embed
 import me.chill.utility.getDateTime
@@ -131,16 +131,16 @@ private fun serverInfoEmbed(guild: Guild) =
 
 private fun commandInfoEmbed(command: Command) =
 	embed {
-		title = "${command.getCategory()} - ${command.name}"
+		title = "${command.category} - ${command.name}"
 		color = cyan
-		description = command.getDescription()
+		description = command.description
 		field {
 			title = "Syntax"
-			description = command.getSyntax()
+			description = command.syntax
 		}
 		field {
 			title = "Example"
-			description = command.getExample()
+			description = command.example
 		}
 	}
 

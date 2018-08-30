@@ -8,7 +8,7 @@ import me.chill.credentials
 import me.chill.database.getPermission
 import me.chill.database.hasPermission
 import me.chill.exception.TaigaException
-import me.chill.json.help.getSyntax
+import me.chill.json.help.syntax
 import me.chill.logging.normalLog
 import me.chill.settings.noWay
 import me.chill.settings.red
@@ -140,7 +140,7 @@ private fun invalidArgumentsEmbed(command: Command, errMsg: String) =
 
 		field {
 			title = "Syntax"
-			description = command.getSyntax()
+			description = command.syntax
 			inline = false
 		}
 
@@ -160,7 +160,7 @@ private fun insufficientArgumentsEmbed(command: Command, expected: Int, actual: 
 
 		field {
 			title = "Syntax"
-			description = command.getSyntax()
+			description = command.syntax
 			inline = false
 		}
 	}

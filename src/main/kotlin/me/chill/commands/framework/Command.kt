@@ -3,7 +3,6 @@ package me.chill.commands.framework
 import me.chill.commands.arguments.Argument
 import me.chill.commands.arguments.types.Sentence
 import me.chill.commands.framework.ContainerKey.*
-import me.chill.credentials
 import me.chill.exception.TaigaException
 import me.chill.utility.send
 import net.dv8tion.jda.core.JDA
@@ -12,7 +11,7 @@ import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.entities.MessageChannel
 import net.dv8tion.jda.core.entities.MessageEmbed
 
-class Command(var name: String, val category: String) {
+class Command(var name: String) {
 	private var action: (Command.(Map<ContainerKey, Any?>) -> Unit)? = null
 
 	var commandInformation: MutableMap<ContainerKey, Any?> = mutableMapOf()
@@ -58,17 +57,4 @@ class Command(var name: String, val category: String) {
 
 	fun respond(embed: MessageEmbed?) = getChannel().send(embed)
 	fun respond(message: String) = getChannel().send(message)
-
-	override fun toString() =
-		StringBuilder()
-			.append(
-				"`${credentials!!.prefix}$name ")
-			.append(
-				getArguments()
-					.joinToString(" ") {
-						"{ $it }"
-					}
-			)
-			.append("`")
-			.toString()
 }
