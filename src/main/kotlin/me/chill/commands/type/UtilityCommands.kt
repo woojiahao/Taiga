@@ -1,7 +1,6 @@
 package me.chill.commands.type
 
 import me.chill.arguments.types.Word
-import me.chill.commands.framework.*
 import me.chill.framework.*
 import me.chill.json.help.category
 import me.chill.json.help.description
