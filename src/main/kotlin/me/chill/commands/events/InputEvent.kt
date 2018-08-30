@@ -23,7 +23,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent
 import net.dv8tion.jda.core.hooks.ListenerAdapter
 import java.util.*
 
-class InputEvent(private val jda: JDA) : ListenerAdapter() {
+class InputEvent : ListenerAdapter() {
 	override fun onMessageReceived(event: MessageReceivedEvent?) {
 		if (event == null) throw TaigaException("Event object was null during message receive")
 
@@ -97,7 +97,7 @@ class InputEvent(private val jda: JDA) : ListenerAdapter() {
 			arguments = parseMap.parsedValues.toTypedArray()
 		}
 
-		c.run(jda, event.guild, event.member, messageChannel, arguments)
+		c.run(event.jda, event.guild, event.member, messageChannel, arguments)
 		normalLog(c)
 	}
 }

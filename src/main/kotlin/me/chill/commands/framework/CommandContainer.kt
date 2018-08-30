@@ -14,7 +14,9 @@ class CommandContainer private constructor() {
 	companion object {
 		val commandSets = mutableListOf<CommandSet>()
 
-		fun loadContainer() = CommandContainer()
+		fun loadContainer() {
+			CommandContainer()
+		}
 
 		fun hasCommand(command: String) = commandSets.stream().anyMatch { it.hasCommand(command) }
 
