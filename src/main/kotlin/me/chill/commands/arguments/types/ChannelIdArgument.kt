@@ -6,14 +6,17 @@ import net.dv8tion.jda.core.entities.Guild
 
 class ChannelIdArgument : Argument {
 	override fun check(guild: Guild, arg: String): ParseMap {
-		if (arg.toLongOrNull() == null) {
-			return ParseMap(false, "ID: **$arg** is not valid")
+		var toCheck = arg
+		if (arg.startsWith("<#") && arg.endsWith(">")) toCheck = arg.substring(2, arg.length - 1)
+
+		if (toCheck.toLongOrNull() == null) {
+			return ParseMap(false, "ID: **$toCheck** is not valid")
 		}
 
-		if (guild.getTextChannelById(arg) == null) {
-			return ParseMap(false, "Channel by the ID of **$arg** is not found")
+		if (guild.getTextChannelById(toCheck) == null) {
+			return ParseMap(false, "Channel by the ID of **$toCheck** is not found")
 		}
 
-		return ParseMap(true, parseValue = arg)
+		return ParseMap(true, parseValue = toCheck)
 	}
 }

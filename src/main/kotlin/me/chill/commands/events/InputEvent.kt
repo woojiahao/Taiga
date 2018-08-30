@@ -10,6 +10,7 @@ import me.chill.database.hasPermission
 import me.chill.exception.TaigaException
 import me.chill.logging.normalLog
 import me.chill.utility.jda.embed
+import me.chill.utility.jda.failureEmbed
 import me.chill.utility.jda.send
 import me.chill.utility.settings.noWay
 import me.chill.utility.settings.red
@@ -38,7 +39,12 @@ class InputEvent(private val jda: JDA) : ListenerAdapter() {
 		val command = commandParts[0]
 
 		if (!CommandContainer.hasCommand(command)) {
-			messageChannel.send(invalidCommandEmbed(command))
+			messageChannel.send(
+				failureEmbed(
+					"Invalid Command",
+					"Command: **$command** does not exist"
+				)
+			)
 			return
 		}
 
@@ -66,7 +72,13 @@ class InputEvent(private val jda: JDA) : ListenerAdapter() {
 
 		val commandName = c.name
 		if (!checkPermissions(commandName, server, invoker)) {
-			messageChannel.send(insufficientPermissionEmbed(commandName))
+			messageChannel.send(
+				failureEmbed(
+					"Insufficient Permission",
+					"You cannot invoke **$commandName**, nice try",
+					thumbnail = noWay
+				)
+			)
 			return
 		}
 
@@ -140,14 +152,6 @@ private fun invalidArgumentsEmbed(command: Command, errMsg: String) =
 		}
 	}
 
-private fun insufficientPermissionEmbed(commandName: String) =
-	embed {
-		title = "Insufficient Permission"
-		description = "You cannot invoke **$commandName**, nice try"
-		color = red
-		thumbnail = noWay
-	}
-
 private fun insufficientArgumentsEmbed(command: Command, expected: Int, actual: Int) =
 	embed {
 		title = "Insufficient Arguments"
@@ -160,12 +164,4 @@ private fun insufficientArgumentsEmbed(command: Command, expected: Int, actual: 
 			description = "$command"
 			inline = false
 		}
-	}
-
-private fun invalidCommandEmbed(command: String) =
-	embed {
-		title = "Invalid Command"
-		description = "Command: **$command** does not exist"
-		color = red
-		thumbnail = shock
 	}
