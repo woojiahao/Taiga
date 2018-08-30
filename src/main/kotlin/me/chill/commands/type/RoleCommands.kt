@@ -6,6 +6,7 @@ import me.chill.commands.framework.CommandCategory
 import me.chill.commands.framework.commands
 import me.chill.database.*
 import me.chill.utility.jda.embed
+import me.chill.utility.jda.failureEmbed
 import me.chill.utility.jda.successEmbed
 import me.chill.utility.roles.assignRole
 import me.chill.utility.roles.removeRole
@@ -49,8 +50,7 @@ fun roleCommands() = commands {
 	command("getjoinrole") {
 		execute {
 			val guild = getGuild()
-			var message = ""
-			message =
+			val message =
 				if (!hasOnJoinRole(guild.id)) {
 					"**${guild.name}** currently does not have an auto-assigned role for new members"
 				} else {
@@ -71,7 +71,13 @@ fun roleCommands() = commands {
 			val serverId = guild.id
 
 			if (roleId == guild.getRolesByName("@everyone", false)[0].id) {
-
+				respond(
+					failureEmbed(
+						"Member On Join",
+						"You cannot assign that role to members on join!"
+					)
+				)
+				return@execute
 			}
 
 			if (hasOnJoinRole(serverId)) editOnJoinRole(serverId, roleId)
