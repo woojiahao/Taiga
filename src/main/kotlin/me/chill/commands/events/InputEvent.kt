@@ -62,6 +62,8 @@ class InputEvent(private val jda: JDA) : ListenerAdapter() {
 			}
 		}
 
+		arguments.forEach { println(it) }
+
 		val commandName = c.name
 		if (!checkPermissions(commandName, server, invoker)) {
 			messageChannel.send(insufficientPermissionEmbed(commandName))
@@ -75,10 +77,13 @@ class InputEvent(private val jda: JDA) : ListenerAdapter() {
 		}
 
 		if (c.getArgumentList().isNotEmpty()) {
-			if (!parseArguments(c, server, arguments)) {
-				messageChannel.send(invalidArgumentsEmbed(credentials!!.prefix, c))
+			val parseMap = parseArguments(c, server, arguments)
+			if (!parseMap.status) {
+				messageChannel.send(invalidArgumentsEmbed(c, parseMap.errMsg))
 				return
 			}
+
+			arguments = parseMap.parsedValues.toTypedArray()
 		}
 
 		c.run(jda, event.guild, event.member, messageChannel, arguments)
@@ -109,12 +114,18 @@ private fun checkPermissions(commandName: String, server: Guild, invoker: Member
 }
 
 // todo: link the learn more to the wiki when it's been setup
-private fun invalidArgumentsEmbed(prefix: String?, command: Command) =
+private fun invalidArgumentsEmbed(command: Command, errMsg: String) =
 	embed {
 		title = "Invalid Arguments"
 		description = "Invalid arguments passed to the command: **${command.name}**"
 		color = red
 		thumbnail = shock
+
+		field {
+			title = "Error"
+			description = errMsg
+			inline = false
+		}
 
 		field {
 			title = "Syntax"
@@ -124,7 +135,7 @@ private fun invalidArgumentsEmbed(prefix: String?, command: Command) =
 
 		field {
 			title = "Learn more"
-			description = "Use the `${prefix}help ${command.name}` to learn more about the command"
+			description = "Use the `${credentials!!.prefix}help ${command.name}` to learn more about the command"
 			inline = false
 		}
 	}
@@ -142,12 +153,7 @@ private fun insufficientArgumentsEmbed(command: Command, expected: Int, actual: 
 		title = "Insufficient Arguments"
 		color = red
 		thumbnail = shock
-
-		field {
-			title = "Arguments"
-			description = "Command: **${command.name}** requires **$expected** arguments, you gave **$actual** arguments"
-			inline = false
-		}
+		description = "Command: **${command.name}** requires **$expected** arguments, you gave **$actual** arguments"
 
 		field {
 			title = "Syntax"

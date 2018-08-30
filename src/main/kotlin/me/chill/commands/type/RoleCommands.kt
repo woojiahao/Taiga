@@ -34,7 +34,7 @@ fun roleCommands() = commands {
 		execute {
 			val arguments = getArguments()
 
-			assignRole(getGuild(), getChannel(), roleId = arguments[0] as String, targetId = arguments[1] as String, silent = false)
+			assignRole(getGuild(), getChannel(), arguments[0] as String, arguments[1] as String, false)
 		}
 	}
 
@@ -43,7 +43,7 @@ fun roleCommands() = commands {
 		execute {
 			val arguments = getArguments()
 
-			removeRole(getGuild(), getChannel(), roleId = arguments[0] as String, targetId = arguments[1] as String)
+			removeRole(getGuild(), getChannel(), arguments[0] as String, arguments[1] as String)
 		}
 	}
 
