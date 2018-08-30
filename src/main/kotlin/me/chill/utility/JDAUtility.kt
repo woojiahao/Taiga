@@ -20,7 +20,7 @@ inline fun embed(create: EmbedCreator.() -> Unit): MessageEmbed? {
 	return creator.build()
 }
 
-fun simpleEmbed(title: String, description: String, thumbnail: String, color: Int) =
+fun simpleEmbed(title: String, description: String, thumbnail: String?, color: Int?) =
 	embed {
 		this.title = title
 		this.description = description
@@ -37,3 +37,9 @@ fun failureEmbed(title: String, description: String, thumbnail: String = shock, 
 fun printMember(member: Member) = "${member.asMention}(${member.effectiveName}#${member.user.discriminator})"
 
 fun printChannel(channel: MessageChannel) = "${channel.name}(${channel.id})"
+
+fun Member.sendPrivateMessage(message: String) =
+	user.openPrivateChannel().queue { it.send(message) }
+
+fun Member.sendPrivateMessage(embed: MessageEmbed?) =
+	user.openPrivateChannel().queue { it.send(embed) }

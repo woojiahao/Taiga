@@ -16,7 +16,6 @@ import me.chill.settings.shock
 import me.chill.utility.embed
 import me.chill.utility.failureEmbed
 import me.chill.utility.send
-import net.dv8tion.jda.core.JDA
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent
@@ -27,6 +26,7 @@ class InputEvent : ListenerAdapter() {
 	override fun onMessageReceived(event: MessageReceivedEvent?) {
 		if (event == null) throw TaigaException("Event object was null during message receive")
 
+		if (event.member == null) return
 		if (event.member!!.user.isBot) return
 
 		val message = event.message.contentRaw.trim()

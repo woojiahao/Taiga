@@ -21,6 +21,13 @@
 			"example": "setjoin",
 			"category": "Administration"
 		},
+		{
+			"name": "setup",
+			"description": "Sets up the bot for moderation like adding the muted roles and overriding channel permissions",
+			"syntax": "setup",
+			"example": "setup",
+			"category": "Administration"
+		},
 
 		{
 			"name": "echo",
@@ -34,6 +41,13 @@
 			"description": "Nukes a certain number of messages, from 0 up to 99",
 			"syntax": "nuke { Number to nuke, 0-99 }",
 			"example": "nuke 10",
+			"category": "Moderation"
+		},
+		{
+			"name": "mute",
+			"description": "Mutes a user for a specified period of time, defaulted to minutes",
+			"syntax": "mute { User Mention/ID } { Duration } { Reason }",
+			"example": "mute @Chill 15 Stop",
 			"category": "Moderation"
 		},
 

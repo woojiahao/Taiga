@@ -17,17 +17,12 @@ fun assignRole(guild: Guild, channel: MessageChannel,
 	val role = guild.getRoleById(roleId)
 	val member = guild.getMemberById(targetId)
 
-	if (member.roles.contains(role)) {
-		channel.send(roleOperationFailureEmbed("Member: ${printMember(member)} already has role: **${role.name}**"))
-		return
-	}
-
 	guild.controller.addSingleRoleToMember(member, role).complete()
 	if (!silent) channel.send(roleOperationSuccessEmbed("Successfully assigned role: **${role.name}** to ${printMember(member)}"))
 }
 
 fun removeRole(guild: Guild, channel: MessageChannel,
-			   roleId: String, targetId: String) {
+			   roleId: String, targetId: String, silent: Boolean = false) {
 	if (!preChecking(guild, channel, roleId, targetId)) return
 
 	val role = guild.getRoleById(roleId)
@@ -39,7 +34,7 @@ fun removeRole(guild: Guild, channel: MessageChannel,
 	}
 
 	guild.controller.removeSingleRoleFromMember(member, role).complete()
-	channel.send(roleOperationSuccessEmbed("Successfully removed role: **${role.name}** from ${printMember(member)}"))
+	if (!silent) channel.send(roleOperationSuccessEmbed("Successfully removed role: **${role.name}** from ${printMember(member)}"))
 }
 
 private fun preChecking(guild: Guild, channel: MessageChannel,
@@ -75,7 +70,7 @@ fun createRole(guild: Guild, roleName: String) {
 
 fun Guild.hasRole(roleName: String, ignoreCase: Boolean = false) = getRolesByName(roleName, ignoreCase).isNotEmpty()
 
-fun Guild.getRole(roleName: String, ignoreCase: Boolean = false) = getRolesByName(roleName, ignoreCase).first()
+fun Guild.getRole(roleName: String, ignoreCase: Boolean = false) = getRolesByName(roleName, ignoreCase).first()!!
 
 private fun roleOperationStatusEmbed(title: String, message: String,
 									 color: Int, thumbnail: String) =
