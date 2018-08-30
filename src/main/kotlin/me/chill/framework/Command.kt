@@ -1,8 +1,8 @@
-package me.chill.commands.framework
+package me.chill.framework
 
-import me.chill.commands.arguments.Argument
-import me.chill.commands.arguments.types.Sentence
-import me.chill.commands.framework.ContainerKey.*
+import me.chill.arguments.Argument
+import me.chill.arguments.types.Sentence
+import me.chill.framework.ContainerKey.*
 import me.chill.exception.TaigaException
 import me.chill.utility.send
 import net.dv8tion.jda.core.JDA

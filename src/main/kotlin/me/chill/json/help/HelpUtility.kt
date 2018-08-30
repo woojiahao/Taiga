@@ -4,7 +4,7 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import com.google.gson.stream.JsonReader
 import me.chill.commandInfo
-import me.chill.commands.framework.Command
+import me.chill.framework.Command
 import me.chill.credentials
 import java.io.File
 import java.io.FileReader

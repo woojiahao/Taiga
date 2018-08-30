@@ -1,6 +1,6 @@
-package me.chill.commands.arguments
+package me.chill.arguments
 
-import me.chill.commands.framework.Command
+import me.chill.framework.Command
 import net.dv8tion.jda.core.entities.Guild
 
 fun parseArguments(command: Command, guild: Guild, args: Array<String>): ParseMap {

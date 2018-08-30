@@ -1,13 +1,13 @@
 package me.chill.commands.events
 
-import me.chill.commands.arguments.parseArguments
-import me.chill.commands.arguments.types.Sentence
-import me.chill.commands.framework.Command
-import me.chill.commands.framework.CommandContainer
+import me.chill.arguments.parseArguments
+import me.chill.arguments.types.Sentence
 import me.chill.credentials
 import me.chill.database.getPermission
 import me.chill.database.hasPermission
 import me.chill.exception.TaigaException
+import me.chill.framework.Command
+import me.chill.framework.CommandContainer
 import me.chill.json.help.syntax
 import me.chill.logging.normalLog
 import me.chill.settings.noWay

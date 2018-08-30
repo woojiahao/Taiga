@@ -1,9 +1,9 @@
 package me.chill.commands.type
 
-import me.chill.commands.arguments.types.RoleId
-import me.chill.commands.arguments.types.UserId
-import me.chill.commands.framework.CommandCategory
-import me.chill.commands.framework.commands
+import me.chill.arguments.types.RoleId
+import me.chill.arguments.types.UserId
+import me.chill.framework.CommandCategory
+import me.chill.framework.commands
 import me.chill.database.*
 import me.chill.roles.assignRole
 import me.chill.roles.removeRole

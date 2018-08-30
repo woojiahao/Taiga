@@ -1,4 +1,4 @@
-package me.chill.commands.arguments
+package me.chill.arguments
 
 import net.dv8tion.jda.core.entities.Guild
 

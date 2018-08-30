@@ -1,4 +1,4 @@
-package me.chill.commands.framework
+package me.chill.framework
 
 enum class ContainerKey {
 	Jda,

@@ -1,4 +1,4 @@
-package me.chill.commands.framework
+package me.chill.framework
 
 class CommandSet(val categoryName: String) {
 	val commands = mutableListOf<Command>()

@@ -3,7 +3,7 @@ package me.chill
 import me.chill.commands.events.InputEvent
 import me.chill.commands.events.OnJoinEvent
 import me.chill.commands.events.OnLeaveEvent
-import me.chill.commands.framework.CommandContainer
+import me.chill.framework.CommandContainer
 import me.chill.credential.Credentials
 import me.chill.database.setupDatabase
 import me.chill.json.configuration.isHerokuRunning

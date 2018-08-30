@@ -1,7 +1,7 @@
 package me.chill.commands.type
 
-import me.chill.commands.framework.CommandCategory
-import me.chill.commands.framework.commands
+import me.chill.framework.CommandCategory
+import me.chill.framework.commands
 import me.chill.database.TargetChannel
 import me.chill.database.editChannel
 import me.chill.roles.createRole

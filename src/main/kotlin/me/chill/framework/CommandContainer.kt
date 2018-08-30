@@ -1,4 +1,4 @@
-package me.chill.commands.framework
+package me.chill.framework
 
 import org.reflections.Reflections
 import org.reflections.scanners.MethodAnnotationsScanner

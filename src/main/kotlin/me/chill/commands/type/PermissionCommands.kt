@@ -1,10 +1,10 @@
 package me.chill.commands.type
 
-import me.chill.commands.arguments.types.RoleId
-import me.chill.commands.arguments.types.Word
-import me.chill.commands.framework.CommandCategory
-import me.chill.commands.framework.CommandContainer
-import me.chill.commands.framework.commands
+import me.chill.arguments.types.RoleId
+import me.chill.arguments.types.Word
+import me.chill.framework.CommandCategory
+import me.chill.framework.CommandContainer
+import me.chill.framework.commands
 import me.chill.database.*
 import me.chill.settings.green
 import me.chill.utility.embed

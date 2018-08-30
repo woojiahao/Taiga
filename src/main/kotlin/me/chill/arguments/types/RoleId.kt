@@ -1,7 +1,7 @@
-package me.chill.commands.arguments.types
+package me.chill.arguments.types
 
-import me.chill.commands.arguments.Argument
-import me.chill.commands.arguments.ParseMap
+import me.chill.arguments.Argument
+import me.chill.arguments.ParseMap
 import net.dv8tion.jda.core.entities.Guild
 
 class RoleId : Argument {
