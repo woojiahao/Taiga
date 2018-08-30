@@ -34,6 +34,8 @@ class InputEvent : ListenerAdapter() {
 		val server = event.guild
 		val invoker = server.getMemberById(event.author.id)
 
+		println(message)
+
 		if (!message.startsWith(credentials!!.prefix!!)) return
 
 		val commandParts = message.substring(credentials!!.prefix!!.length).split(" ").toTypedArray()
@@ -68,6 +70,8 @@ class InputEvent : ListenerAdapter() {
 				Arrays.copyOfRange(commandParts, 1, commandParts.size)
 			}
 		}
+
+		arguments.forEach { println(it + "\n") }
 
 		val commandName = c.name
 		if (!checkPermissions(commandName, server, invoker)) {

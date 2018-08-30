@@ -20,9 +20,9 @@ class CommandContainer private constructor() {
 
 		fun hasCommand(command: String) = commandSets.stream().anyMatch { it.hasCommand(command) }
 
-		fun hasCategory(category: String) = commandSets.stream().anyMatch { it.name == category }
+		fun hasCategory(category: String) = commandSets.stream().anyMatch { it.categoryName == category }
 
-		fun getSet(category: String) = commandSets.stream().filter { it.name == category }.toArray()[0]!! as CommandSet
+		fun getSet(category: String) = commandSets.stream().filter { it.categoryName == category }.toArray()[0]!! as CommandSet
 
 		fun getCommand(command: String) = createCommandList().stream().filter { it.name == command }.toArray()[0]!! as Command
 
@@ -36,8 +36,8 @@ class CommandContainer private constructor() {
 	}
 }
 
-inline fun commands(create: CommandSet.() -> Unit) {
-	val set = CommandSet()
+inline fun commands(categoryName: String, create: CommandSet.() -> Unit) {
+	val set = CommandSet(categoryName)
 	set.create()
 	CommandContainer.commandSets.add(set)
 }

@@ -7,17 +7,13 @@ import me.chill.json.help.description
 import me.chill.json.help.example
 import me.chill.json.help.syntax
 import me.chill.settings.*
-import me.chill.utility.embed
-import me.chill.utility.getDateTime
-import me.chill.utility.printMember
-import me.chill.utility.simpleEmbed
+import me.chill.utility.*
 import net.dv8tion.jda.core.OnlineStatus
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.MessageEmbed
 
 @CommandCategory
-fun utilityCommands() = commands {
-	name = "Utility"
+fun utilityCommands() = commands("Utility") {
 	command("ping") {
 		execute {
 			val jda = getJDA()
@@ -68,6 +64,17 @@ fun utilityCommands() = commands {
 	command("help") {
 		expects(Word())
 		execute {
+			val args = getArguments()
+			val commandName = args[0] as String
+			if (!CommandContainer.hasCommand(commandName)) {
+				respond(
+					failureEmbed(
+						"Command Does Not Exist",
+						"Command: **$commandName** does not exist"
+					)
+				)
+				return@execute
+			}
 			respond(commandInfoEmbed(CommandContainer.getCommand(getArguments()[0] as String)))
 		}
 	}
@@ -151,7 +158,7 @@ private fun listCommandsEmbed(commandSets: List<CommandSet>, avatarUrl: String) 
 		thumbnail = avatarUrl
 		commandSets.forEach { set ->
 			field {
-				title = set.name
+				title = set.categoryName
 				description = set
 					.getCommandNames()
 					.joinToString("\n") { commandName ->

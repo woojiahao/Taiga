@@ -6,16 +6,15 @@ import me.chill.commands.framework.CommandCategory
 import me.chill.commands.framework.CommandContainer
 import me.chill.commands.framework.commands
 import me.chill.database.*
+import me.chill.settings.green
 import me.chill.utility.embed
 import me.chill.utility.failureEmbed
 import me.chill.utility.successEmbed
-import me.chill.settings.green
 import net.dv8tion.jda.core.entities.Guild
 import org.apache.commons.lang3.text.WordUtils
 
 @CommandCategory
-fun permissionCommands() = commands {
-	name = "Permission"
+fun permissionCommands() = commands("Permission") {
 	command("setpermission") {
 		expects(Word(), RoleId())
 		execute {
@@ -129,7 +128,7 @@ private fun listPermissionsEmbed(guild: Guild) =
 
 		CommandContainer.commandSets.forEach {
 			field {
-				title = it.name
+				title = it.categoryName
 				description = generatePermissionsList(guild, it.getCommandNames())
 				inline = false
 			}

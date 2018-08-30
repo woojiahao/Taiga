@@ -18,8 +18,7 @@ import java.util.*
 import kotlin.concurrent.timerTask
 
 @CommandCategory
-fun moderationCommands() = commands {
-	name = "Moderation"
+fun moderationCommands() = commands("Moderation") {
 	command("nuke") {
 		expects(Integer(0, 99))
 		execute {

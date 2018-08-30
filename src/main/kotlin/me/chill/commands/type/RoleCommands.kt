@@ -5,21 +5,19 @@ import me.chill.commands.arguments.types.UserId
 import me.chill.commands.framework.CommandCategory
 import me.chill.commands.framework.commands
 import me.chill.database.*
-import me.chill.utility.embed
-import me.chill.utility.failureEmbed
-import me.chill.utility.successEmbed
 import me.chill.roles.assignRole
 import me.chill.roles.removeRole
 import me.chill.settings.clap
 import me.chill.settings.green
 import me.chill.settings.serve
+import me.chill.utility.embed
+import me.chill.utility.failureEmbed
+import me.chill.utility.successEmbed
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Role
 
 @CommandCategory
-fun roleCommands() = commands {
-	name = "Role"
-
+fun roleCommands() = commands("Role") {
 	command("roles") {
 		execute {
 			val guild = getGuild()

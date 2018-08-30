@@ -1,8 +1,7 @@
 package me.chill.commands.framework
 
-class CommandSet {
+class CommandSet(val categoryName: String) {
 	val commands = mutableListOf<Command>()
-	var name = "Empty"
 
 	inline fun command(name: String, create: Command.() -> Unit) {
 		val command = Command(name)
