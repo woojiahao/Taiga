@@ -80,7 +80,7 @@ fun roleCommands() = commands {
 			respond(
 				successEmbed(
 					"Member On Join",
-					"New members will be assigned **{guild.getRoleById(roleId).name)** on join",
+					"New members will be assigned **${guild.getRoleById(roleId).name}** on join",
 					clap
 				)
 			)
