@@ -1,4 +1,4 @@
-package me.chill.configuration
+package me.chill.json.configuration
 
 import com.google.gson.GsonBuilder
 import com.google.gson.stream.JsonReader
@@ -10,7 +10,7 @@ private const val configDir = "config"
 private const val configFile = "config.json"
 private val gson = GsonBuilder().create()
 
-private const val configPath = "${configDir}/${configFile}"
+private const val configPath = "$configDir/$configFile"
 
 fun isHerokuRunning() = System.getenv("BOT_TOKEN") != null
 

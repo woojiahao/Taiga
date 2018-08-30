@@ -1,7 +1,13 @@
 package me.chill.commands.type
 
+import me.chill.commandInfo
 import me.chill.commands.arguments.types.Word
-import me.chill.commands.framework.*
+import me.chill.commands.framework.CommandCategory
+import me.chill.commands.framework.CommandContainer
+import me.chill.commands.framework.CommandSet
+import me.chill.commands.framework.commands
+import me.chill.credentials
+import me.chill.json.help.CommandInfo
 import me.chill.settings.*
 import me.chill.utility.embed
 import me.chill.utility.getDateTime
@@ -65,7 +71,7 @@ fun utilityCommands() = commands {
 		expects(Word())
 		execute {
 			val commandName = getArguments()[0] as String
-			respond(commandInfoEmbed(CommandContainer.getCommand(commandName)))
+			respond(commandInfoEmbed(commandInfo!!.first { info -> info.name == commandName }))
 		}
 	}
 
@@ -126,13 +132,18 @@ private fun serverInfoEmbed(guild: Guild) =
 		}
 	}
 
-private fun commandInfoEmbed(command: Command) =
+private fun commandInfoEmbed(commandInfo: CommandInfo) =
 	embed {
-		title = "Help - ${command.name}"
-		color = green
+		title = "${commandInfo.category} - ${commandInfo.name}"
+		color = cyan
+		description = commandInfo.description
 		field {
 			title = "Syntax"
-			description = "$command"
+			description = "`${credentials!!.prefix}${commandInfo.syntax}`"
+		}
+		field {
+			title = "Example"
+			description = "`${credentials!!.prefix}${commandInfo.example}`"
 		}
 	}
 

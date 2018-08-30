@@ -1,8 +1,8 @@
 package me.chill.credential
 
-import me.chill.configuration.Configuration
-import me.chill.configuration.isHerokuRunning
 import me.chill.exception.TaigaException
+import me.chill.json.configuration.Configuration
+import me.chill.json.configuration.isHerokuRunning
 
 // todo: make the exception messages more informative
 class Credentials(configuration: Configuration?) {
