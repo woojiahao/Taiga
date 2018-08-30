@@ -2,9 +2,147 @@
 	"commands": [
 		{
 			"name": "setjoin",
-			"description": "Sets the join channel",
+			"description": "Sets the join channel, uses the default channel if not set",
 			"syntax": "setjoin",
-			"example": ""
+			"example": "setjoin",
+			"category": "Administration"
+		},
+		{
+			"name": "setlog",
+			"description": "Sets the logging channel, uses the default channel if not set",
+			"syntax": "setlog",
+			"example": "setlog",
+			"category": "Administration"
+		},
+		{
+			"name": "setsuggestion",
+			"description": "Sets the suggestion channel, uses the default channel if not set",
+			"syntax": "setjoin",
+			"example": "setjoin",
+			"category": "Administration"
+		},
+
+		{
+			"name": "echo",
+			"description": "Echos a message into another channel, the message to echo cannot contain mentions",
+			"syntax": "echo { Channel Mention/ID } { Message }",
+			"example": "echo #testing Hi, this is a test!",
+			"category": "Moderation"
+		},
+		{
+			"name": "nuke",
+			"description": "Nukes a certain number of messages, from 0 up to 99",
+			"syntax": "nuke { Number to nuke, 0-99 }",
+			"example": "nuke 10",
+			"category": "Moderation"
+		},
+
+		{
+			"name": "setpermission",
+			"description": "Sets the permission of a command to be available to a role and higher",
+			"syntax": "setpermission { Command Name } { Role ID }",
+			"example": "setpermission ping 482335855277768717",
+			"category": "Permission"
+		},
+		{
+			"name": "setpermissioncategory",
+			"description": "Sets the permission of all commands in a category to be available to the same role and higher",
+			"syntax": "setpermissioncategory { Command Name } { Role ID }",
+			"example": "setpermissioncategory ping 482335855277768717",
+			"category": "Permission"
+		},
+		{
+			"name": "viewpermissions",
+			"description": "Views all the permissions set in the server",
+			"syntax": "viewpermissions",
+			"example": "viewpermissions",
+			"category": "Permission"
+		},
+
+		{
+			"name": "commands",
+			"description": "Displays all the commands available to the user",
+			"syntax": "commands",
+			"example": "commands",
+			"category": "Utility"
+		},
+		{
+			"name": "help",
+			"description": "Displays a help card for the user to learn more about a specific command",
+			"syntax": "help { Command Name }",
+			"example": "help ping",
+			"category": "Utility"
+		},
+		{
+			"name": "invite",
+			"description": "Displays all invite links related to me such as my development server and to invite me to your server",
+			"syntax": "invite",
+			"example": "invite",
+			"category": "Utility"
+		},
+		{
+			"name": "ping",
+			"description": "Displays the ping for me",
+			"syntax": "ping",
+			"example": "ping",
+			"category": "Utility"
+		},
+		{
+			"name": "serverinfo",
+			"description": "Displays information about the server",
+			"syntax": "serverinfo",
+			"example": "serverinfo",
+			"category": "Utility"
+		},
+		{
+			"name": "source",
+			"description": "Displays all links related to my source code",
+			"syntax": "source",
+			"example": "source",
+			"category": "Utility"
+		},
+
+		{
+			"name": "assign",
+			"description": "Assigns a role to the specified user, the role must not be higher than my role",
+			"syntax": "assign { Role ID } { User Mention/ID }",
+			"example": "assign 482335631402336266 @Chill",
+			"category": "Role"
+		},
+		{
+			"name": "getjoinrole",
+			"description": "Displays the join role that will be assigned to new members on join in the server",
+			"syntax": "getjoinrole",
+			"example": "getjoinrole",
+			"category": "Role"
+		},
+		{
+			"name": "roles",
+			"description": "Displays all roles and their IDs in the server",
+			"syntax": "roles",
+			"example": "roles",
+			"category": "Role"
+		},
+		{
+			"name": "setjoinrole",
+			"description": "Sets the join role that will be assigned to new members on join in the server",
+			"syntax": "setjoinrole { Role ID }",
+			"example": "setjoinrole 482335922453479434",
+			"category": "Role"
+		},
+		{
+			"name": "clearjoinrole",
+			"description": "Clears the join role",
+			"syntax": "clearjoinrole",
+			"example": "clearjoinrole",
+			"category": "Role"
+		},
+		{
+			"name": "unassign",
+			"description": "Removes a role from the user, the role must not be higher than my role",
+			"syntax": "unassign { Role ID } { User Mention/ID }",
+			"example": "unassign 482335631402336266 @Chill",
+			"category": "Role"
 		}
 	]
 }
