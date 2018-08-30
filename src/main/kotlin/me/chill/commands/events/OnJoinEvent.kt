@@ -13,6 +13,7 @@ import net.dv8tion.jda.core.events.guild.GuildJoinEvent
 import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent
 import net.dv8tion.jda.core.hooks.ListenerAdapter
 
+// todo: allow owner to customize what the welcome embed looks like
 class OnJoinEvent : ListenerAdapter() {
 	override fun onGuildMemberJoin(event: GuildMemberJoinEvent?) {
 		if (event == null) throw TaigaException("Event object was null during member join")
@@ -49,7 +50,7 @@ private fun newMemberJoinEmbed(member: Member) =
 		}
 		field {
 			title = "Getting started"
-			description = "Read the #rules-and-info"
+			description = "Read the <#482414770654543872>"
 			inline = false
 		}
 		thumbnail = member.user.avatarUrl
