@@ -29,7 +29,7 @@ fun main(args: Array<String>) {
 		.build()
 }
 
-fun setup() {
+private fun setup() {
 	credentials = if (isHerokuRunning()) {
 		Credentials(null)
 	} else {

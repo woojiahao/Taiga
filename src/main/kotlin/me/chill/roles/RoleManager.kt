@@ -1,12 +1,12 @@
 package me.chill.roles
 
-import me.chill.utility.embed
-import me.chill.utility.printMember
-import me.chill.utility.send
 import me.chill.settings.green
 import me.chill.settings.happy
 import me.chill.settings.red
 import me.chill.settings.shock
+import me.chill.utility.embed
+import me.chill.utility.printMember
+import me.chill.utility.send
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.MessageChannel
 
@@ -63,6 +63,19 @@ private fun preChecking(guild: Guild, channel: MessageChannel,
 
 	return true
 }
+
+fun createRole(guild: Guild, roleName: String) {
+	guild
+		.controller
+		.createRole()
+		.setName(roleName)
+		.setPermissions(emptyList())
+		.complete()
+}
+
+fun Guild.hasRole(roleName: String, ignoreCase: Boolean = false) = getRolesByName(roleName, ignoreCase).isNotEmpty()
+
+fun Guild.getRole(roleName: String, ignoreCase: Boolean = false) = getRolesByName(roleName, ignoreCase).first()
 
 private fun roleOperationStatusEmbed(title: String, message: String,
 									 color: Int, thumbnail: String) =
