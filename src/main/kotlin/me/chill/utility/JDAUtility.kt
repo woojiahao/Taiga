@@ -5,6 +5,7 @@ import me.chill.settings.green
 import me.chill.settings.happy
 import me.chill.settings.red
 import me.chill.settings.shock
+import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.entities.MessageChannel
 import net.dv8tion.jda.core.entities.MessageEmbed
@@ -43,3 +44,7 @@ fun Member.sendPrivateMessage(message: String) =
 
 fun Member.sendPrivateMessage(embed: MessageEmbed?) =
 	user.openPrivateChannel().queue { it.send(embed) }
+
+fun Guild.hasRole(roleName: String, ignoreCase: Boolean = false) = getRolesByName(roleName, ignoreCase).isNotEmpty()
+
+fun Guild.getRole(roleName: String, ignoreCase: Boolean = false) = getRolesByName(roleName, ignoreCase).first()!!

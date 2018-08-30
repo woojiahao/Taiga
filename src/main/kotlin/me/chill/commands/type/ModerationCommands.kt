@@ -9,8 +9,6 @@ import me.chill.commands.framework.commands
 import me.chill.credentials
 import me.chill.database.TargetChannel
 import me.chill.roles.assignRole
-import me.chill.roles.getRole
-import me.chill.roles.hasRole
 import me.chill.roles.removeRole
 import me.chill.settings.*
 import me.chill.utility.*

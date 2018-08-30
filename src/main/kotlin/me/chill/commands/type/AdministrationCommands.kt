@@ -5,8 +5,8 @@ import me.chill.commands.framework.commands
 import me.chill.database.TargetChannel
 import me.chill.database.editChannel
 import me.chill.roles.createRole
-import me.chill.roles.getRole
-import me.chill.roles.hasRole
+import me.chill.utility.getRole
+import me.chill.utility.hasRole
 import me.chill.utility.send
 import me.chill.utility.successEmbed
 import net.dv8tion.jda.core.Permission

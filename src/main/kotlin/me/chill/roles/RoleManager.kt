@@ -68,10 +68,6 @@ fun createRole(guild: Guild, roleName: String) {
 		.complete()
 }
 
-fun Guild.hasRole(roleName: String, ignoreCase: Boolean = false) = getRolesByName(roleName, ignoreCase).isNotEmpty()
-
-fun Guild.getRole(roleName: String, ignoreCase: Boolean = false) = getRolesByName(roleName, ignoreCase).first()!!
-
 private fun roleOperationStatusEmbed(title: String, message: String,
 									 color: Int, thumbnail: String) =
 	embed {
