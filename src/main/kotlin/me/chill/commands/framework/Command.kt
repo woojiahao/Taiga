@@ -1,7 +1,7 @@
 package me.chill.commands.framework
 
-import me.chill.commands.arguments.ArgumentType
-import me.chill.commands.arguments.ArgumentType.Sentence
+import me.chill.commands.arguments.Argument
+import me.chill.commands.arguments.types.Sentence
 import me.chill.commands.framework.ContainerKey.*
 import me.chill.credentials
 import me.chill.exception.TaigaException
@@ -23,13 +23,13 @@ class Command(var name: String, val category: String) {
 		commandInformation[Server] = null
 		commandInformation[Invoker] = null
 		commandInformation[Channel] = null
-		commandInformation[ArgumentTypes] = emptyArray<ArgumentType>()
+		commandInformation[ArgumentTypes] = emptyArray<Argument>()
 		commandInformation[Input] = emptyArray<String>()
 	}
 
-	fun expects(vararg args: ArgumentType) {
-		val sentenceNotLast = args.contains(Sentence) && args.indexOf(Sentence) != args.size - 1
-		val moreThanOneSentence = args.indexOf(Sentence) != args.lastIndexOf(Sentence)
+	fun expects(vararg args: Argument) {
+		val sentenceNotLast = args.any { it is Sentence } && args.indexOf(args.find { it is Sentence }) != args.size - 1
+		val moreThanOneSentence = args.indexOf(args.find { it is Sentence }) != args.lastIndexOf(args.find { it is Sentence })
 		val sentenceExceptionMessage = "Every command can only have 1 Sentence argument type and it must be placed at the end of the argument list"
 		if (sentenceNotLast || moreThanOneSentence) throw TaigaException(sentenceExceptionMessage)
 
@@ -54,9 +54,7 @@ class Command(var name: String, val category: String) {
 	fun getChannel() = commandInformation[Channel] as MessageChannel
 	fun getArguments() = commandInformation[Input] as Array<*>
 	fun getJDA() = commandInformation[Jda] as JDA
-
-	@Suppress("UNCHECKED_CAST")
-	fun getArgumentList() = commandInformation[ArgumentTypes] as Array<ArgumentType>
+	fun getArgumentTypes() = commandInformation[ArgumentTypes] as Array<Argument>
 
 	fun respond(embed: MessageEmbed?) = getChannel().send(embed)
 	fun respond(message: String) = getChannel().send(message)
@@ -66,9 +64,9 @@ class Command(var name: String, val category: String) {
 			.append(
 				"`${credentials!!.prefix}$name ")
 			.append(
-				getArgumentList()
+				getArguments()
 					.joinToString(" ") {
-						"{ ${it.name} }"
+						"{ $it }"
 					}
 			)
 			.append("`")

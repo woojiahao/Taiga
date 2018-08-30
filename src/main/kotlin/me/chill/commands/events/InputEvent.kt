@@ -1,7 +1,7 @@
 package me.chill.commands.events
 
-import me.chill.commands.arguments.ArgumentType
 import me.chill.commands.arguments.parseArguments
+import me.chill.commands.arguments.types.Sentence
 import me.chill.commands.framework.Command
 import me.chill.commands.framework.CommandContainer
 import me.chill.credentials
@@ -51,9 +51,9 @@ class InputEvent(private val jda: JDA) : ListenerAdapter() {
 		val c = CommandContainer.getCommand(command)
 		var arguments: Array<String> = emptyArray()
 		if (commandParts.size > 1) {
-			val argTypes = c.getArgumentList()
-			arguments = if (argTypes.contains(ArgumentType.Sentence)) {
-				val sentenceArgPosition = argTypes.indexOf(ArgumentType.Sentence)
+			val argTypes = c.getArgumentTypes()
+			arguments = if (argTypes.any { it is Sentence }) {
+				val sentenceArgPosition = argTypes.indexOf(argTypes.find { it is Sentence })
 				val sentence = Arrays
 					.copyOfRange(
 						commandParts,
@@ -68,8 +68,6 @@ class InputEvent(private val jda: JDA) : ListenerAdapter() {
 			}
 		}
 
-		arguments.forEach { println(it) }
-
 		val commandName = c.name
 		if (!checkPermissions(commandName, server, invoker)) {
 			messageChannel.send(
@@ -82,13 +80,13 @@ class InputEvent(private val jda: JDA) : ListenerAdapter() {
 			return
 		}
 
-		val expectedArgsSize = c.getArgumentList().size
+		val expectedArgsSize = c.getArgumentTypes().size
 		if (arguments.size != expectedArgsSize) {
 			messageChannel.send(insufficientArgumentsEmbed(c, expectedArgsSize, arguments.size))
 			return
 		}
 
-		if (c.getArgumentList().isNotEmpty()) {
+		if (c.getArgumentTypes().isNotEmpty()) {
 			val parseMap = parseArguments(c, server, arguments)
 			if (!parseMap.status) {
 				messageChannel.send(invalidArgumentsEmbed(c, parseMap.errMsg))

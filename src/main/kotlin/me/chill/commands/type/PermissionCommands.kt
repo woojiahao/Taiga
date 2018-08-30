@@ -1,7 +1,7 @@
 package me.chill.commands.type
 
-import me.chill.commands.arguments.ArgumentType.RoleId
-import me.chill.commands.arguments.ArgumentType.Word
+import me.chill.commands.arguments.types.RoleId
+import me.chill.commands.arguments.types.Word
 import me.chill.commands.framework.CommandCategory
 import me.chill.commands.framework.CommandContainer
 import me.chill.commands.framework.commands
@@ -17,7 +17,7 @@ import org.apache.commons.lang3.text.WordUtils
 fun permissionCommands() = commands {
 	name = "Permission"
 	command("setpermission") {
-		expects(Word, RoleId)
+		expects(Word(), RoleId())
 		execute {
 			val arguments = getArguments()
 			val guild = getGuild()
@@ -63,7 +63,7 @@ fun permissionCommands() = commands {
 	}
 
 	command("setpermissioncategory") {
-		expects(Word, RoleId)
+		expects(Word(), RoleId())
 		execute {
 			val arguments = getArguments()
 			val guild = getGuild()

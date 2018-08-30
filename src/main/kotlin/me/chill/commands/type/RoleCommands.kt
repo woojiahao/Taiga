@@ -1,7 +1,7 @@
 package me.chill.commands.type
 
-import me.chill.commands.arguments.ArgumentType
-import me.chill.commands.arguments.ArgumentType.RoleId
+import me.chill.commands.arguments.types.RoleId
+import me.chill.commands.arguments.types.UserId
 import me.chill.commands.framework.CommandCategory
 import me.chill.commands.framework.commands
 import me.chill.database.*
@@ -30,7 +30,7 @@ fun roleCommands() = commands {
 	}
 
 	command("assign") {
-		expects(RoleId, ArgumentType.UserId)
+		expects(RoleId(), UserId())
 		execute {
 			val arguments = getArguments()
 
@@ -39,7 +39,7 @@ fun roleCommands() = commands {
 	}
 
 	command("unassign") {
-		expects(RoleId, ArgumentType.UserId)
+		expects(RoleId(), UserId())
 		execute {
 			val arguments = getArguments()
 
@@ -63,7 +63,7 @@ fun roleCommands() = commands {
 
 	// todo: support multi-role assignment
 	command("setjoinrole") {
-		expects(RoleId)
+		expects(RoleId())
 		execute {
 			val guild = getGuild()
 			val roleId = getArguments()[0] as String
