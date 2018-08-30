@@ -4,11 +4,11 @@ import me.chill.database.TargetChannel
 import me.chill.database.getChannel
 import me.chill.database.removeServer
 import me.chill.exception.TaigaException
-import me.chill.utility.settings.lost
-import me.chill.utility.general.getDateTime
-import me.chill.utility.jda.embed
-import me.chill.utility.jda.send
-import me.chill.utility.settings.red
+import me.chill.settings.lost
+import me.chill.utility.getDateTime
+import me.chill.utility.embed
+import me.chill.utility.send
+import me.chill.settings.red
 import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.events.guild.GuildLeaveEvent
 import net.dv8tion.jda.core.events.guild.member.GuildMemberLeaveEvent

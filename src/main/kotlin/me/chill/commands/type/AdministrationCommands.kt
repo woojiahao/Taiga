@@ -4,8 +4,8 @@ import me.chill.commands.framework.CommandCategory
 import me.chill.commands.framework.commands
 import me.chill.database.TargetChannel
 import me.chill.database.editChannel
-import me.chill.utility.jda.send
-import me.chill.utility.jda.successEmbed
+import me.chill.utility.send
+import me.chill.utility.successEmbed
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.MessageChannel
 

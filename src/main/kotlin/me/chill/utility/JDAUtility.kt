@@ -1,10 +1,10 @@
-package me.chill.utility.jda
+package me.chill.utility
 
-import me.chill.utility.embed.EmbedCreator
-import me.chill.utility.settings.green
-import me.chill.utility.settings.happy
-import me.chill.utility.settings.red
-import me.chill.utility.settings.shock
+import me.chill.embed.EmbedCreator
+import me.chill.settings.green
+import me.chill.settings.happy
+import me.chill.settings.red
+import me.chill.settings.shock
 import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.entities.MessageChannel
 import net.dv8tion.jda.core.entities.MessageEmbed

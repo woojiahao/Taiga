@@ -5,14 +5,14 @@ import me.chill.commands.arguments.types.UserId
 import me.chill.commands.framework.CommandCategory
 import me.chill.commands.framework.commands
 import me.chill.database.*
-import me.chill.utility.jda.embed
-import me.chill.utility.jda.failureEmbed
-import me.chill.utility.jda.successEmbed
-import me.chill.utility.roles.assignRole
-import me.chill.utility.roles.removeRole
-import me.chill.utility.settings.clap
-import me.chill.utility.settings.green
-import me.chill.utility.settings.serve
+import me.chill.utility.embed
+import me.chill.utility.failureEmbed
+import me.chill.utility.successEmbed
+import me.chill.roles.assignRole
+import me.chill.roles.removeRole
+import me.chill.settings.clap
+import me.chill.settings.green
+import me.chill.settings.serve
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Role
 

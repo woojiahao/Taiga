@@ -1,12 +1,12 @@
-package me.chill.utility.roles
+package me.chill.roles
 
-import me.chill.utility.jda.embed
-import me.chill.utility.jda.printMember
-import me.chill.utility.jda.send
-import me.chill.utility.settings.green
-import me.chill.utility.settings.happy
-import me.chill.utility.settings.red
-import me.chill.utility.settings.shock
+import me.chill.utility.embed
+import me.chill.utility.printMember
+import me.chill.utility.send
+import me.chill.settings.green
+import me.chill.settings.happy
+import me.chill.settings.red
+import me.chill.settings.shock
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.MessageChannel
 

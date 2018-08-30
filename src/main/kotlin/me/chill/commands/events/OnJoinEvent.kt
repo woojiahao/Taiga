@@ -2,12 +2,12 @@ package me.chill.commands.events
 
 import me.chill.database.*
 import me.chill.exception.TaigaException
-import me.chill.utility.general.getDateTime
-import me.chill.utility.jda.embed
-import me.chill.utility.jda.printMember
-import me.chill.utility.jda.send
-import me.chill.utility.roles.assignRole
-import me.chill.utility.settings.green
+import me.chill.utility.getDateTime
+import me.chill.utility.embed
+import me.chill.utility.printMember
+import me.chill.utility.send
+import me.chill.roles.assignRole
+import me.chill.settings.green
 import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent
 import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent

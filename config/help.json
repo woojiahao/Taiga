@@ -1,0 +1,10 @@
+{
+	"commands": [
+		{
+			"name": "setjoin",
+			"description": "Sets the join channel",
+			"syntax": "setjoin",
+			"example": ""
+		}
+	]
+}

@@ -5,9 +5,9 @@ import me.chill.commands.arguments.types.Integer
 import me.chill.commands.arguments.types.Sentence
 import me.chill.commands.framework.CommandCategory
 import me.chill.commands.framework.commands
-import me.chill.utility.jda.failureEmbed
-import me.chill.utility.jda.send
-import me.chill.utility.settings.noWay
+import me.chill.utility.failureEmbed
+import me.chill.utility.send
+import me.chill.settings.noWay
 import net.dv8tion.jda.core.entities.MessageHistory
 
 @CommandCategory

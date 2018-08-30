@@ -6,10 +6,10 @@ import me.chill.commands.framework.CommandCategory
 import me.chill.commands.framework.CommandContainer
 import me.chill.commands.framework.commands
 import me.chill.database.*
-import me.chill.utility.jda.embed
-import me.chill.utility.jda.failureEmbed
-import me.chill.utility.jda.successEmbed
-import me.chill.utility.settings.green
+import me.chill.utility.embed
+import me.chill.utility.failureEmbed
+import me.chill.utility.successEmbed
+import me.chill.settings.green
 import net.dv8tion.jda.core.entities.Guild
 import org.apache.commons.lang3.text.WordUtils
 

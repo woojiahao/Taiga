@@ -1,4 +1,4 @@
-package me.chill.utility.general
+package me.chill.utility
 
 import java.text.SimpleDateFormat
 import java.util.*

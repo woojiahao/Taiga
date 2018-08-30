@@ -2,11 +2,11 @@ package me.chill.commands.type
 
 import me.chill.commands.arguments.types.Word
 import me.chill.commands.framework.*
-import me.chill.utility.general.getDateTime
-import me.chill.utility.jda.embed
-import me.chill.utility.jda.printMember
-import me.chill.utility.jda.simpleEmbed
-import me.chill.utility.settings.*
+import me.chill.settings.*
+import me.chill.utility.embed
+import me.chill.utility.getDateTime
+import me.chill.utility.printMember
+import me.chill.utility.simpleEmbed
 import net.dv8tion.jda.core.OnlineStatus
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.MessageEmbed
