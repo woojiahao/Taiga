@@ -1,13 +1,17 @@
 package me.chill.events
 
-import me.chill.database.*
+import me.chill.database.TargetChannel
+import me.chill.database.preference.addServerPreference
+import me.chill.database.preference.getChannel
+import me.chill.database.preference.getJoinRole
+import me.chill.database.preference.hasJoinRole
 import me.chill.exception.TaigaException
-import me.chill.utility.getDateTime
-import me.chill.utility.embed
-import me.chill.utility.printMember
-import me.chill.utility.send
 import me.chill.roles.assignRole
 import me.chill.settings.green
+import me.chill.utility.embed
+import me.chill.utility.getDateTime
+import me.chill.utility.printMember
+import me.chill.utility.send
 import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent
 import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent
@@ -25,7 +29,7 @@ class OnJoinEvent : ListenerAdapter() {
 		val member = event.member
 
 		joinChannel.send(newMemberJoinEmbed(member))
-		if (hasOnJoinRole(serverId)) assignRole(server, joinChannel, getOnJoinRole(serverId), member.user.id, true)
+		if (hasJoinRole(serverId)) assignRole(server, joinChannel, getJoinRole(serverId)!!, member.user.id, true)
 	}
 
 	override fun onGuildJoin(event: GuildJoinEvent?) {
@@ -35,7 +39,7 @@ class OnJoinEvent : ListenerAdapter() {
 		val defaultChannelId = event.guild.defaultChannel!!.id
 
 		println("Joined ${event.guild.name}::$serverId on ${getDateTime()}")
-		addServer(serverId, defaultChannelId)
+		addServerPreference(serverId, defaultChannelId)
 	}
 }
 

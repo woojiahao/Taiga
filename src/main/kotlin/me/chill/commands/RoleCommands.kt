@@ -2,9 +2,12 @@ package me.chill.commands
 
 import me.chill.arguments.types.RoleId
 import me.chill.arguments.types.UserId
+import me.chill.database.preference.editJoinRole
+import me.chill.database.preference.getJoinRole
+import me.chill.database.preference.hasJoinRole
+import me.chill.database.preference.removeJoinRole
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
-import me.chill.database.*
 import me.chill.roles.assignRole
 import me.chill.roles.removeRole
 import me.chill.settings.clap
@@ -49,10 +52,10 @@ fun roleCommands() = commands("Role") {
 		execute {
 			val guild = getGuild()
 			val message =
-				if (!hasOnJoinRole(guild.id)) {
+				if (!hasJoinRole(guild.id)) {
 					"**${guild.name}** currently does not have an auto-assigned role for new members"
 				} else {
-					val roleId = getOnJoinRole(guild.id)
+					val roleId = getJoinRole(guild.id)
 					"New members will be assigned **${guild.getRoleById(roleId).name}** on join"
 				}
 			respond(successEmbed("Member On Join", message, serve))
@@ -78,8 +81,7 @@ fun roleCommands() = commands("Role") {
 				return@execute
 			}
 
-			if (hasOnJoinRole(serverId)) editOnJoinRole(serverId, roleId)
-			else setOnJoinRole(serverId, roleId)
+			editJoinRole(serverId, roleId)
 
 			respond(
 				successEmbed(
@@ -97,10 +99,10 @@ fun roleCommands() = commands("Role") {
 			val serverId = server.id
 			respond(successEmbed(
 				"Member On Join",
-				if (!hasOnJoinRole(serverId)) {
+				if (!hasJoinRole(serverId)) {
 					"**${server.name}** currently does not have an auto-assigned role for new members"
 				} else {
-					removeOnJoinRole(serverId)
+					removeJoinRole(serverId)
 					"New members will now no longer be assigned a default role"
 				}
 			))

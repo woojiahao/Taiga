@@ -68,7 +68,7 @@ fun moderationCommands() = commands("Moderation") {
 			val duration = (args[1] as String).toInt()
 			val reason = args[2] as String
 
-			val loggingChannel = guild.getTextChannelById(me.chill.database.getChannel(TargetChannel.Logging, guild.id))
+			val loggingChannel = guild.getTextChannelById(me.chill.database.preference.getChannel(TargetChannel.Logging, guild.id))
 
 			if (!guild.hasRole("muted")) {
 				respond(
