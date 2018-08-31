@@ -18,7 +18,6 @@ import net.dv8tion.jda.core.Permission
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.MessageChannel
 
-// todo: allow users to customize how they want the default time element to be like
 @CommandCategory
 fun administrationCommands() = commands("Administration") {
 	command("setlog") {

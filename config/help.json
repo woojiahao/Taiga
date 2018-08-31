@@ -222,6 +222,35 @@
 			"syntax": "unassign { Role ID } { User Mention/ID }",
 			"example": "unassign 482335631402336266 @Chill",
 			"category": "Role"
+		},
+
+		{
+			"name": "getraidmessageduration",
+			"description": "Displays how long user messages are tracked in seconds for raid control",
+			"syntax": "getraidmessageduration",
+			"example": "getraidmessageduration",
+			"category": "Raid"
+		},
+		{
+			"name": "setraidmessageduration",
+			"description": "Sets how long the user messages are tracked in seconds for raid control",
+			"syntax": "setraidmessageduration { Duration (int) }",
+			"example": "setraidmessageduration 10",
+			"category": "Raid"
+		},
+		{
+			"name": "getraidmessagelimit",
+			"description": "Displays how many user messages are tracked for raid control",
+			"syntax": "getraidmessagelimit",
+			"example": "getraidmessagelimit",
+			"category": "Raid"
+		},
+		{
+			"name": "setraidmessagelimit",
+			"description": "Sets the number of user messages are tracked for raid control",
+			"syntax": "setraidmessagelimit { Number of messages }",
+			"example": "setraidmessagelimit 5",
+			"category": "Raid"
 		}
 	]
 }
