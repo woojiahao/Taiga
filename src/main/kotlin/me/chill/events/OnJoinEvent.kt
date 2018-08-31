@@ -1,10 +1,7 @@
 package me.chill.events
 
 import me.chill.database.TargetChannel
-import me.chill.database.preference.addServerPreference
-import me.chill.database.preference.getChannel
-import me.chill.database.preference.getJoinRole
-import me.chill.database.preference.hasJoinRole
+import me.chill.database.preference.*
 import me.chill.exception.TaigaException
 import me.chill.roles.assignRole
 import me.chill.settings.green
@@ -28,7 +25,7 @@ class OnJoinEvent : ListenerAdapter() {
 		val joinChannel = event.jda.getTextChannelById(joinChannelId)
 		val member = event.member
 
-		joinChannel.send(newMemberJoinEmbed(member))
+		if (!getWelcomeDisabled(serverId)) joinChannel.send(newMemberJoinEmbed(member))
 		if (hasJoinRole(serverId)) assignRole(server, joinChannel, getJoinRole(serverId)!!, member.user.id, true)
 	}
 
