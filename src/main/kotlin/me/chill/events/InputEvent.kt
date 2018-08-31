@@ -8,6 +8,7 @@ import me.chill.database.preference.getPrefix
 import me.chill.exception.TaigaException
 import me.chill.framework.Command
 import me.chill.framework.CommandContainer
+import me.chill.json.help.findCommand
 import me.chill.json.help.syntax
 import me.chill.logging.normalLog
 import me.chill.settings.noWay
@@ -84,7 +85,7 @@ class InputEvent : ListenerAdapter() {
 
 		val expectedArgsSize = c.getArgumentTypes().size
 		if (arguments.size != expectedArgsSize) {
-			messageChannel.send(insufficientArgumentsEmbed(c, expectedArgsSize, arguments.size))
+			messageChannel.send(insufficientArgumentsEmbed(serverPrefix, c, expectedArgsSize, arguments.size))
 			return
 		}
 
@@ -152,7 +153,7 @@ private fun invalidArgumentsEmbed(serverPrefix: String, command: Command, errMsg
 		}
 	}
 
-private fun insufficientArgumentsEmbed(command: Command, expected: Int, actual: Int) =
+private fun insufficientArgumentsEmbed(serverPrefix: String, command: Command, expected: Int, actual: Int) =
 	embed {
 		title = "Insufficient Arguments"
 		color = red
@@ -161,7 +162,7 @@ private fun insufficientArgumentsEmbed(command: Command, expected: Int, actual: 
 
 		field {
 			title = "Syntax"
-			description = command.syntax
+			description = "$serverPrefix${findCommand(command.name).syntax}"
 			inline = false
 		}
 	}

@@ -2,8 +2,8 @@ package me.chill.commands
 
 import me.chill.arguments.types.Prefix
 import me.chill.database.TargetChannel
-import me.chill.database.preference.editChannel
-import me.chill.database.preference.editPrefix
+import me.chill.database.WelcomeState
+import me.chill.database.preference.*
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
 import me.chill.roles.createRole
@@ -85,6 +85,61 @@ fun administrationCommands() = commands("Administration") {
 				)
 			)
 		}
+	}
+
+	command("disablewelcome") {
+		execute {
+			alterWelcomeState(getGuild(), getChannel(), WelcomeState.Disabled)
+		}
+	}
+
+	command("enablewelcome") {
+		execute {
+			alterWelcomeState(getGuild(), getChannel(), WelcomeState.Enabled)
+		}
+	}
+
+	command("getwelcomeenabled") {
+		execute {
+			val guild = getGuild()
+			val isWelcomeDisabled = getWelcomeDisabled(guild.id)
+			val welcomeState = when (isWelcomeDisabled) {
+				false -> WelcomeState.Enabled
+				true -> WelcomeState.Disabled
+			}
+			respond(
+				successEmbed(
+					"Welcomes",
+					"Welcomes are ${welcomeState.name.toLowerCase()} in ${guild.name}"
+				)
+			)
+		}
+	}
+}
+
+private fun alterWelcomeState(guild: Guild, channel: MessageChannel, welcomeState: WelcomeState) {
+	val guildId = guild.id
+	val isWelcomeDisabled = getWelcomeDisabled(guildId)
+	val welcomeStateName = welcomeState.name
+
+	if (isWelcomeDisabled != welcomeState.b) {
+		when(welcomeState) {
+			WelcomeState.Disabled -> disableWelcome(guildId)
+			WelcomeState.Enabled -> enableWelcome(guildId)
+		}
+		channel.send(
+			successEmbed(
+				"${welcomeStateName.substring(0, welcomeStateName.length)} Welcome",
+				"Welcomes have been ${welcomeStateName.toLowerCase()} for **${guild.name}**"
+			)
+		)
+	} else {
+		channel.send(
+			failureEmbed(
+				"${welcomeStateName.substring(0, welcomeStateName.length)} Welcome",
+				"Welcomes are already ${welcomeStateName.toLowerCase()} for **${guild.name}**"
+			)
+		)
 	}
 }
 

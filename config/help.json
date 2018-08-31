@@ -42,6 +42,27 @@
 			"example": "setprefix ++",
 			"category": "Administration"
 		},
+		{
+			"name": "disablewelcome",
+			"description": "Disables bot welcomes for new members",
+			"syntax": "disablewelcome",
+			"example": "disablewelcome",
+			"category": "Administration"
+		},
+		{
+			"name": "enablewelcome",
+			"description": "Enables bot welcomes for new members",
+			"syntax": "enablewelcome",
+			"example": "enablewelcome",
+			"category": "Administration"
+		},
+		{
+			"name": "getwelcomeenabled",
+			"description": "Displays whether bot welcomes are enabled or disabled",
+			"syntax": "getwelcomeenabled",
+			"example": "getwelcomeenabled",
+			"category": "Administration"
+		},
 
 
 		{
