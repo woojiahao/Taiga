@@ -29,10 +29,10 @@ fun simpleEmbed(title: String, description: String, thumbnail: String?, color: I
 		this.color = color
 	}
 
-fun successEmbed(title: String, description: String, thumbnail: String = happy, color: Int = green) =
+fun successEmbed(title: String, description: String, thumbnail: String? = happy, color: Int? = green) =
 	simpleEmbed(title, description, thumbnail, color)
 
-fun failureEmbed(title: String, description: String, thumbnail: String = shock, color: Int = red) =
+fun failureEmbed(title: String, description: String, thumbnail: String? = shock, color: Int? = red) =
 	simpleEmbed(title, description, thumbnail, color)
 
 fun printMember(member: Member) = "${member.asMention}(${member.effectiveName}#${member.user.discriminator})"

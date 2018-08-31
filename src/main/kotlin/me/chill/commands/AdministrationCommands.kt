@@ -4,10 +4,7 @@ import me.chill.arguments.types.Prefix
 import me.chill.arguments.types.Word
 import me.chill.database.TargetChannel
 import me.chill.database.TimeMultiplier
-import me.chill.database.preference.editChannel
-import me.chill.database.preference.editPrefix
-import me.chill.database.preference.editTimeMultiplier
-import me.chill.database.preference.getTimeMultiplier
+import me.chill.database.preference.*
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
 import me.chill.roles.createRole
@@ -130,6 +127,20 @@ fun administrationCommands() = commands("Administration") {
 				successEmbed(
 					"Time Multiplier",
 					"Time multiplier for **${guild.name}** has been set to **${timeMultiplier.fullTerm}s**"
+				)
+			)
+		}
+	}
+
+	command("getpreferences") {
+		execute {
+			val guild = getGuild()
+			val allPreferences = getAllPreferences(guild.id)
+			respond(
+				successEmbed(
+					"${guild.name} Preferences",
+					allPreferences,
+					thumbnail = null
 				)
 			)
 		}

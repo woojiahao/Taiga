@@ -56,6 +56,14 @@
 			"example": "settimemultipler H",
 			"category": "Administration"
 		},
+		{
+			"name": "getpreferences",
+			"description": "Displays all the properties set for the server",
+			"syntax": "getpreferences",
+			"example": "getpreferences",
+			"category": "Administration"
+		},
+
 
 		{
 			"name": "disablewelcome",

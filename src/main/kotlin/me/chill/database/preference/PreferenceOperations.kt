@@ -3,6 +3,7 @@ package me.chill.database.preference
 import me.chill.credentials
 import me.chill.database.Preference
 import me.chill.database.TimeMultiplier
+import org.apache.commons.lang3.text.WordUtils
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.statements.UpdateStatement
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -41,3 +42,9 @@ fun updatePreferences(serverId: String, updateStatement: Preference.(UpdateState
 		Preference.update({ Preference.serverId eq serverId }, body = updateStatement)
 	}
 }
+
+fun getAllPreferences(serverId: String) =
+	transaction {
+		val result = Preference.select { Preference.serverId eq serverId }.first()
+		Preference.columns.joinToString("\n") { "**${WordUtils.capitalize(it.name.replace("_", " "))}**\n${result[it]}\n" }
+	}
