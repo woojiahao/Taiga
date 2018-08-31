@@ -7,8 +7,8 @@ import me.chill.roles.assignRole
 import me.chill.settings.green
 import me.chill.utility.embed
 import me.chill.utility.getDateTime
-import me.chill.utility.printMember
 import me.chill.utility.send
+import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent
 import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent
@@ -25,7 +25,7 @@ class OnJoinEvent : ListenerAdapter() {
 		val joinChannel = event.jda.getTextChannelById(joinChannelId)
 		val member = event.member
 
-		if (!getWelcomeDisabled(serverId)) joinChannel.send(newMemberJoinEmbed(member))
+		if (!getWelcomeDisabled(serverId)) joinChannel.send(newMemberJoinEmbed(server, member))
 		if (hasJoinRole(serverId)) assignRole(server, joinChannel, getJoinRole(serverId)!!, member.user.id, true)
 	}
 
@@ -40,18 +40,14 @@ class OnJoinEvent : ListenerAdapter() {
 	}
 }
 
-private fun newMemberJoinEmbed(member: Member) =
+// Read the <#482414770654543872>
+fun newMemberJoinEmbed(server: Guild, member: Member) =
 	embed {
 		title = "Member join"
 		color = green
 		field {
-			title = "Minori senses a disturbance in the force"
-			description = "Minori spots ${printMember(member)}"
-			inline = false
-		}
-		field {
-			title = "Getting started"
-			description = "Read the <#482414770654543872>"
+			title = "Hi ${member.effectiveName}! Welcome to ${server.name}"
+			description = getWelcomeMessage(server.id)
 			inline = false
 		}
 		thumbnail = member.user.avatarUrl
