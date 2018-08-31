@@ -2,9 +2,9 @@ package me.chill.events
 
 import me.chill.arguments.parseArguments
 import me.chill.arguments.types.Sentence
-import me.chill.credentials
 import me.chill.database.getPermission
 import me.chill.database.hasPermission
+import me.chill.database.preference.getPrefix
 import me.chill.exception.TaigaException
 import me.chill.framework.Command
 import me.chill.framework.CommandContainer
@@ -34,9 +34,10 @@ class InputEvent : ListenerAdapter() {
 		val server = event.guild
 		val invoker = server.getMemberById(event.author.id)
 
-		if (!message.startsWith(credentials!!.prefix!!)) return
+		val serverPrefix = getPrefix(server.id)
+		if (!message.startsWith(serverPrefix)) return
 
-		val commandParts = message.substring(credentials!!.prefix!!.length).split(" ").toTypedArray()
+		val commandParts = message.substring(serverPrefix.length).split(" ").toTypedArray()
 		val command = commandParts[0]
 
 		if (!CommandContainer.hasCommand(command)) {
@@ -90,14 +91,14 @@ class InputEvent : ListenerAdapter() {
 		if (c.getArgumentTypes().isNotEmpty()) {
 			val parseMap = parseArguments(c, server, arguments)
 			if (!parseMap.status) {
-				messageChannel.send(invalidArgumentsEmbed(c, parseMap.errMsg))
+				messageChannel.send(invalidArgumentsEmbed(serverPrefix, c, parseMap.errMsg))
 				return
 			}
 
 			arguments = parseMap.parsedValues.toTypedArray()
 		}
 
-		c.run(event.jda, event.guild, event.member, messageChannel, arguments)
+		c.run(serverPrefix, event.jda, event.guild, event.member, messageChannel, arguments)
 		normalLog(c)
 	}
 }
@@ -125,7 +126,7 @@ private fun checkPermissions(commandName: String, server: Guild, invoker: Member
 }
 
 // todo: link the learn more to the wiki when it's been setup
-private fun invalidArgumentsEmbed(command: Command, errMsg: String) =
+private fun invalidArgumentsEmbed(serverPrefix: String, command: Command, errMsg: String) =
 	embed {
 		title = "Invalid Arguments"
 		description = "Invalid arguments passed to the command: **${command.name}**"
@@ -146,7 +147,7 @@ private fun invalidArgumentsEmbed(command: Command, errMsg: String) =
 
 		field {
 			title = "Learn more"
-			description = "Use the `${credentials!!.prefix}help ${command.name}` to learn more about the command"
+			description = "Use the `$serverPrefix help ${command.name}` to learn more about the command"
 			inline = false
 		}
 	}

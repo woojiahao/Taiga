@@ -62,7 +62,7 @@ fun permissionCommands() = commands("Permission") {
 
 			val categoryName = WordUtils.capitalize(arguments[0] as String)
 			val roleId = arguments[1] as String
-			
+
 			val highestRole = roles[0].id
 			val commandSet = CommandContainer.getSet(categoryName)
 			commandSet.commands.forEach { command ->

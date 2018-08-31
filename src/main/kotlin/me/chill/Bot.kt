@@ -24,7 +24,7 @@ fun main(args: Array<String>) {
 	JDABuilder(AccountType.BOT)
 		.setStatus(OnlineStatus.ONLINE)
 		.setToken(credentials!!.token)
-		.setGame(Game.playing("${credentials!!.prefix}help"))
+		.setGame(Game.playing("${credentials!!.defaultPrefix}help"))
 		.addEventListener(OnJoinEvent(), OnLeaveEvent(), InputEvent())
 		.build()
 }

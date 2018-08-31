@@ -28,6 +28,21 @@
 			"example": "setup",
 			"category": "Administration"
 		},
+		{
+			"name": "getprefix",
+			"description": "Displays the current prefix set for the current server",
+			"syntax": "getprefix",
+			"example": "getprefix",
+			"category": "Administration"
+		},
+		{
+			"name": "setprefix",
+			"description": "Sets the current prefix for the server, prefix cannot be more than 3 characters long",
+			"syntax": "setprefix",
+			"example": "setprefix ++",
+			"category": "Administration"
+		},
+
 
 		{
 			"name": "echo",

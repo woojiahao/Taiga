@@ -1,14 +1,15 @@
 package me.chill.commands
 
-import me.chill.framework.CommandCategory
-import me.chill.framework.commands
+import me.chill.arguments.types.Prefix
 import me.chill.database.TargetChannel
 import me.chill.database.preference.editChannel
+import me.chill.database.preference.editPrefix
+import me.chill.framework.CommandCategory
+import me.chill.framework.commands
 import me.chill.roles.createRole
-import me.chill.utility.getRole
-import me.chill.utility.hasRole
-import me.chill.utility.send
-import me.chill.utility.successEmbed
+import me.chill.settings.orange
+import me.chill.settings.serve
+import me.chill.utility.*
 import net.dv8tion.jda.core.Permission
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.MessageChannel
@@ -52,6 +53,35 @@ fun administrationCommands() = commands("Administration") {
 					"Set-Up Completed",
 					"Bot has been set up for **${guild.name}**\n" +
 						"Remember to move the `muted` role higher in order for it to take effect"
+				)
+			)
+		}
+	}
+
+	command("setprefix") {
+		expects(Prefix())
+		execute {
+			val guild = getGuild()
+			val newPrefix = getArguments()[0] as String
+			editPrefix(guild.id, newPrefix)
+			respond(
+				successEmbed(
+					"${guild.name} Prefix Changed",
+					"Prefix has been changed to **$newPrefix**"
+				)
+			)
+		}
+	}
+
+	command("getprefix") {
+		execute {
+			val guild = getGuild()
+			respond(
+				simpleEmbed(
+					"${guild.name} Prefix",
+					"Current prefix is: **${getServerPrefix()}**",
+					serve,
+					orange
 				)
 			)
 		}

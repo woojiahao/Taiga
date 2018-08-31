@@ -11,7 +11,7 @@ fun addServerPreference(serverId: String, defaultChannelId: String) {
 	transaction {
 		Preference.insert {
 			it[this.serverId] = serverId
-			it[prefix] = credentials!!.prefix!!
+			it[prefix] = credentials!!.defaultPrefix!!
 			it[joinChannel] = defaultChannelId
 			it[loggingChannel] = defaultChannelId
 			it[suggestionChannel] = defaultChannelId

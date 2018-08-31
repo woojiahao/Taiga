@@ -5,7 +5,6 @@ import com.google.gson.JsonObject
 import com.google.gson.stream.JsonReader
 import me.chill.commandInfo
 import me.chill.framework.Command
-import me.chill.credentials
 import java.io.File
 import java.io.FileReader
 
@@ -29,9 +28,9 @@ fun loadHelp(): List<CommandInfo> {
 
 fun findCommand(commandName: String) = commandInfo!!.first { info -> info.name == commandName }
 
-val Command.syntax get() = "${credentials!!.prefix}${findCommand(name).syntax}"
+val Command.syntax get() = "${getServerPrefix()}${findCommand(name).syntax}"
 
-val Command.example get() = "${credentials!!.prefix}${findCommand(name).example}"
+val Command.example get() = "${getServerPrefix()}${findCommand(name).example}"
 
 val Command.category get() = findCommand(name).category
 

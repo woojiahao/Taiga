@@ -2,8 +2,9 @@ package me.chill.framework
 
 import me.chill.arguments.Argument
 import me.chill.arguments.types.Sentence
-import me.chill.framework.ContainerKey.*
+import me.chill.credentials
 import me.chill.exception.TaigaException
+import me.chill.framework.ContainerKey.*
 import me.chill.utility.send
 import net.dv8tion.jda.core.JDA
 import net.dv8tion.jda.core.entities.Guild
@@ -19,6 +20,7 @@ class Command(var name: String) {
 
 	init {
 		commandInformation[Jda] = null
+		commandInformation[ServerPrefix] = credentials!!.defaultPrefix!!
 		commandInformation[Server] = null
 		commandInformation[Invoker] = null
 		commandInformation[Channel] = null
@@ -39,9 +41,12 @@ class Command(var name: String) {
 		action = func
 	}
 
-	fun run(jda: JDA, guild: Guild, invoker: Member, messageChannel: MessageChannel, input: Array<String>?) {
+	fun run(serverPrefix: String, jda: JDA, guild: Guild,
+			invoker: Member, messageChannel: MessageChannel,
+			input: Array<String>?) {
 		commandInformation[Jda] = jda
 		commandInformation[Server] = guild
+		commandInformation[ServerPrefix] = serverPrefix
 		commandInformation[Invoker] = invoker
 		commandInformation[Channel] = messageChannel
 		commandInformation[Input] = input
@@ -53,6 +58,7 @@ class Command(var name: String) {
 	fun getChannel() = commandInformation[Channel] as MessageChannel
 	fun getArguments() = commandInformation[Input] as Array<*>
 	fun getJDA() = commandInformation[Jda] as JDA
+	fun getServerPrefix() = commandInformation[ServerPrefix] as String
 	fun getArgumentTypes() = commandInformation[ArgumentTypes] as Array<Argument>
 
 	fun respond(embed: MessageEmbed?) = getChannel().send(embed)

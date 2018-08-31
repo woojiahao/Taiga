@@ -4,10 +4,9 @@ import me.chill.arguments.types.ChannelId
 import me.chill.arguments.types.Integer
 import me.chill.arguments.types.Sentence
 import me.chill.arguments.types.UserId
+import me.chill.database.TargetChannel
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
-import me.chill.credentials
-import me.chill.database.TargetChannel
 import me.chill.roles.assignRole
 import me.chill.roles.removeRole
 import me.chill.settings.*
@@ -74,7 +73,7 @@ fun moderationCommands() = commands("Moderation") {
 				respond(
 					failureEmbed(
 						"Mute Failed",
-						"Unable to apply mute to user as the **muted** role does not exist, run `${credentials!!.prefix}setup`"
+						"Unable to apply mute to user as the **muted** role does not exist, run `${getServerPrefix()}setup`"
 					)
 				)
 				return@execute
