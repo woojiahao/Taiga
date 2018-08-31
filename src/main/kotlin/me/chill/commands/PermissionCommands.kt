@@ -1,15 +1,14 @@
 package me.chill.commands
 
+import me.chill.arguments.types.CategoryName
 import me.chill.arguments.types.CommandName
 import me.chill.arguments.types.RoleId
-import me.chill.arguments.types.Word
 import me.chill.database.*
 import me.chill.framework.CommandCategory
 import me.chill.framework.CommandContainer
 import me.chill.framework.commands
 import me.chill.settings.green
 import me.chill.utility.embed
-import me.chill.utility.failureEmbed
 import me.chill.utility.successEmbed
 import net.dv8tion.jda.core.entities.Guild
 import org.apache.commons.lang3.text.WordUtils
@@ -53,7 +52,7 @@ fun permissionCommands() = commands("Permission") {
 	}
 
 	command("setpermissioncategory") {
-		expects(Word(), RoleId())
+		expects(CategoryName(), RoleId())
 		execute {
 			val arguments = getArguments()
 			val guild = getGuild()
@@ -63,17 +62,7 @@ fun permissionCommands() = commands("Permission") {
 
 			val categoryName = WordUtils.capitalize(arguments[0] as String)
 			val roleId = arguments[1] as String
-
-			if (!CommandContainer.hasCategory(categoryName)) {
-				respond(
-					failureEmbed(
-						"Set Category Permission Failure",
-						"Category: **$categoryName** does not exist"
-					)
-				)
-				return@execute
-			}
-
+			
 			val highestRole = roles[0].id
 			val commandSet = CommandContainer.getSet(categoryName)
 			commandSet.commands.forEach { command ->
