@@ -5,6 +5,8 @@ import me.chill.arguments.types.Integer
 import me.chill.arguments.types.Sentence
 import me.chill.arguments.types.UserId
 import me.chill.database.TargetChannel
+import me.chill.database.TimeMultiplier
+import me.chill.database.preference.getTimeMultiplier
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
 import me.chill.roles.assignRole
@@ -79,9 +81,11 @@ fun moderationCommands() = commands("Moderation") {
 				return@execute
 			}
 
+			val guildTimeMultiplier = getTimeMultiplier(guild.id)
+
 			val mutedRole = guild.getRole("muted")
 			assignRole(guild, getChannel(), mutedRole.id, targetId, true)
-			target.sendPrivateMessage(userMuteNotificationEmbed(guildName, duration, reason))
+			target.sendPrivateMessage(userMuteNotificationEmbed(guildName, duration, reason, guildTimeMultiplier))
 
 			Timer().schedule(
 				timerTask {
@@ -104,15 +108,15 @@ fun moderationCommands() = commands("Moderation") {
 						)
 					)
 				},
-				(duration * 60000).toLong()
+				duration * guildTimeMultiplier.multiplier
 			)
 
-			loggingChannel.send(muteSuccessEmbed(target, duration, reason))
+			loggingChannel.send(muteSuccessEmbed(target, duration, reason, guildTimeMultiplier))
 		}
 	}
 }
 
-private fun userMuteNotificationEmbed(guildName: String, duration: Int, reason: String) =
+private fun userMuteNotificationEmbed(guildName: String, duration: Int, reason: String, guildTimeMultiplier: TimeMultiplier) =
 	embed {
 		title = "Mute"
 		description = "You have been muted in **$guildName**"
@@ -125,14 +129,14 @@ private fun userMuteNotificationEmbed(guildName: String, duration: Int, reason: 
 
 		field {
 			title = "Duration"
-			description = "$duration minutes"
+			description = "$duration ${guildTimeMultiplier.fullTerm}(s)"
 		}
 	}
 
-private fun muteSuccessEmbed(member: Member, duration: Int, reason: String) =
+private fun muteSuccessEmbed(member: Member, duration: Int, reason: String, guildTimeMultiplier: TimeMultiplier) =
 	embed {
 		title = "User Muted"
-		description = "User: ${printMember(member)} has been muted for **$duration** minutes"
+		description = "User: ${printMember(member)} has been muted for **$duration** ${guildTimeMultiplier.fullTerm}(s)"
 		color = green
 		field {
 			title = "Reason"
