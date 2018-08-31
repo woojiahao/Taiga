@@ -1,4 +1,4 @@
-package me.chill.commands.events
+package me.chill.events
 
 import me.chill.arguments.parseArguments
 import me.chill.arguments.types.Sentence

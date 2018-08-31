@@ -1,11 +1,11 @@
 package me.chill
 
-import me.chill.commands.events.InputEvent
-import me.chill.commands.events.OnJoinEvent
-import me.chill.commands.events.OnLeaveEvent
-import me.chill.framework.CommandContainer
 import me.chill.credential.Credentials
 import me.chill.database.setupDatabase
+import me.chill.events.InputEvent
+import me.chill.events.OnJoinEvent
+import me.chill.events.OnLeaveEvent
+import me.chill.framework.CommandContainer
 import me.chill.json.configuration.isHerokuRunning
 import me.chill.json.configuration.loadConfigurations
 import me.chill.json.help.CommandInfo

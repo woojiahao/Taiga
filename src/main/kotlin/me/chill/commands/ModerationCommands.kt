@@ -1,4 +1,4 @@
-package me.chill.commands.type
+package me.chill.commands
 
 import me.chill.arguments.types.ChannelId
 import me.chill.arguments.types.Integer

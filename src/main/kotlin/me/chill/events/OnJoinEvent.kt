@@ -1,4 +1,4 @@
-package me.chill.commands.events
+package me.chill.events
 
 import me.chill.database.*
 import me.chill.exception.TaigaException
