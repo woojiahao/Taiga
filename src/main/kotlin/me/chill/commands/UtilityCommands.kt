@@ -1,13 +1,16 @@
 package me.chill.commands
 
-import me.chill.arguments.types.Word
+import me.chill.arguments.types.CommandName
 import me.chill.framework.*
 import me.chill.json.help.category
 import me.chill.json.help.description
 import me.chill.json.help.example
 import me.chill.json.help.syntax
 import me.chill.settings.*
-import me.chill.utility.*
+import me.chill.utility.embed
+import me.chill.utility.getDateTime
+import me.chill.utility.printMember
+import me.chill.utility.simpleEmbed
 import net.dv8tion.jda.core.OnlineStatus
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.MessageEmbed
@@ -62,19 +65,8 @@ fun utilityCommands() = commands("Utility") {
 	}
 
 	command("help") {
-		expects(Word())
+		expects(CommandName())
 		execute {
-			val args = getArguments()
-			val commandName = args[0] as String
-			if (!CommandContainer.hasCommand(commandName)) {
-				respond(
-					failureEmbed(
-						"Command Does Not Exist",
-						"Command: **$commandName** does not exist"
-					)
-				)
-				return@execute
-			}
 			respond(commandInfoEmbed(CommandContainer.getCommand(getArguments()[0] as String)))
 		}
 	}

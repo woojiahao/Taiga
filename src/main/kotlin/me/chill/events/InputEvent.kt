@@ -69,8 +69,6 @@ class InputEvent : ListenerAdapter() {
 			}
 		}
 
-		arguments.forEach { println(it + "\n") }
-
 		val commandName = c.name
 		if (!checkPermissions(commandName, server, invoker)) {
 			messageChannel.send(
