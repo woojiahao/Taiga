@@ -1,13 +1,16 @@
 package me.chill.commands
 
 import me.chill.arguments.types.Prefix
+import me.chill.arguments.types.Word
 import me.chill.database.TargetChannel
-import me.chill.database.WelcomeState
-import me.chill.database.preference.*
+import me.chill.database.TimeMultiplier
+import me.chill.database.preference.editChannel
+import me.chill.database.preference.editPrefix
+import me.chill.database.preference.editTimeMultiplier
+import me.chill.database.preference.getTimeMultiplier
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
 import me.chill.roles.createRole
-import me.chill.settings.clap
 import me.chill.settings.orange
 import me.chill.settings.serve
 import me.chill.utility.*
@@ -83,6 +86,51 @@ fun administrationCommands() = commands("Administration") {
 					"Current prefix is: **${getServerPrefix()}**",
 					serve,
 					orange
+				)
+			)
+		}
+	}
+
+	command("gettimemultiplier") {
+		execute {
+			respond(
+				successEmbed(
+					"Time Multiplier",
+					"Current time multiplier for **${getGuild().name}** is in **${getTimeMultiplier(getGuild().id).fullTerm}s**"
+				)
+			)
+		}
+	}
+
+	command("settimemultiplier") {
+		val timeMultiplers = TimeMultiplier.values()
+		val inclusion = mutableListOf<String>()
+		val shortForm = timeMultiplers.map { it.name }
+		val longForm = timeMultiplers.map { it.fullTerm }
+		val longFormPlural = timeMultiplers.map { "${it.fullTerm}s" }
+		inclusion.addAll(shortForm)
+		inclusion.addAll(longForm)
+		inclusion.addAll(longFormPlural)
+		expects(Word(inclusion = inclusion.toTypedArray()))
+		execute {
+			val guild = getGuild()
+			val newTimeMultipler = getArguments()[0] as String
+
+			val timeMultiplier = when {
+				shortForm.map { short -> short.toLowerCase() }.contains(newTimeMultipler) ->
+					TimeMultiplier.valueOf(newTimeMultipler.toUpperCase())
+				longForm.contains(newTimeMultipler) ->
+					timeMultiplers.filter { multiplier -> multiplier.fullTerm == newTimeMultipler }[0]
+				longFormPlural.contains(newTimeMultipler) ->
+					timeMultiplers.filter { multiplier -> "${multiplier.fullTerm}s" == newTimeMultipler }[0]
+				else -> TimeMultiplier.M
+			}
+
+			editTimeMultiplier(guild.id, timeMultiplier)
+			respond(
+				successEmbed(
+					"Time Multiplier",
+					"Time multiplier for **${guild.name}** has been set to **${timeMultiplier.fullTerm}s**"
 				)
 			)
 		}

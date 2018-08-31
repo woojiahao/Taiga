@@ -43,6 +43,21 @@
 			"category": "Administration"
 		},
 		{
+			"name": "gettimemultiplier",
+			"description": "Displays the current time multiplier",
+			"syntax": "gettimemultiplier",
+			"example": "gettimemultiplier",
+			"category": "Administration"
+		},
+		{
+			"name": "settimemultiplier",
+			"description": "Sets the time multiplier, multipliers include: S, M, H, D",
+			"syntax": "settimemultiplier { Multiplier }",
+			"example": "settimemultipler H",
+			"category": "Administration"
+		},
+
+		{
 			"name": "disablewelcome",
 			"description": "Disables bot welcomes for new members",
 			"syntax": "disablewelcome",
