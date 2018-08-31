@@ -10,30 +10,16 @@ fun setupDatabase(databaseUrl: String) {
 
 	transaction {
 		SchemaUtils.create(
-			ChannelAssignment,
 			Permission,
-			OnJoinRole,
 			Preference
 		)
 	}
-}
-
-object ChannelAssignment : Table() {
-	val serverId = varchar("server_id", 20).primaryKey()
-	val loggingChannelId = varchar("logging", 20)
-	val suggestionChannelId = varchar("suggestion", 20)
-	val joinChannelId = varchar("join", 20)
 }
 
 object Permission : Table() {
 	val commandName = varchar("command_name", 50).primaryKey()
 	val serverId = varchar("server_id", 20).primaryKey()
 	val permission = varchar("permission", 20).primaryKey()
-}
-
-object OnJoinRole : Table() {
-	val serverId = varchar("server_id", 20).primaryKey()
-	val roleId = varchar("role_id", 20)
 }
 
 object Preference : Table() {

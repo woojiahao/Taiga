@@ -34,8 +34,6 @@ class InputEvent : ListenerAdapter() {
 		val server = event.guild
 		val invoker = server.getMemberById(event.author.id)
 
-		println(message)
-
 		if (!message.startsWith(credentials!!.prefix!!)) return
 
 		val commandParts = message.substring(credentials!!.prefix!!.length).split(" ").toTypedArray()
