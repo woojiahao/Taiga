@@ -72,7 +72,7 @@ class InputEvent : ListenerAdapter() {
 			arguments = if (argTypes.any { it is Sentence }) {
 				val sentenceArgPosition = argTypes.size - 1
 
-				if (commandParts.size - 1 < sentenceArgPosition) {
+				if (commandParts.size - 1 < sentenceArgPosition + 1) {
 					messageChannel.send(insufficientArgumentsEmbed(serverPrefix, c, expectedArgsSize))
 					return
 				}

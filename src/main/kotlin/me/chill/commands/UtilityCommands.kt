@@ -184,6 +184,7 @@ private fun serverInfoEmbed(guild: Guild) =
 
 private fun commandInfoEmbed(command: Command) =
 	embed {
+		val helpLink = "https://github.com/woojiahao/Taiga/wiki/Commands-%28${command.category}%29#${command.name}"
 		title = "${command.category} - ${command.name}"
 		color = cyan
 		description = command.description
@@ -194,6 +195,10 @@ private fun commandInfoEmbed(command: Command) =
 		field {
 			title = "Example"
 			description = command.example
+		}
+		field {
+			title = "Learn More"
+			description = "[Wiki page about ${command.name}]($helpLink)"
 		}
 	}
 
