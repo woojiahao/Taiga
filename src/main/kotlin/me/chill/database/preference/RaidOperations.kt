@@ -11,3 +11,8 @@ fun getRaidMessageDuration(serverId: String) = getPreference(serverId, Preferenc
 
 fun editRaidMessageDuration(serverId: String, messageDuration: Int) =
 	updatePreferences(serverId) { it[raidMessageDuration] = messageDuration }
+
+fun getRaidRoleExcluded(serverId: String) = getPreference(serverId, Preference.raidRoleExcluded) as String?
+
+fun editRaidRoleExcluded(serverId: String, roleId: String) =
+	updatePreferences(serverId) { it[raidRoleExcluded] = roleId }

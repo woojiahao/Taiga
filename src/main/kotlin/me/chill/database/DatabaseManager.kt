@@ -30,6 +30,7 @@ object Preference : Table() {
 	val suggestionChannel = varchar("suggestion", 20)
 	val raidMessageLimit = integer("raid_message_limit")
 	val raidMessageDuration = integer("raid_message_duration")
+	val raidRoleExcluded = varchar("raid_role_excluded", 20).nullable()
 	val disableWelcome = bool("disable_welcome")
 	val welcomeMessage = varchar("welcome_message", 100)
 	val timeMultiplier = varchar("time_multiplier", 1)
