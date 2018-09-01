@@ -28,7 +28,7 @@ fun strikeUser(serverId: String, targetId: String, strikeWeight: Int, strikeReas
 	}
 }
 
-fun getStrikeTotal(serverId: String, targetId: String) =
+fun getStrikeCount(serverId: String, targetId: String) =
 	transaction {
 		UserRecord.join(
 			Strike,
