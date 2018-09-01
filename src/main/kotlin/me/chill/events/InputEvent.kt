@@ -3,8 +3,8 @@ package me.chill.events
 import me.chill.arguments.parseArguments
 import me.chill.arguments.types.Sentence
 import me.chill.database.getPermission
-import me.chill.database.hasPermission
 import me.chill.database.getPrefix
+import me.chill.database.hasPermission
 import me.chill.exception.TaigaException
 import me.chill.framework.Command
 import me.chill.framework.CommandContainer
@@ -52,11 +52,31 @@ class InputEvent : ListenerAdapter() {
 		}
 
 		val c = CommandContainer.getCommand(command)
+		val commandName = c.name
+
+		if (!checkPermissions(commandName, server, invoker)) {
+			messageChannel.send(
+				failureEmbed(
+					"Insufficient Permission",
+					"You cannot invoke **$commandName**, nice try",
+					thumbnail = noWay
+				)
+			)
+			return
+		}
+
+		val expectedArgsSize = c.getArgumentTypes().size
 		var arguments: Array<String> = emptyArray()
 		if (commandParts.size > 1) {
 			val argTypes = c.getArgumentTypes()
 			arguments = if (argTypes.any { it is Sentence }) {
-				val sentenceArgPosition = argTypes.indexOf(argTypes.find { it is Sentence })
+				val sentenceArgPosition = argTypes.size - 1
+
+				if (commandParts.size - 1 < sentenceArgPosition) {
+					messageChannel.send(insufficientArgumentsEmbed(serverPrefix, c, expectedArgsSize))
+					return
+				}
+
 				val sentence = Arrays
 					.copyOfRange(
 						commandParts,
@@ -71,21 +91,8 @@ class InputEvent : ListenerAdapter() {
 			}
 		}
 
-		val commandName = c.name
-		if (!checkPermissions(commandName, server, invoker)) {
-			messageChannel.send(
-				failureEmbed(
-					"Insufficient Permission",
-					"You cannot invoke **$commandName**, nice try",
-					thumbnail = noWay
-				)
-			)
-			return
-		}
-
-		val expectedArgsSize = c.getArgumentTypes().size
 		if (arguments.size != expectedArgsSize) {
-			messageChannel.send(insufficientArgumentsEmbed(serverPrefix, c, expectedArgsSize, arguments.size))
+			messageChannel.send(insufficientArgumentsEmbed(serverPrefix, c, expectedArgsSize))
 			return
 		}
 
@@ -153,16 +160,22 @@ private fun invalidArgumentsEmbed(serverPrefix: String, command: Command, errMsg
 		}
 	}
 
-private fun insufficientArgumentsEmbed(serverPrefix: String, command: Command, expected: Int, actual: Int) =
+private fun insufficientArgumentsEmbed(serverPrefix: String, command: Command, expected: Int) =
 	embed {
 		title = "Insufficient Arguments"
 		color = red
 		thumbnail = shock
-		description = "Command: **${command.name}** requires **$expected** arguments, you gave **$actual** arguments"
+		description = "Command: **${command.name}** requires **$expected** arguments"
 
 		field {
 			title = "Syntax"
 			description = "$serverPrefix${findCommand(command.name).syntax}"
+			inline = false
+		}
+
+		field {
+			title = "Example"
+			description = "$serverPrefix${findCommand(command.name).example}"
 			inline = false
 		}
 	}

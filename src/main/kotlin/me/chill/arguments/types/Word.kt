@@ -7,6 +7,10 @@ import net.dv8tion.jda.core.entities.Guild
 class Word(val inclusion: Array<String> = emptyArray(),
 		   val exclusion: Array<String> = emptyArray()) : Argument {
 	override fun check(guild: Guild, arg: String): ParseMap {
+		if (arg.isEmpty()) {
+			return ParseMap(false, "Word cannot be blank")
+		}
+
 		val lowerCase = arg.toLowerCase()
 		if (!inclusion.map { it.toLowerCase() }.contains(lowerCase)) {
 			return ParseMap(

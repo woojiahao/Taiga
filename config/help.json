@@ -129,8 +129,15 @@
 			{
 				"name": "history",
 				"description": "Displays the history of a specific member",
-				"syntax": "history { User ID }",
+				"syntax": "history { User ID/Mention }",
 				"example": "history @Chill",
+				"category": "Moderation"
+			},
+			{
+				"name": "strike",
+				"description": "Infracts a user",
+				"syntax": "strike { User ID/Mention } { Strike weight (0-3) } { Strike reason }",
+				"example": "strike @Chill 1 Big dum",
 				"category": "Moderation"
 			}
 		],
@@ -253,13 +260,6 @@
 				"syntax": "unassign { Role ID } { User Mention/ID }",
 				"example": "unassign 482335631402336266 @Chill",
 				"category": "Role"
-			},
-			{
-				"name": "getraidmessageduration",
-				"description": "Displays how long user messages are tracked in seconds for raid control",
-				"syntax": "getraidmessageduration",
-				"example": "getraidmessageduration",
-				"category": "Raid"
 			}
 		],
 
@@ -297,6 +297,13 @@
 				"description": "Sets the role that is being excluded from the raid filter, any role higher than this is also automatically excluded",
 				"syntax": "setraidroleexcluded { Role ID }",
 				"example": "setraidroleexcluded 482337896158855168",
+				"category": "Raid"
+			},
+			{
+				"name": "getraidmessageduration",
+				"description": "Displays how long user messages are tracked in seconds for raid control",
+				"syntax": "getraidmessageduration",
+				"example": "getraidmessageduration",
 				"category": "Raid"
 			}
 		]
