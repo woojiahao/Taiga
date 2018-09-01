@@ -1,6 +1,7 @@
 package me.chill.json.help
 
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.stream.JsonReader
 import me.chill.commandInfo
@@ -15,15 +16,22 @@ private val gson = GsonBuilder().create()
 private const val configPath = "$configDir/$helpFile"
 
 fun loadHelp(): List<CommandInfo> {
+	val list = mutableListOf<CommandInfo>()
 	val reader = JsonReader(FileReader(File(configPath)))
 	val commandInfoList = gson
 		.fromJson<JsonObject>(
 			reader,
 			JsonObject::class.java)
-		.getAsJsonArray("commands")
-	return commandInfoList.map {
-		gson.fromJson<CommandInfo>(it, CommandInfo::class.java)
-	}
+		.getAsJsonObject("commands")
+	commandInfoList
+		.entrySet()
+		.map { gson.fromJson(it.value, JsonArray::class.java) }
+		.forEach {
+			it.forEach { info ->
+				list.add(gson.fromJson(info, CommandInfo::class.java))
+			}
+		}
+	return list
 }
 
 fun findCommand(commandName: String) = commandInfo!!.first { info -> info.name == commandName }
