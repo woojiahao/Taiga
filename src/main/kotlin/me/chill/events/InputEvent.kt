@@ -19,6 +19,7 @@ import me.chill.utility.failureEmbed
 import me.chill.utility.send
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member
+import net.dv8tion.jda.core.entities.MessageChannel
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent
 import net.dv8tion.jda.core.hooks.ListenerAdapter
 import java.util.*
@@ -66,32 +67,10 @@ class InputEvent : ListenerAdapter() {
 		}
 
 		val expectedArgsSize = c.getArgumentTypes().size
-		var arguments: Array<String> = emptyArray()
-		if (commandParts.size > 1) {
-			val argTypes = c.getArgumentTypes()
-			arguments = if (argTypes.any { it is Sentence }) {
-				val sentenceArgPosition = argTypes.size
+		var arguments: Array<String>? = formArguments(commandParts, messageChannel, serverPrefix, c, expectedArgsSize)
+			?: return
 
-				if (commandParts.size - 1 < sentenceArgPosition) {
-					messageChannel.send(insufficientArgumentsEmbed(serverPrefix, c, expectedArgsSize))
-					return
-				}
-
-				val sentence = Arrays
-					.copyOfRange(
-						commandParts,
-						sentenceArgPosition,
-						commandParts.size)
-					.joinToString(" ")
-				val tempArgs = Arrays.copyOfRange(commandParts, 1, sentenceArgPosition).toMutableList()
-				tempArgs.add(sentence)
-				tempArgs.toTypedArray()
-			} else {
-				Arrays.copyOfRange(commandParts, 1, commandParts.size)
-			}
-		}
-
-		if (arguments.size != expectedArgsSize) {
+		if (arguments!!.size != expectedArgsSize) {
 			messageChannel.send(insufficientArgumentsEmbed(serverPrefix, c, expectedArgsSize))
 			return
 		}
@@ -133,7 +112,37 @@ private fun checkPermissions(commandName: String, server: Guild, invoker: Member
 	return true
 }
 
-// todo: link the learn more to the wiki when it's been setup
+private fun formArguments(commandParts: Array<String>, messageChannel: MessageChannel,
+						  serverPrefix: String, c: Command,
+						  expectedArgsSize: Int): Array<String>? {
+	var arguments: Array<String> = emptyArray()
+	if (commandParts.size > 1) {
+		val argTypes = c.getArgumentTypes()
+		arguments = if (argTypes.any { it is Sentence }) {
+			val sentenceArgPosition = argTypes.size
+
+			if (commandParts.size - 1 < sentenceArgPosition) {
+				messageChannel.send(insufficientArgumentsEmbed(serverPrefix, c, expectedArgsSize))
+				return null
+			}
+
+			val sentence = Arrays
+				.copyOfRange(
+					commandParts,
+					sentenceArgPosition,
+					commandParts.size)
+				.joinToString(" ")
+			val tempArgs = Arrays.copyOfRange(commandParts, 1, sentenceArgPosition).toMutableList()
+			tempArgs.add(sentence)
+			tempArgs.toTypedArray()
+		} else {
+			Arrays.copyOfRange(commandParts, 1, commandParts.size)
+		}
+	}
+
+	return arguments
+}
+
 private fun invalidArgumentsEmbed(serverPrefix: String, command: Command, errMsg: String) =
 	embed {
 		title = "Invalid Arguments"
