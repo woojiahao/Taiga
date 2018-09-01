@@ -13,7 +13,9 @@ import me.chill.roles.assignRole
 import me.chill.roles.removeRole
 import me.chill.settings.*
 import me.chill.utility.*
+import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member
+import net.dv8tion.jda.core.entities.MessageChannel
 import net.dv8tion.jda.core.entities.MessageHistory
 import java.util.*
 import kotlin.concurrent.timerTask
@@ -61,59 +63,65 @@ fun moderationCommands() = commands("Moderation") {
 		execute {
 			val args = getArguments()
 			val guild = getGuild()
-			val guildName = guild.name
 
 			val targetId = args[0] as String
 			val target = guild.getMemberById(targetId)
 
-			val duration = (args[1] as String).toInt()
+			val duration = args[1]!!.int()
 			val reason = args[2] as String
 
-			val loggingChannel = guild.getTextChannelById(me.chill.database.preference.getChannel(TargetChannel.Logging, guild.id))
-
-			if (!guild.hasRole("muted")) {
-				respond(
-					failureEmbed(
-						"Mute Failed",
-						"Unable to apply mute to user as the **muted** role does not exist, run `${getServerPrefix()}setup`"
-					)
-				)
-				return@execute
-			}
-
-			val guildTimeMultiplier = getTimeMultiplier(guild.id)
-
-			val mutedRole = guild.getRole("muted")
-			assignRole(guild, getChannel(), mutedRole.id, targetId, true)
-			target.sendPrivateMessage(userMuteNotificationEmbed(guildName, duration, reason, guildTimeMultiplier))
-
-			Timer().schedule(
-				timerTask {
-					removeRole(guild, getChannel(), mutedRole.id, targetId, true)
-					target.sendPrivateMessage(
-						simpleEmbed(
-							"Unmuted",
-							"You have been unmuted in **$guildName**",
-							null,
-							cyan
-						)
-					)
-
-					loggingChannel.send(
-						simpleEmbed(
-							"User Unmuted",
-							"User: ${printMember(target)} has been unmuted",
-							thumbnail = null,
-							color = orange
-						)
-					)
-				},
-				duration * guildTimeMultiplier.multiplier
-			)
-
-			loggingChannel.send(muteSuccessEmbed(target, duration, reason, guildTimeMultiplier))
+			muteUser(guild, getChannel(), target, duration, reason, getServerPrefix())
 		}
 	}
+}
+
+private fun muteUser(guild: Guild, channel: MessageChannel,
+					 target: Member, duration: Int,
+					 reason: String, serverPrefix: String) {
+	val loggingChannel = guild.getTextChannelById(me.chill.database.preference.getChannel(TargetChannel.Logging, guild.id))
+	val targetId = target.user.id
+
+	if (!guild.hasRole("muted")) {
+		channel.send(
+			failureEmbed(
+				"Mute Failed",
+				"Unable to apply mute to user as the **muted** role does not exist, run `${serverPrefix}setup`"
+			)
+		)
+		return
+	}
+
+	val guildTimeMultiplier = getTimeMultiplier(guild.id)
+
+	val mutedRole = guild.getRole("muted")
+	assignRole(guild, channel, mutedRole.id, targetId, true)
+	target.sendPrivateMessage(userMuteNotificationEmbed(guild.name, duration, reason, guildTimeMultiplier))
+
+	Timer().schedule(
+		timerTask {
+			removeRole(guild, channel, mutedRole.id, targetId, true)
+			target.sendPrivateMessage(
+				simpleEmbed(
+					"Unmuted",
+					"You have been unmuted in **${guild.name}**",
+					null,
+					cyan
+				)
+			)
+
+			loggingChannel.send(
+				simpleEmbed(
+					"User Unmuted",
+					"User: ${printMember(target)} has been unmuted",
+					thumbnail = null,
+					color = orange
+				)
+			)
+		},
+		duration * guildTimeMultiplier.multiplier
+	)
+
+	loggingChannel.send(muteSuccessEmbed(target, duration, reason, guildTimeMultiplier))
 }
 
 private fun userMuteNotificationEmbed(guildName: String, duration: Int, reason: String, guildTimeMultiplier: TimeMultiplier) =
