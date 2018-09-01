@@ -1,4 +1,4 @@
-package me.chill.database
+package me.chill.database.states
 
 enum class TimeMultiplier(val fullTerm: String, val multiplier: Long) {
 	S("second", 1000L),

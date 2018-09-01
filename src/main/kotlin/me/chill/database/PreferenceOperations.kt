@@ -1,8 +1,7 @@
-package me.chill.database.preference
+package me.chill.database
 
 import me.chill.credentials
-import me.chill.database.Preference
-import me.chill.database.TimeMultiplier
+import me.chill.database.states.TimeMultiplier
 import org.apache.commons.lang3.text.WordUtils
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.statements.UpdateStatement

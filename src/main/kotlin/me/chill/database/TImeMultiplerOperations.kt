@@ -1,7 +1,6 @@
-package me.chill.database.preference
+package me.chill.database
 
-import me.chill.database.Preference
-import me.chill.database.TimeMultiplier
+import me.chill.database.states.TimeMultiplier
 
 fun getTimeMultiplier(serverId: String) = TimeMultiplier.valueOf(getPreference(serverId, Preference.timeMultiplier) as String)
 

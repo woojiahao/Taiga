@@ -1,6 +1,4 @@
-package me.chill.database.preference
-
-import me.chill.database.Preference
+package me.chill.database
 
 fun getWelcomeMessage(serverId: String) = getPreference(serverId, Preference.welcomeMessage) as String
 

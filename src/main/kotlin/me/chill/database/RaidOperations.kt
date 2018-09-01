@@ -1,6 +1,4 @@
-package me.chill.database.preference
-
-import me.chill.database.Preference
+package me.chill.database
 
 fun getRaidMessageLimit(serverId: String) = getPreference(serverId, Preference.raidMessageLimit) as Int
 

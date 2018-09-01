@@ -2,7 +2,7 @@ package me.chill.commands
 
 import me.chill.arguments.types.Integer
 import me.chill.arguments.types.RoleId
-import me.chill.database.preference.*
+import me.chill.database.*
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
 import me.chill.settings.serve

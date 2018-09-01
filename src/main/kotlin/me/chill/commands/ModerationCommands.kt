@@ -4,9 +4,10 @@ import me.chill.arguments.types.ChannelId
 import me.chill.arguments.types.Integer
 import me.chill.arguments.types.Sentence
 import me.chill.arguments.types.UserId
-import me.chill.database.TargetChannel
-import me.chill.database.TimeMultiplier
-import me.chill.database.preference.getTimeMultiplier
+import me.chill.database.getChannel
+import me.chill.database.getTimeMultiplier
+import me.chill.database.states.TargetChannel
+import me.chill.database.states.TimeMultiplier
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
 import me.chill.roles.assignRole
@@ -85,7 +86,7 @@ fun moderationCommands() = commands("Moderation") {
 private fun muteUser(guild: Guild, channel: MessageChannel,
 					 target: Member, duration: Int,
 					 reason: String, serverPrefix: String) {
-	val loggingChannel = guild.getTextChannelById(me.chill.database.preference.getChannel(TargetChannel.Logging, guild.id))
+	val loggingChannel = guild.getTextChannelById(getChannel(TargetChannel.Logging, guild.id))
 	val targetId = target.user.id
 
 	if (!guild.hasRole("muted")) {

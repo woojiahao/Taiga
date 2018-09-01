@@ -65,6 +65,7 @@
 				"category": "Administration"
 			}
 		],
+
 		"Welcome": [
 			{
 				"name": "disablewelcome",
@@ -102,6 +103,7 @@
 				"category": "Welcome"
 			}
 		],
+
 		"Moderation": [
 			{
 				"name": "echo",
@@ -132,6 +134,7 @@
 				"category": "Moderation"
 			}
 		],
+
 		"Permission": [
 			{
 				"name": "setpermission",
@@ -155,6 +158,7 @@
 				"category": "Permission"
 			}
 		],
+
 		"Utility": [
 			{
 				"name": "commands",
@@ -206,6 +210,7 @@
 				"category": "Utility"
 			}
 		],
+
 		"Role": [
 			{
 				"name": "assign",
@@ -257,6 +262,7 @@
 				"category": "Raid"
 			}
 		],
+
 		"Raid": [
 			{
 				"name": "setraidmessageduration",

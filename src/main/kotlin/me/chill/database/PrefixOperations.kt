@@ -1,6 +1,4 @@
-package me.chill.database.preference
-
-import me.chill.database.Preference
+package me.chill.database
 
 fun getPrefix(serverId: String) = getPreference(serverId, Preference.prefix) as String
 

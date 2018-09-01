@@ -1,8 +1,8 @@
 package me.chill.logging
 
 import me.chill.framework.Command
-import me.chill.database.TargetChannel
-import me.chill.database.preference.getChannel
+import me.chill.database.states.TargetChannel
+import me.chill.database.getChannel
 import me.chill.settings.blue
 import me.chill.utility.getDateTime
 import me.chill.utility.embed

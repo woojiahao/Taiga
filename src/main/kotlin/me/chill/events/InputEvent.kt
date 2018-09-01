@@ -4,7 +4,7 @@ import me.chill.arguments.parseArguments
 import me.chill.arguments.types.Sentence
 import me.chill.database.getPermission
 import me.chill.database.hasPermission
-import me.chill.database.preference.getPrefix
+import me.chill.database.getPrefix
 import me.chill.exception.TaigaException
 import me.chill.framework.Command
 import me.chill.framework.CommandContainer

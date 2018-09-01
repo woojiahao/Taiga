@@ -2,9 +2,9 @@ package me.chill.commands
 
 import me.chill.arguments.types.Prefix
 import me.chill.arguments.types.Word
-import me.chill.database.TargetChannel
-import me.chill.database.TimeMultiplier
-import me.chill.database.preference.*
+import me.chill.database.*
+import me.chill.database.states.TargetChannel
+import me.chill.database.states.TimeMultiplier
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
 import me.chill.roles.createRole

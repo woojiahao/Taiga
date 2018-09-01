@@ -1,7 +1,6 @@
-package me.chill.database.preference
+package me.chill.database
 
-import me.chill.database.Preference
-import me.chill.database.TargetChannel
+import me.chill.database.states.TargetChannel
 
 fun editChannel(targetChannel: TargetChannel, serverId: String, channelId: String) =
 	updatePreferences(serverId) { it[selectColumn(targetChannel)] = channelId }

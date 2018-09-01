@@ -11,7 +11,9 @@ fun setupDatabase(databaseUrl: String) {
 	transaction {
 		SchemaUtils.create(
 			Permission,
-			Preference
+			Preference,
+			UserRecord,
+			Strike
 		)
 	}
 }
@@ -35,4 +37,19 @@ object Preference : Table() {
 	val welcomeMessage = varchar("welcome_message", 100)
 	val timeMultiplier = varchar("time_multiplier", 1)
 	val onJoinRole = varchar("on_join_role", 20).nullable()
+}
+
+object UserRecord : Table() {
+	val serverId = varchar("server_id", 20).primaryKey()
+	val userId = varchar("user_id", 20).primaryKey()
+	val strikeId = integer("strike_id").primaryKey().references(Strike.strikeId)
+}
+
+object Strike : Table() {
+	val strikeId = integer("strike_id").autoIncrement().primaryKey()
+	val strikeWeight = integer("strike_weight")
+	val strikeReason = text("strike_reason")
+	val strikeDate = datetime("strike_date")
+	val actingModeratorId = varchar("acting_moderator_id", 20)
+	val expiryDate = datetime("expiry_date")
 }

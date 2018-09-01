@@ -2,10 +2,10 @@ package me.chill.commands
 
 import me.chill.arguments.types.RoleId
 import me.chill.arguments.types.UserId
-import me.chill.database.preference.editJoinRole
-import me.chill.database.preference.getJoinRole
-import me.chill.database.preference.hasJoinRole
-import me.chill.database.preference.removeJoinRole
+import me.chill.database.editJoinRole
+import me.chill.database.getJoinRole
+import me.chill.database.hasJoinRole
+import me.chill.database.removeJoinRole
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
 import me.chill.roles.assignRole
