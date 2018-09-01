@@ -4,12 +4,9 @@ import me.chill.arguments.types.ChannelId
 import me.chill.arguments.types.Integer
 import me.chill.arguments.types.Sentence
 import me.chill.arguments.types.UserId
-import me.chill.database.getChannel
-import me.chill.database.getStrikeCount
-import me.chill.database.getTimeMultiplier
+import me.chill.database.*
 import me.chill.database.states.TargetChannel
 import me.chill.database.states.TimeMultiplier
-import me.chill.database.strikeUser
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
 import me.chill.roles.assignRole
@@ -80,7 +77,8 @@ fun moderationCommands() = commands("Moderation") {
 	command("history") {
 		expects(UserId(true))
 		execute {
-
+			val targetId = getArguments()[0] as String
+			getHistory(getGuild().id, targetId).getStrikes().forEach { strike -> println(strike) }
 		}
 	}
 

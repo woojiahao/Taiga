@@ -14,7 +14,7 @@ class UserId(val globalSearch: Boolean = false) : Argument {
 		}
 
 		if (globalSearch) {
-			if (guild.jda.getUserById(toCheck) == null) {
+			if (guild.jda.retrieveUserById(toCheck).complete() == null) {
 				return ParseMap(false, "User by the ID of **$toCheck** does not exist on Discord")
 			}
 		} else {
