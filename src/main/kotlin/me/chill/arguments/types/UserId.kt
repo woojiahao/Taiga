@@ -2,27 +2,28 @@ package me.chill.arguments.types
 
 import me.chill.arguments.Argument
 import me.chill.arguments.ParseMap
+import me.chill.utility.findUser
 import net.dv8tion.jda.core.entities.Guild
 
 class UserId(val globalSearch: Boolean = false) : Argument {
 	override fun check(guild: Guild, arg: String): ParseMap {
-		var toCheck = arg
-		if (arg.startsWith("<@") && arg.endsWith(">")) toCheck = arg.substring(2, arg.length - 1)
+		var userId = arg
+		if (arg.startsWith("<@") && arg.endsWith(">")) userId = arg.substring(2, arg.length - 1)
 
-		if (toCheck.toLongOrNull() == null) {
-			return ParseMap(false, "ID: **$toCheck** is not valid")
+		if (userId.toLongOrNull() == null) {
+			return ParseMap(false, "ID: **$userId** is not valid")
 		}
 
 		if (globalSearch) {
-			if (guild.jda.retrieveUserById(toCheck).complete() == null) {
-				return ParseMap(false, "User by the ID of **$toCheck** does not exist on Discord")
+			if (guild.jda.findUser(userId) == null) {
+				return ParseMap(false, "User by the ID of **$userId** does not exist on Discord")
 			}
 		} else {
-			if (guild.getMemberById(toCheck) == null) {
-				return ParseMap(false, "Member by the ID of **$toCheck** is not found")
+			if (guild.getMemberById(userId) == null) {
+				return ParseMap(false, "Member by the ID of **$userId** is not found")
 			}
 		}
 
-		return ParseMap(true, parseValue = toCheck)
+		return ParseMap(parseValue = userId)
 	}
 }

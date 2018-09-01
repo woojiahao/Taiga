@@ -70,9 +70,9 @@ class InputEvent : ListenerAdapter() {
 		if (commandParts.size > 1) {
 			val argTypes = c.getArgumentTypes()
 			arguments = if (argTypes.any { it is Sentence }) {
-				val sentenceArgPosition = argTypes.size - 1
+				val sentenceArgPosition = argTypes.size
 
-				if (commandParts.size - 1 < sentenceArgPosition + 1) {
+				if (commandParts.size - 1 < sentenceArgPosition) {
 					messageChannel.send(insufficientArgumentsEmbed(serverPrefix, c, expectedArgsSize))
 					return
 				}
@@ -80,10 +80,10 @@ class InputEvent : ListenerAdapter() {
 				val sentence = Arrays
 					.copyOfRange(
 						commandParts,
-						sentenceArgPosition + 1,
+						sentenceArgPosition,
 						commandParts.size)
 					.joinToString(" ")
-				val tempArgs = Arrays.copyOfRange(commandParts, 1, sentenceArgPosition + 1).toMutableList()
+				val tempArgs = Arrays.copyOfRange(commandParts, 1, sentenceArgPosition).toMutableList()
 				tempArgs.add(sentence)
 				tempArgs.toTypedArray()
 			} else {

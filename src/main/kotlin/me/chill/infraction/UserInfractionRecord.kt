@@ -1,6 +1,6 @@
 package me.chill.infraction
 
-class UserInfractionRecord(userId: String) {
+class UserInfractionRecord(val userId: String) {
 	private val strikes = mutableListOf<UserStrike>()
 
 	fun addStrike(strike: UserStrike) = strikes.add(strike)

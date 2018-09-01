@@ -9,14 +9,16 @@ import me.chill.database.states.TargetChannel
 import me.chill.database.states.TimeMultiplier
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
+import me.chill.infraction.UserInfractionRecord
 import me.chill.roles.assignRole
 import me.chill.roles.removeRole
 import me.chill.settings.*
 import me.chill.utility.*
-import net.dv8tion.jda.core.entities.Guild
-import net.dv8tion.jda.core.entities.Member
-import net.dv8tion.jda.core.entities.MessageChannel
-import net.dv8tion.jda.core.entities.MessageHistory
+import net.dv8tion.jda.core.JDA
+import net.dv8tion.jda.core.entities.*
+import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
+import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.concurrent.timerTask
 
@@ -78,7 +80,7 @@ fun moderationCommands() = commands("Moderation") {
 		expects(UserId(true))
 		execute {
 			val targetId = getArguments()[0] as String
-			getHistory(getGuild().id, targetId).getStrikes().forEach { strike -> println(strike) }
+			respond(historyEmbed(getGuild(), getJDA().findUser(targetId), getJDA(), getHistory(getGuild().id, targetId)))
 		}
 	}
 
@@ -131,6 +133,51 @@ fun moderationCommands() = commands("Moderation") {
 		}
 	}
 }
+
+private fun historyEmbed(guild: Guild, user: User, jda: JDA, userInfractionRecord: UserInfractionRecord) =
+	embed {
+		val dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+		val joinDate = if (guild.getMember(user) == null) {
+			"User is not on the server"
+		} else {
+			guild.getMember(user).joinDate.format(dateTimeFormatter)
+		}
+
+		title = "${user.name}'s History"
+		color = cyan
+		thumbnail = user.avatarUrl
+
+		field {
+			title = "Summary"
+			description =
+				"${user.name}#${user.discriminator} has **${userInfractionRecord.getStrikes().size}** infraction(s)\n" +
+				"Current Strike Count: **${getStrikeCount(guild.id, user.id)}/3**\n" +
+				"Join Date: **$joinDate**\n" +
+				"Creation Date: **${user.creationTime.format(dateTimeFormatter)}**"
+		}
+
+		field {}
+
+		if (userInfractionRecord.getStrikes().isEmpty()) {
+			field {
+				title = "This user has no infractions"
+				description = "Squeaky clean!"
+			}
+		} else {
+			userInfractionRecord.getStrikes().forEach { userStrike ->
+				val isExpired = if (DateTime.now() > userStrike.expiryDate) "expired" else "not expired"
+
+				field {
+					title = "Infraction #${userStrike.strikeId} :: Weight :: ${userStrike.strikeWeight}"
+					description =
+						"This infraction is **$isExpired**\n" +
+						"Issued by **${jda.findUser(userStrike.actingModeratorId).name}** " +
+						"on **${DateTimeFormat.forPattern("dd-MM-yyyy").print(userStrike.strikeDate)}**\n" +
+						"__**Reason:**__\n${userStrike.strikeReason}"
+				}
+			}
+		}
+	}
 
 private fun strikeSuccessEmbed(strikeWeight: Int, target: Member, strikeReason: String) =
 	embed {
