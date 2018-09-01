@@ -207,9 +207,7 @@ private fun listCommandsEmbed(commandSets: List<CommandSet>, avatarUrl: String) 
 				title = set.categoryName
 				description = set
 					.getCommandNames()
-					.joinToString("\n") { commandName ->
-						"- $commandName"
-					}
+					.joinToString(", ")
 				inline = false
 			}
 		}

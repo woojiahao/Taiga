@@ -1,2 +1,0 @@
-package me.chill.infraction
-

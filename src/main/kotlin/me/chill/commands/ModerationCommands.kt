@@ -8,6 +8,7 @@ import me.chill.database.getChannel
 import me.chill.database.getTimeMultiplier
 import me.chill.database.states.TargetChannel
 import me.chill.database.states.TimeMultiplier
+import me.chill.database.strikeUser
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
 import me.chill.roles.assignRole
@@ -76,12 +77,53 @@ fun moderationCommands() = commands("Moderation") {
 	}
 
 	command("history") {
-		expects(UserId())
+		expects(UserId(true))
 		execute {
 
 		}
 	}
+
+	command("strike") {
+		expects(UserId(), Integer(0, 3), Sentence())
+		execute {
+			val args = getArguments()
+			val targetId = args[0] as String
+			val strikeWeight = args[1]!!.int()
+			val strikeReason = args[2] as String
+
+			val guild = getGuild()
+			val loggingChannel = guild.getTextChannelById(me.chill.database.getChannel(TargetChannel.Logging, guild.id))
+
+			strikeUser(guild.id, targetId, strikeWeight, strikeReason, getInvoker().user.id)
+			loggingChannel.send(
+				strikeSuccessEmbed(
+					strikeWeight,
+					getGuild().getMemberById(targetId),
+					strikeReason
+				)
+			)
+		}
+	}
 }
+
+private fun strikeSuccessEmbed(strikeWeight: Int, target: Member, strikeReason: String) =
+	embed {
+		title = "User Striked"
+		color = orange
+		description = "${printMember(target)} has been striked"
+
+		field {
+			title = "Reason"
+			description = strikeReason
+			inline = false
+		}
+
+		field {
+			title = "Weight"
+			description = strikeWeight.toString()
+			inline = false
+		}
+	}
 
 private fun muteUser(guild: Guild, channel: MessageChannel,
 					 target: Member, duration: Int,
