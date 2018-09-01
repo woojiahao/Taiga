@@ -73,6 +73,13 @@ fun moderationCommands() = commands("Moderation") {
 			muteUser(guild, getChannel(), target, duration, reason, getServerPrefix())
 		}
 	}
+
+	command("history") {
+		expects(UserId())
+		execute {
+
+		}
+	}
 }
 
 private fun muteUser(guild: Guild, channel: MessageChannel,

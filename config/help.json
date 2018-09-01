@@ -120,6 +120,14 @@
 			"category": "Moderation"
 		},
 		{
+			"name": "history",
+			"description": "Displays the history of a specific member",
+			"syntax": "history { User ID }",
+			"example": "history @Chill",
+			"category": "Moderation"
+		},
+
+		{
 			"name": "setpermission",
 			"description": "Sets the permission of a command to be available to a role and higher",
 			"syntax": "setpermission { Command Name } { Role ID }",
@@ -140,6 +148,7 @@
 			"example": "viewpermissions",
 			"category": "Permission"
 		},
+
 		{
 			"name": "commands",
 			"description": "Displays all the commands available to the user",
@@ -182,6 +191,14 @@
 			"example": "source",
 			"category": "Utility"
 		},
+		{
+			"name": "botinfo",
+			"description": "Displays information about the bot",
+			"syntax": "botinfo",
+			"example": "botinfo",
+			"category": "Utility"
+		},
+
 		{
 			"name": "assign",
 			"description": "Assigns a role to the specified user, the role must not be higher than my role",
