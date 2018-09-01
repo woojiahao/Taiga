@@ -92,44 +92,16 @@ fun moderationCommands() = commands("Moderation") {
 			val strikeWeight = args[1]!!.int()
 			val strikeReason = args[2] as String
 
-			val guild = getGuild()
-			val guildId = guild.id
-			val target = guild.getMemberById(targetId)
-			val loggingChannel = guild.getTextChannelById(me.chill.database.getChannel(TargetChannel.Logging, guildId))
+			strikeUser(getGuild(), targetId, getChannel(), strikeWeight, strikeReason, getInvoker())
+		}
+	}
 
-			strikeUser(guildId, targetId, strikeWeight, strikeReason, getInvoker().user.id)
-			val strikeCount = getStrikeCount(guildId, targetId)
-			guild
-				.getMemberById(targetId)
-				.sendPrivateMessage(
-					userStrikeNotificationEmbed(guild.name, strikeReason, strikeWeight, strikeCount)
-				)
-
-			loggingChannel.send(
-				strikeSuccessEmbed(strikeWeight, target, strikeReason)
-			)
-
-			when {
-				strikeCount == 1 -> muteUser(
-					guild,
-					getChannel(),
-					target,
-					1,
-					getServerPrefix(),
-					"Muted due to infraction",
-					TimeMultiplier.H
-				)
-				strikeCount == 2 -> muteUser(
-					guild,
-					getChannel(),
-					target,
-					1,
-					getServerPrefix(),
-					"Muted due to infraction",
-					TimeMultiplier.D
-				)
-				strikeCount >= 3 -> guild.controller.ban(target, 1, strikeReason).complete()
-			}
+	command("warn") {
+		expects(UserId(), Sentence())
+		execute {
+			val targetId = getArguments()[0] as String
+			val strikeReason = getArguments()[1] as String
+			strikeUser(getGuild(), targetId, getChannel(), 0, strikeReason, getInvoker())
 		}
 	}
 }
@@ -168,7 +140,7 @@ private fun historyEmbed(guild: Guild, user: User, jda: JDA, userInfractionRecor
 				val isExpired = if (DateTime.now() > userStrike.expiryDate) "expired" else "not expired"
 
 				field {
-					title = "Infraction #${userStrike.strikeId} :: Weight :: ${userStrike.strikeWeight}"
+					title = "ID :: ${userStrike.strikeId} :: Weight :: ${userStrike.strikeWeight}"
 					description =
 						"This infraction is **$isExpired**\n" +
 						"Issued by **${jda.findUser(userStrike.actingModeratorId).name}** " +
@@ -220,6 +192,47 @@ private fun userStrikeNotificationEmbed(guildName: String, strikeReason: String,
 			description = "Your strike count is at **$strikeCount/3**"
 		}
 	}
+
+private fun strikeUser(guild: Guild, targetId: String, channel: MessageChannel,
+					   strikeWeight: Int, strikeReason: String, invoker: Member) {
+	val guildId = guild.id
+	val target = guild.getMemberById(targetId)
+	val loggingChannel = guild.getTextChannelById(me.chill.database.getChannel(TargetChannel.Logging, guildId))
+
+	addStrike(guildId, targetId, strikeWeight, strikeReason, invoker.user.id)
+	val strikeCount = getStrikeCount(guildId, targetId)
+	guild
+		.getMemberById(targetId)
+		.sendPrivateMessage(
+			userStrikeNotificationEmbed(guild.name, strikeReason, strikeWeight, strikeCount)
+		)
+
+	loggingChannel.send(
+		strikeSuccessEmbed(strikeWeight, target, strikeReason)
+	)
+
+	when {
+		strikeCount == 1 -> muteUser(
+			guild,
+			channel,
+			target,
+			1,
+			getPrefix(guildId),
+			"Muted due to infraction",
+			TimeMultiplier.H
+		)
+		strikeCount == 2 -> muteUser(
+			guild,
+			channel,
+			target,
+			1,
+			getPrefix(guildId),
+			"Muted due to infraction",
+			TimeMultiplier.D
+		)
+		strikeCount >= 3 -> guild.controller.ban(target, 1, strikeReason).complete()
+	}
+}
 
 private fun muteUser(guild: Guild, channel: MessageChannel,
 					 target: Member, duration: Int,

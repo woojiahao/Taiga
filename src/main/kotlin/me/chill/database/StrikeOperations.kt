@@ -9,7 +9,7 @@ import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.joda.time.DateTime
 
-fun strikeUser(serverId: String, targetId: String, strikeWeight: Int, strikeReason: String, actingModeratorId: String) {
+fun addStrike(serverId: String, targetId: String, strikeWeight: Int, strikeReason: String, actingModeratorId: String) {
 	transaction {
 		val currentDate = DateTime.now()
 		val strikeId = Strike.insert {

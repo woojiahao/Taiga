@@ -139,6 +139,13 @@
 				"syntax": "strike { User ID/Mention } { Strike weight (0-3) } { Strike reason }",
 				"example": "strike @Chill 1 Big dum",
 				"category": "Moderation"
+			},
+			{
+				"name": "warn",
+				"description": "Infracts a user with a 0 weight strike",
+				"syntax": "strike { User ID/Mention } { Strike reason }",
+				"example": "warn @Chill Stop this nonsense",
+				"category": "Moderation"
 			}
 		],
 
