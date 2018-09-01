@@ -5,6 +5,7 @@ import me.chill.arguments.types.Integer
 import me.chill.arguments.types.Sentence
 import me.chill.arguments.types.UserId
 import me.chill.database.getChannel
+import me.chill.database.getStrikeTotal
 import me.chill.database.getTimeMultiplier
 import me.chill.database.states.TargetChannel
 import me.chill.database.states.TimeMultiplier
@@ -95,6 +96,16 @@ fun moderationCommands() = commands("Moderation") {
 			val loggingChannel = guild.getTextChannelById(me.chill.database.getChannel(TargetChannel.Logging, guild.id))
 
 			strikeUser(guild.id, targetId, strikeWeight, strikeReason, getInvoker().user.id)
+			guild
+				.getMemberById(targetId)
+				.sendPrivateMessage(
+					userStrikeNotificationEmbed(
+						guild,
+						targetId,
+						strikeReason,
+						strikeWeight)
+				)
+
 			loggingChannel.send(
 				strikeSuccessEmbed(
 					strikeWeight,
@@ -173,6 +184,28 @@ private fun muteUser(guild: Guild, channel: MessageChannel,
 
 	loggingChannel.send(muteSuccessEmbed(target, duration, reason, guildTimeMultiplier))
 }
+
+private fun userStrikeNotificationEmbed(guild: Guild, targetId: String, reason: String, weight: Int) =
+	embed {
+		title = "Strike"
+		description = "You have been striked in **${guild.name}**"
+		color = red
+
+		field {
+			title = "Reason"
+			description = reason
+		}
+
+		field {
+			title = "Weight"
+			description = weight.toString()
+		}
+
+		field {
+			title = "Infraction Status"
+			description = "Your strike count is at **${getStrikeTotal(guild.id, targetId)}/3**"
+		}
+	}
 
 private fun userMuteNotificationEmbed(guildName: String, duration: Int, reason: String, guildTimeMultiplier: TimeMultiplier) =
 	embed {

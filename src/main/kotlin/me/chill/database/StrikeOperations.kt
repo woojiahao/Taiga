@@ -28,6 +28,21 @@ fun strikeUser(serverId: String, targetId: String, strikeWeight: Int, strikeReas
 	}
 }
 
+fun getStrikeTotal(serverId: String, targetId: String) =
+	transaction {
+		UserRecord.join(
+			Strike,
+			JoinType.INNER,
+			additionalConstraint = { Strike.strikeId eq UserRecord.strikeId }
+		)
+			.select {
+				(UserRecord.serverId eq serverId) and
+					(UserRecord.userId eq targetId) and
+					(Strike.expiryDate greater DateTime.now())
+			}.map { it[Strike.strikeWeight] }.sum()
+	}
+
+
 fun getHistory(serverId: String, targetId: String): UserInfractionRecord {
 	val userRecord = UserInfractionRecord(targetId)
 	transaction {
