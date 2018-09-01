@@ -11,6 +11,7 @@ import me.chill.utility.embed
 import me.chill.utility.getDateTime
 import me.chill.utility.printMember
 import me.chill.utility.simpleEmbed
+import net.dv8tion.jda.core.JDA
 import net.dv8tion.jda.core.OnlineStatus
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.MessageEmbed
@@ -76,7 +77,60 @@ fun utilityCommands() = commands("Utility") {
 			respond(serverInfoEmbed(getGuild()))
 		}
 	}
+
+	command("botinfo") {
+		execute {
+			respond(botInfoEmbed(getJDA()))
+		}
+	}
 }
+
+private fun botInfoEmbed(jda: JDA) =
+	embed {
+		title = "${jda.selfUser.name} Info"
+		color = orange
+		thumbnail = jda.selfUser.avatarUrl
+		field {
+			title = "Servers"
+			description = jda.guilds.size.toString()
+			inline = true
+		}
+
+		field {
+			title = "Members"
+			description = jda.users.size.toString()
+			inline = true
+		}
+
+		field {
+			title = "Commands"
+			description = CommandContainer.getCommandNames().size.toString()
+			inline = true
+		}
+
+		field {
+			title = "Categories"
+			description = CommandContainer.commandSets.size.toString()
+			inline = true
+		}
+
+		field {
+			title = "Invite"
+			description = "[Invite Me!](https://discordapp.com/oauth2/authorize?client_id=482340927709511682&scope=bot&permissions=8)"
+			inline = true
+		}
+
+		field {
+			title = "Ping"
+			description = "${jda.ping}ms"
+			inline = true
+		}
+
+		footer {
+			message = getDateTime()
+			iconUrl = jda.selfUser.avatarUrl
+		}
+	}
 
 private fun serverInfoEmbed(guild: Guild) =
 	embed {
