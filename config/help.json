@@ -146,6 +146,13 @@
 				"syntax": "strike { User ID/Mention } { Strike reason }",
 				"example": "warn @Chill Stop this nonsense",
 				"category": "Moderation"
+			},
+			{
+				"name": "wiperecord",
+				"description": "Wipes the user's record from the database",
+				"syntax": "wiperecord { User ID/Mention }",
+				"example": "wiperecord @Chill",
+				"category": "Moderation"
 			}
 		],
 

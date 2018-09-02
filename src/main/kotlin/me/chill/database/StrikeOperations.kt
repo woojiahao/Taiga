@@ -2,10 +2,8 @@ package me.chill.database
 
 import me.chill.infraction.UserInfractionRecord
 import me.chill.infraction.UserStrike
-import org.jetbrains.exposed.sql.JoinType
-import org.jetbrains.exposed.sql.and
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.joda.time.DateTime
 
@@ -28,7 +26,7 @@ fun addStrike(serverId: String, targetId: String, strikeWeight: Int, strikeReaso
 	}
 }
 
-fun getStrikeCount(serverId: String, targetId: String) =
+fun getStrikeCount(serverId: String, userId: String) =
 	transaction {
 		UserRecord.join(
 			Strike,
@@ -36,15 +34,14 @@ fun getStrikeCount(serverId: String, targetId: String) =
 			additionalConstraint = { Strike.strikeId eq UserRecord.strikeId }
 		)
 			.select {
-				(UserRecord.serverId eq serverId) and
-					(UserRecord.userId eq targetId) and
+				userRecordMatch(serverId, userId) and
 					(Strike.expiryDate greater DateTime.now())
 			}.map { it[Strike.strikeWeight] }.sum()
 	}
 
 
-fun getHistory(serverId: String, targetId: String): UserInfractionRecord {
-	val userRecord = UserInfractionRecord(targetId)
+fun getHistory(serverId: String, userId: String): UserInfractionRecord {
+	val userRecord = UserInfractionRecord(userId)
 	transaction {
 		val strikeRecords = UserRecord
 			.join(
@@ -58,7 +55,7 @@ fun getHistory(serverId: String, targetId: String): UserInfractionRecord {
 				Strike.strikeDate,
 				Strike.actingModeratorId,
 				Strike.expiryDate
-			).select { (UserRecord.userId eq targetId) and (UserRecord.serverId eq serverId) }
+			).select { userRecordMatch(serverId, userId) }
 
 		strikeRecords.forEach {
 			userRecord.addStrike(
@@ -75,3 +72,15 @@ fun getHistory(serverId: String, targetId: String): UserInfractionRecord {
 	}
 	return userRecord
 }
+
+fun wipeRecord(serverId: String, userId: String) {
+	transaction {
+		val strikeIds = UserRecord
+			.select { userRecordMatch(serverId, userId) }
+			.map { it[UserRecord.strikeId] }
+		UserRecord.deleteWhere { userRecordMatch(serverId, userId) }
+		Strike.deleteWhere { Strike.strikeId inList strikeIds }
+	}
+}
+
+private fun userRecordMatch(serverId: String, userId: String) = (UserRecord.userId eq userId) and (UserRecord.serverId eq serverId)

@@ -104,6 +104,22 @@ fun moderationCommands() = commands("Moderation") {
 			strikeUser(getGuild(), targetId, getChannel(), 0, strikeReason, getInvoker())
 		}
 	}
+
+	command("wiperecord") {
+		expects(UserId(true))
+		execute {
+			val guild = getGuild()
+			val targetId = getArguments()[0] as String
+			wipeRecord(guild.id, targetId)
+			respond(
+				successEmbed(
+					"Records Wiped",
+					"User: **${getJDA().findUser(targetId).name}**'s history has been wiped!",
+					clap
+				)
+			)
+		}
+	}
 }
 
 private fun historyEmbed(guild: Guild, user: User, jda: JDA, userInfractionRecord: UserInfractionRecord) =
