@@ -46,7 +46,7 @@ fun moderationCommands() = commands("Moderation") {
 			val args = getArguments()
 			val message = args[1] as String
 			val messageChannel = getGuild().getTextChannelById(args[0] as String)
-			if (message.contains(Regex("(<@\\d*>)|(<@&\\d*>)|(<@everyone>)|(<@here>)"))) {
+			if (message.contains(Regex("(<@\\d*>)|(<@&\\d*>)|(@everyone)|(@here)"))) {
 				respond(
 					failureEmbed(
 						"Echo",
