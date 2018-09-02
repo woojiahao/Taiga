@@ -4,10 +4,9 @@ import me.chill.database.operations.*
 import me.chill.database.states.TargetChannel
 import me.chill.exception.TaigaException
 import me.chill.roles.assignRole
+import me.chill.roles.permanentMute
 import me.chill.settings.green
-import me.chill.utility.embed
-import me.chill.utility.getDateTime
-import me.chill.utility.send
+import me.chill.utility.*
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent
@@ -22,11 +21,21 @@ class OnJoinEvent : ListenerAdapter() {
 		val server = event.guild
 		val serverId = server.id
 		val joinChannelId = getChannel(TargetChannel.Join, serverId)
-		val joinChannel = event.jda.getTextChannelById(joinChannelId)
+		val joinChannel = server.getTextChannelById(joinChannelId)
+		val loggingChannel = server.getTextChannelById(getChannel(TargetChannel.Logging, serverId))
 		val member = event.member
 
 		if (!getWelcomeDisabled(serverId)) joinChannel.send(newMemberJoinEmbed(server, member))
 		if (hasJoinRole(serverId)) assignRole(server, joinChannel, getJoinRole(serverId)!!, member.user.id, true)
+		if (hasRaider(serverId, member.user.id)) {
+			permanentMute(server, loggingChannel, member.user.id)
+			loggingChannel.send(
+				failureEmbed(
+					"Raider Rejoin",
+					"Raider: ${printMember(member)} as rejoined the server"
+				)
+			)
+		}
 	}
 
 	override fun onGuildJoin(event: GuildJoinEvent?) {
