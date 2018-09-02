@@ -132,7 +132,9 @@ fun raidCommands() = commands("Raid") {
 				return@execute
 			}
 
-			if (guild.getMemberById(userId) != null) removeRole(guild, getChannel(), guild.getMutedRole()!!.id, userId, true)
+			if (guild.getMemberById(userId) != null) {
+				if (!removeRole(guild, getChannel(), guild.getMutedRole()!!.id, userId, true)) return@execute
+			}
 			freeRaider(guild.id, userId)
 			respond(
 				successEmbed(

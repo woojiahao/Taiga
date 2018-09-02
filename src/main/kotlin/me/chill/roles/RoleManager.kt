@@ -41,19 +41,20 @@ fun permanentMute(guild: Guild, channel: MessageChannel, targetId: String): Bool
 }
 
 fun removeRole(guild: Guild, channel: MessageChannel,
-			   roleId: String, targetId: String, silent: Boolean = false) {
-	if (!preChecking(guild, channel, roleId, targetId)) return
+			   roleId: String, targetId: String, silent: Boolean = false): Boolean {
+	if (!preChecking(guild, channel, roleId, targetId)) return false
 
 	val role = guild.getRoleById(roleId)
 	val member = guild.getMemberById(targetId)
 
 	if (!member.roles.contains(role)) {
 		channel.send(roleOperationFailureEmbed("Member: ${printMember(member)} does not have role: **${role.name}**"))
-		return
+		return false
 	}
 
 	guild.controller.removeSingleRoleFromMember(member, role).complete()
 	if (!silent) channel.send(roleOperationSuccessEmbed("Successfully removed role: **${role.name}** from ${printMember(member)}"))
+	return true
 }
 
 fun createRole(guild: Guild, roleName: String) {
