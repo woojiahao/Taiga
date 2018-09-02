@@ -49,7 +49,6 @@ class OnJoinEvent : ListenerAdapter() {
 	}
 }
 
-// Read the <#482414770654543872>
 fun newMemberJoinEmbed(server: Guild, member: Member) =
 	embed {
 		title = "Member join"

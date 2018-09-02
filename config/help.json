@@ -319,6 +319,27 @@
 				"syntax": "getraidmessageduration",
 				"example": "getraidmessageduration",
 				"category": "Raid"
+			},
+			{
+				"name": "viewraiders",
+				"description": "Displays all the raiders in the server",
+				"syntax": "viewraiders",
+				"example": "viewraiders",
+				"category": "Raid"
+			},
+			{
+				"name": "freeraider",
+				"description": "Removes a user from the raid list and unmutes them",
+				"syntax": "freeraider { User ID/Mention }",
+				"example": "freeraider @Chill",
+				"category": "Raid"
+			},
+			{
+				"name": "freeallraiders",
+				"description": "Removes all users from the raid list and unmutes them",
+				"syntax": "freeallraiders",
+				"example": "freeallraiders",
+				"category": "Raid"
 			}
 		]
 	}
