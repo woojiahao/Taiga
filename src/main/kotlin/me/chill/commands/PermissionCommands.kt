@@ -3,7 +3,7 @@ package me.chill.commands
 import me.chill.arguments.types.CategoryName
 import me.chill.arguments.types.CommandName
 import me.chill.arguments.types.RoleId
-import me.chill.database.*
+import me.chill.database.operations.*
 import me.chill.framework.CommandCategory
 import me.chill.framework.CommandContainer
 import me.chill.framework.commands

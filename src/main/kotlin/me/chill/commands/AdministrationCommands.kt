@@ -2,7 +2,7 @@ package me.chill.commands
 
 import me.chill.arguments.types.Prefix
 import me.chill.arguments.types.Word
-import me.chill.database.*
+import me.chill.database.operations.*
 import me.chill.database.states.TargetChannel
 import me.chill.database.states.TimeMultiplier
 import me.chill.framework.CommandCategory

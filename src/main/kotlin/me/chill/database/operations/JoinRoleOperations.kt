@@ -1,5 +1,6 @@
-package me.chill.database
+package me.chill.database.operations
 
+import me.chill.database.Preference
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 

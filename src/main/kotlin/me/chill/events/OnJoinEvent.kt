@@ -1,6 +1,6 @@
 package me.chill.events
 
-import me.chill.database.*
+import me.chill.database.operations.*
 import me.chill.database.states.TargetChannel
 import me.chill.exception.TaigaException
 import me.chill.roles.assignRole

@@ -1,5 +1,6 @@
-package me.chill.database
+package me.chill.database.operations
 
+import me.chill.database.Preference
 import me.chill.database.states.TargetChannel
 
 fun editChannel(targetChannel: TargetChannel, serverId: String, channelId: String) =

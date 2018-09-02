@@ -2,10 +2,10 @@ package me.chill.commands
 
 import me.chill.arguments.types.Sentence
 import me.chill.database.states.WelcomeState
-import me.chill.database.disableWelcome
-import me.chill.database.editWelcomeMessage
-import me.chill.database.enableWelcome
-import me.chill.database.getWelcomeDisabled
+import me.chill.database.operations.disableWelcome
+import me.chill.database.operations.editWelcomeMessage
+import me.chill.database.operations.enableWelcome
+import me.chill.database.operations.getWelcomeDisabled
 import me.chill.events.newMemberJoinEmbed
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands

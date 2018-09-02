@@ -13,7 +13,8 @@ fun setupDatabase(databaseUrl: String) {
 			Permission,
 			Preference,
 			UserRecord,
-			Strike
+			Strike,
+			Raider
 		)
 	}
 }
@@ -52,4 +53,9 @@ object Strike : Table() {
 	val strikeDate = datetime("strike_date")
 	val actingModeratorId = varchar("acting_moderator_id", 20)
 	val expiryDate = datetime("expiry_date")
+}
+
+object Raider : Table() {
+	val serverId = varchar("server_id", 20).primaryKey()
+	val userId = varchar("user_id", 20).primaryKey()
 }

@@ -4,7 +4,7 @@ import me.chill.arguments.types.ChannelId
 import me.chill.arguments.types.Integer
 import me.chill.arguments.types.Sentence
 import me.chill.arguments.types.UserId
-import me.chill.database.*
+import me.chill.database.operations.*
 import me.chill.database.states.TargetChannel
 import me.chill.database.states.TimeMultiplier
 import me.chill.framework.CommandCategory
@@ -213,7 +213,7 @@ private fun strikeUser(guild: Guild, targetId: String, channel: MessageChannel,
 					   strikeWeight: Int, strikeReason: String, invoker: Member) {
 	val guildId = guild.id
 	val target = guild.getMemberById(targetId)
-	val loggingChannel = guild.getTextChannelById(me.chill.database.getChannel(TargetChannel.Logging, guildId))
+	val loggingChannel = guild.getTextChannelById(getChannel(TargetChannel.Logging, guildId))
 
 	addStrike(guildId, targetId, strikeWeight, strikeReason, invoker.user.id)
 	val strikeCount = getStrikeCount(guildId, targetId)

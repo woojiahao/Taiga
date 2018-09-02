@@ -1,5 +1,6 @@
-package me.chill.database
+package me.chill.database.operations
 
+import me.chill.database.Permission
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -9,7 +10,7 @@ fun addPermission(commandName: String, serverId: String, roleId: String) {
 		Permission.insert {
 			it[Permission.commandName] = commandName
 			it[Permission.serverId] = serverId
-			it[Permission.permission] = roleId
+			it[permission] = roleId
 		}
 	}
 }
@@ -23,7 +24,7 @@ fun removePermission(commandName: String, serverId: String) {
 fun editPermission(commandName: String, serverId: String, roleId: String) {
 	transaction {
 		Permission.update({ selectKey(serverId, commandName) }) {
-			it[Permission.permission] = roleId
+			it[permission] = roleId
 		}
 	}
 }

@@ -1,5 +1,7 @@
-package me.chill.database
+package me.chill.database.operations
 
+import me.chill.database.Strike
+import me.chill.database.UserRecord
 import me.chill.infraction.UserInfractionRecord
 import me.chill.infraction.UserStrike
 import org.jetbrains.exposed.sql.*
@@ -11,17 +13,17 @@ fun addStrike(serverId: String, targetId: String, strikeWeight: Int, strikeReaso
 	transaction {
 		val currentDate = DateTime.now()
 		val strikeId = Strike.insert {
-			it[this.strikeWeight] = strikeWeight
-			it[this.strikeReason] = strikeReason
-			it[this.actingModeratorId] = actingModeratorId
+			it[Strike.strikeWeight] = strikeWeight
+			it[Strike.strikeReason] = strikeReason
+			it[Strike.actingModeratorId] = actingModeratorId
 			it[strikeDate] = currentDate
 			it[expiryDate] = currentDate.plusMonths(1)
 		}[Strike.strikeId]
 
 		UserRecord.insert {
-			it[this.serverId] = serverId
+			it[UserRecord.serverId] = serverId
 			it[userId] = targetId
-			it[this.strikeId] = strikeId!!
+			it[UserRecord.strikeId] = strikeId!!
 		}
 	}
 }

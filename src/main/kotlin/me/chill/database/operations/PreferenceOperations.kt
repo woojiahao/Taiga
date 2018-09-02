@@ -1,6 +1,7 @@
-package me.chill.database
+package me.chill.database.operations
 
 import me.chill.credentials
+import me.chill.database.Preference
 import me.chill.database.states.TimeMultiplier
 import org.apache.commons.lang3.text.WordUtils
 import org.jetbrains.exposed.sql.*
@@ -10,7 +11,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 fun addServerPreference(serverId: String, defaultChannelId: String) {
 	transaction {
 		Preference.insert {
-			it[this.serverId] = serverId
+			it[Preference.serverId] = serverId
 			it[prefix] = credentials!!.defaultPrefix!!
 			it[joinChannel] = defaultChannelId
 			it[loggingChannel] = defaultChannelId

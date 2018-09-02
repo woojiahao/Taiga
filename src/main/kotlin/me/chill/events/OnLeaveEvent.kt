@@ -1,8 +1,8 @@
 package me.chill.events
 
 import me.chill.database.states.TargetChannel
-import me.chill.database.getChannel
-import me.chill.database.removeServerPreference
+import me.chill.database.operations.getChannel
+import me.chill.database.operations.removeServerPreference
 import me.chill.exception.TaigaException
 import me.chill.settings.lost
 import me.chill.settings.red

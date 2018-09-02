@@ -2,7 +2,7 @@ package me.chill.logging
 
 import me.chill.framework.Command
 import me.chill.database.states.TargetChannel
-import me.chill.database.getChannel
+import me.chill.database.operations.getChannel
 import me.chill.settings.blue
 import me.chill.utility.getDateTime
 import me.chill.utility.embed
