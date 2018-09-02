@@ -37,7 +37,7 @@ class InputEvent : ListenerAdapter() {
 
 		val serverPrefix = getPrefix(server.id)
 		if (!message.startsWith(serverPrefix)) {
-			val isExcludedFromRaidControl = invoker.roles[0].position >= server.getRoleById(getRaidRoleExcluded(server.id)).position
+			val isExcludedFromRaidControl = invoker.roles.isNotEmpty() && invoker.roles[0].position >= server.getRoleById(getRaidRoleExcluded(server.id)).position
 			val isAlreadyCaught = hasRaider(server.id, invoker.user.id)
 			if (isExcludedFromRaidControl || isAlreadyCaught) return
 			else {
