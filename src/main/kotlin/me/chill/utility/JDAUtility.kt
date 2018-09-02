@@ -51,3 +51,5 @@ fun Guild.hasRole(roleName: String, ignoreCase: Boolean = false) = getRolesByNam
 fun Guild.getRole(roleName: String, ignoreCase: Boolean = false) = getRolesByName(roleName, ignoreCase).first()!!
 
 fun JDA.findUser(userId: String) = retrieveUserById(userId).complete()
+
+fun Guild.getMutedRole() = if (getRolesByName("muted", false).isEmpty()) null else getRolesByName("muted", false).first()!!

@@ -1,10 +1,12 @@
 package me.chill.roles
 
+import me.chill.database.operations.getPrefix
 import me.chill.settings.green
 import me.chill.settings.happy
 import me.chill.settings.red
 import me.chill.settings.shock
 import me.chill.utility.embed
+import me.chill.utility.failureEmbed
 import me.chill.utility.printMember
 import me.chill.utility.send
 import net.dv8tion.jda.core.entities.Guild
@@ -21,6 +23,23 @@ fun assignRole(guild: Guild, channel: MessageChannel,
 	if (!silent) channel.send(roleOperationSuccessEmbed("Successfully assigned role: **${role.name}** to ${printMember(member)}"))
 }
 
+fun permanentMute(guild: Guild, channel: MessageChannel, targetId: String): Boolean {
+	val mutedRole = guild.getRolesByName("muted", true)[0]
+
+	if (mutedRole == null) {
+		channel.send(
+			failureEmbed(
+				"Mute Failed",
+				"Unable to apply mute to user as the **muted** role does not exist, run `${getPrefix(guild.id)}setup`"
+			)
+		)
+		return false
+	}
+
+	guild.controller.addSingleRoleToMember(guild.getMemberById(targetId), mutedRole).complete()
+	return true
+}
+
 fun removeRole(guild: Guild, channel: MessageChannel,
 			   roleId: String, targetId: String, silent: Boolean = false) {
 	if (!preChecking(guild, channel, roleId, targetId)) return
@@ -35,6 +54,15 @@ fun removeRole(guild: Guild, channel: MessageChannel,
 
 	guild.controller.removeSingleRoleFromMember(member, role).complete()
 	if (!silent) channel.send(roleOperationSuccessEmbed("Successfully removed role: **${role.name}** from ${printMember(member)}"))
+}
+
+fun createRole(guild: Guild, roleName: String) {
+	guild
+		.controller
+		.createRole()
+		.setName(roleName)
+		.setPermissions(emptyList())
+		.complete()
 }
 
 private fun preChecking(guild: Guild, channel: MessageChannel,
@@ -57,15 +85,6 @@ private fun preChecking(guild: Guild, channel: MessageChannel,
 	}
 
 	return true
-}
-
-fun createRole(guild: Guild, roleName: String) {
-	guild
-		.controller
-		.createRole()
-		.setName(roleName)
-		.setPermissions(emptyList())
-		.complete()
 }
 
 private fun roleOperationStatusEmbed(title: String, message: String,

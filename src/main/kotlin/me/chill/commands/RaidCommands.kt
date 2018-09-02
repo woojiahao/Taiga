@@ -2,10 +2,15 @@ package me.chill.commands
 
 import me.chill.arguments.types.Integer
 import me.chill.arguments.types.RoleId
+import me.chill.arguments.types.UserId
 import me.chill.database.operations.*
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
+import me.chill.roles.removeRole
+import me.chill.settings.clap
 import me.chill.settings.serve
+import me.chill.utility.failureEmbed
+import me.chill.utility.getMutedRole
 import me.chill.utility.int
 import me.chill.utility.successEmbed
 
@@ -92,6 +97,79 @@ fun raidCommands() = commands("Raid") {
 					if (raidRoleExcluded == null) "No role is being filtered"
 					else "**${guild.getRoleById(raidRoleExcluded).name} and higher** are excluded from the raid filter",
 					serve
+				)
+			)
+		}
+	}
+
+	command("viewraiders") {
+		execute {
+			val guild = getGuild()
+			val raiders = getRaiders(guild.id)
+			respond(
+				successEmbed(
+					"Raiders in ${guild.name}",
+					raiders.joinToString(", "),
+					guild.iconUrl
+				)
+			)
+		}
+	}
+
+	command("freeraider") {
+		expects(UserId(true))
+		execute {
+			val guild = getGuild()
+			val userId = getArguments()[0] as String
+
+			if (guild.getMutedRole() == null) {
+				respond(
+					failureEmbed(
+						"Unmute Failure",
+						"Unable to free raider as the muted role does not exist, run `${getPrefix(guild.id)}setup`"
+					)
+				)
+				return@execute
+			}
+
+			if (guild.getMemberById(userId) != null) removeRole(guild, getChannel(), guild.getMutedRole()!!.id, userId, true)
+			freeRaider(guild.id, userId)
+			respond(
+				successEmbed(
+					"Raider Freed",
+					"Raider: **$userId** has been freed",
+					clap
+				)
+			)
+		}
+	}
+
+	command("freeallraiders") {
+		execute {
+			val guild = getGuild()
+			val channel = getChannel()
+
+			if (guild.getMutedRole() == null) {
+				respond(
+					failureEmbed(
+						"Unmute Failure",
+						"Unable to free raider as the muted role does not exist, run `${getPrefix(guild.id)}setup`"
+					)
+				)
+				return@execute
+			}
+
+			val mutedRoleId = guild.getMutedRole()!!.id
+
+			getRaiders(guild.id)
+				.filter { raider -> guild.getMemberById(raider) != null }
+				.forEach { member -> removeRole(guild, channel, mutedRoleId, member, true) }
+			freeAll(guild.id)
+			respond(
+				successEmbed(
+					"All Raiders Freed",
+					"All raiders in **${guild.name}** have been freed",
+					clap
 				)
 			)
 		}

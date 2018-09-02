@@ -2,15 +2,14 @@ package me.chill.events
 
 import me.chill.arguments.parseArguments
 import me.chill.arguments.types.Sentence
-import me.chill.database.operations.getPermission
-import me.chill.database.operations.getPrefix
-import me.chill.database.operations.hasPermission
+import me.chill.database.operations.*
 import me.chill.exception.TaigaException
 import me.chill.framework.Command
 import me.chill.framework.CommandContainer
 import me.chill.json.help.findCommand
 import me.chill.json.help.syntax
 import me.chill.logging.normalLog
+import me.chill.raidManger
 import me.chill.settings.noWay
 import me.chill.settings.red
 import me.chill.settings.shock
@@ -34,10 +33,18 @@ class InputEvent : ListenerAdapter() {
 		val message = event.message.contentRaw.trim()
 		val messageChannel = event.channel
 		val server = event.guild
-		val invoker = server.getMemberById(event.author.id)
+		val invoker = event.member
 
 		val serverPrefix = getPrefix(server.id)
-		if (!message.startsWith(serverPrefix)) return
+		if (!message.startsWith(serverPrefix)) {
+			val isExcludedFromRaidControl = invoker.roles[0].position >= server.getRoleById(getRaidRoleExcluded(server.id)).position
+			val isAlreadyCaught = hasRaider(server.id, invoker.user.id)
+			if (isExcludedFromRaidControl || isAlreadyCaught) return
+			else {
+				raidManger!!.manageRaid(server, messageChannel, invoker)
+				return
+			}
+		}
 
 		val commandParts = message.substring(serverPrefix.length).split(" ").toTypedArray()
 		val command = commandParts[0]

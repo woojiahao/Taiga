@@ -10,6 +10,7 @@ import me.chill.json.configuration.isHerokuRunning
 import me.chill.json.configuration.loadConfigurations
 import me.chill.json.help.CommandInfo
 import me.chill.json.help.loadHelp
+import me.chill.raid.RaidManager
 import net.dv8tion.jda.core.AccountType
 import net.dv8tion.jda.core.JDABuilder
 import net.dv8tion.jda.core.OnlineStatus
@@ -18,6 +19,7 @@ import net.dv8tion.jda.core.entities.Game
 // todo: add a command to dm all server owners if there is a problem detected
 var credentials: Credentials? = null
 var commandInfo: List<CommandInfo>? = null
+var raidManger: RaidManager? = null
 fun main(args: Array<String>) {
 	setup()
 
@@ -41,4 +43,6 @@ private fun setup() {
 
 	CommandContainer.loadContainer()
 	commandInfo = loadHelp()
+
+	raidManger = RaidManager()
 }

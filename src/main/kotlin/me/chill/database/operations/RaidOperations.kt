@@ -36,4 +36,10 @@ fun freeRaider(serverId: String, userId: String) {
 	}
 }
 
+fun freeAll(serverId: String) {
+	transaction {
+		Raider.deleteWhere { Raider.serverId eq serverId }
+	}
+}
+
 private fun raiderRecordMatch(serverId: String, userId: String) = (Raider.serverId eq serverId) and (Raider.userId eq userId)
