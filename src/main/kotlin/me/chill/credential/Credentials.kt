@@ -9,6 +9,7 @@ class Credentials(configuration: Configuration?) {
 	var token: String? = ""
 	var database: String? = ""
 	var defaultPrefix: String? = ""
+	var botOwnerId: String = ""
 
 	init {
 		if (isHerokuRunning()) {

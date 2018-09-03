@@ -2,6 +2,7 @@ package me.chill.events
 
 import me.chill.arguments.parseArguments
 import me.chill.arguments.types.Sentence
+import me.chill.credentials
 import me.chill.database.operations.*
 import me.chill.exception.TaigaException
 import me.chill.framework.Command
@@ -117,7 +118,8 @@ private fun checkPermissions(commandName: String, server: Guild, invoker: Member
 	} else {
 		val highestRolePosition = server.roles[0].position
 		val canInvoke = invoker.roles.isNotEmpty() && invoker.roles[0].position >= highestRolePosition
-		if (!(invoker.isOwner || canInvoke)) return false
+		val isBotOwner = invoker.user.id == credentials!!.botOwnerId
+		if (!(isBotOwner || invoker.isOwner || canInvoke)) return false
 	}
 
 	return true

@@ -23,12 +23,13 @@ var raidManger: RaidManager? = null
 fun main(args: Array<String>) {
 	setup()
 
-	JDABuilder(AccountType.BOT)
+	val jda = JDABuilder(AccountType.BOT)
 		.setStatus(OnlineStatus.ONLINE)
 		.setToken(credentials!!.token)
 		.setGame(Game.playing("${credentials!!.defaultPrefix}help"))
 		.addEventListener(OnJoinEvent(), OnLeaveEvent(), InputEvent())
 		.build()
+	credentials!!.botOwnerId = jda.asBot().applicationInfo.complete().owner.id
 }
 
 private fun setup() {
