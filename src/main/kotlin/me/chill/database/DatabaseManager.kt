@@ -14,7 +14,8 @@ fun setupDatabase(databaseUrl: String) {
 			Preference,
 			UserRecord,
 			Strike,
-			Raider
+			Raider,
+			Suggestion
 		)
 	}
 }
@@ -58,4 +59,13 @@ object Strike : Table() {
 object Raider : Table() {
 	val serverId = varchar("server_id", 20).primaryKey()
 	val userId = varchar("user_id", 20).primaryKey()
+}
+
+object Suggestion : Table() {
+	val suggestionId = integer("suggestion_id").primaryKey().autoIncrement()
+	val serverId = varchar("server_id", 20)
+	val suggesterId = varchar("suggester_id", 20)
+	val suggestionDescription = text("suggestion_description")
+	val suggestionDate = datetime("suggestion_date")
+	val messageId = varchar("message_id", 20).nullable()
 }
