@@ -6,29 +6,10 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.joda.time.DateTime
 
-fun getPool(serverId: String): List<UserSuggestion> {
-	val pool = mutableListOf<UserSuggestion>()
-	transaction {
-		Suggestion
-			.select { (Suggestion.serverId eq serverId) and Suggestion.messageId.isNull() }
-			.forEach {
-				pool.add(
-					UserSuggestion(
-						it[Suggestion.serverId],
-						it[Suggestion.suggesterId],
-						it[Suggestion.suggestionDescription],
-						it[Suggestion.suggestionDate]
-					)
-				)
-			}
-	}
-	return pool
-}
-
 fun getLatestSuggestionInPool(serverId: String) =
 	transaction {
 		val latestSuggestion = Suggestion
-			.select { (Suggestion.serverId eq serverId) }
+			.select { (Suggestion.serverId eq serverId) and Suggestion.messageId.isNull() }
 			.orderBy(Suggestion.suggestionDate, false)
 			.first()
 		UserSuggestion(
@@ -72,10 +53,23 @@ fun acceptLatestSuggestionInPool(serverId: String, suggestionMessageId: String) 
 	}
 }
 
+fun clearSuggestion(serverId: String, messageId: String) {
+	transaction {
+		Suggestion.deleteWhere { (Suggestion.serverId eq serverId) and (Suggestion.messageId eq messageId) }
+	}
+}
+
+fun hasSuggestion(serverId: String, suggestionMessageId: String) =
+	transaction {
+		Suggestion.select {
+			(Suggestion.serverId eq serverId) and (Suggestion.messageId eq suggestionMessageId)
+		}.count() > 0
+	}
+
 private fun getLatestSuggestionId(serverId: String) =
 	transaction {
 		Suggestion
-			.select { (Suggestion.serverId eq serverId) }
+			.select { (Suggestion.serverId eq serverId) and Suggestion.messageId.isNull() }
 			.orderBy(Suggestion.suggestionDate, false)
 			.first()[Suggestion.suggestionId]
 	}

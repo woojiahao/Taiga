@@ -341,6 +341,51 @@
 				"example": "freeallraiders",
 				"category": "Raid"
 			}
+		],
+
+		"Suggestion": [
+			{
+				"name": "poolinfo",
+				"description": "Displays information about the suggestion pool",
+				"syntax": "poolinfo",
+				"example": "poolinfo",
+				"category": "Suggestion"
+			},
+			{
+				"name": "pooltop",
+				"description": "Displays the latest suggestion in the pool",
+				"syntax": "pooltop",
+				"example": "pooltop",
+				"category": "Suggestion"
+			},
+			{
+				"name": "poolaccept",
+				"description": "Accepts the latest suggestion in the pool",
+				"syntax": "poolaccept",
+				"example": "poolaccept",
+				"category": "Suggestion"
+			},
+			{
+				"name": "pooldeny",
+				"description": "Denies the latest suggestion in the pool",
+				"syntax": "pooldeny",
+				"example": "pooldeny",
+				"category": "Suggestion"
+			},
+			{
+				"name": "suggest",
+				"description": "Adds a suggestion to the suggestion pool",
+				"syntax": "suggest { Suggestion }",
+				"example": "suggest An animal channel please",
+				"category": "Suggestion"
+			},
+			{
+				"name": "respond",
+				"description": "Responds to a suggestion",
+				"syntax": "respond { Suggestion Message ID } { Status (Accepted/Declined) } { Reason }",
+				"example": "respond 12345667 Declined Not enough support",
+				"category": "Suggestion"
+			}
 		]
 	}
 }

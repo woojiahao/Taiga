@@ -1,12 +1,16 @@
 package me.chill.commands
 
 import me.chill.arguments.types.Sentence
+import me.chill.arguments.types.SuggestionId
+import me.chill.arguments.types.Word
 import me.chill.database.operations.*
 import me.chill.database.states.TargetChannel
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
 import me.chill.settings.blue
+import me.chill.settings.green
 import me.chill.settings.orange
+import me.chill.settings.red
 import me.chill.suggestion.UserSuggestion
 import me.chill.utility.embed
 import me.chill.utility.findUser
@@ -32,8 +36,19 @@ fun suggestionCommands() = commands("Suggestion") {
 
 	command("pooltop") {
 		execute {
-			val latestSuggestion = getLatestSuggestionInPool(getGuild().id)
-			respond(suggestionInformationEmbed(getJDA().findUser(latestSuggestion.suggesterId), latestSuggestion))
+			if (getPoolSize(getGuild().id) == 0) {
+				respond(
+					simpleEmbed(
+						"No Suggestion In Pool",
+						"There are no suggestions in the pool",
+						null,
+						blue
+					)
+				)
+			} else {
+				val latestSuggestion = getLatestSuggestionInPool(getGuild().id)
+				respond(suggestionInformationEmbed(getJDA().findUser(latestSuggestion.suggesterId), latestSuggestion))
+			}
 		}
 	}
 
@@ -83,18 +98,68 @@ fun suggestionCommands() = commands("Suggestion") {
 			acceptLatestSuggestionInPool(guild.id, messageId)
 		}
 	}
+
+	command("respond") {
+		expects(
+			SuggestionId(),
+			Word(inclusion = arrayOf("Accepted", "Declined")),
+			Sentence()
+		)
+		execute {
+			val guild = getGuild()
+			val args = getArguments()
+			val messageId = args[0] as String
+			val status = args[1] as String
+
+			val suggestionChannel = guild.getTextChannelById(me.chill.database.operations.getChannel(TargetChannel.Suggestion, guild.id))
+			val message = suggestionChannel.getMessageById(messageId).complete()
+			val original = message.embeds[0]
+			val suggesterName = original.title.substring(original.title.lastIndexOf(" "))
+
+			respond("Suggestion Responded To:")
+			respond(original)
+
+			message.editMessage(
+				publicSuggestionEmbed(
+					suggesterName,
+					original.thumbnail.url,
+					original.description,
+					when (status.toLowerCase()) {
+						"accepted" -> green
+						"declined" -> red
+						else -> orange
+					},
+					args[2] as String
+				)
+			).queue()
+			clearSuggestion(guild.id, messageId)
+		}
+	}
 }
 
-private fun publicSuggestionEmbed(suggesterName: String, suggesterAvater: String, suggestion: String) =
+private fun publicSuggestionEmbed(suggesterName: String, suggesterAvatar: String,
+								  suggestion: String, suggestionColor: Int? = null,
+								  suggestionResponseReason: String? = null) =
 	embed {
 		title = "Suggestion by $suggesterName"
 		description = suggestion
-		color = orange
-		thumbnail = suggesterAvater
+		color = suggestionColor ?: orange
+		thumbnail = suggesterAvatar
 
 		field {
 			title = "Status"
-			description = "In Review"
+			description = when (suggestionColor) {
+				green -> "Accepted"
+				red -> "Declined"
+				else -> "In Review"
+			}
+		}
+
+		if (suggestionResponseReason != null) {
+			field {
+				title = "Reason"
+				description = suggestionResponseReason
+			}
 		}
 	}
 
