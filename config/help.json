@@ -65,7 +65,6 @@
 				"category": "Administration"
 			}
 		],
-
 		"Welcome": [
 			{
 				"name": "disablewelcome",
@@ -103,7 +102,6 @@
 				"category": "Welcome"
 			}
 		],
-
 		"Moderation": [
 			{
 				"name": "echo",
@@ -155,7 +153,6 @@
 				"category": "Moderation"
 			}
 		],
-
 		"Permission": [
 			{
 				"name": "setpermission",
@@ -179,7 +176,6 @@
 				"category": "Permission"
 			}
 		],
-
 		"Utility": [
 			{
 				"name": "commands",
@@ -231,7 +227,6 @@
 				"category": "Utility"
 			}
 		],
-
 		"Role": [
 			{
 				"name": "assign",
@@ -276,7 +271,6 @@
 				"category": "Role"
 			}
 		],
-
 		"Raid": [
 			{
 				"name": "setraidmessageduration",
@@ -342,7 +336,6 @@
 				"category": "Raid"
 			}
 		],
-
 		"Suggestion": [
 			{
 				"name": "poolinfo",
@@ -408,6 +401,36 @@
 				"syntax": "bird",
 				"example": "bird",
 				"category": "Animal"
+			}
+		],
+		"Macro": [
+			{
+				"name": "listmacros",
+				"description": "Displays all the macros on the server",
+				"syntax": "listmacros",
+				"example": "listmacros",
+				"category": "Macro"
+			},
+			{
+				"name": "addmacro",
+				"description": "Adds a macro to the server",
+				"syntax": "addmacro { Macro Name } { Macro Description }",
+				"example": "addmacro hi Hello",
+				"category": "Macro"
+			},
+			{
+				"name": "editmacro",
+				"description": "Edits an existing macro on the server",
+				"syntax": "editmacro { Macro Name } { New Macro Description }",
+				"example": "editmacro hi Howdy",
+				"category": "Macro"
+			},
+			{
+				"name": "removemacro",
+				"description": "Removes an existing macro from the server",
+				"syntax": "removemacro { Macro Name }",
+				"example": "removemacro hi",
+				"category": "Macro"
 			}
 		]
 	}
