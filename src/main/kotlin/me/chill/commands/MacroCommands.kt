@@ -82,7 +82,8 @@ private fun macroEditEmbed(title: String, serverId: String, macroName: String, m
 		color = green
 		description = "**$macroName** will now respond with: **$macroDescription**"
 		footer {
-			this.message = "${getMacroList(serverId).size}/50 macros"
+			iconUrl = null
+			message = "${getMacroList(serverId).size}/50 macros"
 		}
 	}
 
@@ -92,6 +93,7 @@ private fun listMacrosEmbed(serverName: String, description: String, serverMacro
 		this.description = description
 		color = green
 		footer {
+			iconUrl = null
 			message = "$serverMacroSize/50 macros"
 		}
 	}

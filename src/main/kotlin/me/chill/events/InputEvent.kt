@@ -54,8 +54,8 @@ class InputEvent : ListenerAdapter() {
 		val commandParts = message.substring(serverPrefix.length).split(" ").toTypedArray()
 		val command = commandParts[0]
 
-		if (commandParts.size == 1 && hasMacro(server.id, command)) {
-			messageChannel.send(getMacro(server.id, command))
+		if (hasMacro(server.id, command)) {
+			if (commandParts.size == 1) messageChannel.send(getMacro(server.id, command))
 			return
 		}
 
