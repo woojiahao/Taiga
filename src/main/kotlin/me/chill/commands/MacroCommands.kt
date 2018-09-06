@@ -18,13 +18,7 @@ fun macroCommands() = commands("Macro") {
 	command("listmacros") {
 		execute {
 			val macroList = getMacroList(getGuild().id)
-			respond(
-				successEmbed(
-					"${getGuild().name} Macros",
-					macroList.sorted().joinToString(", "),
-					null
-				)
-			)
+			respond(listMacrosEmbed(getGuild().name, macroList.sorted().joinToString(", "), macroList.size))
 		}
 	}
 
@@ -89,5 +83,15 @@ private fun macroEditEmbed(title: String, serverId: String, macroName: String, m
 		description = "**$macroName** will now respond with: **$macroDescription**"
 		footer {
 			this.message = "${getMacroList(serverId).size}/50 macros"
+		}
+	}
+
+private fun listMacrosEmbed(serverName: String, description: String, serverMacroSize: Int) =
+	embed {
+		title = "$serverName Macros"
+		this.description = description
+		color = green
+		footer {
+			message = "$serverMacroSize/50 macros"
 		}
 	}
