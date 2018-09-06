@@ -386,6 +386,29 @@
 				"example": "respond 12345667 Declined Not enough support",
 				"category": "Suggestion"
 			}
+		],
+		"Animal": [
+			{
+				"name": "cat",
+				"description": "Displays a cat picture/GIF",
+				"syntax": "cat",
+				"example": "cat",
+				"category": "Animal"
+			},
+			{
+				"name": "dog",
+				"description": "Displays a dog picture/GIF",
+				"syntax": "dog",
+				"example": "dog",
+				"category": "Animal"
+			},
+			{
+				"name": "bird",
+				"description": "Displays a bird picture/GIF",
+				"syntax": "bird",
+				"example": "bird",
+				"category": "Animal"
+			}
 		]
 	}
 }
