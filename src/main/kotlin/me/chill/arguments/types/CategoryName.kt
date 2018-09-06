@@ -8,6 +8,6 @@ import org.apache.commons.lang3.text.WordUtils
 
 class CategoryName : Argument {
 	override fun check(guild: Guild, arg: String) =
-		if (!CommandContainer.hasCategory(arg.toLowerCase())) ParseMap(false, "Category: **$arg** does not exist")
+		if (!CommandContainer.hasCategory(WordUtils.capitalize(arg))) ParseMap(false, "Category: **$arg** does not exist")
 		else ParseMap(parseValue = WordUtils.capitalize(arg))
 }
