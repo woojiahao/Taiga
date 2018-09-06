@@ -21,6 +21,7 @@ import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.entities.MessageChannel
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent
+import net.dv8tion.jda.core.exceptions.InsufficientPermissionException
 import net.dv8tion.jda.core.hooks.ListenerAdapter
 import java.util.*
 
@@ -96,9 +97,18 @@ class InputEvent : ListenerAdapter() {
 			arguments = parseMap.parsedValues.toTypedArray()
 		}
 
-		c.run(serverPrefix, event.jda, event.guild, event.member, messageChannel, arguments)
-		event.message.addReaction("\uD83D\uDC40").complete()
-		normalLog(c)
+		try {
+			c.run(serverPrefix, event.jda, event.guild, event.member, messageChannel, arguments)
+			event.message.addReaction("\uD83D\uDC40").complete()
+			normalLog(c)
+		} catch (e: InsufficientPermissionException) {
+			messageChannel.send(
+				failureEmbed(
+					"Failed to invoke command",
+					"You need the permission: **${e.permission.getName()}** to use **$commandName**"
+				)
+			)
+		}
 	}
 }
 
