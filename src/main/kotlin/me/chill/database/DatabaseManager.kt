@@ -15,7 +15,8 @@ fun setupDatabase(databaseUrl: String) {
 			UserRecord,
 			Strike,
 			Raider,
-			Suggestion
+			Suggestion,
+			Macro
 		)
 	}
 }
@@ -68,4 +69,10 @@ object Suggestion : Table() {
 	val suggestionDescription = text("suggestion_description")
 	val suggestionDate = datetime("suggestion_date")
 	val messageId = varchar("message_id", 20).nullable()
+}
+
+object Macro : Table() {
+	val serverId = varchar("server_id", 20).primaryKey()
+	val macroName = text("macro_name").primaryKey()
+	val macroDescription = text("macro_description")
 }
