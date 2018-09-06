@@ -192,7 +192,7 @@ private fun invalidArgumentsEmbed(serverPrefix: String, command: Command, errMsg
 
 		field {
 			title = "Learn more"
-			description = "Use the `$serverPrefix help ${command.name}` to learn more about the command"
+			description = "Use the `${serverPrefix}help ${command.name}` to learn more about the command"
 			inline = false
 		}
 	}

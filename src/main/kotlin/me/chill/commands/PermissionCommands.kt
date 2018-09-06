@@ -95,7 +95,7 @@ private fun generatePermissionsList(guild: Guild, commandNames: Array<String>) =
 	commandNames
 		.map {
 			val permission = generatePermission(it, guild)
-			"${permission.first} :: ${guild.getRoleById(permission.second).name}"
+			"**${permission.first}** :: ${guild.getRoleById(permission.second).name}"
 		}
 		.joinToString("\n") { "- $it" }
 
