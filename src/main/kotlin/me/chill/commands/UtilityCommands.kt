@@ -86,7 +86,7 @@ fun utilityCommands() = commands("Utility") {
 	command("changelog") {
 		execute {
 			val changelogsFolder = File("changelogs/")
-			if (changelogsFolder.listFiles().isEmpty()) {
+			if (changelogsFolder.listFiles() == null || changelogsFolder.listFiles().isEmpty()) {
 				respond(
 					successEmbed(
 						"No changelogs",
