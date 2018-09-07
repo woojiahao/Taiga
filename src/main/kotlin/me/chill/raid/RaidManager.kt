@@ -10,7 +10,6 @@ import me.chill.utility.*
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.entities.MessageChannel
-import net.dv8tion.jda.core.entities.MessageHistory
 
 class RaidManager {
 	private val raiders = mutableMapOf<String, RaiderList>()
@@ -48,11 +47,8 @@ class RaidManager {
 						)
 					)
 
-					val raiderMessageHistory = MessageHistory(channel)
-						.retrievePast(50)
-						.complete()
-						.filter { it.author.id == raider.userId }
-					guild.getTextChannelById(channel.id).deleteMessages(raiderMessageHistory).queue()
+					val raiderMessageHistory = channel.getMessageHistory(50) { it.author.id == raider.userId }
+					guild.deleteMessagesFromChannel(channel.id, raiderMessageHistory)
 				}
 			}
 		}

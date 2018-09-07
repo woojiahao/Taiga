@@ -6,10 +6,7 @@ import me.chill.settings.happy
 import me.chill.settings.red
 import me.chill.settings.shock
 import net.dv8tion.jda.core.JDA
-import net.dv8tion.jda.core.entities.Guild
-import net.dv8tion.jda.core.entities.Member
-import net.dv8tion.jda.core.entities.MessageChannel
-import net.dv8tion.jda.core.entities.MessageEmbed
+import net.dv8tion.jda.core.entities.*
 
 fun MessageChannel.send(message: String?) = sendMessage(message).queue()
 
@@ -53,3 +50,9 @@ fun Guild.getRole(roleName: String, ignoreCase: Boolean = false) = getRolesByNam
 fun JDA.findUser(userId: String) = retrieveUserById(userId).complete()
 
 fun Guild.getMutedRole() = if (getRolesByName("muted", false).isEmpty()) null else getRolesByName("muted", false).first()!!
+
+fun Guild.deleteMessagesFromChannel(channelId: String, messagesToDelete: List<Message>) =
+	this.getTextChannelById(channelId).deleteMessages(messagesToDelete).queue()
+
+fun MessageChannel.getMessageHistory(messagesToRetrieve: Int, filter: (Message) -> Boolean = { true }) =
+	MessageHistory(this).retrievePast(messagesToRetrieve).complete().filter { filter(it) }

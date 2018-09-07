@@ -15,7 +15,10 @@ import me.chill.roles.removeRole
 import me.chill.settings.*
 import me.chill.utility.*
 import net.dv8tion.jda.core.JDA
-import net.dv8tion.jda.core.entities.*
+import net.dv8tion.jda.core.entities.Guild
+import net.dv8tion.jda.core.entities.Member
+import net.dv8tion.jda.core.entities.MessageChannel
+import net.dv8tion.jda.core.entities.User
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import java.time.format.DateTimeFormatter
@@ -32,11 +35,8 @@ fun moderationCommands() = commands("Moderation") {
 			val numberToNuke = (arguments[0] as String).toInt()
 			val guild = getGuild()
 
-			val messages = MessageHistory(messageChannel)
-				.retrievePast(numberToNuke + 1)
-				.complete()
-			guild.getTextChannelById(messageChannel.id).deleteMessages(messages)
-				.queue()
+			val messages = messageChannel.getMessageHistory(numberToNuke + 1)
+			guild.deleteMessagesFromChannel(messageChannel.id, messages)
 		}
 	}
 
