@@ -7,14 +7,13 @@ import me.chill.json.help.description
 import me.chill.json.help.example
 import me.chill.json.help.syntax
 import me.chill.settings.*
-import me.chill.utility.embed
-import me.chill.utility.getDateTime
-import me.chill.utility.printMember
-import me.chill.utility.simpleEmbed
+import me.chill.utility.*
 import net.dv8tion.jda.core.JDA
 import net.dv8tion.jda.core.OnlineStatus
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.MessageEmbed
+import java.io.File
+import java.io.FileReader
 
 @CommandCategory
 fun utilityCommands() = commands("Utility") {
@@ -81,6 +80,39 @@ fun utilityCommands() = commands("Utility") {
 	command("botinfo") {
 		execute {
 			respond(botInfoEmbed(getJDA()))
+		}
+	}
+
+	command("changelog") {
+		execute {
+			val changelogsFolder = File("changelogs/")
+			if (changelogsFolder.listFiles().isEmpty()) {
+				respond(
+					successEmbed(
+						"No changelogs",
+						"Nothing to report!",
+						null
+					)
+				)
+				return@execute
+			}
+
+			val latest = changelogsFolder
+				.listFiles()
+				.map { file ->
+					val fileName = file.name
+					fileName.substring(fileName.indexOf("_") + 1, fileName.indexOf(".")).int()
+				}
+				.max()
+
+			val latestChangeLog = "changelogs/changelog_$latest.txt"
+			respond(
+				successEmbed(
+					"${getJDA().selfUser.name} Changelogs",
+					FileReader(File(latestChangeLog)).readLines().joinToString("\n"),
+					null
+				)
+			)
 		}
 	}
 }
