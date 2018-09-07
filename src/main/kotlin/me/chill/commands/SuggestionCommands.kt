@@ -94,7 +94,10 @@ fun suggestionCommands() = commands("Suggestion") {
 					latestSuggestion.suggestionDescription
 				)
 			)
-			val messageId = messageAction.complete().id
+			val message = messageAction.complete()
+			val messageId = message.id
+			message.addReaction("\uD83D\uDC4D").complete()
+			message.addReaction("\uD83D\uDC4E").complete()
 			acceptLatestSuggestionInPool(guild.id, messageId)
 		}
 	}
