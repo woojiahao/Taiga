@@ -47,8 +47,10 @@ class RaidManager {
 						)
 					)
 
-					val raiderMessageHistory = channel.getMessageHistory(50) { it.author.id == raider.userId }
-					guild.deleteMessagesFromChannel(channel.id, raiderMessageHistory)
+					guild.deleteMessagesFromChannel(
+						channel.id,
+						channel.getMessageHistory(50) { it.author.id == raider.userId }
+					)
 				}
 			}
 		}

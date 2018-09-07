@@ -31,12 +31,11 @@ fun moderationCommands() = commands("Moderation") {
 		expects(Integer(0, 99))
 		execute {
 			val messageChannel = getChannel()
-			val arguments = getArguments()
-			val numberToNuke = (arguments[0] as String).toInt()
-			val guild = getGuild()
 
-			val messages = messageChannel.getMessageHistory(numberToNuke + 1)
-			guild.deleteMessagesFromChannel(messageChannel.id, messages)
+			getGuild().deleteMessagesFromChannel(
+				messageChannel.id,
+				messageChannel.getMessageHistory(getArguments()[0]!!.int() + 1)
+			)
 		}
 	}
 

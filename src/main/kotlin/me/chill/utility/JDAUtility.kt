@@ -12,7 +12,6 @@ fun MessageChannel.send(message: String?) = sendMessage(message).queue()
 
 fun MessageChannel.send(embed: MessageEmbed?) = sendMessage(embed).queue()
 
-// todo: add functions for a generic success and failure embed
 inline fun embed(create: EmbedCreator.() -> Unit): MessageEmbed? {
 	val creator = EmbedCreator()
 	creator.create()
