@@ -1,0 +1,4 @@
+**Updates:**
+Major refactoring to clean up the code
+- Split ParseMap into 2 classes, one for final parsing and one for arguments to return
+- Introduced overloaded methods for role manager to reduce overhead
