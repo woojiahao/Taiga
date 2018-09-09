@@ -5,7 +5,7 @@ import me.chill.arguments.ArgumentParseMap
 import me.chill.utility.jda.findUser
 import net.dv8tion.jda.core.entities.Guild
 
-class UserId(val globalSearch: Boolean = false) : Argument {
+class UserId(private val globalSearch: Boolean = false) : Argument {
 	override fun check(guild: Guild, arg: String): ArgumentParseMap {
 		var userId = arg
 		if (arg.startsWith("<@") && arg.endsWith(">")) userId = arg.substring(2, arg.length - 1)

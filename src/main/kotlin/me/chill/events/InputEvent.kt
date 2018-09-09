@@ -27,7 +27,7 @@ import java.util.*
 
 class InputEvent : ListenerAdapter() {
 	override fun onMessageReceived(event: MessageReceivedEvent?) {
-		if (event == null) throw TaigaException("Event object was null during message receive")
+		event ?: throw TaigaException("Event object was null during message receive")
 
 		if (event.member == null) return
 		if (event.member!!.user.isBot) return
