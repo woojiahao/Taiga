@@ -1,437 +1,435 @@
 {
-	"commands": {
-		"Administration": [
-			{
-				"name": "setjoin",
-				"description": "Sets the join channel, uses the default channel if not set",
-				"syntax": "setjoin",
-				"example": "setjoin",
-				"category": "Administration"
-			},
-			{
-				"name": "setlog",
-				"description": "Sets the logging channel, uses the default channel if not set",
-				"syntax": "setlog",
-				"example": "setlog",
-				"category": "Administration"
-			},
-			{
-				"name": "setsuggestion",
-				"description": "Sets the suggestion channel, uses the default channel if not set",
-				"syntax": "setjoin",
-				"example": "setjoin",
-				"category": "Administration"
-			},
-			{
-				"name": "setup",
-				"description": "Sets up the bot for moderation like adding the muted roles and overriding channel permissions",
-				"syntax": "setup",
-				"example": "setup",
-				"category": "Administration"
-			},
-			{
-				"name": "getprefix",
-				"description": "Displays the current prefix set for the current server",
-				"syntax": "getprefix",
-				"example": "getprefix",
-				"category": "Administration"
-			},
-			{
-				"name": "setprefix",
-				"description": "Sets the current prefix for the server, prefix cannot be more than 3 characters long",
-				"syntax": "setprefix { New prefix }",
-				"example": "setprefix ++",
-				"category": "Administration"
-			},
-			{
-				"name": "gettimemultiplier",
-				"description": "Displays the current time multiplier",
-				"syntax": "gettimemultiplier",
-				"example": "gettimemultiplier",
-				"category": "Administration"
-			},
-			{
-				"name": "settimemultiplier",
-				"description": "Sets the time multiplier, multipliers include: S, M, H, D",
-				"syntax": "settimemultiplier { Multiplier }",
-				"example": "settimemultipler H",
-				"category": "Administration"
-			},
-			{
-				"name": "getpreferences",
-				"description": "Displays all the properties set for the server",
-				"syntax": "getpreferences",
-				"example": "getpreferences",
-				"category": "Administration"
-			}
-		],
-		"Welcome": [
-			{
-				"name": "disablewelcome",
-				"description": "Disables bot welcomes for new members",
-				"syntax": "disablewelcome",
-				"example": "disablewelcome",
-				"category": "Welcome"
-			},
-			{
-				"name": "enablewelcome",
-				"description": "Enables bot welcomes for new members",
-				"syntax": "enablewelcome",
-				"example": "enablewelcome",
-				"category": "Welcome"
-			},
-			{
-				"name": "getwelcomeenabled",
-				"description": "Displays whether bot welcomes are enabled or disabled",
-				"syntax": "getwelcomeenabled",
-				"example": "getwelcomeenabled",
-				"category": "Welcome"
-			},
-			{
-				"name": "getwelcomemessage",
-				"description": "Displays what the bot will print when a new member joins the server",
-				"syntax": "getwelcomemessage",
-				"example": "getwelcomemessage",
-				"category": "Welcome"
-			},
-			{
-				"name": "setwelcomemessage",
-				"description": "Sets the welcome message for new members",
-				"syntax": "setwelcomemessage { Welcome message }",
-				"example": "setwelcomemessage Welcome to the server! Have a seat and make sure to read our rules!",
-				"category": "Welcome"
-			}
-		],
-		"Moderation": [
-			{
-				"name": "echo",
-				"description": "Echos a message into another channel, the message to echo cannot contain mentions",
-				"syntax": "echo { Channel Mention/ID } { Message }",
-				"example": "echo #testing Hi, this is a test!",
-				"category": "Moderation"
-			},
-			{
-				"name": "nuke",
-				"description": "Nukes a certain number of messages, from 0 up to 99",
-				"syntax": "nuke { Number to nuke, 0-99 }",
-				"example": "nuke 10",
-				"category": "Moderation"
-			},
-			{
-				"name": "mute",
-				"description": "Mutes a user for a specified period of time, defaulted to minutes",
-				"syntax": "mute { User Mention/ID } { Duration } { Reason }",
-				"example": "mute @Chill 15 Stop",
-				"category": "Moderation"
-			},
-			{
-				"name": "history",
-				"description": "Displays the history of a specific member",
-				"syntax": "history { User ID/Mention }",
-				"example": "history @Chill",
-				"category": "Moderation"
-			},
-			{
-				"name": "strike",
-				"description": "Infracts a user",
-				"syntax": "strike { User ID/Mention } { Strike weight (0-3) } { Strike reason }",
-				"example": "strike @Chill 1 Big dum",
-				"category": "Moderation"
-			},
-			{
-				"name": "warn",
-				"description": "Infracts a user with a 0 weight strike",
-				"syntax": "strike { User ID/Mention } { Strike reason }",
-				"example": "warn @Chill Stop this nonsense",
-				"category": "Moderation"
-			},
-			{
-				"name": "wiperecord",
-				"description": "Wipes the user's record from the database",
-				"syntax": "wiperecord { User ID/Mention }",
-				"example": "wiperecord @Chill",
-				"category": "Moderation"
-			}
-		],
-		"Permission": [
-			{
-				"name": "setpermission",
-				"description": "Sets the permission of a command to be available to a role and higher",
-				"syntax": "setpermission { Command Name } { Role ID }",
-				"example": "setpermission ping 482335855277768717",
-				"category": "Permission"
-			},
-			{
-				"name": "setpermissioncategory",
-				"description": "Sets the permission of all commands in a category to be available to the same role and higher",
-				"syntax": "setpermissioncategory { Command Name } { Role ID }",
-				"example": "setpermissioncategory ping 482335855277768717",
-				"category": "Permission"
-			},
-			{
-				"name": "viewpermissions",
-				"description": "Views all the permissions set in the server",
-				"syntax": "viewpermissions",
-				"example": "viewpermissions",
-				"category": "Permission"
-			}
-		],
-		"Utility": [
-			{
-				"name": "commands",
-				"description": "Displays all the commands available to the user",
-				"syntax": "commands",
-				"example": "commands",
-				"category": "Utility"
-			},
-			{
-				"name": "help",
-				"description": "Displays a help card for the user to learn more about a specific command",
-				"syntax": "help { Command Name }",
-				"example": "help ping",
-				"category": "Utility"
-			},
-			{
-				"name": "invite",
-				"description": "Displays all invite links related to me such as my development server and to invite me to your server",
-				"syntax": "invite",
-				"example": "invite",
-				"category": "Utility"
-			},
-			{
-				"name": "ping",
-				"description": "Displays the ping for me",
-				"syntax": "ping",
-				"example": "ping",
-				"category": "Utility"
-			},
-			{
-				"name": "serverinfo",
-				"description": "Displays information about the server",
-				"syntax": "serverinfo",
-				"example": "serverinfo",
-				"category": "Utility"
-			},
-			{
-				"name": "source",
-				"description": "Displays all links related to my source code",
-				"syntax": "source",
-				"example": "source",
-				"category": "Utility"
-			},
-			{
-				"name": "botinfo",
-				"description": "Displays information about the bot",
-				"syntax": "botinfo",
-				"example": "botinfo",
-				"category": "Utility"
-			}
-		],
-		"Role": [
-			{
-				"name": "assign",
-				"description": "Assigns a role to the specified user, the role must not be higher than my role",
-				"syntax": "assign { Role ID } { User Mention/ID }",
-				"example": "assign 482335631402336266 @Chill",
-				"category": "Role"
-			},
-			{
-				"name": "getjoinrole",
-				"description": "Displays the join role that will be assigned to new members on join in the server",
-				"syntax": "getjoinrole",
-				"example": "getjoinrole",
-				"category": "Role"
-			},
-			{
-				"name": "roles",
-				"description": "Displays all roles and their IDs in the server",
-				"syntax": "roles",
-				"example": "roles",
-				"category": "Role"
-			},
-			{
-				"name": "setjoinrole",
-				"description": "Sets the join role that will be assigned to new members on join in the server",
-				"syntax": "setjoinrole { Role ID }",
-				"example": "setjoinrole 482335922453479434",
-				"category": "Role"
-			},
-			{
-				"name": "clearjoinrole",
-				"description": "Clears the join role",
-				"syntax": "clearjoinrole",
-				"example": "clearjoinrole",
-				"category": "Role"
-			},
-			{
-				"name": "unassign",
-				"description": "Removes a role from the user, the role must not be higher than my role",
-				"syntax": "unassign { Role ID } { User Mention/ID }",
-				"example": "unassign 482335631402336266 @Chill",
-				"category": "Role"
-			}
-		],
-		"Raid": [
-			{
-				"name": "setraidmessageduration",
-				"description": "Sets how long the user messages are tracked in seconds for raid control",
-				"syntax": "setraidmessageduration { Duration (int) }",
-				"example": "setraidmessageduration 10",
-				"category": "Raid"
-			},
-			{
-				"name": "getraidmessagelimit",
-				"description": "Displays how many user messages are tracked for raid control",
-				"syntax": "getraidmessagelimit",
-				"example": "getraidmessagelimit",
-				"category": "Raid"
-			},
-			{
-				"name": "setraidmessagelimit",
-				"description": "Sets the number of user messages are tracked for raid control",
-				"syntax": "setraidmessagelimit { Number of messages }",
-				"example": "setraidmessagelimit 5",
-				"category": "Raid"
-			},
-			{
-				"name": "getraidroleexcluded",
-				"description": "Displays what roles are being excluded from raid filter",
-				"syntax": "getraidroleexcluded",
-				"example": "getraidroleexcluded",
-				"category": "Raid"
-			},
-			{
-				"name": "setraidroleexcluded",
-				"description": "Sets the role that is being excluded from the raid filter, any role higher than this is also automatically excluded",
-				"syntax": "setraidroleexcluded { Role ID }",
-				"example": "setraidroleexcluded 482337896158855168",
-				"category": "Raid"
-			},
-			{
-				"name": "getraidmessageduration",
-				"description": "Displays how long user messages are tracked in seconds for raid control",
-				"syntax": "getraidmessageduration",
-				"example": "getraidmessageduration",
-				"category": "Raid"
-			},
-			{
-				"name": "viewraiders",
-				"description": "Displays all the raiders in the server",
-				"syntax": "viewraiders",
-				"example": "viewraiders",
-				"category": "Raid"
-			},
-			{
-				"name": "freeraider",
-				"description": "Removes a user from the raid list and unmutes them",
-				"syntax": "freeraider { User ID/Mention }",
-				"example": "freeraider @Chill",
-				"category": "Raid"
-			},
-			{
-				"name": "freeallraiders",
-				"description": "Removes all users from the raid list and unmutes them",
-				"syntax": "freeallraiders",
-				"example": "freeallraiders",
-				"category": "Raid"
-			}
-		],
-		"Suggestion": [
-			{
-				"name": "poolinfo",
-				"description": "Displays information about the suggestion pool",
-				"syntax": "poolinfo",
-				"example": "poolinfo",
-				"category": "Suggestion"
-			},
-			{
-				"name": "pooltop",
-				"description": "Displays the latest suggestion in the pool",
-				"syntax": "pooltop",
-				"example": "pooltop",
-				"category": "Suggestion"
-			},
-			{
-				"name": "poolaccept",
-				"description": "Accepts the latest suggestion in the pool",
-				"syntax": "poolaccept",
-				"example": "poolaccept",
-				"category": "Suggestion"
-			},
-			{
-				"name": "pooldeny",
-				"description": "Denies the latest suggestion in the pool",
-				"syntax": "pooldeny",
-				"example": "pooldeny",
-				"category": "Suggestion"
-			},
-			{
-				"name": "suggest",
-				"description": "Adds a suggestion to the suggestion pool",
-				"syntax": "suggest { Suggestion }",
-				"example": "suggest An animal channel please",
-				"category": "Suggestion"
-			},
-			{
-				"name": "respond",
-				"description": "Responds to a suggestion",
-				"syntax": "respond { Suggestion Message ID } { Status (Accepted/Declined) } { Reason }",
-				"example": "respond 12345667 Declined Not enough support",
-				"category": "Suggestion"
-			}
-		],
-		"Animal": [
-			{
-				"name": "cat",
-				"description": "Displays a cat picture/GIF",
-				"syntax": "cat",
-				"example": "cat",
-				"category": "Animal"
-			},
-			{
-				"name": "dog",
-				"description": "Displays a dog picture/GIF",
-				"syntax": "dog",
-				"example": "dog",
-				"category": "Animal"
-			},
-			{
-				"name": "bird",
-				"description": "Displays a bird picture/GIF",
-				"syntax": "bird",
-				"example": "bird",
-				"category": "Animal"
-			}
-		],
-		"Macro": [
-			{
-				"name": "listmacros",
-				"description": "Displays all the macros on the server",
-				"syntax": "listmacros",
-				"example": "listmacros",
-				"category": "Macro"
-			},
-			{
-				"name": "addmacro",
-				"description": "Adds a macro to the server",
-				"syntax": "addmacro { Macro Name } { Macro Description }",
-				"example": "addmacro hi Hello",
-				"category": "Macro"
-			},
-			{
-				"name": "editmacro",
-				"description": "Edits an existing macro on the server",
-				"syntax": "editmacro { Macro Name } { New Macro Description }",
-				"example": "editmacro hi Howdy",
-				"category": "Macro"
-			},
-			{
-				"name": "removemacro",
-				"description": "Removes an existing macro from the server",
-				"syntax": "removemacro { Macro Name }",
-				"example": "removemacro hi",
-				"category": "Macro"
-			}
-		]
-	}
+	"Administration": [
+		{
+			"name": "setjoin",
+			"description": "Sets the join channel, uses the default channel if not set",
+			"syntax": "setjoin",
+			"example": "setjoin",
+			"category": "Administration"
+		},
+		{
+			"name": "setlog",
+			"description": "Sets the logging channel, uses the default channel if not set",
+			"syntax": "setlog",
+			"example": "setlog",
+			"category": "Administration"
+		},
+		{
+			"name": "setsuggestion",
+			"description": "Sets the suggestion channel, uses the default channel if not set",
+			"syntax": "setjoin",
+			"example": "setjoin",
+			"category": "Administration"
+		},
+		{
+			"name": "setup",
+			"description": "Sets up the bot for moderation like adding the muted roles and overriding channel permissions",
+			"syntax": "setup",
+			"example": "setup",
+			"category": "Administration"
+		},
+		{
+			"name": "getprefix",
+			"description": "Displays the current prefix set for the current server",
+			"syntax": "getprefix",
+			"example": "getprefix",
+			"category": "Administration"
+		},
+		{
+			"name": "setprefix",
+			"description": "Sets the current prefix for the server, prefix cannot be more than 3 characters long",
+			"syntax": "setprefix { New prefix }",
+			"example": "setprefix ++",
+			"category": "Administration"
+		},
+		{
+			"name": "gettimemultiplier",
+			"description": "Displays the current time multiplier",
+			"syntax": "gettimemultiplier",
+			"example": "gettimemultiplier",
+			"category": "Administration"
+		},
+		{
+			"name": "settimemultiplier",
+			"description": "Sets the time multiplier, multipliers include: S, M, H, D",
+			"syntax": "settimemultiplier { Multiplier }",
+			"example": "settimemultipler H",
+			"category": "Administration"
+		},
+		{
+			"name": "getpreferences",
+			"description": "Displays all the properties set for the server",
+			"syntax": "getpreferences",
+			"example": "getpreferences",
+			"category": "Administration"
+		}
+	],
+	"Welcome": [
+		{
+			"name": "disablewelcome",
+			"description": "Disables bot welcomes for new members",
+			"syntax": "disablewelcome",
+			"example": "disablewelcome",
+			"category": "Welcome"
+		},
+		{
+			"name": "enablewelcome",
+			"description": "Enables bot welcomes for new members",
+			"syntax": "enablewelcome",
+			"example": "enablewelcome",
+			"category": "Welcome"
+		},
+		{
+			"name": "getwelcomeenabled",
+			"description": "Displays whether bot welcomes are enabled or disabled",
+			"syntax": "getwelcomeenabled",
+			"example": "getwelcomeenabled",
+			"category": "Welcome"
+		},
+		{
+			"name": "getwelcomemessage",
+			"description": "Displays what the bot will print when a new member joins the server",
+			"syntax": "getwelcomemessage",
+			"example": "getwelcomemessage",
+			"category": "Welcome"
+		},
+		{
+			"name": "setwelcomemessage",
+			"description": "Sets the welcome message for new members",
+			"syntax": "setwelcomemessage { Welcome message }",
+			"example": "setwelcomemessage Welcome to the server! Have a seat and make sure to read our rules!",
+			"category": "Welcome"
+		}
+	],
+	"Moderation": [
+		{
+			"name": "echo",
+			"description": "Echos a message into another channel, the message to echo cannot contain mentions",
+			"syntax": "echo { Channel Mention/ID } { Message }",
+			"example": "echo #testing Hi, this is a test!",
+			"category": "Moderation"
+		},
+		{
+			"name": "nuke",
+			"description": "Nukes a certain number of messages, from 0 up to 99",
+			"syntax": "nuke { Number to nuke, 0-99 }",
+			"example": "nuke 10",
+			"category": "Moderation"
+		},
+		{
+			"name": "mute",
+			"description": "Mutes a user for a specified period of time, defaulted to minutes",
+			"syntax": "mute { User Mention/ID } { Duration } { Reason }",
+			"example": "mute @Chill 15 Stop",
+			"category": "Moderation"
+		},
+		{
+			"name": "history",
+			"description": "Displays the history of a specific member",
+			"syntax": "history { User ID/Mention }",
+			"example": "history @Chill",
+			"category": "Moderation"
+		},
+		{
+			"name": "strike",
+			"description": "Infracts a user",
+			"syntax": "strike { User ID/Mention } { Strike weight (0-3) } { Strike reason }",
+			"example": "strike @Chill 1 Big dum",
+			"category": "Moderation"
+		},
+		{
+			"name": "warn",
+			"description": "Infracts a user with a 0 weight strike",
+			"syntax": "strike { User ID/Mention } { Strike reason }",
+			"example": "warn @Chill Stop this nonsense",
+			"category": "Moderation"
+		},
+		{
+			"name": "wiperecord",
+			"description": "Wipes the user's record from the database",
+			"syntax": "wiperecord { User ID/Mention }",
+			"example": "wiperecord @Chill",
+			"category": "Moderation"
+		}
+	],
+	"Permission": [
+		{
+			"name": "setpermission",
+			"description": "Sets the permission of a command to be available to a role and higher",
+			"syntax": "setpermission { Command Name } { Role ID }",
+			"example": "setpermission ping 482335855277768717",
+			"category": "Permission"
+		},
+		{
+			"name": "setpermissioncategory",
+			"description": "Sets the permission of all commands in a category to be available to the same role and higher",
+			"syntax": "setpermissioncategory { Command Name } { Role ID }",
+			"example": "setpermissioncategory ping 482335855277768717",
+			"category": "Permission"
+		},
+		{
+			"name": "viewpermissions",
+			"description": "Views all the permissions set in the server",
+			"syntax": "viewpermissions",
+			"example": "viewpermissions",
+			"category": "Permission"
+		}
+	],
+	"Utility": [
+		{
+			"name": "commands",
+			"description": "Displays all the commands available to the user",
+			"syntax": "commands",
+			"example": "commands",
+			"category": "Utility"
+		},
+		{
+			"name": "help",
+			"description": "Displays a help card for the user to learn more about a specific command",
+			"syntax": "help { Command Name }",
+			"example": "help ping",
+			"category": "Utility"
+		},
+		{
+			"name": "invite",
+			"description": "Displays all invite links related to me such as my development server and to invite me to your server",
+			"syntax": "invite",
+			"example": "invite",
+			"category": "Utility"
+		},
+		{
+			"name": "ping",
+			"description": "Displays the ping for me",
+			"syntax": "ping",
+			"example": "ping",
+			"category": "Utility"
+		},
+		{
+			"name": "serverinfo",
+			"description": "Displays information about the server",
+			"syntax": "serverinfo",
+			"example": "serverinfo",
+			"category": "Utility"
+		},
+		{
+			"name": "source",
+			"description": "Displays all links related to my source code",
+			"syntax": "source",
+			"example": "source",
+			"category": "Utility"
+		},
+		{
+			"name": "botinfo",
+			"description": "Displays information about the bot",
+			"syntax": "botinfo",
+			"example": "botinfo",
+			"category": "Utility"
+		}
+	],
+	"Role": [
+		{
+			"name": "assign",
+			"description": "Assigns a role to the specified user, the role must not be higher than my role",
+			"syntax": "assign { Role ID } { User Mention/ID }",
+			"example": "assign 482335631402336266 @Chill",
+			"category": "Role"
+		},
+		{
+			"name": "getjoinrole",
+			"description": "Displays the join role that will be assigned to new members on join in the server",
+			"syntax": "getjoinrole",
+			"example": "getjoinrole",
+			"category": "Role"
+		},
+		{
+			"name": "roles",
+			"description": "Displays all roles and their IDs in the server",
+			"syntax": "roles",
+			"example": "roles",
+			"category": "Role"
+		},
+		{
+			"name": "setjoinrole",
+			"description": "Sets the join role that will be assigned to new members on join in the server",
+			"syntax": "setjoinrole { Role ID }",
+			"example": "setjoinrole 482335922453479434",
+			"category": "Role"
+		},
+		{
+			"name": "clearjoinrole",
+			"description": "Clears the join role",
+			"syntax": "clearjoinrole",
+			"example": "clearjoinrole",
+			"category": "Role"
+		},
+		{
+			"name": "unassign",
+			"description": "Removes a role from the user, the role must not be higher than my role",
+			"syntax": "unassign { Role ID } { User Mention/ID }",
+			"example": "unassign 482335631402336266 @Chill",
+			"category": "Role"
+		}
+	],
+	"Raid": [
+		{
+			"name": "setraidmessageduration",
+			"description": "Sets how long the user messages are tracked in seconds for raid control",
+			"syntax": "setraidmessageduration { Duration (int) }",
+			"example": "setraidmessageduration 10",
+			"category": "Raid"
+		},
+		{
+			"name": "getraidmessagelimit",
+			"description": "Displays how many user messages are tracked for raid control",
+			"syntax": "getraidmessagelimit",
+			"example": "getraidmessagelimit",
+			"category": "Raid"
+		},
+		{
+			"name": "setraidmessagelimit",
+			"description": "Sets the number of user messages are tracked for raid control",
+			"syntax": "setraidmessagelimit { Number of messages }",
+			"example": "setraidmessagelimit 5",
+			"category": "Raid"
+		},
+		{
+			"name": "getraidroleexcluded",
+			"description": "Displays what roles are being excluded from raid filter",
+			"syntax": "getraidroleexcluded",
+			"example": "getraidroleexcluded",
+			"category": "Raid"
+		},
+		{
+			"name": "setraidroleexcluded",
+			"description": "Sets the role that is being excluded from the raid filter, any role higher than this is also automatically excluded",
+			"syntax": "setraidroleexcluded { Role ID }",
+			"example": "setraidroleexcluded 482337896158855168",
+			"category": "Raid"
+		},
+		{
+			"name": "getraidmessageduration",
+			"description": "Displays how long user messages are tracked in seconds for raid control",
+			"syntax": "getraidmessageduration",
+			"example": "getraidmessageduration",
+			"category": "Raid"
+		},
+		{
+			"name": "viewraiders",
+			"description": "Displays all the raiders in the server",
+			"syntax": "viewraiders",
+			"example": "viewraiders",
+			"category": "Raid"
+		},
+		{
+			"name": "freeraider",
+			"description": "Removes a user from the raid list and unmutes them",
+			"syntax": "freeraider { User ID/Mention }",
+			"example": "freeraider @Chill",
+			"category": "Raid"
+		},
+		{
+			"name": "freeallraiders",
+			"description": "Removes all users from the raid list and unmutes them",
+			"syntax": "freeallraiders",
+			"example": "freeallraiders",
+			"category": "Raid"
+		}
+	],
+	"Suggestion": [
+		{
+			"name": "poolinfo",
+			"description": "Displays information about the suggestion pool",
+			"syntax": "poolinfo",
+			"example": "poolinfo",
+			"category": "Suggestion"
+		},
+		{
+			"name": "pooltop",
+			"description": "Displays the latest suggestion in the pool",
+			"syntax": "pooltop",
+			"example": "pooltop",
+			"category": "Suggestion"
+		},
+		{
+			"name": "poolaccept",
+			"description": "Accepts the latest suggestion in the pool",
+			"syntax": "poolaccept",
+			"example": "poolaccept",
+			"category": "Suggestion"
+		},
+		{
+			"name": "pooldeny",
+			"description": "Denies the latest suggestion in the pool",
+			"syntax": "pooldeny",
+			"example": "pooldeny",
+			"category": "Suggestion"
+		},
+		{
+			"name": "suggest",
+			"description": "Adds a suggestion to the suggestion pool",
+			"syntax": "suggest { Suggestion }",
+			"example": "suggest An animal channel please",
+			"category": "Suggestion"
+		},
+		{
+			"name": "respond",
+			"description": "Responds to a suggestion",
+			"syntax": "respond { Suggestion Message ID } { Status (Accepted/Declined) } { Reason }",
+			"example": "respond 12345667 Declined Not enough support",
+			"category": "Suggestion"
+		}
+	],
+	"Animal": [
+		{
+			"name": "cat",
+			"description": "Displays a cat picture/GIF",
+			"syntax": "cat",
+			"example": "cat",
+			"category": "Animal"
+		},
+		{
+			"name": "dog",
+			"description": "Displays a dog picture/GIF",
+			"syntax": "dog",
+			"example": "dog",
+			"category": "Animal"
+		},
+		{
+			"name": "bird",
+			"description": "Displays a bird picture/GIF",
+			"syntax": "bird",
+			"example": "bird",
+			"category": "Animal"
+		}
+	],
+	"Macro": [
+		{
+			"name": "listmacros",
+			"description": "Displays all the macros on the server",
+			"syntax": "listmacros",
+			"example": "listmacros",
+			"category": "Macro"
+		},
+		{
+			"name": "addmacro",
+			"description": "Adds a macro to the server",
+			"syntax": "addmacro { Macro Name } { Macro Description }",
+			"example": "addmacro hi Hello",
+			"category": "Macro"
+		},
+		{
+			"name": "editmacro",
+			"description": "Edits an existing macro on the server",
+			"syntax": "editmacro { Macro Name } { New Macro Description }",
+			"example": "editmacro hi Howdy",
+			"category": "Macro"
+		},
+		{
+			"name": "removemacro",
+			"description": "Removes an existing macro from the server",
+			"syntax": "removemacro { Macro Name }",
+			"example": "removemacro hi",
+			"category": "Macro"
+		}
+	]
 }

@@ -6,11 +6,9 @@ import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
 
-private const val configDir = "config"
-private const val configFile = "config.json"
 private val gson = GsonBuilder().create()
 
-private const val configPath = "$configDir/$configFile"
+private const val configPath = "config/config.json"
 
 fun isHerokuRunning() = System.getenv("BOT_TOKEN") != null
 
@@ -30,9 +28,8 @@ private fun generateConfigurationFile(configFile: File) {
 	configFile.parentFile.mkdir()
 	configFile.createNewFile()
 
-	val configuration = Configuration()
 	val fileWriter = FileWriter(configPath)
-	gson.toJson(configuration, fileWriter)
+	gson.toJson(Configuration(), fileWriter)
 	fileWriter.close()
 }
 

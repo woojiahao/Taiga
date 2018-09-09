@@ -9,27 +9,17 @@ import me.chill.framework.Command
 import java.io.File
 import java.io.FileReader
 
-private const val configDir = "config"
-private const val helpFile = "help.json"
 private val gson = GsonBuilder().create()
-
-private const val configPath = "$configDir/$helpFile"
 
 fun loadHelp(): List<CommandInfo> {
 	val list = mutableListOf<CommandInfo>()
-	val reader = JsonReader(FileReader(File(configPath)))
-	val commandInfoList = gson
-		.fromJson<JsonObject>(
-			reader,
-			JsonObject::class.java)
-		.getAsJsonObject("commands")
+	val reader = JsonReader(FileReader(File("config/help.json")))
+	val commandInfoList = gson.fromJson<JsonObject>(reader, JsonObject::class.java)
 	commandInfoList
 		.entrySet()
 		.map { gson.fromJson(it.value, JsonArray::class.java) }
 		.forEach {
-			it.forEach { info ->
-				list.add(gson.fromJson(info, CommandInfo::class.java))
-			}
+			it.forEach { info -> list.add(gson.fromJson(info, CommandInfo::class.java)) }
 		}
 	return list
 }
