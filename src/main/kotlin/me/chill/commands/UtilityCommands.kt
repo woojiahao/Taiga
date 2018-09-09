@@ -8,11 +8,7 @@ import me.chill.json.help.example
 import me.chill.json.help.syntax
 import me.chill.settings.*
 import me.chill.utility.getDateTime
-import me.chill.utility.int
-import me.chill.utility.jda.embed
-import me.chill.utility.jda.printMember
-import me.chill.utility.jda.simpleEmbed
-import me.chill.utility.jda.successEmbed
+import me.chill.utility.jda.*
 import me.chill.utility.str
 import net.dv8tion.jda.core.JDA
 import net.dv8tion.jda.core.OnlineStatus
@@ -107,21 +103,59 @@ fun utilityCommands() = commands("Utility") {
 				.listFiles()
 				.map { file ->
 					val fileName = file.name
-					fileName.substring(fileName.indexOf("_") + 1, fileName.indexOf(".")).int()
+					fileName.substring(fileName.indexOf("_") + 1, fileName.lastIndexOf("."))
 				}
-				.max()
+				.max()!!
 
 			val latestChangeLog = "changelogs/changelog_$latest.txt"
+			if (!File(latestChangeLog).exists()) {
+				respond(
+					failureEmbed(
+						"Changelog Reading Failed",
+						"Unable to locate changelog file: **$latestChangeLog**"
+					)
+				)
+				return@execute
+			}
+
 			respond(
-				successEmbed(
-					"${jda.selfUser.name} Changelogs",
-					FileReader(File(latestChangeLog)).readLines().joinToString("\n"),
-					null
+				changeLogEmbed(
+					jda.selfUser.name,
+					latest,
+					FileReader(File(latestChangeLog)).readLines().joinToString("\n")
 				)
 			)
 		}
 	}
 }
+
+private fun changeLogEmbed(botName: String, buildVersion: String, changelogContents: String) =
+	embed {
+		title = "$botName Changelogs"
+		color = green
+
+		field {
+			title = "Changes"
+			description = changelogContents
+		}
+		
+		field {
+			title = "Build Version"
+			description = buildVersion
+			inline = true
+		}
+
+		field {
+			title = "Learn More"
+			description = "[GitHub Repository](https://github.com/woojiahao/Taiga)"
+			inline = true
+		}
+
+		footer {
+			message = getDateTime()
+			iconUrl = null
+		}
+	}
 
 private fun botInfoEmbed(jda: JDA) =
 	embed {
@@ -256,6 +290,7 @@ private fun listCommandsEmbed(commandSets: List<CommandSet>, avatarUrl: String) 
 		}
 	}
 
+// todo: refactor this to not use null
 private fun pingEmbed(latency: Long): MessageEmbed? {
 	var color: Int? = null
 	var thumbnail: String? = null
