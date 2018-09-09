@@ -270,7 +270,7 @@ private fun muteUser(guild: Guild, channel: MessageChannel,
 	val guildTimeMultiplier = getTimeMultiplier(guild.id)
 
 	val mutedRole = guild.getRole("muted")
-	assignRole(guild, channel, mutedRole.id, targetId, true)
+	assignRole(guild, channel, mutedRole.id, targetId)
 	target.sendPrivateMessage(userMuteNotificationEmbed(guild.name, duration, reason, guildTimeMultiplier))
 
 	val muteDuration = if (timeMultiplier != null) {
@@ -281,7 +281,7 @@ private fun muteUser(guild: Guild, channel: MessageChannel,
 
 	Timer().schedule(
 		timerTask {
-			removeRole(guild, channel, mutedRole.id, targetId, true)
+			removeRole(guild, channel, mutedRole.id, targetId)
 			target.sendPrivateMessage(
 				simpleEmbed(
 					"Unmuted",

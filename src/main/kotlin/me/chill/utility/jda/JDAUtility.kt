@@ -15,13 +15,7 @@ fun Member.sendPrivateMessage(message: String) =
 fun Member.sendPrivateMessage(embed: MessageEmbed?) =
 	user.openPrivateChannel().queue { it.send(embed) }
 
-fun Guild.hasRole(roleName: String, ignoreCase: Boolean = false) = getRolesByName(roleName, ignoreCase).isNotEmpty()
-
-fun Guild.getRole(roleName: String, ignoreCase: Boolean = false) = getRolesByName(roleName, ignoreCase).first()!!
-
 fun JDA.findUser(userId: String) = retrieveUserById(userId).complete()
-
-fun Guild.getMutedRole() = if (getRolesByName("muted", false).isEmpty()) null else getRolesByName("muted", false).first()!!
 
 fun Guild.deleteMessagesFromChannel(channelId: String, messagesToDelete: List<Message>) =
 	this.getTextChannelById(channelId).deleteMessages(messagesToDelete).queue()

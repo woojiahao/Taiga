@@ -30,7 +30,7 @@ class OnJoinEvent : ListenerAdapter() {
 		val member = event.member
 
 		if (!getWelcomeDisabled(serverId)) joinChannel.send(newMemberJoinEmbed(server, member))
-		if (hasJoinRole(serverId)) assignRole(server, joinChannel, getJoinRole(serverId)!!, member.user.id, true)
+		if (hasJoinRole(serverId)) assignRole(server, joinChannel, getJoinRole(serverId)!!, member.user.id)
 		if (hasRaider(serverId, member.user.id)) {
 			permanentMute(server, loggingChannel, member.user.id)
 			loggingChannel.send(
