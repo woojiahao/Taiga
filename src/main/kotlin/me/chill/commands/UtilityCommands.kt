@@ -138,7 +138,7 @@ private fun changeLogEmbed(botName: String, buildVersion: String, changelogConte
 			title = "Changes"
 			description = changelogContents
 		}
-		
+
 		field {
 			title = "Build Version"
 			description = buildVersion
