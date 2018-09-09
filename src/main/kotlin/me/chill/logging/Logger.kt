@@ -1,8 +1,8 @@
 package me.chill.logging
 
-import me.chill.framework.Command
-import me.chill.database.states.TargetChannel
 import me.chill.database.operations.getChannel
+import me.chill.database.states.TargetChannel
+import me.chill.framework.Command
 import me.chill.settings.blue
 import me.chill.utility.getDateTime
 import me.chill.utility.jda.embed
@@ -13,13 +13,13 @@ import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.entities.MessageChannel
 
 fun normalLog(command: Command) {
-	val guild = command.getGuild()
+	val guild = command.guild
 	val loggingChannel = guild.getTextChannelById(getChannel(TargetChannel.Logging, guild.id))
 	loggingChannel.send(
 		normalLogEmbed(
 			command.name,
-			command.getInvoker(),
-			command.getChannel()
+			command.invoker,
+			command.channel
 		)
 	)
 }
