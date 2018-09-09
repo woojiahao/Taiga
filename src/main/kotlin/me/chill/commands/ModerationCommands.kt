@@ -14,6 +14,7 @@ import me.chill.roles.assignRole
 import me.chill.roles.removeRole
 import me.chill.settings.*
 import me.chill.utility.*
+import me.chill.utility.jda.*
 import net.dv8tion.jda.core.JDA
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member

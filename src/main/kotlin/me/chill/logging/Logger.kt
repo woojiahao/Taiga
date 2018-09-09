@@ -5,10 +5,10 @@ import me.chill.database.states.TargetChannel
 import me.chill.database.operations.getChannel
 import me.chill.settings.blue
 import me.chill.utility.getDateTime
-import me.chill.utility.embed
-import me.chill.utility.printChannel
-import me.chill.utility.printMember
-import me.chill.utility.send
+import me.chill.utility.jda.embed
+import me.chill.utility.jda.printChannel
+import me.chill.utility.jda.printMember
+import me.chill.utility.jda.send
 import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.entities.MessageChannel
 

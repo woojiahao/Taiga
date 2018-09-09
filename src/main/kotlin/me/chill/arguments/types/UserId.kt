@@ -2,7 +2,7 @@ package me.chill.arguments.types
 
 import me.chill.arguments.Argument
 import me.chill.arguments.ParseMap
-import me.chill.utility.findUser
+import me.chill.utility.jda.findUser
 import net.dv8tion.jda.core.entities.Guild
 
 class UserId(val globalSearch: Boolean = false) : Argument {

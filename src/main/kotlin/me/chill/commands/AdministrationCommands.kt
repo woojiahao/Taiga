@@ -10,7 +10,7 @@ import me.chill.framework.commands
 import me.chill.roles.createRole
 import me.chill.settings.orange
 import me.chill.settings.serve
-import me.chill.utility.*
+import me.chill.utility.jda.*
 import net.dv8tion.jda.core.Permission
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.MessageChannel

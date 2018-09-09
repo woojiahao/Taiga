@@ -5,10 +5,10 @@ import me.chill.settings.green
 import me.chill.settings.happy
 import me.chill.settings.red
 import me.chill.settings.shock
-import me.chill.utility.embed
-import me.chill.utility.failureEmbed
-import me.chill.utility.printMember
-import me.chill.utility.send
+import me.chill.utility.jda.embed
+import me.chill.utility.jda.failureEmbed
+import me.chill.utility.jda.printMember
+import me.chill.utility.jda.send
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.MessageChannel
 

@@ -13,9 +13,9 @@ import me.chill.roles.removeRole
 import me.chill.settings.clap
 import me.chill.settings.green
 import me.chill.settings.serve
-import me.chill.utility.embed
-import me.chill.utility.failureEmbed
-import me.chill.utility.successEmbed
+import me.chill.utility.jda.embed
+import me.chill.utility.jda.failureEmbed
+import me.chill.utility.jda.successEmbed
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Role
 

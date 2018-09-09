@@ -6,7 +6,7 @@ import me.chill.database.operations.getRaidMessageDuration
 import me.chill.database.operations.getRaidMessageLimit
 import me.chill.database.states.TargetChannel
 import me.chill.roles.permanentMute
-import me.chill.utility.*
+import me.chill.utility.jda.*
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.entities.MessageChannel

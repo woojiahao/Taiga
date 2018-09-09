@@ -14,9 +14,9 @@ import me.chill.raidManger
 import me.chill.settings.noWay
 import me.chill.settings.red
 import me.chill.settings.shock
-import me.chill.utility.embed
-import me.chill.utility.failureEmbed
-import me.chill.utility.send
+import me.chill.utility.jda.embed
+import me.chill.utility.jda.failureEmbed
+import me.chill.utility.jda.send
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.entities.MessageChannel
@@ -44,33 +44,34 @@ class InputEvent : ListenerAdapter() {
 					&& getRaidRoleExcluded(server.id) != null
 					&& invoker.roles[0].position >= server.getRoleById(getRaidRoleExcluded(server.id)).position
 			val isAlreadyCaught = hasRaider(server.id, invoker.user.id)
-			if (isExcludedFromRaidControl || isAlreadyCaught) return
-			else {
+			if (isExcludedFromRaidControl || isAlreadyCaught) {
+				return
+			} else {
 				raidManger!!.manageRaid(server, messageChannel, invoker)
 				return
 			}
 		}
 
 		val commandParts = message.substring(serverPrefix.length).split(" ").toTypedArray()
-		val command = commandParts[0]
+		val attemptedCommandMacro = commandParts[0]
 
-		if (hasMacro(server.id, command)) {
-			if (commandParts.size == 1) messageChannel.send(getMacro(server.id, command))
+		if (hasMacro(server.id, attemptedCommandMacro)) {
+			if (commandParts.size == 1) messageChannel.send(getMacro(server.id, attemptedCommandMacro))
 			return
 		}
 
-		if (!CommandContainer.hasCommand(command)) {
+		if (!CommandContainer.hasCommand(attemptedCommandMacro)) {
 			messageChannel.send(
 				failureEmbed(
 					"Invalid Command/Macro",
-					"Command/Macro: **$command** does not exist"
+					"Command/Macro: **$attemptedCommandMacro** does not exist"
 				)
 			)
 			return
 		}
 
-		val c = CommandContainer.getCommand(command)
-		val commandName = c.name
+		val command = CommandContainer.getCommand(attemptedCommandMacro)
+		val commandName = command.name
 
 		if (!checkPermissions(commandName, server, invoker)) {
 			messageChannel.send(
@@ -83,19 +84,24 @@ class InputEvent : ListenerAdapter() {
 			return
 		}
 
-		val expectedArgsSize = c.getArgumentTypes().size
-		var arguments: Array<String>? = formArguments(commandParts, messageChannel, serverPrefix, c, expectedArgsSize)
-			?: return
+		val expectedArgsSize = command.getArgumentTypes().size
+		var arguments = formArguments(
+			commandParts,
+			messageChannel,
+			serverPrefix,
+			command,
+			expectedArgsSize
+		) ?: return
 
-		if (arguments!!.size != expectedArgsSize) {
-			messageChannel.send(insufficientArgumentsEmbed(serverPrefix, c, expectedArgsSize))
+		if (arguments.size != expectedArgsSize) {
+			messageChannel.send(insufficientArgumentsEmbed(serverPrefix, command, expectedArgsSize))
 			return
 		}
 
-		if (c.getArgumentTypes().isNotEmpty()) {
-			val parseMap = parseArguments(c, server, arguments)
+		if (command.getArgumentTypes().isNotEmpty()) {
+			val parseMap = parseArguments(command, server, arguments)
 			if (!parseMap.status) {
-				messageChannel.send(invalidArgumentsEmbed(serverPrefix, c, parseMap.errMsg))
+				messageChannel.send(invalidArgumentsEmbed(serverPrefix, command, parseMap.errMsg))
 				return
 			}
 
@@ -103,9 +109,9 @@ class InputEvent : ListenerAdapter() {
 		}
 
 		try {
-			c.run(serverPrefix, event.jda, event.guild, event.member, messageChannel, arguments)
+			command.run(serverPrefix, event.jda, event.guild, event.member, messageChannel, arguments)
 			event.message.addReaction("\uD83D\uDC40").complete()
-			normalLog(c)
+			normalLog(command)
 		} catch (e: InsufficientPermissionException) {
 			messageChannel.send(
 				failureEmbed(
@@ -143,7 +149,7 @@ private fun checkPermissions(commandName: String, server: Guild, invoker: Member
 private fun formArguments(commandParts: Array<String>, messageChannel: MessageChannel,
 						  serverPrefix: String, c: Command,
 						  expectedArgsSize: Int): Array<String>? {
-	var arguments: Array<String> = emptyArray()
+	var arguments = emptyArray<String>()
 	if (commandParts.size > 1) {
 		val argTypes = c.getArgumentTypes()
 		arguments = if (argTypes.any { it is Sentence }) {
@@ -160,6 +166,7 @@ private fun formArguments(commandParts: Array<String>, messageChannel: MessageCh
 					sentenceArgPosition,
 					commandParts.size)
 				.joinToString(" ")
+
 			val tempArgs = Arrays.copyOfRange(commandParts, 1, sentenceArgPosition).toMutableList()
 			tempArgs.add(sentence)
 			tempArgs.toTypedArray()

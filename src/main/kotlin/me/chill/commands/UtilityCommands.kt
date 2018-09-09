@@ -8,6 +8,10 @@ import me.chill.json.help.example
 import me.chill.json.help.syntax
 import me.chill.settings.*
 import me.chill.utility.*
+import me.chill.utility.jda.embed
+import me.chill.utility.jda.printMember
+import me.chill.utility.jda.simpleEmbed
+import me.chill.utility.jda.successEmbed
 import net.dv8tion.jda.core.JDA
 import net.dv8tion.jda.core.OnlineStatus
 import net.dv8tion.jda.core.entities.Guild

@@ -7,6 +7,10 @@ import me.chill.roles.assignRole
 import me.chill.roles.permanentMute
 import me.chill.settings.green
 import me.chill.utility.*
+import me.chill.utility.jda.embed
+import me.chill.utility.jda.failureEmbed
+import me.chill.utility.jda.printMember
+import me.chill.utility.jda.send
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent

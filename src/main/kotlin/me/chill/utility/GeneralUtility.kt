@@ -1,7 +1,7 @@
 package me.chill.utility
 
-import java.text.SimpleDateFormat
-import java.util.*
+import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
 
-fun getDateTime() = SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(Calendar.getInstance().time)!!
+fun getDateTime() = DateTimeFormat.forPattern("dd-MM-yyyy HH:mm:ss").print(DateTime.now())!!
 fun Any.int() = (this as String).toInt()

@@ -5,7 +5,7 @@ import me.chill.arguments.types.Sentence
 import me.chill.credentials
 import me.chill.exception.TaigaException
 import me.chill.framework.ContainerKey.*
-import me.chill.utility.send
+import me.chill.utility.jda.send
 import net.dv8tion.jda.core.JDA
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member

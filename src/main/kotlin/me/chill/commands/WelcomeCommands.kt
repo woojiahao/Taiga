@@ -10,9 +10,9 @@ import me.chill.events.newMemberJoinEmbed
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
 import me.chill.settings.clap
-import me.chill.utility.failureEmbed
-import me.chill.utility.send
-import me.chill.utility.successEmbed
+import me.chill.utility.jda.failureEmbed
+import me.chill.utility.jda.send
+import me.chill.utility.jda.successEmbed
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.MessageChannel
 

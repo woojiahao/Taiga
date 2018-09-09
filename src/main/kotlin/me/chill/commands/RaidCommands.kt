@@ -9,10 +9,10 @@ import me.chill.framework.commands
 import me.chill.roles.removeRole
 import me.chill.settings.clap
 import me.chill.settings.serve
-import me.chill.utility.failureEmbed
-import me.chill.utility.getMutedRole
+import me.chill.utility.jda.failureEmbed
+import me.chill.utility.jda.getMutedRole
 import me.chill.utility.int
-import me.chill.utility.successEmbed
+import me.chill.utility.jda.successEmbed
 
 @CommandCategory
 fun raidCommands() = commands("Raid") {

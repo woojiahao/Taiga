@@ -5,7 +5,7 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
-import me.chill.utility.failureEmbed
+import me.chill.utility.jda.failureEmbed
 import java.net.HttpURLConnection
 import java.net.URL
 

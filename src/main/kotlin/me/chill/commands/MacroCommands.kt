@@ -9,9 +9,9 @@ import me.chill.database.operations.removeMacro
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
 import me.chill.settings.green
-import me.chill.utility.embed
-import me.chill.utility.failureEmbed
-import me.chill.utility.successEmbed
+import me.chill.utility.jda.embed
+import me.chill.utility.jda.failureEmbed
+import me.chill.utility.jda.successEmbed
 
 @CommandCategory
 fun macroCommands() = commands("Macro") {
