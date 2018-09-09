@@ -13,6 +13,7 @@ import me.chill.settings.serve
 import me.chill.utility.int
 import me.chill.utility.jda.failureEmbed
 import me.chill.utility.jda.successEmbed
+import me.chill.utility.str
 
 @CommandCategory
 fun raidCommands() = commands("Raid") {
@@ -47,7 +48,7 @@ fun raidCommands() = commands("Raid") {
 	command("setraidroleexcluded") {
 		expects(RoleId())
 		execute {
-			val roleId = arguments[0] as String
+			val roleId = arguments[0]!!.str()
 			editRaidRoleExcluded(guild.id, roleId)
 			respond(
 				successEmbed(
@@ -112,7 +113,7 @@ fun raidCommands() = commands("Raid") {
 	command("freeraider") {
 		expects(UserId(true))
 		execute {
-			val userId = arguments[0] as String
+			val userId = arguments[0]!!.str()
 
 			if (guild.getMutedRole() == null) {
 				respond(

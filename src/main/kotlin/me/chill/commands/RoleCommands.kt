@@ -16,6 +16,7 @@ import me.chill.settings.serve
 import me.chill.utility.jda.embed
 import me.chill.utility.jda.failureEmbed
 import me.chill.utility.jda.successEmbed
+import me.chill.utility.str
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Role
 
@@ -31,14 +32,14 @@ fun roleCommands() = commands("Role") {
 	command("assign") {
 		expects(UserId(), RoleId())
 		execute {
-			assignRole(guild, channel, arguments[1] as String, arguments[0] as String)
+			assignRole(guild, channel, arguments[1]!!.str(), arguments[0]!!.str())
 		}
 	}
 
 	command("unassign") {
 		expects(UserId(), RoleId())
 		execute {
-			removeRole(guild, channel, arguments[1] as String, arguments[0] as String)
+			removeRole(guild, channel, arguments[1]!!.str(), arguments[0]!!.str())
 		}
 	}
 
@@ -59,7 +60,7 @@ fun roleCommands() = commands("Role") {
 	command("setjoinrole") {
 		expects(RoleId())
 		execute {
-			val roleId = arguments[0] as String
+			val roleId = arguments[0]!!.str()
 
 			val serverId = guild.id
 

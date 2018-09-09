@@ -10,6 +10,7 @@ import me.chill.framework.commands
 import me.chill.settings.green
 import me.chill.utility.jda.embed
 import me.chill.utility.jda.successEmbed
+import me.chill.utility.str
 import net.dv8tion.jda.core.entities.Guild
 import org.apache.commons.lang3.text.WordUtils
 
@@ -21,8 +22,8 @@ fun permissionCommands() = commands("Permission") {
 			val roles = guild.roles
 			val serverId = guild.id
 
-			val commandName = arguments[0] as String
-			val roleId = arguments[1] as String
+			val commandName = arguments[0]!!.str()
+			val roleId = arguments[1]!!.str()
 
 			val highestRole = roles[0].id
 			if (roleId == highestRole) {
@@ -54,8 +55,8 @@ fun permissionCommands() = commands("Permission") {
 			val roles = guild.roles
 			val serverId = guild.id
 
-			val categoryName = WordUtils.capitalize(arguments[0] as String)
-			val roleId = arguments[1] as String
+			val categoryName = WordUtils.capitalize(arguments[0]!!.str())
+			val roleId = arguments[1]!!.str()
 
 			val highestRole = roles[0].id
 			val commandSet = CommandContainer.getSet(categoryName)

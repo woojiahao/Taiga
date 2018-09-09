@@ -17,6 +17,7 @@ import me.chill.roles.removeRole
 import me.chill.settings.*
 import me.chill.utility.int
 import me.chill.utility.jda.*
+import me.chill.utility.str
 import net.dv8tion.jda.core.JDA
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member
@@ -44,8 +45,8 @@ fun moderationCommands() = commands("Moderation") {
 	command("echo") {
 		expects(ChannelId(), Sentence())
 		execute {
-			val messageChannel = guild.getTextChannelById(arguments[0] as String)
-			val message = arguments[1] as String
+			val messageChannel = guild.getTextChannelById(arguments[0]!!.str())
+			val message = arguments[1]!!.str()
 			if (message.contains(Regex("(<@\\d*>)|(<@&\\d*>)|(@everyone)|(@here)"))) {
 				respond(
 					failureEmbed(
@@ -63,14 +64,14 @@ fun moderationCommands() = commands("Moderation") {
 	command("mute") {
 		expects(UserId(), Integer(), Sentence())
 		execute {
-			muteUser(guild, channel, guild.getMemberById(arguments[0] as String), arguments[2] as String, arguments[1]!!.int())
+			muteUser(guild, channel, guild.getMemberById(arguments[0]!!.str()), arguments[2]!!.str(), arguments[1]!!.int())
 		}
 	}
 
 	command("history") {
 		expects(UserId(true))
 		execute {
-			val targetId = arguments[0] as String
+			val targetId = arguments[0]!!.str()
 			respond(historyEmbed(guild, jda.findUser(targetId), jda, getHistory(guild.id, targetId)))
 		}
 	}
@@ -78,15 +79,15 @@ fun moderationCommands() = commands("Moderation") {
 	command("strike") {
 		expects(UserId(), Integer(0, 3), Sentence())
 		execute {
-			strikeUser(guild, arguments[0] as String, channel, arguments[1]!!.int(), arguments[2] as String, invoker)
+			strikeUser(guild, arguments[0]!!.str(), channel, arguments[1]!!.int(), arguments[2]!!.str(), invoker)
 		}
 	}
 
 	command("warn") {
 		expects(UserId(), Sentence())
 		execute {
-			val targetId = arguments[0] as String
-			val strikeReason = arguments[1] as String
+			val targetId = arguments[0]!!.str()
+			val strikeReason = arguments[1]!!.str()
 			strikeUser(guild, targetId, channel, 0, strikeReason, invoker)
 		}
 	}
@@ -94,7 +95,7 @@ fun moderationCommands() = commands("Moderation") {
 	command("wiperecord") {
 		expects(UserId(true))
 		execute {
-			val targetId = arguments[0] as String
+			val targetId = arguments[0]!!.str()
 			wipeRecord(guild.id, targetId)
 			respond(
 				successEmbed(

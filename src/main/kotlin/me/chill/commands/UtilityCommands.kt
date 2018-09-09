@@ -13,6 +13,7 @@ import me.chill.utility.jda.embed
 import me.chill.utility.jda.printMember
 import me.chill.utility.jda.simpleEmbed
 import me.chill.utility.jda.successEmbed
+import me.chill.utility.str
 import net.dv8tion.jda.core.JDA
 import net.dv8tion.jda.core.OnlineStatus
 import net.dv8tion.jda.core.entities.Guild
@@ -72,7 +73,7 @@ fun utilityCommands() = commands("Utility") {
 	command("help") {
 		expects(CommandName())
 		execute {
-			respond(commandInfoEmbed(CommandContainer.getCommand(arguments[0] as String)))
+			respond(commandInfoEmbed(CommandContainer.getCommand(arguments[0]!!.str())))
 		}
 	}
 

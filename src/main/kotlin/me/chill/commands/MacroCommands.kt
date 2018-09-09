@@ -12,6 +12,7 @@ import me.chill.settings.green
 import me.chill.utility.jda.embed
 import me.chill.utility.jda.failureEmbed
 import me.chill.utility.jda.successEmbed
+import me.chill.utility.str
 
 @CommandCategory
 fun macroCommands() = commands("Macro") {
@@ -25,8 +26,8 @@ fun macroCommands() = commands("Macro") {
 	command("addmacro") {
 		expects(MacroName(), Sentence())
 		execute {
-			val macroName = arguments[0] as String
-			val macroDescription = arguments[1] as String
+			val macroName = arguments[0]!!.str()
+			val macroDescription = arguments[1]!!.str()
 
 			if (getMacroList(guild.id).size >= 50) {
 				respond(
@@ -46,8 +47,8 @@ fun macroCommands() = commands("Macro") {
 	command("editmacro") {
 		expects(MacroName(true), Sentence())
 		execute {
-			val macroName = arguments[0] as String
-			val macroDescription = arguments[1] as String
+			val macroName = arguments[0]!!.str()
+			val macroDescription = arguments[1]!!.str()
 
 			editMacro(guild.id, macroName, macroDescription)
 			respond(macroEditEmbed("Edit Macro Success", guild.id, macroName, macroDescription))
@@ -57,7 +58,7 @@ fun macroCommands() = commands("Macro") {
 	command("removemacro") {
 		expects(MacroName(true))
 		execute {
-			val macroName = arguments[0] as String
+			val macroName = arguments[0]!!.str()
 
 			removeMacro(guild.id, macroName)
 			respond(

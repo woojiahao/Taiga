@@ -13,6 +13,7 @@ import me.chill.settings.clap
 import me.chill.utility.jda.failureEmbed
 import me.chill.utility.jda.send
 import me.chill.utility.jda.successEmbed
+import me.chill.utility.str
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.MessageChannel
 
@@ -56,7 +57,7 @@ fun welcomeCommands() = commands("Welcome") {
 	command("setwelcomemessage") {
 		expects(Sentence())
 		execute {
-			editWelcomeMessage(guild.id, arguments[0] as String)
+			editWelcomeMessage(guild.id, arguments[0]!!.str())
 			respond(newMemberJoinEmbed(guild, invoker))
 		}
 	}

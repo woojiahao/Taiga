@@ -16,6 +16,7 @@ import me.chill.utility.jda.embed
 import me.chill.utility.jda.findUser
 import me.chill.utility.jda.simpleEmbed
 import me.chill.utility.jda.successEmbed
+import me.chill.utility.str
 import net.dv8tion.jda.core.entities.User
 import org.joda.time.format.DateTimeFormat
 
@@ -55,7 +56,7 @@ fun suggestionCommands() = commands("Suggestion") {
 	command("suggest") {
 		expects(Sentence())
 		execute {
-			addSuggestionToPool(guild.id, invoker.user.id, arguments[0] as String)
+			addSuggestionToPool(guild.id, invoker.user.id, arguments[0]!!.str())
 			respond(
 				successEmbed(
 					"Suggestion Added",
@@ -108,8 +109,8 @@ fun suggestionCommands() = commands("Suggestion") {
 			Sentence()
 		)
 		execute {
-			val messageId = arguments[0] as String
-			val status = arguments[1] as String
+			val messageId = arguments[0]!!.str()
+			val status = arguments[1]!!.str()
 
 			val suggestionChannel = guild.getTextChannelById(me.chill.database.operations.getChannel(TargetChannel.Suggestion, guild.id))
 			val message = suggestionChannel.getMessageById(messageId).complete()
@@ -129,7 +130,7 @@ fun suggestionCommands() = commands("Suggestion") {
 						"declined" -> red
 						else -> orange
 					},
-					arguments[2] as String
+					arguments[2]!!.str()
 				)
 			).queue()
 			clearSuggestion(guild.id, messageId)

@@ -15,6 +15,7 @@ import me.chill.settings.serve
 import me.chill.utility.jda.send
 import me.chill.utility.jda.simpleEmbed
 import me.chill.utility.jda.successEmbed
+import me.chill.utility.str
 import net.dv8tion.jda.core.Permission
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.MessageChannel
@@ -55,7 +56,7 @@ fun administrationCommands() = commands("Administration") {
 	command("setprefix") {
 		expects(Prefix())
 		execute {
-			val newPrefix = arguments[0] as String
+			val newPrefix = arguments[0] !!.str()
 			editPrefix(guild.id, newPrefix)
 			respond(
 				successEmbed(
@@ -101,7 +102,7 @@ fun administrationCommands() = commands("Administration") {
 		inclusion.addAll(longFormPlural)
 		expects(Word(inclusion = inclusion.toTypedArray()))
 		execute {
-			val newTimeMultiplier = arguments[0] as String
+			val newTimeMultiplier = arguments[0] !!.str()
 
 			val timeMultiplier = when {
 				shortForm.map { short -> short.toLowerCase() }.contains(newTimeMultiplier) ->
