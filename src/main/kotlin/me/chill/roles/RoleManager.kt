@@ -26,24 +26,18 @@ fun assignRole(guild: Guild, roleId: String, targetId: String) {
 	guild.addRoleToUser(guild.getMemberById(targetId), guild.getRoleById(roleId))
 }
 
-fun removeRole(guild: Guild, channel: MessageChannel, roleId: String, targetId: String): Boolean {
+fun removeRole(guild: Guild, channel: MessageChannel, roleId: String, targetId: String) {
 	val preCheckingResults = preChecking(guild, roleId, targetId)
 	if (preCheckingResults != null) {
 		channel.send(preCheckingResults)
-		return false
+		return
 	}
 
 	val role = guild.getRoleById(roleId)
 	val member = guild.getMemberById(targetId)
 
-	if (!member.roles.contains(role)) {
-		channel.send(roleOperationFailureEmbed("Member: ${printMember(member)} does not have role: **${role.name}**"))
-		return false
-	}
-
 	guild.removeRoleFromUser(member, role)
 	channel.send(roleOperationSuccessEmbed("Successfully removed role: **${role.name}** from ${printMember(member)}"))
-	return true
 }
 
 fun removeRole(guild: Guild, roleId: String, targetId: String) {

@@ -29,16 +29,16 @@ fun roleCommands() = commands("Role") {
 	}
 
 	command("assign") {
-		expects(RoleId(), UserId())
+		expects(UserId(), RoleId())
 		execute {
-			assignRole(guild, channel, arguments[0] as String, arguments[1] as String)
+			assignRole(guild, channel, arguments[1] as String, arguments[0] as String)
 		}
 	}
 
 	command("unassign") {
-		expects(RoleId(), UserId())
+		expects(UserId(), RoleId())
 		execute {
-			removeRole(guild, channel, arguments[0] as String, arguments[1] as String)
+			removeRole(guild, channel, arguments[1] as String, arguments[0] as String)
 		}
 	}
 
@@ -59,7 +59,6 @@ fun roleCommands() = commands("Role") {
 	command("setjoinrole") {
 		expects(RoleId())
 		execute {
-			val guild = guild
 			val roleId = arguments[0] as String
 
 			val serverId = guild.id
@@ -88,14 +87,12 @@ fun roleCommands() = commands("Role") {
 
 	command("clearjoinrole") {
 		execute {
-			val server = guild
-			val serverId = server.id
 			respond(successEmbed(
 				"Member On Join",
-				if (!hasJoinRole(serverId)) {
-					"**${server.name}** currently does not have an auto-assigned role for new members"
+				if (!hasJoinRole(guild.id)) {
+					"**${guild.name}** currently does not have an auto-assigned role for new members"
 				} else {
-					removeJoinRole(serverId)
+					removeJoinRole(guild.id)
 					"New members will now no longer be assigned a default role"
 				}
 			))
@@ -108,7 +105,7 @@ private fun listRolesEmbed(guild: Guild, roles: List<Role>) =
 		title = "Roles in ${guild.name}"
 		color = green
 		description = roles.joinToString("\n") {
-			"${it.name} :: ${it.id}"
+			"**${it.name}** :: ${it.id}"
 		}
 		thumbnail = guild.iconUrl
 	}

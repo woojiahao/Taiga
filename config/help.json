@@ -230,8 +230,8 @@
 		{
 			"name": "assign",
 			"description": "Assigns a role to the specified user, the role must not be higher than my role",
-			"syntax": "assign { Role ID } { User Mention/ID }",
-			"example": "assign 482335631402336266 @Chill",
+			"syntax": "assign { User Mention/ID } { Role ID }",
+			"example": "assign @Chill 482335631402336266",
 			"category": "Role"
 		},
 		{
@@ -265,8 +265,8 @@
 		{
 			"name": "unassign",
 			"description": "Removes a role from the user, the role must not be higher than my role",
-			"syntax": "unassign { Role ID } { User Mention/ID }",
-			"example": "unassign 482335631402336266 @Chill",
+			"syntax": "unassign { User Mention/ID } { Role ID }",
+			"example": "unassign @Chill 482335631402336266",
 			"category": "Role"
 		}
 	],

@@ -125,7 +125,7 @@ fun raidCommands() = commands("Raid") {
 			}
 
 			if (guild.getMemberById(userId) != null) {
-				if (!removeRole(guild, channel, guild.getMutedRole()!!.id, userId)) return@execute
+				removeRole(guild, guild.getMutedRole()!!.id, userId)
 			}
 			freeRaider(guild.id, userId)
 			respond(
@@ -154,7 +154,7 @@ fun raidCommands() = commands("Raid") {
 
 			getRaiders(guild.id)
 				.filter { raider -> guild.getMemberById(raider) != null }
-				.forEach { member -> removeRole(guild, channel, mutedRoleId, member) }
+				.forEach { member -> removeRole(guild, mutedRoleId, member) }
 			freeAll(guild.id)
 			respond(
 				successEmbed(
