@@ -1,6 +1,6 @@
 package me.chill.raid
 
-class RaiderList(val duration: Int) {
+class RaiderList(private val duration: Int) {
 	private val raiders = mutableListOf<Raider>()
 
 	fun getRaider(userId: String) = raiders.first { it.userId == userId }

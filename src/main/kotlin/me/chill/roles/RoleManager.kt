@@ -1,6 +1,5 @@
 package me.chill.roles
 
-import me.chill.database.operations.getPrefix
 import me.chill.utility.jda.failureEmbed
 import me.chill.utility.jda.printMember
 import me.chill.utility.jda.send
@@ -52,24 +51,6 @@ fun removeRole(guild: Guild, roleId: String, targetId: String) {
 	if (preCheckingResults != null) return
 
 	guild.removeRoleFromUser(guild.getMemberById(targetId), guild.getRoleById(roleId))
-}
-
-// todo: remove the return value from this method and move the checking for the mute role into the place where mutes are issued
-fun permanentMute(guild: Guild, channel: MessageChannel, targetId: String): Boolean {
-	val mutedRole = guild.getRolesByName("muted", true)[0]
-
-	if (mutedRole == null) {
-		channel.send(
-			failureEmbed(
-				"Mute Failed",
-				"Unable to apply mute to user as the **muted** role does not exist, run `${getPrefix(guild.id)}setup`"
-			)
-		)
-		return false
-	}
-
-	guild.addRoleToUser(guild.getMemberById(targetId), mutedRole)
-	return true
 }
 
 fun Guild.hasRole(roleName: String, ignoreCase: Boolean = false) = getRolesByName(roleName, ignoreCase).isNotEmpty()
