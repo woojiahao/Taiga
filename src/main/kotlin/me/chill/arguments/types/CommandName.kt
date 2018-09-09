@@ -1,13 +1,12 @@
 package me.chill.arguments.types
 
 import me.chill.arguments.Argument
-import me.chill.arguments.ParseMap
+import me.chill.arguments.ArgumentParseMap
 import me.chill.framework.CommandContainer
 import net.dv8tion.jda.core.entities.Guild
-import org.apache.commons.lang3.text.WordUtils
 
 class CommandName : Argument {
-	override fun check(guild: Guild, arg: String) =
-		if (!CommandContainer.hasCommand(arg.toLowerCase())) ParseMap(false, "Command: **$arg** does not exist")
-		else ParseMap(parseValue = arg.toLowerCase())
+	override fun check(guild: Guild, arg: String): ArgumentParseMap =
+		if (!CommandContainer.hasCommand(arg.toLowerCase())) ArgumentParseMap(false, errMsg = "Command: **$arg** does not exist")
+		else ArgumentParseMap(true, parsedValue = arg.toLowerCase())
 }

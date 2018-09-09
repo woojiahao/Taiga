@@ -26,9 +26,9 @@ fun loadHelp(): List<CommandInfo> {
 
 fun findCommand(commandName: String) = commandInfo!!.first { info -> info.name == commandName }
 
-val Command.syntax get() = "${getServerPrefix()}${findCommand(name).syntax}"
+val Command.syntax get() = "$serverPrefix${findCommand(name).syntax}"
 
-val Command.example get() = "${getServerPrefix()}${findCommand(name).example}"
+val Command.example get() = "$serverPrefix${findCommand(name).example}"
 
 val Command.category get() = findCommand(name).category
 

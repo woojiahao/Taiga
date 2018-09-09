@@ -11,7 +11,7 @@ fun parseArguments(command: Command, guild: Guild, args: Array<String>): ParseMa
 	for (pair in zipped) {
 		val result = pair.first.check(guild, pair.second)
 		val status = result.status
-		val parsedValue = result.parseValue
+		val parsedValue = result.parsedValue
 
 		parseMap.parsedValues.add(parsedValue)
 
