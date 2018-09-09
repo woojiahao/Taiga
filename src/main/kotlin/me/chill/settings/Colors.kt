@@ -1,8 +1,8 @@
 package me.chill.settings
 
-val red = 16135992
-val blue = 2707594
-val cyan = 3066057
-val green = 3080137
-val orange = 16761614
-val yellow = 16776584
+const val red = 16135992
+const val blue = 7649791
+const val cyan = 52937
+const val green = 5631940
+const val orange = 16761614
+const val yellow = 16771751
