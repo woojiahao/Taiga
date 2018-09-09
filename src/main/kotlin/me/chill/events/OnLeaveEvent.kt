@@ -1,13 +1,14 @@
 package me.chill.events
 
-import me.chill.database.states.TargetChannel
 import me.chill.database.operations.getChannel
 import me.chill.database.operations.removeServerPreference
+import me.chill.database.states.TargetChannel
 import me.chill.exception.TaigaException
 import me.chill.settings.lost
 import me.chill.settings.red
-import me.chill.utility.jda.embed
 import me.chill.utility.getDateTime
+import me.chill.utility.jda.embed
+import me.chill.utility.jda.printMember
 import me.chill.utility.jda.send
 import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.events.guild.GuildLeaveEvent
@@ -39,6 +40,6 @@ private fun memberLeaveEmbed(member: Member) =
 	embed {
 		title = "Member leave"
 		color = red
-		description = "${member.effectiveName}#${member.user.discriminator}::${member.asMention} left the server"
+		description = "${printMember(member)} left the server"
 		thumbnail = lost
 	}

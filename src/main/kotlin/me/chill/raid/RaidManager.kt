@@ -9,6 +9,7 @@ import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.entities.MessageChannel
 
+// todo: add all servers into the mutablemap first instead of dynamically generating them
 class RaidManager {
 	private val raiders = mutableMapOf<String, RaiderList>()
 
