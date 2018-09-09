@@ -15,8 +15,18 @@ import net.dv8tion.jda.core.entities.MessageEmbed
 class Command(var name: String) {
 	private var action: (Command.(Map<ContainerKey, Any?>) -> Unit)? = null
 
-	var commandInformation: MutableMap<ContainerKey, Any?> = mutableMapOf()
-		private set
+	private val commandInformation: MutableMap<ContainerKey, Any?> = mutableMapOf()
+
+	val guild get() = commandInformation[Server] as Guild
+	val invoker get() = commandInformation[Invoker] as Member
+	val channel get() = commandInformation[Channel] as MessageChannel
+	val arguments get() = commandInformation[Input] as Array<*>
+	val jda get() = commandInformation[Jda] as JDA
+	val serverPrefix get() = commandInformation[ServerPrefix] as String
+
+	@Suppress("UNCHECKED_CAST")
+	val argumentTypes
+		get() = commandInformation[ArgumentTypes] as Array<Argument>
 
 	init {
 		commandInformation[Jda] = null
@@ -53,14 +63,6 @@ class Command(var name: String) {
 		this.action!!(commandInformation)
 	}
 
-	fun getGuild() = commandInformation[Server] as Guild
-	fun getInvoker() = commandInformation[Invoker] as Member
-	fun getChannel() = commandInformation[Channel] as MessageChannel
-	fun getArguments() = commandInformation[Input] as Array<*>
-	fun getJDA() = commandInformation[Jda] as JDA
-	fun getServerPrefix() = commandInformation[ServerPrefix] as String
-	fun getArgumentTypes() = commandInformation[ArgumentTypes] as Array<Argument>
-
-	fun respond(embed: MessageEmbed?) = getChannel().send(embed)
-	fun respond(message: String) = getChannel().send(message)
+	fun respond(embed: MessageEmbed?) = channel.send(embed)
+	fun respond(message: String) = channel.send(message)
 }
