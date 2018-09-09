@@ -1,3 +1,6 @@
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/woojiahao/Taiga.js/graphs/commit-activity)
+[![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/woojiahao/Taiga/blob/master/LICENSE)
+
 # Table of contents:
 1. [About Taiga](https://github.com/woojiahao/Taiga#about-taiga)
 2. [Setting up](https://github.com/woojiahao/Taiga#setting-up)
