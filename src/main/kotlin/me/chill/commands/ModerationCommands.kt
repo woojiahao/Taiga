@@ -11,9 +11,11 @@ import me.chill.framework.CommandCategory
 import me.chill.framework.commands
 import me.chill.infraction.UserInfractionRecord
 import me.chill.roles.assignRole
+import me.chill.roles.getMutedRole
+import me.chill.roles.hasRole
 import me.chill.roles.removeRole
 import me.chill.settings.*
-import me.chill.utility.*
+import me.chill.utility.int
 import me.chill.utility.jda.*
 import net.dv8tion.jda.core.JDA
 import net.dv8tion.jda.core.entities.Guild
@@ -26,6 +28,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.concurrent.timerTask
 
+// todo: move embeds into another class to reduce pollution
 @CommandCategory
 fun moderationCommands() = commands("Moderation") {
 	command("nuke") {
@@ -66,13 +69,7 @@ fun moderationCommands() = commands("Moderation") {
 			val args = getArguments()
 			val guild = getGuild()
 
-			val targetId = args[0] as String
-			val target = guild.getMemberById(targetId)
-
-			val duration = args[1]!!.int()
-			val reason = args[2] as String
-
-			muteUser(guild, getChannel(), target, duration, getServerPrefix(), reason)
+			muteUser(guild, getChannel(), guild.getMemberById(args[0] as String), args[2] as String, args[1]!!.int())
 		}
 	}
 
@@ -88,11 +85,7 @@ fun moderationCommands() = commands("Moderation") {
 		expects(UserId(), Integer(0, 3), Sentence())
 		execute {
 			val args = getArguments()
-			val targetId = args[0] as String
-			val strikeWeight = args[1]!!.int()
-			val strikeReason = args[2] as String
-
-			strikeUser(getGuild(), targetId, getChannel(), strikeWeight, strikeReason, getInvoker())
+			strikeUser(getGuild(), args[0] as String, getChannel(), args[1]!!.int(), args[2] as String, getInvoker())
 		}
 	}
 
@@ -120,6 +113,81 @@ fun moderationCommands() = commands("Moderation") {
 			)
 		}
 	}
+}
+
+private fun strikeUser(guild: Guild, targetId: String, channel: MessageChannel,
+					   strikeWeight: Int, strikeReason: String, invoker: Member) {
+	val guildId = guild.id
+	val target = guild.getMemberById(targetId)
+	val loggingChannel = guild.getTextChannelById(getChannel(TargetChannel.Logging, guildId))
+
+	addStrike(guildId, targetId, strikeWeight, strikeReason, invoker.user.id)
+	val strikeCount = getStrikeCount(guildId, targetId)
+	guild.getMemberById(targetId)
+		.sendPrivateMessage(
+			userStrikeNotificationEmbed(guild.name, strikeReason, strikeWeight, strikeCount)
+		)
+
+	loggingChannel.send(strikeSuccessEmbed(strikeWeight, target, strikeReason))
+
+	when {
+		strikeCount == 1 -> muteUser(guild, channel, target, "Muted due to infraction", timeMultiplier = TimeMultiplier.H)
+		strikeCount == 2 -> muteUser(guild, channel, target, "Muted due to infraction", timeMultiplier = TimeMultiplier.D)
+		strikeCount >= 3 -> guild.controller.ban(target, 1, strikeReason).complete()
+	}
+}
+
+private fun muteUser(guild: Guild, channel: MessageChannel,
+					 target: Member, reason: String,
+					 duration: Int = 1, timeMultiplier: TimeMultiplier? = null) {
+	val loggingChannel = guild.getTextChannelById(getChannel(TargetChannel.Logging, guild.id))
+	val targetId = target.user.id
+
+	if (!guild.hasRole("muted")) {
+		channel.send(
+			failureEmbed(
+				"Mute Failed",
+				"Unable to apply mute to user as the **muted** role does not exist, run `${getPrefix(guild.id)}setup`"
+			)
+		)
+		return
+	}
+
+	val guildTimeMultiplier = getTimeMultiplier(guild.id)
+
+	val mutedRole = guild.getMutedRole()
+	assignRole(guild, mutedRole!!.id, targetId)
+	target.sendPrivateMessage(userMuteNotificationEmbed(guild.name, duration, reason, guildTimeMultiplier))
+
+	val muteDuration =
+		if (timeMultiplier != null) duration * timeMultiplier.multiplier
+		else duration * guildTimeMultiplier.multiplier
+
+	Timer().schedule(
+		timerTask {
+			removeRole(guild, mutedRole.id, targetId)
+			target.sendPrivateMessage(
+				simpleEmbed(
+					"Unmuted",
+					"You have been unmuted in **${guild.name}**",
+					null,
+					cyan
+				)
+			)
+
+			loggingChannel.send(
+				simpleEmbed(
+					"User Unmuted",
+					"User: ${printMember(target)} has been unmuted",
+					null,
+					orange
+				)
+			)
+		},
+		muteDuration
+	)
+
+	loggingChannel.send(muteSuccessEmbed(target, duration, reason, guildTimeMultiplier))
 }
 
 private fun historyEmbed(guild: Guild, user: User, jda: JDA, userInfractionRecord: UserInfractionRecord) =
@@ -208,103 +276,6 @@ private fun userStrikeNotificationEmbed(guildName: String, strikeReason: String,
 			description = "Your strike count is at **$strikeCount/3**"
 		}
 	}
-
-private fun strikeUser(guild: Guild, targetId: String, channel: MessageChannel,
-					   strikeWeight: Int, strikeReason: String, invoker: Member) {
-	val guildId = guild.id
-	val target = guild.getMemberById(targetId)
-	val loggingChannel = guild.getTextChannelById(getChannel(TargetChannel.Logging, guildId))
-
-	addStrike(guildId, targetId, strikeWeight, strikeReason, invoker.user.id)
-	val strikeCount = getStrikeCount(guildId, targetId)
-	guild
-		.getMemberById(targetId)
-		.sendPrivateMessage(
-			userStrikeNotificationEmbed(guild.name, strikeReason, strikeWeight, strikeCount)
-		)
-
-	loggingChannel.send(
-		strikeSuccessEmbed(strikeWeight, target, strikeReason)
-	)
-
-	when {
-		strikeCount == 1 -> muteUser(
-			guild,
-			channel,
-			target,
-			1,
-			getPrefix(guildId),
-			"Muted due to infraction",
-			TimeMultiplier.H
-		)
-		strikeCount == 2 -> muteUser(
-			guild,
-			channel,
-			target,
-			1,
-			getPrefix(guildId),
-			"Muted due to infraction",
-			TimeMultiplier.D
-		)
-		strikeCount >= 3 -> guild.controller.ban(target, 1, strikeReason).complete()
-	}
-}
-
-private fun muteUser(guild: Guild, channel: MessageChannel,
-					 target: Member, duration: Int,
-					 serverPrefix: String, reason: String,
-					 timeMultiplier: TimeMultiplier? = null) {
-	val loggingChannel = guild.getTextChannelById(getChannel(TargetChannel.Logging, guild.id))
-	val targetId = target.user.id
-
-	if (!guild.hasRole("muted")) {
-		channel.send(
-			failureEmbed(
-				"Mute Failed",
-				"Unable to apply mute to user as the **muted** role does not exist, run `${serverPrefix}setup`"
-			)
-		)
-		return
-	}
-
-	val guildTimeMultiplier = getTimeMultiplier(guild.id)
-
-	val mutedRole = guild.getRole("muted")
-	assignRole(guild, channel, mutedRole.id, targetId)
-	target.sendPrivateMessage(userMuteNotificationEmbed(guild.name, duration, reason, guildTimeMultiplier))
-
-	val muteDuration = if (timeMultiplier != null) {
-		duration * timeMultiplier.multiplier
-	} else {
-		duration * guildTimeMultiplier.multiplier
-	}
-
-	Timer().schedule(
-		timerTask {
-			removeRole(guild, channel, mutedRole.id, targetId)
-			target.sendPrivateMessage(
-				simpleEmbed(
-					"Unmuted",
-					"You have been unmuted in **${guild.name}**",
-					null,
-					cyan
-				)
-			)
-
-			loggingChannel.send(
-				simpleEmbed(
-					"User Unmuted",
-					"User: ${printMember(target)} has been unmuted",
-					thumbnail = null,
-					color = orange
-				)
-			)
-		},
-		muteDuration
-	)
-
-	loggingChannel.send(muteSuccessEmbed(target, duration, reason, guildTimeMultiplier))
-}
 
 private fun userMuteNotificationEmbed(guildName: String, duration: Int, reason: String, guildTimeMultiplier: TimeMultiplier) =
 	embed {
