@@ -25,8 +25,8 @@ fun suggestionCommands() = commands("Suggestion") {
 		execute {
 			respond(
 				simpleEmbed(
-					"${getGuild().name} Suggestion Pool",
-					"There are **${getPoolSize(getGuild().id)}** suggestion(s)",
+					"${guild.name} Suggestion Pool",
+					"There are **${getPoolSize(guild.id)}** suggestion(s)",
 					null,
 					blue
 				)
@@ -36,7 +36,7 @@ fun suggestionCommands() = commands("Suggestion") {
 
 	command("pooltop") {
 		execute {
-			if (getPoolSize(getGuild().id) == 0) {
+			if (getPoolSize(guild.id) == 0) {
 				respond(
 					simpleEmbed(
 						"No Suggestion In Pool",
@@ -46,8 +46,8 @@ fun suggestionCommands() = commands("Suggestion") {
 					)
 				)
 			} else {
-				val latestSuggestion = getLatestSuggestionInPool(getGuild().id)
-				respond(suggestionInformationEmbed(getJDA().findUser(latestSuggestion.suggesterId), latestSuggestion))
+				val latestSuggestion = getLatestSuggestionInPool(guild.id)
+				respond(suggestionInformationEmbed(jda.findUser(latestSuggestion.suggesterId), latestSuggestion))
 			}
 		}
 	}
@@ -55,7 +55,7 @@ fun suggestionCommands() = commands("Suggestion") {
 	command("suggest") {
 		expects(Sentence())
 		execute {
-			addSuggestionToPool(getGuild().id, getInvoker().user.id, getArguments()[0] as String)
+			addSuggestionToPool(guild.id, invoker.user.id, arguments[0] as String)
 			respond(
 				successEmbed(
 					"Suggestion Added",
@@ -68,19 +68,18 @@ fun suggestionCommands() = commands("Suggestion") {
 
 	command("pooldeny") {
 		execute {
-			val latestSuggestion = getLatestSuggestionInPool(getGuild().id)
-			denyLatestSuggestionInPool(getGuild().id)
+			val latestSuggestion = getLatestSuggestionInPool(guild.id)
+			denyLatestSuggestionInPool(guild.id)
 			respond("Suggestion Denied:")
-			respond(suggestionInformationEmbed(getJDA().findUser(latestSuggestion.suggesterId), latestSuggestion))
+			respond(suggestionInformationEmbed(jda.findUser(latestSuggestion.suggesterId), latestSuggestion))
 		}
 	}
 
 	command("poolaccept") {
 		execute {
-			val guild = getGuild()
 			val latestSuggestion = getLatestSuggestionInPool(guild.id)
 
-			val suggester = getJDA().findUser(latestSuggestion.suggesterId)
+			val suggester = jda.findUser(latestSuggestion.suggesterId)
 
 			respond("Suggestion Accepted:")
 			respond(suggestionInformationEmbed(suggester, latestSuggestion))
@@ -109,10 +108,8 @@ fun suggestionCommands() = commands("Suggestion") {
 			Sentence()
 		)
 		execute {
-			val guild = getGuild()
-			val args = getArguments()
-			val messageId = args[0] as String
-			val status = args[1] as String
+			val messageId = arguments[0] as String
+			val status = arguments[1] as String
 
 			val suggestionChannel = guild.getTextChannelById(me.chill.database.operations.getChannel(TargetChannel.Suggestion, guild.id))
 			val message = suggestionChannel.getMessageById(messageId).complete()
@@ -132,7 +129,7 @@ fun suggestionCommands() = commands("Suggestion") {
 						"declined" -> red
 						else -> orange
 					},
-					args[2] as String
+					arguments[2] as String
 				)
 			).queue()
 			clearSuggestion(guild.id, messageId)

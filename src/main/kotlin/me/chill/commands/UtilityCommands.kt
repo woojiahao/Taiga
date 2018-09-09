@@ -7,7 +7,8 @@ import me.chill.json.help.description
 import me.chill.json.help.example
 import me.chill.json.help.syntax
 import me.chill.settings.*
-import me.chill.utility.*
+import me.chill.utility.getDateTime
+import me.chill.utility.int
 import me.chill.utility.jda.embed
 import me.chill.utility.jda.printMember
 import me.chill.utility.jda.simpleEmbed
@@ -23,7 +24,7 @@ import java.io.FileReader
 fun utilityCommands() = commands("Utility") {
 	command("ping") {
 		execute {
-			val jda = getJDA()
+			val jda = jda
 			val latency = jda.ping
 			respond(pingEmbed(latency))
 		}
@@ -62,7 +63,7 @@ fun utilityCommands() = commands("Utility") {
 			respond(
 				listCommandsEmbed(
 					CommandContainer.commandSets,
-					getJDA().selfUser.avatarUrl
+					jda.selfUser.avatarUrl
 				)
 			)
 		}
@@ -71,19 +72,19 @@ fun utilityCommands() = commands("Utility") {
 	command("help") {
 		expects(CommandName())
 		execute {
-			respond(commandInfoEmbed(CommandContainer.getCommand(getArguments()[0] as String)))
+			respond(commandInfoEmbed(CommandContainer.getCommand(arguments[0] as String)))
 		}
 	}
 
 	command("serverinfo") {
 		execute {
-			respond(serverInfoEmbed(getGuild()))
+			respond(serverInfoEmbed(guild))
 		}
 	}
 
 	command("botinfo") {
 		execute {
-			respond(botInfoEmbed(getJDA()))
+			respond(botInfoEmbed(jda))
 		}
 	}
 
@@ -112,7 +113,7 @@ fun utilityCommands() = commands("Utility") {
 			val latestChangeLog = "changelogs/changelog_$latest.txt"
 			respond(
 				successEmbed(
-					"${getJDA().selfUser.name} Changelogs",
+					"${jda.selfUser.name} Changelogs",
 					FileReader(File(latestChangeLog)).readLines().joinToString("\n"),
 					null
 				)

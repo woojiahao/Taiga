@@ -84,7 +84,7 @@ class InputEvent : ListenerAdapter() {
 			return
 		}
 
-		val expectedArgsSize = command.getArgumentTypes().size
+		val expectedArgsSize = command.argumentTypes.size
 		var arguments = formArguments(
 			commandParts,
 			messageChannel,
@@ -98,7 +98,7 @@ class InputEvent : ListenerAdapter() {
 			return
 		}
 
-		if (command.getArgumentTypes().isNotEmpty()) {
+		if (command.argumentTypes.isNotEmpty()) {
 			val parseMap = parseArguments(command, server, arguments)
 			if (!parseMap.status) {
 				messageChannel.send(invalidArgumentsEmbed(serverPrefix, command, parseMap.errMsg))
@@ -151,7 +151,7 @@ private fun formArguments(commandParts: Array<String>, messageChannel: MessageCh
 						  expectedArgsSize: Int): Array<String>? {
 	var arguments = emptyArray<String>()
 	if (commandParts.size > 1) {
-		val argTypes = c.getArgumentTypes()
+		val argTypes = c.argumentTypes
 		arguments = if (argTypes.any { it is Sentence }) {
 			val sentenceArgPosition = argTypes.size
 

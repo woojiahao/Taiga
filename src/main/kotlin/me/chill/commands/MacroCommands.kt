@@ -17,18 +17,16 @@ import me.chill.utility.jda.successEmbed
 fun macroCommands() = commands("Macro") {
 	command("listmacros") {
 		execute {
-			val macroList = getMacroList(getGuild().id)
-			respond(listMacrosEmbed(getGuild().name, macroList.sorted().joinToString(", "), macroList.size))
+			val macroList = getMacroList(guild.id)
+			respond(listMacrosEmbed(guild.name, macroList.sorted().joinToString(", "), macroList.size))
 		}
 	}
 
 	command("addmacro") {
 		expects(MacroName(), Sentence())
 		execute {
-			val guild = getGuild()
-			val args = getArguments()
-			val macroName = args[0] as String
-			val macroDescription = args[1] as String
+			val macroName = arguments[0] as String
+			val macroDescription = arguments[1] as String
 
 			if (getMacroList(guild.id).size >= 50) {
 				respond(
@@ -48,10 +46,8 @@ fun macroCommands() = commands("Macro") {
 	command("editmacro") {
 		expects(MacroName(true), Sentence())
 		execute {
-			val guild = getGuild()
-			val args = getArguments()
-			val macroName = args[0] as String
-			val macroDescription = args[1] as String
+			val macroName = arguments[0] as String
+			val macroDescription = arguments[1] as String
 
 			editMacro(guild.id, macroName, macroDescription)
 			respond(macroEditEmbed("Edit Macro Success", guild.id, macroName, macroDescription))
@@ -61,8 +57,7 @@ fun macroCommands() = commands("Macro") {
 	command("removemacro") {
 		expects(MacroName(true))
 		execute {
-			val guild = getGuild()
-			val macroName = getArguments()[0] as String
+			val macroName = arguments[0] as String
 
 			removeMacro(guild.id, macroName)
 			respond(

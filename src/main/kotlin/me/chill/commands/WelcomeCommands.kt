@@ -1,11 +1,11 @@
 package me.chill.commands
 
 import me.chill.arguments.types.Sentence
-import me.chill.database.states.WelcomeState
 import me.chill.database.operations.disableWelcome
 import me.chill.database.operations.editWelcomeMessage
 import me.chill.database.operations.enableWelcome
 import me.chill.database.operations.getWelcomeDisabled
+import me.chill.database.states.WelcomeState
 import me.chill.events.newMemberJoinEmbed
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
@@ -18,22 +18,20 @@ import net.dv8tion.jda.core.entities.MessageChannel
 
 @CommandCategory
 fun welcomeCommands() = commands("Welcome") {
-
 	command("disablewelcome") {
 		execute {
-			alterWelcomeState(getGuild(), getChannel(), WelcomeState.Disabled)
+			alterWelcomeState(guild, channel, WelcomeState.Disabled)
 		}
 	}
 
 	command("enablewelcome") {
 		execute {
-			alterWelcomeState(getGuild(), getChannel(), WelcomeState.Enabled)
+			alterWelcomeState(guild, channel, WelcomeState.Enabled)
 		}
 	}
 
 	command("getwelcomeenabled") {
 		execute {
-			val guild = getGuild()
 			val isWelcomeDisabled = getWelcomeDisabled(guild.id)
 			val welcomeState = when (isWelcomeDisabled) {
 				false -> WelcomeState.Enabled
@@ -51,15 +49,15 @@ fun welcomeCommands() = commands("Welcome") {
 
 	command("getwelcomemessage") {
 		execute {
-			respond(newMemberJoinEmbed(getGuild(), getInvoker()))
+			respond(newMemberJoinEmbed(guild, invoker))
 		}
 	}
 
 	command("setwelcomemessage") {
 		expects(Sentence())
 		execute {
-			editWelcomeMessage(getGuild().id, getArguments()[0] as String)
-			respond(newMemberJoinEmbed(getGuild(), getInvoker()))
+			editWelcomeMessage(guild.id, arguments[0] as String)
+			respond(newMemberJoinEmbed(guild, invoker))
 		}
 	}
 }

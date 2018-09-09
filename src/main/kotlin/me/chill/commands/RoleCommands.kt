@@ -23,8 +23,6 @@ import net.dv8tion.jda.core.entities.Role
 fun roleCommands() = commands("Role") {
 	command("roles") {
 		execute {
-			val guild = getGuild()
-
 			val roles = guild.roles
 			respond(listRolesEmbed(guild, roles))
 		}
@@ -33,24 +31,19 @@ fun roleCommands() = commands("Role") {
 	command("assign") {
 		expects(RoleId(), UserId())
 		execute {
-			val arguments = getArguments()
-
-			assignRole(getGuild(), getChannel(), arguments[0] as String, arguments[1] as String)
+			assignRole(guild, channel, arguments[0] as String, arguments[1] as String)
 		}
 	}
 
 	command("unassign") {
 		expects(RoleId(), UserId())
 		execute {
-			val arguments = getArguments()
-
-			removeRole(getGuild(), getChannel(), arguments[0] as String, arguments[1] as String)
+			removeRole(guild, channel, arguments[0] as String, arguments[1] as String)
 		}
 	}
 
 	command("getjoinrole") {
 		execute {
-			val guild = getGuild()
 			val message =
 				if (!hasJoinRole(guild.id)) {
 					"**${guild.name}** currently does not have an auto-assigned role for new members"
@@ -66,8 +59,8 @@ fun roleCommands() = commands("Role") {
 	command("setjoinrole") {
 		expects(RoleId())
 		execute {
-			val guild = getGuild()
-			val roleId = getArguments()[0] as String
+			val guild = guild
+			val roleId = arguments[0] as String
 
 			val serverId = guild.id
 
@@ -95,7 +88,7 @@ fun roleCommands() = commands("Role") {
 
 	command("clearjoinrole") {
 		execute {
-			val server = getGuild()
+			val server = guild
 			val serverId = server.id
 			respond(successEmbed(
 				"Member On Join",

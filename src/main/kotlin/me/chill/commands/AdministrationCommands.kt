@@ -8,9 +8,13 @@ import me.chill.database.states.TimeMultiplier
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
 import me.chill.roles.createRole
+import me.chill.roles.getRole
+import me.chill.roles.hasRole
 import me.chill.settings.orange
 import me.chill.settings.serve
-import me.chill.utility.jda.*
+import me.chill.utility.jda.send
+import me.chill.utility.jda.simpleEmbed
+import me.chill.utility.jda.successEmbed
 import net.dv8tion.jda.core.Permission
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.MessageChannel
@@ -19,34 +23,24 @@ import net.dv8tion.jda.core.entities.MessageChannel
 fun administrationCommands() = commands("Administration") {
 	command("setlog") {
 		execute {
-			val channel = getChannel()
-			val guild = getGuild()
-
 			setChannel(TargetChannel.Logging, channel, guild)
 		}
 	}
 
 	command("setjoin") {
 		execute {
-			val channel = getChannel()
-			val guild = getGuild()
-
 			setChannel(TargetChannel.Join, channel, guild)
 		}
 	}
 
 	command("setsuggestion") {
 		execute {
-			val channel = getChannel()
-			val guild = getGuild()
-
 			setChannel(TargetChannel.Suggestion, channel, guild)
 		}
 	}
 
 	command("setup") {
 		execute {
-			val guild = getGuild()
 			setupMuted(guild)
 			respond(
 				successEmbed(
@@ -61,8 +55,7 @@ fun administrationCommands() = commands("Administration") {
 	command("setprefix") {
 		expects(Prefix())
 		execute {
-			val guild = getGuild()
-			val newPrefix = getArguments()[0] as String
+			val newPrefix = arguments[0] as String
 			editPrefix(guild.id, newPrefix)
 			respond(
 				successEmbed(
@@ -75,11 +68,10 @@ fun administrationCommands() = commands("Administration") {
 
 	command("getprefix") {
 		execute {
-			val guild = getGuild()
 			respond(
 				simpleEmbed(
 					"${guild.name} Prefix",
-					"Current prefix is: **${getServerPrefix()}**",
+					"Current prefix is: **$serverPrefix**",
 					serve,
 					orange
 				)
@@ -92,7 +84,7 @@ fun administrationCommands() = commands("Administration") {
 			respond(
 				successEmbed(
 					"Time Multiplier",
-					"Current time multiplier for **${getGuild().name}** is in **${getTimeMultiplier(getGuild().id).fullTerm}s**"
+					"Current time multiplier for **${guild.name}** is in **${getTimeMultiplier(guild.id).fullTerm}s**"
 				)
 			)
 		}
@@ -109,16 +101,15 @@ fun administrationCommands() = commands("Administration") {
 		inclusion.addAll(longFormPlural)
 		expects(Word(inclusion = inclusion.toTypedArray()))
 		execute {
-			val guild = getGuild()
-			val newTimeMultipler = getArguments()[0] as String
+			val newTimeMultiplier = arguments[0] as String
 
 			val timeMultiplier = when {
-				shortForm.map { short -> short.toLowerCase() }.contains(newTimeMultipler) ->
-					TimeMultiplier.valueOf(newTimeMultipler.toUpperCase())
-				longForm.contains(newTimeMultipler) ->
-					timeMultiplers.filter { multiplier -> multiplier.fullTerm == newTimeMultipler }[0]
-				longFormPlural.contains(newTimeMultipler) ->
-					timeMultiplers.filter { multiplier -> "${multiplier.fullTerm}s" == newTimeMultipler }[0]
+				shortForm.map { short -> short.toLowerCase() }.contains(newTimeMultiplier) ->
+					TimeMultiplier.valueOf(newTimeMultiplier.toUpperCase())
+				longForm.contains(newTimeMultiplier) ->
+					timeMultiplers.filter { multiplier -> multiplier.fullTerm == newTimeMultiplier }[0]
+				longFormPlural.contains(newTimeMultiplier) ->
+					timeMultiplers.filter { multiplier -> "${multiplier.fullTerm}s" == newTimeMultiplier }[0]
 				else -> TimeMultiplier.M
 			}
 
@@ -134,7 +125,6 @@ fun administrationCommands() = commands("Administration") {
 
 	command("getpreferences") {
 		execute {
-			val guild = getGuild()
 			val allPreferences = getAllPreferences(guild.id)
 			respond(
 				successEmbed(
@@ -160,7 +150,7 @@ private fun setChannel(targetChannel: TargetChannel, channel: MessageChannel, gu
 
 private fun setupMuted(guild: Guild) {
 	val mutedName = "muted"
-	if (!guild.hasRole(mutedName)) createRole(guild, mutedName)
+	if (!guild.hasRole(mutedName)) guild.createRole(mutedName)
 
 	val muted = guild.getRole(mutedName)
 

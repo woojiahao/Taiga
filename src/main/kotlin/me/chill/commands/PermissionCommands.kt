@@ -18,9 +18,6 @@ fun permissionCommands() = commands("Permission") {
 	command("setpermission") {
 		expects(CommandName(), RoleId())
 		execute {
-			val arguments = getArguments()
-			val guild = getGuild()
-
 			val roles = guild.roles
 			val serverId = guild.id
 
@@ -47,16 +44,13 @@ fun permissionCommands() = commands("Permission") {
 
 	command("viewpermissions") {
 		execute {
-			respond(listPermissionsEmbed(getGuild()))
+			respond(listPermissionsEmbed(guild))
 		}
 	}
 
 	command("setpermissioncategory") {
 		expects(CategoryName(), RoleId())
 		execute {
-			val arguments = getArguments()
-			val guild = getGuild()
-
 			val roles = guild.roles
 			val serverId = guild.id
 

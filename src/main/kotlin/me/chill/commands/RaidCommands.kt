@@ -6,12 +6,12 @@ import me.chill.arguments.types.UserId
 import me.chill.database.operations.*
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
+import me.chill.roles.getMutedRole
 import me.chill.roles.removeRole
 import me.chill.settings.clap
 import me.chill.settings.serve
-import me.chill.utility.jda.failureEmbed
-import me.chill.utility.jda.getMutedRole
 import me.chill.utility.int
+import me.chill.utility.jda.failureEmbed
 import me.chill.utility.jda.successEmbed
 
 @CommandCategory
@@ -19,8 +19,7 @@ fun raidCommands() = commands("Raid") {
 	command("setraidmessageduration") {
 		expects(Integer(1))
 		execute {
-			val guild = getGuild()
-			val duration = getArguments()[0]!!.int()
+			val duration = arguments[0]!!.int()
 			editRaidMessageDuration(guild.id, duration)
 			respond(
 				successEmbed(
@@ -34,8 +33,7 @@ fun raidCommands() = commands("Raid") {
 	command("setraidmessagelimit") {
 		expects(Integer(1))
 		execute {
-			val guild = getGuild()
-			val limit = getArguments()[0]!!.int()
+			val limit = arguments[0]!!.int()
 			editRaidMessageLimit(guild.id, limit)
 			respond(
 				successEmbed(
@@ -49,8 +47,7 @@ fun raidCommands() = commands("Raid") {
 	command("setraidroleexcluded") {
 		expects(RoleId())
 		execute {
-			val guild = getGuild()
-			val roleId = getArguments()[0] as String
+			val roleId = arguments[0] as String
 			editRaidRoleExcluded(guild.id, roleId)
 			respond(
 				successEmbed(
@@ -63,7 +60,6 @@ fun raidCommands() = commands("Raid") {
 
 	command("getraidmessageduration") {
 		execute {
-			val guild = getGuild()
 			respond(
 				successEmbed(
 					"Raid Message Duration",
@@ -76,7 +72,6 @@ fun raidCommands() = commands("Raid") {
 
 	command("getraidmessagelimit") {
 		execute {
-			val guild = getGuild()
 			respond(
 				successEmbed(
 					"Raid Message Limit",
@@ -89,7 +84,6 @@ fun raidCommands() = commands("Raid") {
 
 	command("getraidroleexcluded") {
 		execute {
-			val guild = getGuild()
 			val raidRoleExcluded = getRaidRoleExcluded(guild.id)
 			respond(
 				successEmbed(
@@ -104,7 +98,6 @@ fun raidCommands() = commands("Raid") {
 
 	command("viewraiders") {
 		execute {
-			val guild = getGuild()
 			val raiders = getRaiders(guild.id)
 			respond(
 				successEmbed(
@@ -119,8 +112,7 @@ fun raidCommands() = commands("Raid") {
 	command("freeraider") {
 		expects(UserId(true))
 		execute {
-			val guild = getGuild()
-			val userId = getArguments()[0] as String
+			val userId = arguments[0] as String
 
 			if (guild.getMutedRole() == null) {
 				respond(
@@ -133,7 +125,7 @@ fun raidCommands() = commands("Raid") {
 			}
 
 			if (guild.getMemberById(userId) != null) {
-				if (!removeRole(guild, getChannel(), guild.getMutedRole()!!.id, userId)) return@execute
+				if (!removeRole(guild, channel, guild.getMutedRole()!!.id, userId)) return@execute
 			}
 			freeRaider(guild.id, userId)
 			respond(
@@ -148,9 +140,6 @@ fun raidCommands() = commands("Raid") {
 
 	command("freeallraiders") {
 		execute {
-			val guild = getGuild()
-			val channel = getChannel()
-
 			if (guild.getMutedRole() == null) {
 				respond(
 					failureEmbed(

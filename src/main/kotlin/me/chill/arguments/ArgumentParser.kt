@@ -4,7 +4,7 @@ import me.chill.framework.Command
 import net.dv8tion.jda.core.entities.Guild
 
 fun parseArguments(command: Command, guild: Guild, args: Array<String>): ParseMap {
-	val expectedArgs = command.getArgumentTypes()
+	val expectedArgs = command.argumentTypes
 	val parseMap = ParseMap()
 
 	val zipped = expectedArgs.zip(args)

@@ -34,11 +34,9 @@ fun moderationCommands() = commands("Moderation") {
 	command("nuke") {
 		expects(Integer(0, 99))
 		execute {
-			val messageChannel = getChannel()
-
-			getGuild().deleteMessagesFromChannel(
-				messageChannel.id,
-				messageChannel.getMessageHistory(getArguments()[0]!!.int() + 1)
+			guild.deleteMessagesFromChannel(
+				channel.id,
+				channel.getMessageHistory(arguments[0]!!.int() + 1)
 			)
 		}
 	}
@@ -46,9 +44,8 @@ fun moderationCommands() = commands("Moderation") {
 	command("echo") {
 		expects(ChannelId(), Sentence())
 		execute {
-			val args = getArguments()
-			val message = args[1] as String
-			val messageChannel = getGuild().getTextChannelById(args[0] as String)
+			val messageChannel = guild.getTextChannelById(arguments[0] as String)
+			val message = arguments[1] as String
 			if (message.contains(Regex("(<@\\d*>)|(<@&\\d*>)|(@everyone)|(@here)"))) {
 				respond(
 					failureEmbed(
@@ -59,55 +56,50 @@ fun moderationCommands() = commands("Moderation") {
 				)
 				return@execute
 			}
-			messageChannel.send(args[1] as String)
+			messageChannel.send(message)
 		}
 	}
 
 	command("mute") {
 		expects(UserId(), Integer(), Sentence())
 		execute {
-			val args = getArguments()
-			val guild = getGuild()
-
-			muteUser(guild, getChannel(), guild.getMemberById(args[0] as String), args[2] as String, args[1]!!.int())
+			muteUser(guild, channel, guild.getMemberById(arguments[0] as String), arguments[2] as String, arguments[1]!!.int())
 		}
 	}
 
 	command("history") {
 		expects(UserId(true))
 		execute {
-			val targetId = getArguments()[0] as String
-			respond(historyEmbed(getGuild(), getJDA().findUser(targetId), getJDA(), getHistory(getGuild().id, targetId)))
+			val targetId = arguments[0] as String
+			respond(historyEmbed(guild, jda.findUser(targetId), jda, getHistory(guild.id, targetId)))
 		}
 	}
 
 	command("strike") {
 		expects(UserId(), Integer(0, 3), Sentence())
 		execute {
-			val args = getArguments()
-			strikeUser(getGuild(), args[0] as String, getChannel(), args[1]!!.int(), args[2] as String, getInvoker())
+			strikeUser(guild, arguments[0] as String, channel, arguments[1]!!.int(), arguments[2] as String, invoker)
 		}
 	}
 
 	command("warn") {
 		expects(UserId(), Sentence())
 		execute {
-			val targetId = getArguments()[0] as String
-			val strikeReason = getArguments()[1] as String
-			strikeUser(getGuild(), targetId, getChannel(), 0, strikeReason, getInvoker())
+			val targetId = arguments[0] as String
+			val strikeReason = arguments[1] as String
+			strikeUser(guild, targetId, channel, 0, strikeReason, invoker)
 		}
 	}
 
 	command("wiperecord") {
 		expects(UserId(true))
 		execute {
-			val guild = getGuild()
-			val targetId = getArguments()[0] as String
+			val targetId = arguments[0] as String
 			wipeRecord(guild.id, targetId)
 			respond(
 				successEmbed(
 					"Records Wiped",
-					"User: **${getJDA().findUser(targetId).name}**'s history has been wiped!",
+					"User: **${jda.findUser(targetId).name}**'s history has been wiped!",
 					clap
 				)
 			)
