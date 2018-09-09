@@ -40,9 +40,7 @@ class EmbedCreator {
 
 		if (footer != null) builder.setFooter(footer!!.message, footer!!.iconUrl)
 
-		fields.forEach {
-			builder.addField(it.title, it.description, it.inline)
-		}
+		fields.forEach { builder.addField(it.title, it.description, it.inline) }
 
 		return builder.build()
 	}

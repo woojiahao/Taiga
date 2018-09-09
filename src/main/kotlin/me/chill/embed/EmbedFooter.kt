@@ -1,3 +1,4 @@
 package me.chill.embed
 
-data class EmbedFooter(var message: String? = "", var iconUrl: String? = "")
+data class EmbedFooter(var message: String? = "",
+					   var iconUrl: String? = "")
