@@ -6,6 +6,11 @@ import me.chill.utility.jda.send
 import me.chill.utility.jda.successEmbed
 import net.dv8tion.jda.core.entities.*
 
+/**
+ * Checks that the role to assign and user to assign is valid before performing assignment
+ * Assigns a role to a user and announces the status of the assignment in the channel where
+ * 	the command is invoked
+ */
 fun assignRole(guild: Guild, channel: MessageChannel, roleId: String, targetId: String) {
 	val preCheckingResults = preChecking(guild, roleId, targetId)
 	if (preCheckingResults != null) {
@@ -19,6 +24,10 @@ fun assignRole(guild: Guild, channel: MessageChannel, roleId: String, targetId: 
 	channel.send(roleOperationSuccessEmbed("Successfully assigned role: **${role.name}** to ${printMember(member)}"))
 }
 
+/**
+ * Checks that the role to assign and user to assign is valid before performing assignment
+ * Assigns a role to a user
+ */
 fun assignRole(guild: Guild, roleId: String, targetId: String) {
 	val preCheckingResults = preChecking(guild, roleId, targetId)
 	if (preCheckingResults != null) return
@@ -26,6 +35,11 @@ fun assignRole(guild: Guild, roleId: String, targetId: String) {
 	guild.addRoleToUser(guild.getMemberById(targetId), guild.getRoleById(roleId))
 }
 
+/**
+ * Checks that the role to remove and user to remove from is valid before performing assignment
+ * Removes a role from a user and announces the status of the assignment in the channel where
+ * the command is invoked
+ */
 fun removeRole(guild: Guild, channel: MessageChannel, roleId: String, targetId: String) {
 	val preCheckingResults = preChecking(guild, roleId, targetId)
 	if (preCheckingResults != null) {
@@ -40,6 +54,10 @@ fun removeRole(guild: Guild, channel: MessageChannel, roleId: String, targetId: 
 	channel.send(roleOperationSuccessEmbed("Successfully removed role: **${role.name}** from ${printMember(member)}"))
 }
 
+/**
+ * Checks that the role to remove and user to remove from is valid before performing assignment
+ * Removes a role from a user
+ */
 fun removeRole(guild: Guild, roleId: String, targetId: String) {
 	val preCheckingResults = preChecking(guild, roleId, targetId)
 	if (preCheckingResults != null) return
@@ -53,8 +71,15 @@ fun Guild.getRole(roleName: String, ignoreCase: Boolean = false) = getRolesByNam
 
 fun Guild.getMutedRole() = if (getRolesByName("muted", false).isEmpty()) null else getRolesByName("muted", false).first()!!
 
+/**
+ * Assigns a role to a user
+ */
 fun Guild.addRoleToUser(member: Member, role: Role) = controller.addSingleRoleToMember(member, role).queue()
 
+
+/**
+ * Removes a role from a user
+ */
 fun Guild.removeRoleFromUser(member: Member, role: Role) = controller.removeSingleRoleFromMember(member, role).queue()
 
 fun Guild.createRole(roleName: String) =
@@ -64,6 +89,11 @@ fun Guild.createRole(roleName: String) =
 		.setPermissions(emptyList())
 		.queue()
 
+/**
+ * Performs checking to ensure that a role operation attempt is valid
+ * Status of the check is represented by a message embed.
+ * 	If a message embed is present, the pre-checking failed, else, it passed
+ */
 private fun preChecking(guild: Guild, roleId: String,
 						targetId: String): MessageEmbed? {
 	val role = guild.getRoleById(roleId)

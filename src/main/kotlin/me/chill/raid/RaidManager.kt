@@ -13,6 +13,10 @@ import net.dv8tion.jda.core.entities.MessageChannel
 class RaidManager {
 	private val raiders = mutableMapOf<String, RaiderList>()
 
+	/**
+	 * When the user is to be managed, checks are made to ensure that the server is being watched and the
+	 * 	raider is being tracked
+	 */
 	fun manageRaid(guild: Guild, channel: MessageChannel, member: Member) {
 		val serverId = guild.id
 		val userId = member.user.id
@@ -21,23 +25,24 @@ class RaidManager {
 
 		if (!hasRaider(serverId, userId)) {
 			raiders[serverId]!!.addRaider(userId)
-		} else {
-			val raider = raiders[serverId]!!.getRaider(userId)
-			val raidMessageLimit = getRaidMessageLimit(serverId)
-			raider.messageCount++
+			return
+		}
 
-			if (raider.messageCount >= raidMessageLimit) {
-				if (guild.getMutedRole() == null) {
-					channel.send(
-						failureEmbed(
-							"Mute Failed",
-							"Unable to apply mute to user as the **muted** role does not exist, run `${getPrefix(guild.id)}setup`"
-						)
+		val raider = raiders[serverId]!!.getRaider(userId)
+		val raidMessageLimit = getRaidMessageLimit(serverId)
+		raider.messageCount++
+
+		if (raider.messageCount >= raidMessageLimit) {
+			if (guild.getMutedRole() == null) {
+				channel.send(
+					failureEmbed(
+						"Mute Failed",
+						"Unable to apply mute to user as the **muted** role does not exist, run `${getPrefix(guild.id)}setup`"
 					)
-					return
-				} else {
-					raiderCaught(guild, member, channel)
-				}
+				)
+				return
+			} else {
+				raiderCaught(guild, member, channel)
 			}
 		}
 	}
