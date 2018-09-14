@@ -1,8 +1,10 @@
 # Creating Custom Commands
-> Taiga introduces a simple to use [command framework](https://github.com/woojiahao/Taiga/tree/master/src/main/kotlin/me/chill/commands/framework) to speed up external use.
+> Taiga introduces a simple to use [command framework](https://github.com/woojiahao/Taiga/tree/master/src/main/kotlin/me/chill/commands/framework) 
+to speed up external use.
 
 ## New Category
-When adding a new command, you might find that the command does not fit the theme of any of the existing categories available, namely:
+When adding a new command, you might find that the command does not fit the theme of any of the existing categories 
+available, namely:
 
 * Administration
 * Welcome
@@ -15,21 +17,28 @@ When adding a new command, you might find that the command does not fit the them
 * Animal
 * Macro
 
-If that is the case, you should create a new category to house similar commands so as to reduce the pollution of the other categories with unrelated commands:
+If that is the case, you should create a new category to house similar commands so as to reduce the pollution of the 
+other categories with unrelated commands:
 
-1. Add a new `.kt` file in the [`type`](https://github.com/woojiahao/Taiga/tree/master/src/main/kotlin/me/chill/commands/type) package, ideally, this class should follow the default naming convention of `<Category Name>Commands.kt`
-2. Inside the newly-created file, add a [function](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-function.html) and inside of the body of the function, call the [`commands`](https://github.com/woojiahao/Taiga/blob/master/src/main/kotlin/me/chill/commands/framework/CommandContainer.kt#L33) function. You will also need to pass the name of the category to the `commands` method
+1. Add a new `.kt` file in the [`type`](https://github.com/woojiahao/Taiga/tree/master/src/main/kotlin/me/chill/commands/type) 
+package, ideally, this class should follow the default naming convention of `<Category Name>Commands.kt`
+2. Inside the newly-created file, add a [function](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-function.html) 
+and inside of the body of the function, 
+call the [`commands`](https://github.com/woojiahao/Taiga/blob/master/src/main/kotlin/me/chill/commands/framework/CommandContainer.kt#L33) 
+function. You will also need to pass the name of the category to the `commands` method
 
     ```kotlin
     fun playCommands() = commands("Play") { }
     ```
-3. Add the annotation `@CommandCategory` to the newly-created function, as this allows the command framework to detect this set of commands and seamlessly integrate them into Taiga
+3. Add the annotation `@CommandCategory` to the newly-created function, as this allows the command framework to detect 
+this set of commands and seamlessly integrate them into Taiga
 
     ```kotlin
     @CommandCategory
     fun playCommands() = commands("Play") { }
     ```
-4. You have created a new command category called `Play` successfully, you are now ready to add new commands to this category
+4. You have created a new command category called `Play` successfully, you are now ready to add new commands to this 
+category
 
 ## New Command
 All commands that are created will go within the `commands` lambda and follow the following syntax:
@@ -82,10 +91,12 @@ Each `Command` object holds onto the following pieces of information about the c
 * JDA - This is the JDA object and it can hold information about the bot, that is not just specific to the Guild
 * Input - These are the arguments that the user has specified for the command
 
-To access any of these pieces of information, you can use the helper functions: `getGuild()`, `getChannel()`, `getInvoker()`, `getJDA()` and `getArguments()` within the `command` function.
+To access any of these pieces of information, you can use the helper functions: `getGuild()`, `getChannel()`, 
+`getInvoker()`, `getJDA()` and `getArguments()` within the `command` function.
 
 ### Responding to the user
-When creating commands, you will be needing to respond to the user, thus a utility function has been made available to the `Command` object to respond to the user in the same message channel in which they invoked the command.
+When creating commands, you will be needing to respond to the user, thus a utility function has been made available to 
+the `Command` object to respond to the user in the same message channel in which they invoked the command.
 
 ```kotlin
 @CommandCategory
@@ -100,17 +111,26 @@ fun playCommands() = commands("Play") {
 ```
 ## New Argument Type
 ### Structure
-All argument types in Taiga implement the interface [`Argument`](https://github.com/woojiahao/Taiga/blob/master/src/main/kotlin/me/chill/arguments/Argument.kt) as well as override the `check` method which returns a [`ParseMap`](https://github.com/woojiahao/Taiga/blob/master/src/main/kotlin/me/chill/arguments/ParseMap.kt) which holds the information about the attempt to parse the argument.
+All argument types in Taiga implement the interface 
+[`Argument`](https://github.com/woojiahao/Taiga/blob/master/src/main/kotlin/me/chill/arguments/Argument.kt) as well as 
+override the `check` method which returns a [`ParseMap`](https://github.com/woojiahao/Taiga/blob/master/src/main/kotlin/me/chill/arguments/ParseMap.kt) which holds the information about the attempt to parse the argument.
 
-Inside the `check` method, you will specify how the argument should be parsed and decide what constitutes a passing parse and a failing parse. When you decide on the passing/failing conditions, construct a ParseMap that handles each condition.
+Inside the `check` method, you will specify how the argument should be parsed and decide what constitutes a passing 
+parse and a failing parse. When you decide on the passing/failing conditions, construct a ParseMap that handles each 
+condition.
 
-Every argument type receives both the guild that the command was invoked in as well as the actual argument passed through the command.
+Every argument type receives both the guild that the command was invoked in as well as the actual argument passed 
+through the command.
 
 ### Failing ParseMap
-When returning a failing ParseMap, set the `status` property of the ParseMap to `false` and supply an error message to be displayed to the user to inform them of the reason why the argument was invalid, you can use discord formatting to format this text and the formatting will show up in the error embed.
+When returning a failing ParseMap, set the `status` property of the ParseMap to `false` and supply an error message to 
+be displayed to the user to inform them of the reason why the argument was invalid, you can use discord formatting to 
+format this text and the formatting will show up in the error embed.
 
 ### Passing ParseMap
-When returning a passing ParseMap, you only need to set the `parseValue` to the value after any modifications, in the following example, channel ids can be in the Discord rich format, and in that case, we will be stripping the original argument of that rich format and simply returning the raw channel id.
+When returning a passing ParseMap, you only need to set the `parseValue` to the value after any modifications, in the 
+following example, channel ids can be in the Discord rich format, and in that case, we will be stripping the original 
+argument of that rich format and simply returning the raw channel id.
 
 ```kotlin
 class ChannelId : Argument {
@@ -130,3 +150,38 @@ class ChannelId : Argument {
     }
 }
 ```
+
+## Adding Documentation
+If you create a new command, you will need to create the relevant documentation for it. 
+
+This documentation will not only be used for the `help` command, but also the documentation site which you can deploy
+using GitHub pages.
+
+There are scripts included in this repository written in Python to generate documentation and markdown page structure 
+from the `help.json` file. 
+
+All you need to do to add documentation for your new command is to add it to the `help.json` file in the following 
+format:
+
+```json
+{
+			"name": "",
+			"description": "",
+			"syntax": "",
+			"example": "",
+			"category": ""
+}
+```
+
+Then, if you wish to generate the documentation for the documentation site, run the following command in the root 
+directory, using the output to replace the existing markdowns:
+```bash 
+$ cd scripts
+$ python documentation_command_overview_generator.py
+$ python command_information_generator.py
+$ python main_command_overview_generator.py
+```
+
+**Note:** You should have Python 3.6 and higher installed on your machine.
+
+**Note for Mac OS/X and Linux:** Switch `python` to `python3` to run the commands.
