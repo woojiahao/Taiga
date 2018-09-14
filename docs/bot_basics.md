@@ -1,6 +1,6 @@
 # Bot Basics
 ## Prefix
-> The default prefix to invoke Taiga is `?`.
+> The default prefix to invoke Taiga is `?`
 
 This can be customized for each server, by running the `setprefix` command.
 
