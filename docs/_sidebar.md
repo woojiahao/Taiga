@@ -2,7 +2,7 @@
 
 * [Home](/)
 * [Bot Basics](bot_basics.md)
-* [Commands](commands.md)
+* [Commands Overview](commands.md)
 * [Moderation System](moderation_system.md)
 * [Raid Control](raid_control.md)
 * [Setting Preferences](setting_preferences.md)
