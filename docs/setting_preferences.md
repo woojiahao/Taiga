@@ -61,7 +61,7 @@ New members can be assigned a role by default by using the `setjoinrole` command
 ## Moderation
 The time multiplier is used primarily for muting users as that specified the default duration of the mute. 
 More information about this can be found in the 
-[moderation system section](moderation_system.md) for Taiga.
+[moderation system section](moderation_system.md?id=time-multipliers) for Taiga.
 
 You can change the time multiplier for Taiga to use seconds (S), minutes (M), hours (H) or days (D) and it can be set 
 using `settimemultiplier`

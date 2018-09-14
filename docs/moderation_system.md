@@ -11,6 +11,36 @@ In order for the moderation system of Taiga to work effectively, you have to set
 
 More information on this can be found in the [bot basics](bot_basics.md?id=muted-role) section of the documentation.
 
+## Time Multipliers
+Taiga offers 4 time multipliers:
+
+1. Seconds (**S**)
+2. Minutes (**M**)
+3. Hours (**H**)
+4. Days (**D**)
+
+These time multipliers work in conjunction with commands like `mute` as they specify how long each time unit passed to
+these commands last for.
+
+## Mute
+You can mute users for a specific duration of time using the `mute` command, following such a format:
+
+> mute { User ID/Mention } { Duration } { Reason }
+
+Users will receive a direct message from Taiga informing them of the mute as well as the duration of the mute and the 
+reason for the mute.
+
+The duration is multiplied by the [time multiplier](moderation_system.md?id=time-multipliers) set in the server, with 
+the default being **minutes**
+
+### Gagging
+Seeing how users might interfere whilst moderators are handling a situation, moderators can use the `gag` command which 
+will mute a user for **5 minutes**, enabling moderators to sort things out first.
+
+The reason set for a gag is: *You have been gagged whilst moderators handle an ongoing conflict. Please be patient.*
+
+> gag { User ID/Mention }
+
 ## Strikes
 User infractions are handled via strikes, which can hold weights from 0 to 3. A user can be infracted using the 
 `strike` command. 
