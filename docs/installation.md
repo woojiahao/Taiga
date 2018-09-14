@@ -1,6 +1,6 @@
 # Installation Guide
 Taiga can be hosted on both a local machine and over a Heroku instance.
-## Pre-requisites
+## Prerequisites
 **Either:**
 * [Java 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 * [Maven](https://maven.apache.org/) 
@@ -11,7 +11,7 @@ Taiga can be hosted on both a local machine and over a Heroku instance.
 * [Heroku](https://devcenter.heroku.com/articles/heroku-cli)
 
 ## Local
-### Steps:
+### Steps: {docsify-ignore}
 1. Clone the repository
 
 	```bash
@@ -44,7 +44,7 @@ Taiga can be hosted on both a local machine and over a Heroku instance.
 	```
 
 ## Heroku
-### Steps:
+### Steps: {docsify-ignore}
 1. Clone this repository
 
 	```bash

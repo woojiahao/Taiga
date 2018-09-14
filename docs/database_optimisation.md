@@ -10,8 +10,6 @@ Permissions are only recorded when the command is available to any role other th
 
 This results in a huge performance penalty when using the `viewpermissions` command. 
 
-If you have additional rows to spare in your own database, perform the following replacements to the following files:
-
 ### PermissionOperations.kt
 To assist with batch inserts and batch removal of permissions, add the following method to `PermissionOperations.kt`
 
@@ -78,9 +76,6 @@ This edit goes into the `generatePermissionList()` method of the `PermissionComm
 ```kotlin
 private fun generatePermissionsList(guild: Guild, commandNames: Array<String>) =
 	commandNames
-		.map {
-			val permission = getPermission(it, guild.id)
-			"**$it** :: ${guild.getRoleById(permission).name}"
-		}
+		.map { "**$it** :: ${guild.getRoleById(getPermission(it, guild.id)).name}" }
 		.joinToString("\n") { "- $it" }
 ```
