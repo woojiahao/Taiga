@@ -256,7 +256,7 @@ private fun serverInfoEmbed(guild: Guild) =
 
 private fun commandInfoEmbed(command: Command) =
 	embed {
-		val helpLink = "https://github.com/woojiahao/Taiga/wiki/Commands-%28${command.category}%29#${command.name}"
+		val helpLink = "https://woojiahao.github.io/Taiga/#/${command.category.toLowerCase()}_commands?id=${command.name.toLowerCase()}"
 		title = "${command.category} - ${command.name}"
 		color = cyan
 		description = command.description
@@ -270,7 +270,7 @@ private fun commandInfoEmbed(command: Command) =
 		}
 		field {
 			title = "Learn More"
-			description = "[Wiki page about ${command.name}]($helpLink)"
+			description = "[Documentation on ${command.name}]($helpLink)"
 		}
 	}
 
@@ -290,30 +290,22 @@ private fun listCommandsEmbed(commandSets: List<CommandSet>, avatarUrl: String) 
 		}
 	}
 
-// todo: refactor this to not use null
 private fun pingEmbed(latency: Long): MessageEmbed? {
-	var color: Int? = null
-	var thumbnail: String? = null
-
-	when {
-		latency < 30 -> {
-			color = green
-			thumbnail = happy
-		}
-		latency < 60 -> {
-			color = yellow
-			thumbnail = clap
-		}
-		latency > 90 -> {
-			color = red
-			thumbnail = noWay
-		}
+	val status = when {
+		latency < 30 -> PingStatus.Good
+		latency < 60 -> PingStatus.Average
+		latency > 90 -> PingStatus.Slow
+		else -> PingStatus.Good
 	}
 
 	return embed {
 		title = "Pong! \uD83C\uDFD3"
 		description = "Ping took **${latency}ms**"
-		this.color = pingEmbed@ color
-		this.thumbnail = pingEmbed@ thumbnail
+		color = status.color
+		thumbnail = status.thumbnail
 	}
+}
+
+private enum class PingStatus(val color: Int, val thumbnail: String) {
+	Good(green, happy), Average(yellow, clap), Slow(red, noWay)
 }
