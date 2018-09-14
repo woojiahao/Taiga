@@ -1,6 +1,7 @@
 <!-- docs/_sidebar.md -->
 
 * [Home](/)
+* [Bot Basics](bot_basics.md)
 * [Commands](commands.md)
 * [Moderation System](moderation_system.md)
 * [Raid Control](raid_control.md)

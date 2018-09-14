@@ -5,6 +5,12 @@ Taiga's moderation system operates on the basis of allowing moderators of a serv
 through the use of strikes and to have a consistent system in moderating the system to ensure a fair and balanced 
 chances are given to each and every user.
 
+## Muted Role
+In order for the moderation system of Taiga to work effectively, you have to set up the muted role via the use of the 
+`?setup` command. 
+
+More information on this can be found in the [bot basics](bot_basics.md?id=muted-role) section of the documentation.
+
 ## Strikes
 User infractions are handled via strikes, which can hold weights from 0 to 3. A user can be infracted using the 
 `strike` command. 

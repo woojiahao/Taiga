@@ -4,6 +4,12 @@ messages (message duration).
 
 Raiders that are caught will be reported in the logging channel of the server.
 
+## Muted Role
+In order for the raid control of Taiga to work effectively, you have to set up the muted role via the use of the `?setup`
+command. 
+
+More information on this can be found in the [bot basics](bot_basics.md?id=muted-role) section of the documentation.
+
 ## Elements Of Raid Control
 ### Message Limit 
 Taiga stores a preference for `RaidMessageLimit` and this tracks the number of messages that the user has sent within a 
