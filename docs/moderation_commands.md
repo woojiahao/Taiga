@@ -75,3 +75,48 @@ Wipes the user's record from the database
 ### Example {docsify-ignore}
 
 > wiperecord @Chill
+
+## ban
+### Description {docsify-ignore}
+Bans a user from the server, regardless of whether they are on the server or not
+### Syntax {docsify-ignore}
+
+> ban { User ID/Mention } { Ban Reason }
+
+### Example {docsify-ignore}
+
+> ban @Chill#4048 raid
+
+## banall
+### Description {docsify-ignore}
+Bans all users from the server
+### Syntax {docsify-ignore}
+
+> banall { User ID List (,) } { Ban Reason }
+
+### Example {docsify-ignore}
+
+> banall 416016773226168321,302385772718325760 Raiders
+
+## unban
+### Description {docsify-ignore}
+Unbans a user and leaves a mark on their history
+### Syntax {docsify-ignore}
+
+> unban { User ID/Mention }
+
+### Example {docsify-ignore}
+
+> unban @Chill#4048
+
+## gag
+### Description {docsify-ignore}
+Temporarily mutes a user for 5 minutes to allow moderators to handle an ongoing situation
+### Syntax {docsify-ignore}
+
+> gag { User ID/Mention }
+
+### Example {docsify-ignore}
+
+> gag @Chill#4048
+

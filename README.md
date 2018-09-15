@@ -48,6 +48,10 @@ More information about commands can be found on the [website](https://woojiahao.
 |`strike`|Infracts a user|
 |`warn`|Infracts a user with a 0 weight strike|
 |`wiperecord`|Wipes the user's record from the database|
+|`ban`|Bans a user from the server, regardless of whether they are on the server or not|
+|`banall`|Bans all users from the server|
+|`unban`|Unbans a user and leaves a mark on their history|
+|`gag`|Temporarily mutes a user for 5 minutes to allow moderators to handle an ongoing situation|
 
 ### Permission
 |Name|Description|
@@ -114,7 +118,6 @@ More information about commands can be found on the [website](https://woojiahao.
 |`addmacro`|Adds a macro to the server|
 |`editmacro`|Edits an existing macro on the server|
 |`removemacro`|Removes an existing macro from the server|
-
 
 ## Credits
 Taiga's command framework is heavily inspired by @Fox#0001 HotBot.

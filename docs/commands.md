@@ -42,6 +42,10 @@
 |[`strike`](moderation_commands.md?id=strike)|Infracts a user|
 |[`warn`](moderation_commands.md?id=warn)|Infracts a user with a 0 weight strike|
 |[`wiperecord`](moderation_commands.md?id=wiperecord)|Wipes the user's record from the database|
+|[`ban`](moderation_commands.md?id=ban)|Bans a user from the server, regardless of whether they are on the server or not|
+|[`banall`](moderation_commands.md?id=banall)|Bans all users from the server|
+|[`unban`](moderation_commands.md?id=unban)|Unbans a user and leaves a mark on their history|
+|[`gag`](moderation_commands.md?id=gag)|Temporarily mutes a user for 5 minutes to allow moderators to handle an ongoing situation|
 
 ### [Permission](permission_commands.md)
 |Name|Description|
