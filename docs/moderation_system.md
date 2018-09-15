@@ -41,6 +41,15 @@ The reason set for a gag is: *You have been gagged whilst moderators handle an o
 
 > gag { User ID/Mention }
 
+## Bans
+Taiga supports ban operations using `ban`, `banall`, `unban`.
+
+* **ban** - Bans a user from the server
+* **banall** - Bans multiple users from the server
+* **unban** - Removes the ban from a user, leaves a note on the user's history to note the date of the unban
+
+**Note:** All ban operations will remove a day of the user's message history.
+
 ## Strikes
 User infractions are handled via strikes, which can hold weights from 0 to 3. A user can be infracted using the 
 `strike` command. 
@@ -63,9 +72,9 @@ infraction.
 * If they receive a strike of 1, they will have an accumulated strike weight of 3 and be banned.
 
 ### Strike Weights
-#### Weight 0 / Warns
+#### Weight 0
 ##### Use:
-Strikes of 0 often serve as means to track a user's behavior.
+Strikes of 0 also known as **warns** often serve as means to track a user's behavior.
 
 ##### Punishment:
 Warns do not hold any punishment.
