@@ -157,6 +157,13 @@
 			"syntax": "ban { User ID/Mention } { Ban Reason }",
 			"example": "ban @Chill#4048 raid",
 			"category": "Moderation"
+		},
+		{
+			"name": "banall",
+			"description": "Bans all users from the server",
+			"syntax": "ban { User ID/Mention List (,) } { Ban Reason }",
+			"example": "ban @Chill#4048,@Gasper#6074 Raiders",
+			"category": "Moderation"
 		}
 	],
 	"Permission": [
