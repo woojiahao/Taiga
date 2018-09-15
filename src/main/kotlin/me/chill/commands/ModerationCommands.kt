@@ -156,6 +156,19 @@ fun moderationCommands() = commands("Moderation") {
 			)
 		}
 	}
+
+	command("gag") {
+		expects(UserId())
+		execute {
+			muteUser(
+				guild,
+				channel,
+				guild.getMemberById(arguments[0]!!.str()),
+				"You have been gagged whilst moderators handle an ongoing conflict. Please be patient.",
+				5,
+				TimeMultiplier.M)
+		}
+	}
 }
 
 private fun strikeUser(guild: Guild, targetId: String, channel: MessageChannel,
