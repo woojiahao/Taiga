@@ -169,7 +169,14 @@
 			"name": "unban",
 			"description": "Unbans a user and leaves a mark on their history",
 			"syntax": "unban { User ID/Mention }",
-			"example": "unbane @Chill#4048",
+			"example": "unban @Chill#4048",
+			"category": "Moderation"
+		},
+		{
+			"name": "gag",
+			"description": "Temporarily mutes a user for 5 minutes to allow moderators to handle an ongoing situation",
+			"syntax": "gag { User ID/Mention }",
+			"example": "gag @Chill#4048",
 			"category": "Moderation"
 		}
 	],
