@@ -30,7 +30,7 @@ class OnJoinEvent : ListenerAdapter() {
 
 		if (!getWelcomeDisabled(guildId)) joinChannel.send(newMemberJoinEmbed(guild, member))
 
-		if (hasJoinRole(guildId)) assignRole(guild, joinChannel, getJoinRole(guildId)!!, member.user.id)
+		if (hasJoinRole(guildId)) assignRole(guild, getJoinRole(guildId)!!, member.user.id)
 
 		if (hasRaider(guildId, member.user.id)) {
 			if (guild.getMutedRole() == null) {
