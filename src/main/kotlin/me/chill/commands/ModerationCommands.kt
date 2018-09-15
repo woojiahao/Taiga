@@ -111,10 +111,16 @@ fun moderationCommands() = commands("Moderation") {
 			val banReason = "Mass Ban: ${arguments[1]!!.str()}"
 			Thread {
 				banList.forEach { target ->
-					guild.controller.ban(jda.findUser(target), 1, banReason)
+					guild.controller.ban(jda.findUser(target), 1, banReason).complete()
 					Thread.sleep(300)
 				}
 			}.start()
+			respond(
+				successEmbed(
+					"Users Banned",
+					"Users: **${banList.joinToString(", ")}** banned for **$banReason**"
+				)
+			)
 		}
 	}
 

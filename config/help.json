@@ -161,8 +161,8 @@
 		{
 			"name": "banall",
 			"description": "Bans all users from the server",
-			"syntax": "ban { User ID/Mention List (,) } { Ban Reason }",
-			"example": "ban @Chill#4048,@Gasper#6074 Raiders",
+			"syntax": "banall { User ID List (,) } { Ban Reason }",
+			"example": "banall 416016773226168321,302385772718325760 Raiders",
 			"category": "Moderation"
 		}
 	],
