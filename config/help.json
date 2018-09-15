@@ -150,6 +150,13 @@
 			"syntax": "wiperecord { User ID/Mention }",
 			"example": "wiperecord @Chill",
 			"category": "Moderation"
+		},
+		{
+			"name": "ban",
+			"description": "Bans a user from the server, regardless of whether they are on the server or not",
+			"syntax": "ban { User ID/Mention } { Ban Reason }",
+			"example": "ban @Chill#4048 raid",
+			"category": "Moderation"
 		}
 	],
 	"Permission": [
