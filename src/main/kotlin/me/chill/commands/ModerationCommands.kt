@@ -1,9 +1,6 @@
 package me.chill.commands
 
-import me.chill.arguments.types.ChannelId
-import me.chill.arguments.types.Integer
-import me.chill.arguments.types.Sentence
-import me.chill.arguments.types.UserId
+import me.chill.arguments.types.*
 import me.chill.database.operations.*
 import me.chill.database.states.TargetChannel
 import me.chill.database.states.TimeMultiplier
@@ -95,7 +92,29 @@ fun moderationCommands() = commands("Moderation") {
 	command("ban") {
 		expects(UserId(true), Sentence())
 		execute {
-			guild.controller.ban(jda.findUser(arguments[0]!!.str()), 1, arguments[1]!!.str())
+			val target = jda.findUser(arguments[0]!!.str())
+			val banReason = arguments[1]!!.str()
+			guild.controller.ban(target, 1, banReason).complete()
+			respond(
+				successEmbed(
+					"User Banned",
+					"User: **${target.name}** has been banned for **$banReason**"
+				)
+			)
+		}
+	}
+
+	command("banall") {
+		expects(UserIdList(true), Sentence())
+		execute {
+			val banList = arguments[0]!!.str().split(",")
+			val banReason = "Mass Ban: ${arguments[1]!!.str()}"
+			Thread {
+				banList.forEach { target ->
+					guild.controller.ban(jda.findUser(target), 1, banReason)
+					Thread.sleep(300)
+				}
+			}.start()
 		}
 	}
 
