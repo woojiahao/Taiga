@@ -106,7 +106,7 @@ fun moderationCommands() = commands("Moderation") {
 	}
 
 	command("banall") {
-		expects(UserIdList(true), Sentence())
+		expects(ArgumentList(UserId(true)), Sentence())
 		execute {
 			val banList = arguments[0]!!.str().split(",")
 			val banReason = "Mass Ban: ${arguments[1]!!.str()}"
@@ -118,8 +118,9 @@ fun moderationCommands() = commands("Moderation") {
 			}.start()
 			respond(
 				successEmbed(
-					"Users Banned",
-					"Users: **${banList.joinToString(", ")}** banned for **$banReason**"
+					"Mass Ban",
+					"Banning users: ${banList.joinToString(", ")}",
+					null
 				)
 			)
 		}
