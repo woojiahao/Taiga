@@ -12,6 +12,7 @@ import me.chill.roles.getMutedRole
 import me.chill.roles.hasRole
 import me.chill.roles.removeRole
 import me.chill.settings.*
+import me.chill.utility.getDateTime
 import me.chill.utility.int
 import me.chill.utility.jda.*
 import me.chill.utility.str
@@ -119,6 +120,22 @@ fun moderationCommands() = commands("Moderation") {
 				successEmbed(
 					"Users Banned",
 					"Users: **${banList.joinToString(", ")}** banned for **$banReason**"
+				)
+			)
+		}
+	}
+
+	command("unban") {
+		expects(UserId(true))
+		execute {
+			val target = jda.findUser(arguments[0]!!.str())
+			guild.controller.unban(target).complete()
+			addStrike(guild.id, target.id, 0, "Unbanned on **${getDateTime()}**", invoker.user.id)
+			respond(
+				successEmbed(
+					"User Unbanned",
+					"User: **${target.name}** has been unbanned",
+					null
 				)
 			)
 		}

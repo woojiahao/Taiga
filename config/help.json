@@ -164,6 +164,13 @@
 			"syntax": "banall { User ID List (,) } { Ban Reason }",
 			"example": "banall 416016773226168321,302385772718325760 Raiders",
 			"category": "Moderation"
+		},
+		{
+			"name": "unban",
+			"description": "Unbans a user and leaves a mark on their history",
+			"syntax": "unban { User ID/Mention }",
+			"example": "unbane @Chill#4048",
+			"category": "Moderation"
 		}
 	],
 	"Permission": [
