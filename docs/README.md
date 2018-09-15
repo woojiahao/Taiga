@@ -3,6 +3,8 @@
 
 Welcome to Taiga's documentation site. This site covers everything you need to know about Taiga and her codebase.
 
+![alt text](home_image.png "Taiga Aisaka")
+
 ## Documentation Navigator
 
 1. **Just invited Taiga?** [Setting Up Taiga.](bot_basics.md)
@@ -19,6 +21,15 @@ Welcome to Taiga's documentation site. This site covers everything you need to k
 
 [Join my development server](https://discord.gg/xtDNfyw)
 
+## Contact Me
+### Bot Inquiries {docsify-ignore}
+If you have any inquiries about Taiga, you can reach out to me on Discord, my user handle is `@Chill#4048`.
+
+You can also visit the [development server](https://discord.gg/xtDNfyw) and use the `#bot-help` channel.
+
+### Issues {docsify-ignore}
+If you have found an issue with Taiga and wish to report it, use GitHub's [issue tracking system.](https://github.com/woojiahao/Taiga/issues)
+
 ## Libraries Used
 1. [JDA](https://github.com/DV8FromTheWorld/JDA)
 2. [docsify](https://docsify.js.org/#/)
@@ -32,15 +43,6 @@ Taiga is heavily inspired by @Fox#0001's HotBot.
 
 * [HotBot's Repository](https://gitlab.com/Aberrantfox/hotbot)
 * [HotBot in action](https://discord.gg/programming)
-
-## Contact Me
-### Bot Inquiries {docsify-ignore}
-If you have any inquiries about Taiga, you can reach out to me on Discord, my user handle is `@Chill#4048`.
-
-You can also visit the [development server](https://discord.gg/xtDNfyw) and use the `#bot-help` channel.
-
-### Issues {docsify-ignore}
-If you have found an issue with Taiga and wish to report it, use GitHub's [issue tracking system.](https://github.com/woojiahao/Taiga/issues)
 
 ## Contribution Guide {docsify-ignore}
 > TODO
