@@ -92,6 +92,13 @@ fun moderationCommands() = commands("Moderation") {
 		}
 	}
 
+	command("ban") {
+		expects(UserId(true), Sentence())
+		execute {
+			guild.controller.ban(jda.findUser(arguments[0]!!.str()), 1, arguments[1]!!.str())
+		}
+	}
+
 	command("wiperecord") {
 		expects(UserId(true))
 		execute {
