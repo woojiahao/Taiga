@@ -120,3 +120,15 @@ Temporarily mutes a user for 5 minutes to allow moderators to handle an ongoing 
 
 > gag @Chill#4048
 
+## clearstrike
+### Description {docsify-ignore}
+Removes a strike from a user
+### Syntax {docsify-ignore}
+
+> clearstrike { User ID/Mention } { Strike ID }
+
+### Example {docsify-ignore}
+
+> clearstrike @Chill#4048 1
+
+

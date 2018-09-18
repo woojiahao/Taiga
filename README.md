@@ -52,6 +52,7 @@ More information about commands can be found on the [website](https://woojiahao.
 |`banall`|Bans all users from the server|
 |`unban`|Unbans a user and leaves a mark on their history|
 |`gag`|Temporarily mutes a user for 5 minutes to allow moderators to handle an ongoing situation|
+|`clearstrike`|Removes a strike from a user|
 
 ### Permission
 |Name|Description|

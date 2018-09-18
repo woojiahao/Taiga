@@ -46,6 +46,7 @@
 |[`banall`](moderation_commands.md?id=banall)|Bans all users from the server|
 |[`unban`](moderation_commands.md?id=unban)|Unbans a user and leaves a mark on their history|
 |[`gag`](moderation_commands.md?id=gag)|Temporarily mutes a user for 5 minutes to allow moderators to handle an ongoing situation|
+|[`clearstrike`](moderation_commands.md?id=clearstrike)|Removes a strike from a user|
 
 ### [Permission](permission_commands.md)
 |Name|Description|
