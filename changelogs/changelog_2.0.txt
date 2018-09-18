@@ -1,5 +1,0 @@
-1. Complete overhaul of documentation and official site
-	- Made use of [docsify](https://docsify.js.org/#/) to generate the documentation
-	- Official site is now the documentation site
-
-2. Inclusion of Python scripts to auto-generate markdown

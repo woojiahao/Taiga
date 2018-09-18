@@ -1,5 +1,7 @@
 package me.chill.commands
 
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonObject
 import me.chill.arguments.types.CommandName
 import me.chill.framework.*
 import me.chill.json.help.category
@@ -107,7 +109,7 @@ fun utilityCommands() = commands("Utility") {
 				}
 				.max()!!
 
-			val latestChangeLog = "changelogs/changelog_$latest.txt"
+			val latestChangeLog = "changelogs/changelog_$latest.json"
 			if (!File(latestChangeLog).exists()) {
 				respond(
 					failureEmbed(
@@ -118,25 +120,42 @@ fun utilityCommands() = commands("Utility") {
 				return@execute
 			}
 
+			val gson = GsonBuilder().create()
+			val changelogDetails = gson.fromJson<JsonObject>(FileReader(File(latestChangeLog)), JsonObject::class.java)
+
+			val buildTitle = changelogDetails["buildTitle"].asString
+			val changes = changelogDetails["changes"].asJsonArray.mapIndexed { index, s -> "${index + 1}. ${s.asString}" }.joinToString("\n")
+			val releaseDate = changelogDetails["releaseDate"].asString
+			val contributors = changelogDetails["contributors"].asJsonArray.joinToString("\n") { cont -> "- ${cont.asString}" }
+			val buildVersion = changelogDetails["buildNumber"].asString
+
 			respond(
-				changeLogEmbed(
-					jda.selfUser.name,
-					latest,
-					FileReader(File(latestChangeLog)).readLines().joinToString("\n")
-				)
+				changeLogEmbed(jda.selfUser.name, buildVersion, changes, buildTitle, releaseDate, contributors)
 			)
 		}
 	}
 }
 
-private fun changeLogEmbed(botName: String, buildVersion: String, changelogContents: String) =
+private fun changeLogEmbed(botName: String, buildVersion: String,
+						   changelogContents: String, buildTitle: String,
+						   releaseDate: String, contributors: String) =
 	embed {
 		title = "$botName Changelogs"
 		color = green
 
 		field {
+			title = "Build Title"
+			description = buildTitle
+		}
+
+		field {
 			title = "Changes"
 			description = changelogContents
+		}
+
+		field {
+			title = "Contributors"
+			description = contributors
 		}
 
 		field {
@@ -152,7 +171,7 @@ private fun changeLogEmbed(botName: String, buildVersion: String, changelogConte
 		}
 
 		footer {
-			message = getDateTime()
+			message = "Released on : $releaseDate"
 			iconUrl = null
 		}
 	}

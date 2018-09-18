@@ -1,5 +1,0 @@
-1. Added documentation for the suggestion system
-2. Added documentation for the existing ArgumentTypes
-3. Updated `Creating New Commands` section
-4. Added favicon and images to documentation site
-5. Cleared up unused gifs to save space

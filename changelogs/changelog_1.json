@@ -1,0 +1,12 @@
+{
+	"buildNumber": "1.0",
+	"buildTitle": "First Working Build",
+	"changes": [
+		"Introduced overloaded methods for role manager to reduce overhead",
+		"Split ParseMap into 2 classes, one for final parsing and one for arguments to return"
+	],
+	"releaseDate": "09 September 2018",
+	"contributors": [
+		"@Chill#4048"
+	]
+}

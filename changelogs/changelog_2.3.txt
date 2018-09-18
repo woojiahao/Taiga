@@ -1,5 +1,0 @@
-1. Update Prefix argument type such that the prefix cannot be all letters/digits
-2. Added `clearstrike` command
-3. Fixed the muting message time multiplier inconsistency
-4. On Join role assignments are now silent
-5. Updated documentation for the new `Prefix`, `ArgumentList` and `StrikeId` argument types

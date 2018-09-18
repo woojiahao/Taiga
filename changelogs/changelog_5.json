@@ -1,0 +1,15 @@
+{
+	"buildNumber": "2.3",
+	"buildTitle": "Documentation of argument types and minor bug fix",
+	"changes": [
+		"Update Prefix argument type such that the prefix cannot be all letters/digits",
+		"Added `clearstrike` command",
+		"On Join role assignments are now silent",
+		"Updated documentation for the new `Prefix`, `ArgumentList` and `StrikeId` argument types",
+		"Major update to `changelog` command such that it reads from a JSON file which extracts more useful information"
+	],
+	"releaseDate": "18 September 2018",
+	"contributors": [
+		"@Chill#4048"
+	]
+}

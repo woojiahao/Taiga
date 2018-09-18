@@ -1,0 +1,13 @@
+{
+	"buildNumber": "2.2",
+	"buildTitle": "Moderation Command Upgrade",
+	"changes": [
+		"Added `gag`, `ban`, `banall` and `unban` commands",
+		"Introduced `ArgumentList` to allow developers to make lists of the same kind of argument types separated by a specific delimiter",
+		"Updated documentation to include new moderation commands"
+	],
+	"releaseDate": "15 September 2018",
+	"contributors": [
+		"@Chill#4048"
+	]
+}

@@ -1,4 +1,0 @@
-1. Added `gag`, `ban`, `banall` and `unban` commands
-2. Introduced `ArgumentList` to allow developers to make lists of the same kind of argument types separated by a specific
-delimiter
-3. Updated documentation to include new moderation commands

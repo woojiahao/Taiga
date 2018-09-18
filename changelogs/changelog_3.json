@@ -1,0 +1,15 @@
+{
+	"buildNumber": "2.1",
+	"buildTitle": "Documentation Site Updates",
+	"changes": [
+		"Added documentation for the suggestion system",
+		"Added documentation for the existing ArgumentTypes",
+		"Updated `Creating New Commands` section",
+		"Added favicon and images to documentation site",
+		"Cleared up unused gifs to save space"
+	],
+	"releaseDate": "15 September 2018",
+	"contributors": [
+		"@Chill#4048"
+	]
+}

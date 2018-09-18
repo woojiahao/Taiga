@@ -1,0 +1,13 @@
+{
+	"buildNumber": "2.0",
+	"buildTitle": "Documentation Site",
+	"changes": [
+		"Used [docsify](https://docsify.js.org/#/) to generate documentation",
+		"Documentation site is now the official site: https://woojiahao.github.io/Taiga",
+		"Inclusion of Python scripts to auto-generate markdown for the documentation site"
+	],
+	"releaseDate": "14 September 2018",
+	"contributors": [
+		"@Chill#4048"
+	]
+}
