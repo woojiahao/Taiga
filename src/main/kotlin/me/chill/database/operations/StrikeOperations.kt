@@ -85,4 +85,26 @@ fun wipeRecord(serverId: String, userId: String) {
 	}
 }
 
+fun hasStrike(serverId: String, strikeId: Int) =
+	transaction {
+		!UserRecord.select {
+			(UserRecord.serverId eq serverId) and (UserRecord.strikeId eq strikeId)
+		}.empty()
+	}
+
+
+fun removeStrike(serverId: String, userId: String, strikeId: Int) {
+	transaction {
+		UserRecord.deleteWhere { userRecordMatch(serverId, userId) and (UserRecord.strikeId eq strikeId) }
+		Strike.deleteWhere { Strike.strikeId eq strikeId }
+	}
+}
+
+fun userHasStrike(serverId: String, userId: String, strikeId: Int) =
+	transaction {
+		!UserRecord
+			.select { userRecordMatch(serverId, userId) and (UserRecord.strikeId eq strikeId) }
+			.empty()
+	}
+
 private fun userRecordMatch(serverId: String, userId: String) = (UserRecord.userId eq userId) and (UserRecord.serverId eq serverId)

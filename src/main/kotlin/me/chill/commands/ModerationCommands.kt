@@ -169,6 +169,32 @@ fun moderationCommands() = commands("Moderation") {
 				TimeMultiplier.M)
 		}
 	}
+
+	command("clearstrike") {
+		expects(UserId(true), StrikeId())
+		execute {
+			val target = arguments[0]!!.str()
+			val toRemove = arguments[1]!!.int()
+
+			if (!userHasStrike(guild.id, target, toRemove)) {
+				respond(
+					failureEmbed(
+						"Clear Strike Fail",
+						"User: **${jda.findUser(target).name}** does not have strike **$toRemove**"
+					)
+				)
+				return@execute
+			}
+
+			removeStrike(guild.id, target, toRemove)
+			respond(
+				successEmbed(
+					"Strike Removed",
+					"Strike: **$toRemove** has been cleared from ${jda.findUser(target).name}"
+				)
+			)
+		}
+	}
 }
 
 private fun strikeUser(guild: Guild, targetId: String, channel: MessageChannel,

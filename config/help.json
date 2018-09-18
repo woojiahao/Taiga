@@ -178,6 +178,13 @@
 			"syntax": "gag { User ID/Mention }",
 			"example": "gag @Chill#4048",
 			"category": "Moderation"
+		},
+		{
+			"name": "clearstrike",
+			"description": "Removes a strike from a user",
+			"syntax": "clearstrike { User ID/Mention } { Strike ID }",
+			"example": "clearstrike @Chill#4048 1",
+			"category": "Moderation"
 		}
 	],
 	"Permission": [
