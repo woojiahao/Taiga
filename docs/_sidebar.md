@@ -9,5 +9,6 @@
 * [Setting Preferences](setting_preferences.md)
 * [Installation Guide](installation.md)
 * [Database Optimisation](database_optimisation.md)
+* [Writing Changelogs](changelog_guide.md)
 * [Creating Custom Commands](creating_commands.md)
 * [Argument Types](argument_types.md)
