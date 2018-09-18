@@ -1,4 +1,6 @@
 # Taiga
+![alt text](docs/smile.gif "Taiga Aisaka")
+
 |**Prefix:** ?|**Creator:** @Chill#4048|**Language:** Kotlin|**Library:** JDA|[Invite Link](https://discordapp.com/oauth2/authorize?client_id=482340927709511682&scope=bot&permissions=8)|[Development Server](https://discord.gg/xtDNfyw)|[Website](https://woojiahao.github.io/Taiga)|
 |---|---|---|---|---|---|---|
 
