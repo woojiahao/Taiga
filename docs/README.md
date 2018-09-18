@@ -14,7 +14,8 @@ Welcome to Taiga's documentation site. This site covers everything you need to k
 5. **Raid Control Inquiries?** [Raid Control Introduction.](raid_control.md)
 6. **Customizing Taiga?** [Setting Preferences Guide.](setting_preferences.md)
 7. **Adding your own commands?** [Command Framework Guide.](creating_commands.md)
-8. **Bot running slow?** [Optimise It!](database_optimisation.md)
+8. **Writing up some changelogs?** [Changelog Guide.](changelog_guide.md)
+9. **Bot running slow?** [Optimise It!](database_optimisation.md)
 
 ## Invites
 [Invite me to your server](https://discordapp.com/oauth2/authorize?client_id=482340927709511682&scope=bot&permissions=8)

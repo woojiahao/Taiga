@@ -11,7 +11,7 @@ You can view the latest changelogs of your bot using the `changelog` command.
 ### Changelog File
 All changelogs are stored in the `changelogs` folder in the project root and follow the following naming convention:
 
-> changelog_<latest_number>.json
+> changelog_(latest_number).json
 
 Taiga will automatically search for the latest changelog based on the prior naming convention and retrieve that changelog's 
 information.
