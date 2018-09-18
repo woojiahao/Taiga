@@ -209,7 +209,7 @@ private fun muteUser(guild: Guild, channel: MessageChannel,
 		return
 	}
 
-	val guildTimeMultiplier = getTimeMultiplier(guild.id)
+	val guildTimeMultiplier = timeMultiplier ?: getTimeMultiplier(guild.id)
 
 	val mutedRole = guild.getMutedRole()
 	assignRole(guild, mutedRole!!.id, targetId)
