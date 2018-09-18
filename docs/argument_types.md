@@ -55,4 +55,17 @@ Arguments passed will be checked to confirm that the suggestion does exist on th
 in the suggestion channel of the server.
 
 ## Prefix
-Arguments passed will be checked to ensure they are within 3 characters long.
+Arguments passed will be checked to ensure they are within 3 characters long and are not composed solely of letters/digits.
+
+## ArgumentList
+Arguments passed will be composed of a singular other argument type and separated by a pipe. 
+
+Every argument in the list is checked based on the specified argument type.
+
+Argument lists cannot be spaced.
+
+### Mandatory Checks {docsify-ignore}
+* **argumentType** - Argument type that each and every one in the argument list will be checked against
+
+### Optional Checks {docsify-ignore}
+* **pipes** - Changes what the separators will be used between each argument in the list, defaults to `,`
