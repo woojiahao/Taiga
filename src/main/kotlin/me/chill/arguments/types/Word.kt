@@ -12,7 +12,7 @@ class Word(val inclusion: Array<String> = emptyArray(),
 		}
 
 		val lowerCase = arg.toLowerCase()
-		if (!inclusion.map { it.toLowerCase() }.contains(lowerCase)) {
+		if (inclusion.isNotEmpty() && !inclusion.map { it.toLowerCase() }.contains(lowerCase)) {
 			return ArgumentParseMap(
 				false,
 				"Arugment: **$arg** is not an included word\n" +
@@ -20,7 +20,7 @@ class Word(val inclusion: Array<String> = emptyArray(),
 			)
 		}
 
-		if (exclusion.map { it.toLowerCase() }.contains(lowerCase)) {
+		if (exclusion.isNotEmpty() && exclusion.map { it.toLowerCase() }.contains(lowerCase)) {
 			return ArgumentParseMap(false, "Argument: **$arg** cannot be used for this command")
 		}
 		return ArgumentParseMap(true, parsedValue = lowerCase)
