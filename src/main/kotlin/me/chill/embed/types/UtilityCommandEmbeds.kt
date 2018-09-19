@@ -51,7 +51,7 @@ fun changeLogEmbed(botName: String, buildVersion: String,
 			}
 
 			footer {
-				message = "Released on : $releaseDate"
+				message = "Released on: $releaseDate"
 				iconUrl = null
 			}
 		}
