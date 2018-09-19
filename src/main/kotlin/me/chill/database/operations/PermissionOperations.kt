@@ -47,6 +47,22 @@ fun viewPermissions(serverId: String): MutableMap<String, String> {
 	return commandMap
 }
 
+fun batchAddPermissions(commandNames: List<String>, serverId: String, roleId: String) {
+	transaction {
+		Permission.batchInsert(commandNames) { name ->
+			this[Permission.commandName] = name
+			this[Permission.serverId] = serverId
+			this[Permission.permission] = roleId
+		}
+	}
+}
+
+fun clearPermissions(serverId: String) {
+	transaction {
+		Permission.deleteWhere { Permission.serverId eq serverId }
+	}
+}
+
 fun getPermission(commandName: String, serverId: String) =
 	transaction {
 		Permission.select { selectKey(serverId, commandName) }.first()[Permission.permission]

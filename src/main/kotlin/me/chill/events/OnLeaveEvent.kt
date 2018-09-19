@@ -1,5 +1,6 @@
 package me.chill.events
 
+import me.chill.database.operations.clearPermissions
 import me.chill.database.operations.getChannel
 import me.chill.database.operations.removeServerPreference
 import me.chill.database.states.TargetChannel
@@ -33,6 +34,7 @@ class OnLeaveEvent : ListenerAdapter() {
 
 		println("Left ${event.guild.name}::$serverId on ${getDateTime()}")
 		removeServerPreference(serverId)
+		clearPermissions(serverId)
 	}
 }
 

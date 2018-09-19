@@ -16,7 +16,6 @@ import net.dv8tion.jda.core.JDABuilder
 import net.dv8tion.jda.core.OnlineStatus
 import net.dv8tion.jda.core.entities.Game
 
-// todo: add a command to dm all server owners if there is a problem detected
 var credentials: Credentials? = null
 var commandInfo: List<CommandInfo>? = null
 var raidManger: RaidManager? = null
@@ -41,9 +40,7 @@ private fun setup() {
 	}
 
 	setupDatabase(credentials!!.database!!)
-
 	CommandContainer.loadContainer()
 	commandInfo = loadHelp()
-
 	raidManger = RaidManager()
 }

@@ -17,6 +17,8 @@ class Command(var name: String) {
 
 	private val commandInformation: MutableMap<ContainerKey, Any?> = mutableMapOf()
 
+	private var isGlobal: Boolean = false
+
 	val guild get() = commandInformation[Server] as Guild
 	val invoker get() = commandInformation[Invoker] as Member
 	val channel get() = commandInformation[Channel] as MessageChannel
@@ -50,6 +52,12 @@ class Command(var name: String) {
 	fun execute(func: Command.(Map<ContainerKey, Any?>) -> Unit) {
 		action = func
 	}
+
+	fun setGlobal(isGlobal: Boolean = true) {
+		this.isGlobal = isGlobal
+	}
+
+	fun getGlobal() = isGlobal
 
 	fun run(serverPrefix: String, jda: JDA, guild: Guild,
 			invoker: Member, messageChannel: MessageChannel,
