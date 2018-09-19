@@ -31,8 +31,8 @@ fun moderationCommands() = commands("Moderation") {
 		expects(Integer(0, 99))
 		execute {
 			guild.deleteMessagesFromChannel(
-					channel.id,
-					channel.getMessageHistory(arguments[0]!!.int() + 1)
+				channel.id,
+				channel.getMessageHistory(arguments[0]!!.int() + 1)
 			)
 		}
 	}
@@ -44,11 +44,11 @@ fun moderationCommands() = commands("Moderation") {
 			val message = arguments[1]!!.str()
 			if (message.contains(Regex("(<@\\d*>)|(<@&\\d*>)|(@everyone)|(@here)"))) {
 				respond(
-						failureEmbed(
-								"Echo",
-								"Cannot echo a message with a member/role mention",
-								thumbnail = noWay
-						)
+					failureEmbed(
+						"Echo",
+						"Cannot echo a message with a member/role mention",
+						thumbnail = noWay
+					)
 				)
 				return@execute
 			}
@@ -94,10 +94,10 @@ fun moderationCommands() = commands("Moderation") {
 			val banReason = arguments[1]!!.str()
 			guild.controller.ban(target, 1, banReason).complete()
 			respond(
-					successEmbed(
-							"User Banned",
-							"User: **${target.name}** has been banned for **$banReason**"
-					)
+				successEmbed(
+					"User Banned",
+					"User: **${target.name}** has been banned for **$banReason**"
+				)
 			)
 		}
 	}
@@ -114,11 +114,11 @@ fun moderationCommands() = commands("Moderation") {
 				}
 			}.start()
 			respond(
-					successEmbed(
-							"Mass Ban",
-							"Banning users: ${banList.joinToString(", ")}",
-							null
-					)
+				successEmbed(
+					"Mass Ban",
+					"Banning users: ${banList.joinToString(", ")}",
+					null
+				)
 			)
 		}
 	}
@@ -130,11 +130,11 @@ fun moderationCommands() = commands("Moderation") {
 			guild.controller.unban(target).complete()
 			addStrike(guild.id, target.id, 0, "Unbanned on **${getDateTime()}**", invoker.user.id)
 			respond(
-					successEmbed(
-							"User Unbanned",
-							"User: **${target.name}** has been unbanned",
-							null
-					)
+				successEmbed(
+					"User Unbanned",
+					"User: **${target.name}** has been unbanned",
+					null
+				)
 			)
 		}
 	}
@@ -145,11 +145,11 @@ fun moderationCommands() = commands("Moderation") {
 			val targetId = arguments[0]!!.str()
 			wipeRecord(guild.id, targetId)
 			respond(
-					successEmbed(
-							"Records Wiped",
-							"User: **${jda.findUser(targetId).name}**'s history has been wiped!",
-							clap
-					)
+				successEmbed(
+					"Records Wiped",
+					"User: **${jda.findUser(targetId).name}**'s history has been wiped!",
+					clap
+				)
 			)
 		}
 	}
@@ -158,12 +158,12 @@ fun moderationCommands() = commands("Moderation") {
 		expects(UserId())
 		execute {
 			muteUser(
-					guild,
-					channel,
-					guild.getMemberById(arguments[0]!!.str()),
-					"You have been gagged whilst moderators handle an ongoing conflict. Please be patient.",
-					5,
-					TimeMultiplier.M)
+				guild,
+				channel,
+				guild.getMemberById(arguments[0]!!.str()),
+				"You have been gagged whilst moderators handle an ongoing conflict. Please be patient.",
+				5,
+				TimeMultiplier.M)
 		}
 	}
 
@@ -175,20 +175,20 @@ fun moderationCommands() = commands("Moderation") {
 
 			if (!userHasStrike(guild.id, target, toRemove)) {
 				respond(
-						failureEmbed(
-								"Clear Strike Fail",
-								"User: **${jda.findUser(target).name}** does not have strike **$toRemove**"
-						)
+					failureEmbed(
+						"Clear Strike Fail",
+						"User: **${jda.findUser(target).name}** does not have strike **$toRemove**"
+					)
 				)
 				return@execute
 			}
 
 			removeStrike(guild.id, target, toRemove)
 			respond(
-					successEmbed(
-							"Strike Removed",
-							"Strike: **$toRemove** has been cleared from ${jda.findUser(target).name}"
-					)
+				successEmbed(
+					"Strike Removed",
+					"Strike: **$toRemove** has been cleared from ${jda.findUser(target).name}"
+				)
 			)
 		}
 	}
@@ -203,9 +203,9 @@ private fun strikeUser(guild: Guild, targetId: String, channel: MessageChannel,
 	addStrike(guildId, targetId, strikeWeight, strikeReason, invoker.user.id)
 	val strikeCount = getStrikeCount(guildId, targetId)
 	guild.getMemberById(targetId)
-			.sendPrivateMessage(
-					userStrikeNotificationEmbed(guild.name, strikeReason, strikeWeight, strikeCount)
-			)
+		.sendPrivateMessage(
+			userStrikeNotificationEmbed(guild.name, strikeReason, strikeWeight, strikeCount)
+		)
 
 	loggingChannel.send(strikeSuccessEmbed(strikeWeight, target, strikeReason))
 
@@ -224,10 +224,10 @@ private fun muteUser(guild: Guild, channel: MessageChannel,
 
 	if (!guild.hasRole("muted")) {
 		channel.send(
-				failureEmbed(
-						"Mute Failed",
-						"Unable to apply mute to user as the **muted** role does not exist, run `${getPrefix(guild.id)}setup`"
-				)
+			failureEmbed(
+				"Mute Failed",
+				"Unable to apply mute to user as the **muted** role does not exist, run `${getPrefix(guild.id)}setup`"
+			)
 		)
 		return
 	}
@@ -239,31 +239,31 @@ private fun muteUser(guild: Guild, channel: MessageChannel,
 	target.sendPrivateMessage(userMuteNotificationEmbed(guild.name, duration, reason, guildTimeMultiplier))
 
 	val muteDuration =
-			if (timeMultiplier != null) duration * timeMultiplier.multiplier
-			else duration * guildTimeMultiplier.multiplier
+		if (timeMultiplier != null) duration * timeMultiplier.multiplier
+		else duration * guildTimeMultiplier.multiplier
 
 	Timer().schedule(
-			timerTask {
-				removeRole(guild, mutedRole.id, targetId)
-				target.sendPrivateMessage(
-						simpleEmbed(
-								"Unmuted",
-								"You have been unmuted in **${guild.name}**",
-								null,
-								cyan
-						)
+		timerTask {
+			removeRole(guild, mutedRole.id, targetId)
+			target.sendPrivateMessage(
+				simpleEmbed(
+					"Unmuted",
+					"You have been unmuted in **${guild.name}**",
+					null,
+					cyan
 				)
+			)
 
-				loggingChannel.send(
-						simpleEmbed(
-								"User Unmuted",
-								"User: ${printMember(target)} has been unmuted",
-								null,
-								orange
-						)
+			loggingChannel.send(
+				simpleEmbed(
+					"User Unmuted",
+					"User: ${printMember(target)} has been unmuted",
+					null,
+					orange
 				)
-			},
-			muteDuration
+			)
+		},
+		muteDuration
 	)
 
 	loggingChannel.send(muteSuccessEmbed(target, duration, reason, guildTimeMultiplier))

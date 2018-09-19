@@ -3,15 +3,16 @@ package me.chill.commands
 import me.chill.arguments.types.CategoryName
 import me.chill.arguments.types.CommandName
 import me.chill.arguments.types.RoleId
-import me.chill.database.operations.*
+import me.chill.database.operations.addPermission
+import me.chill.database.operations.editPermission
+import me.chill.database.operations.hasPermission
+import me.chill.database.operations.removePermission
+import me.chill.embed.types.listPermissionsEmbed
 import me.chill.framework.CommandCategory
 import me.chill.framework.CommandContainer
 import me.chill.framework.commands
-import me.chill.settings.green
-import me.chill.utility.jda.embed
 import me.chill.utility.jda.successEmbed
 import me.chill.utility.str
-import net.dv8tion.jda.core.entities.Guild
 import org.apache.commons.lang3.text.WordUtils
 
 @CommandCategory
@@ -38,7 +39,8 @@ fun permissionCommands() = commands("Permission") {
 			respond(
 				successEmbed(
 					"Set Command Permission Success!",
-					"Command: **$commandName** has been assigned to **${guild.getRoleById(roleId).name}**")
+					"Command: **$commandName** has been assigned to **${guild.getRoleById(roleId).name}**"
+				)
 			)
 		}
 	}
@@ -80,32 +82,3 @@ fun permissionCommands() = commands("Permission") {
 		}
 	}
 }
-
-private fun generatePermission(commandName: String, guild: Guild) =
-	if (hasPermission(commandName, guild.id)) Pair(commandName, getPermission(commandName, guild.id))
-	else Pair(commandName, guild.roles[0].id)
-
-
-private fun generatePermissionsList(guild: Guild, commandNames: Array<String>) =
-	commandNames
-		.map {
-			val permission = generatePermission(it, guild)
-			"**${permission.first}** :: ${guild.getRoleById(permission.second).name}"
-		}
-		.joinToString("\n") { "- $it" }
-
-
-private fun listPermissionsEmbed(guild: Guild) =
-	embed {
-		title = "${guild.name} Permissions"
-		color = green
-		thumbnail = guild.iconUrl
-
-		CommandContainer.commandSets.forEach {
-			field {
-				title = it.categoryName
-				description = generatePermissionsList(guild, it.getCommandNames())
-				inline = false
-			}
-		}
-	}

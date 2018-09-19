@@ -6,19 +6,16 @@ import me.chill.database.operations.editJoinRole
 import me.chill.database.operations.getJoinRole
 import me.chill.database.operations.hasJoinRole
 import me.chill.database.operations.removeJoinRole
+import me.chill.embed.types.listRolesEmbed
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
 import me.chill.roles.assignRole
 import me.chill.roles.removeRole
 import me.chill.settings.clap
-import me.chill.settings.green
 import me.chill.settings.serve
-import me.chill.utility.jda.embed
 import me.chill.utility.jda.failureEmbed
 import me.chill.utility.jda.successEmbed
 import me.chill.utility.str
-import net.dv8tion.jda.core.entities.Guild
-import net.dv8tion.jda.core.entities.Role
 
 @CommandCategory
 fun roleCommands() = commands("Role") {
@@ -100,13 +97,3 @@ fun roleCommands() = commands("Role") {
 		}
 	}
 }
-
-private fun listRolesEmbed(guild: Guild, roles: List<Role>) =
-	embed {
-		title = "Roles in ${guild.name}"
-		color = green
-		description = roles.joinToString("\n") {
-			"**${it.name}** :: ${it.id}"
-		}
-		thumbnail = guild.iconUrl
-	}

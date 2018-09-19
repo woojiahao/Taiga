@@ -5,20 +5,18 @@ import me.chill.arguments.types.SuggestionId
 import me.chill.arguments.types.Word
 import me.chill.database.operations.*
 import me.chill.database.states.TargetChannel
+import me.chill.embed.types.publicSuggestionEmbed
+import me.chill.embed.types.suggestionInformationEmbed
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
 import me.chill.settings.blue
 import me.chill.settings.green
 import me.chill.settings.orange
 import me.chill.settings.red
-import me.chill.suggestion.UserSuggestion
-import me.chill.utility.jda.embed
 import me.chill.utility.jda.findUser
 import me.chill.utility.jda.simpleEmbed
 import me.chill.utility.jda.successEmbed
 import me.chill.utility.str
-import net.dv8tion.jda.core.entities.User
-import org.joda.time.format.DateTimeFormat
 
 @CommandCategory
 fun suggestionCommands() = commands("Suggestion") {
@@ -137,46 +135,3 @@ fun suggestionCommands() = commands("Suggestion") {
 		}
 	}
 }
-
-private fun publicSuggestionEmbed(suggesterName: String, suggesterAvatar: String,
-								  suggestion: String, suggestionColor: Int? = null,
-								  suggestionResponseReason: String? = null) =
-	embed {
-		title = "Suggestion by $suggesterName"
-		description = suggestion
-		color = suggestionColor ?: orange
-		thumbnail = suggesterAvatar
-
-		field {
-			title = "Status"
-			description = when (suggestionColor) {
-				green -> "Accepted"
-				red -> "Declined"
-				else -> "In Review"
-			}
-		}
-
-		if (suggestionResponseReason != null) {
-			field {
-				title = "Reason"
-				description = suggestionResponseReason
-			}
-		}
-	}
-
-private fun suggestionInformationEmbed(suggester: User, suggestion: UserSuggestion) =
-	embed {
-		title = "Suggestion by ${suggester.name}"
-		description = suggestion.suggestionDescription
-		color = orange
-		thumbnail = suggester.avatarUrl
-		field {
-			title = "Creation Date"
-			description = DateTimeFormat.forPattern("dd/MM/yyyy").print(suggestion.suggestionDate)
-		}
-
-		field {
-			title = "User ID"
-			description = suggestion.suggesterId
-		}
-	}

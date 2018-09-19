@@ -30,13 +30,13 @@ fun utilityCommands() = commands("Utility") {
 	command("invite") {
 		execute {
 			respond(
-					simpleEmbed(
-							"Invites",
-							"- [Invite me to your server!](https://discordapp.com/oauth2/authorize?client_id=482340927709511682&scope=bot&permissions=8)\n" +
-									"- [Join my development server](https://discord.gg/xtDNfyw)",
-							fondling,
-							blue
-					)
+				simpleEmbed(
+					"Invites",
+					"- [Invite me to your server!](https://discordapp.com/oauth2/authorize?client_id=482340927709511682&scope=bot&permissions=8)\n" +
+						"- [Join my development server](https://discord.gg/xtDNfyw)",
+					fondling,
+					blue
+				)
 			)
 		}
 	}
@@ -44,13 +44,13 @@ fun utilityCommands() = commands("Utility") {
 	command("source") {
 		execute {
 			respond(
-					simpleEmbed(
-							"Sources",
-							"- [GitHub repository](https://github.com/woojiahao/Taiga)\n" +
-									"- [Website](https://woojiahao.github.io/Taiga)",
-							serve,
-							blue
-					)
+				simpleEmbed(
+					"Sources",
+					"- [GitHub repository](https://github.com/woojiahao/Taiga)\n" +
+						"- [Website](https://woojiahao.github.io/Taiga)",
+					serve,
+					blue
+				)
 			)
 		}
 	}
@@ -85,30 +85,30 @@ fun utilityCommands() = commands("Utility") {
 			val changelogsFolder = File("changelogs/")
 			if (changelogsFolder.listFiles() == null || changelogsFolder.listFiles().isEmpty()) {
 				respond(
-						successEmbed(
-								"No changelogs",
-								"Nothing to report!",
-								null
-						)
+					successEmbed(
+						"No changelogs",
+						"Nothing to report!",
+						null
+					)
 				)
 				return@execute
 			}
 
 			val latest = changelogsFolder
-					.listFiles()
-					.map { file ->
-						val fileName = file.name
-						fileName.substring(fileName.indexOf("_") + 1, fileName.lastIndexOf("."))
-					}
-					.max()!!
+				.listFiles()
+				.map { file ->
+					val fileName = file.name
+					fileName.substring(fileName.indexOf("_") + 1, fileName.lastIndexOf("."))
+				}
+				.max()!!
 
 			val latestChangeLog = "changelogs/changelog_$latest.json"
 			if (!File(latestChangeLog).exists()) {
 				respond(
-						failureEmbed(
-								"Changelog Reading Failed",
-								"Unable to locate changelog file: **$latestChangeLog**"
-						)
+					failureEmbed(
+						"Changelog Reading Failed",
+						"Unable to locate changelog file: **$latestChangeLog**"
+					)
 				)
 				return@execute
 			}
@@ -123,7 +123,7 @@ fun utilityCommands() = commands("Utility") {
 			val buildVersion = changelogDetails["buildNumber"].asString
 
 			respond(
-					changeLogEmbed(jda.selfUser.name, buildVersion, changes, buildTitle, releaseDate, contributors)
+				changeLogEmbed(jda.selfUser.name, buildVersion, changes, buildTitle, releaseDate, contributors)
 			)
 		}
 	}

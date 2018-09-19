@@ -31,10 +31,10 @@ fun macroCommands() = commands("Macro") {
 
 			if (getMacroList(guild.id).size >= 50) {
 				respond(
-						failureEmbed(
-								"Add Macro Failed",
-								"You have reached the macro limit for the server"
-						)
+					failureEmbed(
+						"Add Macro Failed",
+						"You have reached the macro limit for the server"
+					)
 				)
 				return@execute
 			}
@@ -62,11 +62,11 @@ fun macroCommands() = commands("Macro") {
 
 			removeMacro(guild.id, macroName)
 			respond(
-					successEmbed(
-							"Remove Macro Success",
-							"Macro: **$macroName** as been removed",
-							null
-					)
+				successEmbed(
+					"Remove Macro Success",
+					"Macro: **$macroName** as been removed",
+					null
+				)
 			)
 		}
 	}
