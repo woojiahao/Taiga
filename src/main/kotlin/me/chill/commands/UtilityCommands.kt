@@ -71,7 +71,13 @@ fun utilityCommands() = commands("Utility") {
 	command("help") {
 		expects(CommandName())
 		execute {
-			respond(commandInfoEmbed(CommandContainer.getCommand(arguments[0]!!.str())))
+			respond(commandInfoEmbed(CommandContainer.getCommand(arguments[0]!!.str())[0]))
+		}
+	}
+
+	command("help") {
+		execute {
+			respond(listCommandsEmbed(CommandContainer.commandSets, jda.selfUser.avatarUrl))
 		}
 	}
 

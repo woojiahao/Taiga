@@ -7,14 +7,14 @@ class CommandContainer private constructor() {
 	init {
 		val reflections = Reflections("me.chill.commands", MethodAnnotationsScanner())
 		reflections
-			.getMethodsAnnotatedWith(CommandCategory::class.java)
-			.forEach { it.invoke(null) }
+				.getMethodsAnnotatedWith(CommandCategory::class.java)
+				.forEach { it.invoke(null) }
 	}
 
 	companion object {
 		val commandSets = mutableListOf<CommandSet>()
 
-		fun loadContainer(){
+		fun loadContainer() {
 			CommandContainer()
 		}
 
@@ -24,15 +24,11 @@ class CommandContainer private constructor() {
 
 		fun getSet(category: String) = commandSets.stream().filter { it.categoryName == category }.toArray()[0]!! as CommandSet
 
-		fun getCommand(command: String) = createCommandList().stream().filter { it.name == command }.toArray()[0]!! as Command
+		fun getCommand(command: String) = createCommandList().filter { it.name == command }.toTypedArray()
 
 		fun getCommandNames() = createCommandList().map { it.name }.toTypedArray()
 
-		private fun createCommandList(): MutableList<Command> {
-			val commandsFlattened = mutableListOf<Command>()
-			commandSets.forEach { commandsFlattened.addAll(it.commands) }
-			return commandsFlattened
-		}
+		private fun createCommandList() = commandSets.map { it.commands }.flatten()
 	}
 }
 

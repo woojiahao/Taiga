@@ -33,22 +33,22 @@ fun invalidArgumentsEmbed(serverPrefix: String, command: Command, errMsg: String
 		}
 	}
 
-fun insufficientArgumentsEmbed(serverPrefix: String, command: Command, expected: Int) =
+fun insufficientArgumentsEmbed(serverPrefix: String, commandName: String, expected: Array<Int>) =
 	embed {
 		title = "Insufficient Arguments"
 		color = red
 		thumbnail = shock
-		description = "Command: **${command.name}** requires **$expected** arguments"
+		description = "Command: **$commandName** requires **${expected.joinToString(" or ")}** arguments"
 
 		field {
 			title = "Syntax"
-			description = "$serverPrefix${findCommand(command.name).syntax}"
+			description = "$serverPrefix${findCommand(commandName).syntax}"
 			inline = false
 		}
 
 		field {
 			title = "Example"
-			description = "$serverPrefix${findCommand(command.name).example}"
+			description = "$serverPrefix${findCommand(commandName).example}"
 			inline = false
 		}
 	}

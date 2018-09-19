@@ -35,7 +35,9 @@ class InputEvent : ListenerAdapter() {
 
 		val serverPrefix = getPrefix(server.id)
 
-		if (!handleRaider(invoker, server, messageChannel)) return
+		if (handleRaider(invoker, server, messageChannel)) return
+
+		if (!message.startsWith(serverPrefix)) return
 
 		val commandParts = message.substring(serverPrefix.length).split(" ").toTypedArray()
 		val attemptedCommandMacro = commandParts[0]
@@ -55,32 +57,47 @@ class InputEvent : ListenerAdapter() {
 			return
 		}
 
-		val command = CommandContainer.getCommand(attemptedCommandMacro)
-		val commandName = command.name
+		val commands = CommandContainer.getCommand(attemptedCommandMacro)
 
-		if (!checkPermissions(commandName, server, invoker)) {
+		if (!checkPermissions(attemptedCommandMacro, server, invoker)) {
 			messageChannel.send(
 					failureEmbed(
 							"Insufficient Permission",
-							"You cannot invoke **$commandName**, nice try",
+							"You cannot invoke **$attemptedCommandMacro**, nice try",
 							thumbnail = noWay
 					)
 			)
 			return
 		}
 
-		val expectedArgsSize = command.argumentTypes.size
-		var arguments = formArguments(commandParts, messageChannel, serverPrefix, command, expectedArgsSize) ?: return
+		var arguments: Array<String>? = null
+		var selectedCommand: Command? = null
+		for (i in 0 until commands.size) {
+			val command = commands[i]
+			val expectedArgSize = command.argumentTypes.size
+			val compiledArguments = formArguments(commandParts, command)
+			if (compiledArguments != null && compiledArguments.size == expectedArgSize) {
+				arguments = compiledArguments
+				selectedCommand = command
+				break
+			}
+		}
 
-		if (arguments.size != expectedArgsSize) {
-			messageChannel.send(insufficientArgumentsEmbed(serverPrefix, command, expectedArgsSize))
+		if (arguments == null || selectedCommand == null) {
+			messageChannel.send(
+					insufficientArgumentsEmbed(
+							serverPrefix,
+							attemptedCommandMacro,
+							commands.map { it.argumentTypes.size }.toTypedArray()
+					)
+			)
 			return
 		}
 
-		if (command.argumentTypes.isNotEmpty()) {
-			val parseMap = parseArguments(command, server, arguments)
+		if (selectedCommand.argumentTypes.isNotEmpty()) {
+			val parseMap = parseArguments(selectedCommand, server, arguments)
 			if (!parseMap.status) {
-				messageChannel.send(invalidArgumentsEmbed(serverPrefix, command, parseMap.errMsg))
+				messageChannel.send(invalidArgumentsEmbed(serverPrefix, selectedCommand, parseMap.errMsg))
 				return
 			}
 
@@ -88,14 +105,14 @@ class InputEvent : ListenerAdapter() {
 		}
 
 		try {
-			command.run(serverPrefix, event.jda, event.guild, event.member, messageChannel, arguments)
+			selectedCommand.run(serverPrefix, event.jda, event.guild, event.member, messageChannel, arguments)
 			event.message.addReaction("\uD83D\uDC40").complete()
-			normalLog(command)
+			normalLog(selectedCommand)
 		} catch (e: InsufficientPermissionException) {
 			messageChannel.send(
 					failureEmbed(
 							"Failed to invoke command",
-							"You need the permission: **${e.permission.getName()}** to use **$commandName**"
+							"You need the permission: **${e.permission.getName()}** to use **$attemptedCommandMacro**"
 					)
 			)
 		}
@@ -108,19 +125,19 @@ private fun handleRaider(invoker: Member, server: Guild, messageChannel: Message
 					&& getRaidRoleExcluded(server.id) != null
 					&& invoker.roles[0].position >= server.getRoleById(getRaidRoleExcluded(server.id)).position
 	val isAlreadyCaught = hasRaider(server.id, invoker.user.id)
-	return if (isExcludedFromRaidControl || isAlreadyCaught) {
-		false
+	return if (!isExcludedFromRaidControl && isAlreadyCaught) {
+		true
 	} else {
 		raidManger!!.manageRaid(server, messageChannel, invoker)
-		true
+		false
 	}
 }
 
-private fun checkPermissions(commandName: String, server: Guild, invoker: Member): Boolean {
+private fun checkPermissions(attemptedCommandMacro: String, server: Guild, invoker: Member): Boolean {
 	val serverId = server.id
 	val everyoneRoleId = server.getRolesByName("@everyone", false)[0].id
-	if (hasPermission(commandName, serverId)) {
-		val expectedPermission = getPermission(commandName, serverId)
+	if (hasPermission(attemptedCommandMacro, serverId)) {
+		val expectedPermission = getPermission(attemptedCommandMacro, serverId)
 		val expectedPermissionPosition = server.getRoleById(expectedPermission).position
 
 		val invokerRolelessHasPermission = invoker.roles.isNotEmpty() && invoker.roles[0].position < expectedPermissionPosition
@@ -139,33 +156,23 @@ private fun checkPermissions(commandName: String, server: Guild, invoker: Member
 	return true
 }
 
-private fun formArguments(
-		commandParts: Array<String>, messageChannel: MessageChannel,
-		serverPrefix: String, c: Command,
-		expectedArgsSize: Int): Array<String>? {
+private fun formArguments(commandParts: Array<String>, c: Command): Array<String>? {
 	var arguments = emptyArray<String>()
 	if (commandParts.size > 1) {
 		val argTypes = c.argumentTypes
-		arguments = if (argTypes.any { it is Sentence }) {
-			val sentenceArgPosition = argTypes.size
+		arguments = when {
+			argTypes.any { it is Sentence } -> {
+				val sentenceArgPosition = argTypes.size
 
-			if (commandParts.size - 1 < sentenceArgPosition) {
-				messageChannel.send(insufficientArgumentsEmbed(serverPrefix, c, expectedArgsSize))
-				return null
+				if (commandParts.size - 1 < sentenceArgPosition) return null
+
+				val sentence = Arrays.copyOfRange(commandParts, sentenceArgPosition, commandParts.size).joinToString(" ")
+
+				val tempArgs = Arrays.copyOfRange(commandParts, 1, sentenceArgPosition).toMutableList()
+				tempArgs.add(sentence)
+				tempArgs.toTypedArray()
 			}
-
-			val sentence = Arrays
-					.copyOfRange(
-							commandParts,
-							sentenceArgPosition,
-							commandParts.size)
-					.joinToString(" ")
-
-			val tempArgs = Arrays.copyOfRange(commandParts, 1, sentenceArgPosition).toMutableList()
-			tempArgs.add(sentence)
-			tempArgs.toTypedArray()
-		} else {
-			Arrays.copyOfRange(commandParts, 1, commandParts.size)
+			else -> Arrays.copyOfRange(commandParts, 1, commandParts.size)
 		}
 	}
 
