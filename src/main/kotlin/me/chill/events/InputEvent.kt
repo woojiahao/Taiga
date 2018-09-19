@@ -142,10 +142,10 @@ private fun checkPermissions(attemptedCommandMacro: String, server: Guild, invok
 		val expectedPermission = getPermission(attemptedCommandMacro, serverId)
 		val expectedPermissionPosition = server.getRoleById(expectedPermission).position
 
-		val invokerRolelessHasPermission = invoker.roles.isNotEmpty() && invoker.roles[0].position < expectedPermissionPosition
-		val invokerRoleHasPermission = invoker.roles.isEmpty() && expectedPermission != everyoneRoleId
+		val roleHasPermission = invoker.roles.isNotEmpty() && invoker.roles[0].position < expectedPermissionPosition
+		val rolelessHasPermission = invoker.roles.isEmpty() && expectedPermission != everyoneRoleId
 
-		if (invokerRoleHasPermission || invokerRolelessHasPermission) {
+		if (rolelessHasPermission || roleHasPermission) {
 			return false
 		}
 	} else {
