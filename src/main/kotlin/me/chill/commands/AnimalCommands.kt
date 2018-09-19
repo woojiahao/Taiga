@@ -11,6 +11,7 @@ import java.net.URL
 
 @CommandCategory
 fun animalCommands() = commands("Animal") {
+	setGlobal()
 	command("cat") {
 		execute {
 			val result = Gson().fromJson(URL("https://aws.random.cat/meow").readText(), JsonObject::class.java)
