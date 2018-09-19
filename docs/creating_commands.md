@@ -70,6 +70,7 @@ By default, Taiga has several argument types available to her, and these include
 9. [MacroName](argument_types.md?id=macroname)
 10. [SuggestionId](argument_types.md?id=suggestionid)
 11. [Prefix](argument_types.md?id=prefix)
+11. [ArgumentList](argument_types.md?id=argumentlist)
 
 To specify an argument, simply pass it to the command via the `expects` method
 ```kotlin
@@ -114,6 +115,13 @@ fun playCommands() = commands("Play") {
     }
 }
 ```
+
+### Overloading commands
+Taiga supports the overloading of existing commands. The only condition is that the number of arguments expected must differ,
+otherwise, there will be an exception thrown during run time.
+
+To overload the command, just name the new command to be the same as the original and then, modify the behavior and 
+arguments list.
 
 ## New Argument Type
 ### Structure
