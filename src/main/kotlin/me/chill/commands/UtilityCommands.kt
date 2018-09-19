@@ -14,6 +14,7 @@ import me.chill.utility.jda.failureEmbed
 import me.chill.utility.jda.simpleEmbed
 import me.chill.utility.jda.successEmbed
 import me.chill.utility.str
+import net.dv8tion.jda.core.Permission
 import java.io.File
 import java.io.FileReader
 
@@ -32,7 +33,7 @@ fun utilityCommands() = commands("Utility") {
 			respond(
 				simpleEmbed(
 					"Invites",
-					"- [Invite me to your server!](https://discordapp.com/oauth2/authorize?client_id=482340927709511682&scope=bot&permissions=8)\n" +
+					"- [Invite me to your server!](${jda.asBot().getInviteUrl(Permission.ADMINISTRATOR)})\n" +
 						"- [Join my development server](https://discord.gg/xtDNfyw)",
 					fondling,
 					blue
