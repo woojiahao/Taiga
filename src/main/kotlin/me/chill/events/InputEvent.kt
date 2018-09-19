@@ -35,7 +35,7 @@ class InputEvent : ListenerAdapter() {
 
 		val serverPrefix = getPrefix(server.id)
 
-		if (handleRaider(invoker, server, messageChannel)) return
+		handleRaider(invoker, server, messageChannel) ?: return
 
 		if (!message.startsWith(serverPrefix)) return
 
@@ -49,10 +49,10 @@ class InputEvent : ListenerAdapter() {
 
 		if (!CommandContainer.hasCommand(attemptedCommandMacro)) {
 			messageChannel.send(
-					failureEmbed(
-							"Invalid Command/Macro",
-							"Command/Macro: **$attemptedCommandMacro** does not exist"
-					)
+				failureEmbed(
+					"Invalid Command/Macro",
+					"Command/Macro: **$attemptedCommandMacro** does not exist"
+				)
 			)
 			return
 		}
@@ -61,11 +61,11 @@ class InputEvent : ListenerAdapter() {
 
 		if (!checkPermissions(attemptedCommandMacro, server, invoker)) {
 			messageChannel.send(
-					failureEmbed(
-							"Insufficient Permission",
-							"You cannot invoke **$attemptedCommandMacro**, nice try",
-							thumbnail = noWay
-					)
+				failureEmbed(
+					"Insufficient Permission",
+					"You cannot invoke **$attemptedCommandMacro**, nice try",
+					thumbnail = noWay
+				)
 			)
 			return
 		}
@@ -85,11 +85,11 @@ class InputEvent : ListenerAdapter() {
 
 		if (arguments == null || selectedCommand == null) {
 			messageChannel.send(
-					insufficientArgumentsEmbed(
-							serverPrefix,
-							attemptedCommandMacro,
-							commands.map { it.argumentTypes.size }.toTypedArray()
-					)
+				insufficientArgumentsEmbed(
+					serverPrefix,
+					attemptedCommandMacro,
+					commands.map { it.argumentTypes.size }.toTypedArray()
+				)
 			)
 			return
 		}
@@ -110,26 +110,28 @@ class InputEvent : ListenerAdapter() {
 			normalLog(selectedCommand)
 		} catch (e: InsufficientPermissionException) {
 			messageChannel.send(
-					failureEmbed(
-							"Failed to invoke command",
-							"You need the permission: **${e.permission.getName()}** to use **$attemptedCommandMacro**"
-					)
+				failureEmbed(
+					"Failed to invoke command",
+					"You need the permission: **${e.permission.getName()}** to use **$attemptedCommandMacro**"
+				)
 			)
 		}
 	}
 }
 
-private fun handleRaider(invoker: Member, server: Guild, messageChannel: MessageChannel): Boolean {
+private fun handleRaider(invoker: Member, server: Guild, messageChannel: MessageChannel): Boolean? {
 	val isExcludedFromRaidControl =
-			invoker.roles.isNotEmpty()
-					&& getRaidRoleExcluded(server.id) != null
-					&& invoker.roles[0].position >= server.getRoleById(getRaidRoleExcluded(server.id)).position
+		invoker.roles.isNotEmpty()
+			&& getRaidRoleExcluded(server.id) != null
+			&& invoker.roles[0].position >= server.getRoleById(getRaidRoleExcluded(server.id)).position
 	val isAlreadyCaught = hasRaider(server.id, invoker.user.id)
-	return if (!isExcludedFromRaidControl && isAlreadyCaught) {
-		true
-	} else {
-		raidManger!!.manageRaid(server, messageChannel, invoker)
-		false
+	return when {
+		isExcludedFromRaidControl -> true
+		isAlreadyCaught -> null
+		else -> {
+			raidManger!!.manageRaid(server, messageChannel, invoker)
+			false
+		}
 	}
 }
 
