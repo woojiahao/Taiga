@@ -13,7 +13,7 @@ class CommandSet(val categoryName: String) {
 				.filter { it.name == name }
 				.any { it.argumentTypes.size == command.argumentTypes.size }
 
-		if (invalidOverride) throw TaigaException("Unable to override command with the same number of argument types")
+		if (invalidOverride) throw TaigaException("Unable to overload command: $name with the same number of argument types")
 		commands.add(command)
 	}
 
