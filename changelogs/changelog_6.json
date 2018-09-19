@@ -4,7 +4,6 @@
 	"changes": [
 		"Commands can be overridden to include different numbers of argument types",
 		"`help` without arguments now display all available commands to users",
-		"Commands displayed to user are those that the user has permissions to access",
 		"Updated documentation for the new command framework system",
 		"Some commands are now available to everyone regardless of the role",
 		"Embeds are moved to separate classes to de-clutter"
