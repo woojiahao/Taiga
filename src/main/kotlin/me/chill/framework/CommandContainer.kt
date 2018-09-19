@@ -40,7 +40,7 @@ class CommandContainer private constructor() {
 
 		fun getCommandNames() = commandList().map { it.name }.toTypedArray()
 
-		fun getGlobalCommands() = commandList().asSequence().filter { it.getGlobal() }.map { it.name }.toList()
+		fun getGlobalCommands() = commandList().asSequence().filter { it.getGlobal() }.map { it.name }.distinct().toList()
 
 		fun commandList() = commandSets.map { it.commands }.flatten()
 	}
@@ -49,5 +49,6 @@ class CommandContainer private constructor() {
 inline fun commands(categoryName: String, create: CommandSet.() -> Unit) {
 	val set = CommandSet(categoryName)
 	set.create()
+	set.commands.forEach { it.setGlobal(set.getGlobal()) }
 	CommandContainer.commandSets.add(set)
 }

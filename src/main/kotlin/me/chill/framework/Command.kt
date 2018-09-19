@@ -17,7 +17,7 @@ class Command(var name: String) {
 
 	private val commandInformation: MutableMap<ContainerKey, Any?> = mutableMapOf()
 
-	private var isGlobal: Boolean = false
+	private var isGlobal = false
 
 	val guild get() = commandInformation[Server] as Guild
 	val invoker get() = commandInformation[Invoker] as Member

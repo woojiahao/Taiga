@@ -4,6 +4,7 @@ import me.chill.exception.TaigaException
 
 class CommandSet(val categoryName: String) {
 	val commands = mutableListOf<Command>()
+	private var isGlobal = false
 
 	inline fun command(name: String, create: Command.() -> Unit) {
 		val command = Command(name)
@@ -20,4 +21,10 @@ class CommandSet(val categoryName: String) {
 	fun hasCommand(command: String) = commands.stream().anyMatch { it.name == command }
 
 	fun getCommandNames() = commands.map { it.name }.toTypedArray().sortedArray()
+
+	fun setGlobal(isGlobal: Boolean = true) {
+		this.isGlobal = isGlobal
+	}
+
+	fun getGlobal() = isGlobal
 }
