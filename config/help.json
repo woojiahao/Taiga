@@ -212,17 +212,10 @@
 	],
 	"Utility": [
 		{
-			"name": "commands",
-			"description": "Displays all the commands available to the user",
-			"syntax": "commands",
-			"example": "commands",
-			"category": "Utility"
-		},
-		{
 			"name": "help",
-			"description": "Displays a help card for the user to learn more about a specific command",
-			"syntax": "help { Command Name }",
-			"example": "help ping",
+			"description": "Displays a help card for the user to learn more about a specific command, pass no arguments and it will display all commands available to you",
+			"syntax": "help ({ Command Name })",
+			"example": "help (ping)",
 			"category": "Utility"
 		},
 		{
