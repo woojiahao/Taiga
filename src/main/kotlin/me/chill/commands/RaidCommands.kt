@@ -103,8 +103,8 @@ fun raidCommands() = commands("Raid") {
 			respond(
 				successEmbed(
 					"Raiders in ${guild.name}",
-					raiders.joinToString(", "),
-					guild.iconUrl
+					if (raiders.isEmpty()) "No raiders on the server" else raiders.joinToString(", "),
+					null
 				)
 			)
 		}
