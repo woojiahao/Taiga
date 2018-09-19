@@ -105,9 +105,9 @@ class InputEvent : ListenerAdapter() {
 		}
 
 		try {
-			selectedCommand.run(serverPrefix, event.jda, event.guild, event.member, messageChannel, arguments)
 			event.message.addReaction("\uD83D\uDC40").complete()
-			normalLog(selectedCommand)
+			selectedCommand.run(serverPrefix, event.jda, event.guild, event.member, messageChannel, arguments)
+				normalLog(selectedCommand)
 		} catch (e: InsufficientPermissionException) {
 			messageChannel.send(
 				failureEmbed(
