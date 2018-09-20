@@ -71,6 +71,12 @@ fun moderationCommands() = commands("Moderation") {
 		}
 	}
 
+	command("history") {
+		execute {
+			respond(historyEmbed(guild, invoker.user, jda, getHistory(guild.id, invoker.user.id)))
+		}
+	}
+
 	command("strike") {
 		expects(UserId(), Integer(0, 3), Sentence())
 		execute {
