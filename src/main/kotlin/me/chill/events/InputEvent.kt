@@ -39,8 +39,16 @@ class InputEvent : ListenerAdapter() {
 
 		if (!message.startsWith(serverPrefix)) return
 
-		val commandParts = message.substring(serverPrefix.length).split(" ").toTypedArray()
+		val silentInvoke = message.startsWith(serverPrefix.repeat(2))
+
+		val commandParts = if (!silentInvoke) {
+			message.substring(serverPrefix.length).split(" ").toTypedArray()
+		} else {
+			message.substring(serverPrefix.repeat(2).length).split(" ").toTypedArray()
+		}
 		val attemptedCommandMacro = commandParts[0]
+
+		if (attemptedCommandMacro.isBlank()) return
 
 		if (hasMacro(server.id, attemptedCommandMacro)) {
 			if (commandParts.size == 1) messageChannel.send(getMacro(server.id, attemptedCommandMacro))
@@ -107,7 +115,10 @@ class InputEvent : ListenerAdapter() {
 		try {
 			event.message.addReaction("\uD83D\uDC40").complete()
 			selectedCommand.run(serverPrefix, event.jda, event.guild, event.member, messageChannel, arguments)
-				normalLog(selectedCommand)
+			normalLog(selectedCommand)
+			if (silentInvoke) {
+				event.message.delete().complete()
+			}
 		} catch (e: InsufficientPermissionException) {
 			messageChannel.send(
 				failureEmbed(
