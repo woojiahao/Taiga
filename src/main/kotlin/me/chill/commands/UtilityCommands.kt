@@ -3,6 +3,7 @@ package me.chill.commands
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import me.chill.arguments.types.CommandName
+import me.chill.database.operations.getPrefix
 import me.chill.embed.types.*
 import me.chill.framework.CommandCategory
 import me.chill.framework.CommandContainer
@@ -66,7 +67,7 @@ fun utilityCommands() = commands("Utility") {
 
 	command("help") {
 		execute {
-			respond(listCommandsEmbed(CommandContainer.commandSets, jda.selfUser.avatarUrl))
+			respond(listCommandsEmbed(CommandContainer.commandSets, jda.selfUser.avatarUrl, getPrefix(guild.id)))
 		}
 	}
 

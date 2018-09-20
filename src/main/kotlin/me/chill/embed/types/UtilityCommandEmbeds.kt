@@ -19,175 +19,181 @@ import net.dv8tion.jda.core.entities.MessageEmbed
 fun changeLogEmbed(botName: String, buildVersion: String,
 				   changelogContents: String, buildTitle: String,
 				   releaseDate: String, contributors: String) =
-		embed {
-			title = "$botName Changelogs"
-			color = green
+	embed {
+		title = "$botName Changelogs"
+		color = green
 
-			field {
-				title = "Build Title"
-				description = buildTitle
-			}
-
-			field {
-				title = "Changes"
-				description = changelogContents
-			}
-
-			field {
-				title = "Contributors"
-				description = contributors
-			}
-
-			field {
-				title = "Build Version"
-				description = buildVersion
-				inline = true
-			}
-
-			field {
-				title = "Learn More"
-				description = "[GitHub Repository](https://github.com/woojiahao/Taiga)"
-				inline = true
-			}
-
-			footer {
-				message = "Released on: $releaseDate"
-				iconUrl = null
-			}
+		field {
+			title = "Build Title"
+			description = buildTitle
 		}
+
+		field {
+			title = "Changes"
+			description = changelogContents
+		}
+
+		field {
+			title = "Contributors"
+			description = contributors
+		}
+
+		field {
+			title = "Build Version"
+			description = buildVersion
+			inline = true
+		}
+
+		field {
+			title = "Learn More"
+			description = "[GitHub Repository](https://github.com/woojiahao/Taiga)"
+			inline = true
+		}
+
+		footer {
+			message = "Released on: $releaseDate"
+			iconUrl = null
+		}
+	}
 
 fun botInfoEmbed(jda: JDA) =
-		embed {
-			title = "${jda.selfUser.name} Info"
-			color = orange
-			thumbnail = jda.selfUser.avatarUrl
-			field {
-				title = "Servers"
-				description = jda.guilds.size.toString()
-				inline = true
-			}
-
-			field {
-				title = "Members"
-				description = jda.users.size.toString()
-				inline = true
-			}
-
-			field {
-				title = "Commands"
-				description = CommandContainer.getCommandNames().size.toString()
-				inline = true
-			}
-
-			field {
-				title = "Categories"
-				description = CommandContainer.commandSets.size.toString()
-				inline = true
-			}
-
-			field {
-				title = "Invite"
-				description = "[Invite Me!](https://discordapp.com/oauth2/authorize?client_id=482340927709511682&scope=bot&permissions=8)"
-				inline = true
-			}
-
-			field {
-				title = "Ping"
-				description = "${jda.ping}ms"
-				inline = true
-			}
-
-			footer {
-				message = getDateTime()
-				iconUrl = jda.selfUser.avatarUrl
-			}
+	embed {
+		title = "${jda.selfUser.name} Info"
+		color = orange
+		thumbnail = jda.selfUser.avatarUrl
+		field {
+			title = "Servers"
+			description = jda.guilds.size.toString()
+			inline = true
 		}
+
+		field {
+			title = "Members"
+			description = jda.users.size.toString()
+			inline = true
+		}
+
+		field {
+			title = "Commands"
+			description = CommandContainer.getCommandNames().size.toString()
+			inline = true
+		}
+
+		field {
+			title = "Categories"
+			description = CommandContainer.commandSets.size.toString()
+			inline = true
+		}
+
+		field {
+			title = "Invite"
+			description = "[Invite Me!](https://discordapp.com/oauth2/authorize?client_id=482340927709511682&scope=bot&permissions=8)"
+			inline = true
+		}
+
+		field {
+			title = "Ping"
+			description = "${jda.ping}ms"
+			inline = true
+		}
+
+		footer {
+			message = getDateTime()
+			iconUrl = jda.selfUser.avatarUrl
+		}
+	}
 
 fun serverInfoEmbed(guild: Guild) =
-		embed {
-			title = guild.name
-			color = orange
-			thumbnail = guild.iconUrl
+	embed {
+		title = guild.name
+		color = orange
+		thumbnail = guild.iconUrl
 
-			field {
-				title = "Owner"
-				description = printMember(guild.owner)
-				inline = true
-			}
-
-			field {
-				val onlineMemberCount = guild.members.filter { it.onlineStatus == OnlineStatus.ONLINE }.size
-
-				title = "Users"
-				description = "$onlineMemberCount/${guild.members.size}"
-				inline = true
-			}
-
-			field {
-				title = "Region"
-				description = guild.region.getName()
-				inline = true
-			}
-
-			field {
-				title = "Roles"
-				description = guild.roles.size.toString()
-				inline = true
-			}
-
-			field {
-				title = "Text Channels"
-				description = guild.textChannels.size.toString()
-				inline = true
-			}
-
-			field {
-				title = "Voice Channels"
-				description = guild.voiceChannels.size.toString()
-				inline = true
-			}
-
-			footer {
-				message = getDateTime()
-				iconUrl = guild.jda.selfUser.avatarUrl
-			}
+		field {
+			title = "Owner"
+			description = printMember(guild.owner)
+			inline = true
 		}
+
+		field {
+			val onlineMemberCount = guild.members.filter { it.onlineStatus == OnlineStatus.ONLINE }.size
+
+			title = "Users"
+			description = "$onlineMemberCount/${guild.members.size}"
+			inline = true
+		}
+
+		field {
+			title = "Region"
+			description = guild.region.getName()
+			inline = true
+		}
+
+		field {
+			title = "Roles"
+			description = guild.roles.size.toString()
+			inline = true
+		}
+
+		field {
+			title = "Text Channels"
+			description = guild.textChannels.size.toString()
+			inline = true
+		}
+
+		field {
+			title = "Voice Channels"
+			description = guild.voiceChannels.size.toString()
+			inline = true
+		}
+
+		footer {
+			message = getDateTime()
+			iconUrl = guild.jda.selfUser.avatarUrl
+		}
+	}
 
 fun commandInfoEmbed(command: Command) =
-		embed {
-			val helpLink = "https://woojiahao.github.io/Taiga/#/${command.category.toLowerCase()}_commands?id=${command.name.toLowerCase()}"
-			title = "${command.category} - ${command.name}"
-			color = cyan
-			description = command.description
-			field {
-				title = "Syntax"
-				description = command.syntax
-			}
-			field {
-				title = "Example"
-				description = command.example
-			}
-			field {
-				title = "Learn More"
-				description = "[Documentation on ${command.name}]($helpLink)"
-			}
+	embed {
+		val helpLink = "https://woojiahao.github.io/Taiga/#/${command.category.toLowerCase()}_commands?id=${command.name.toLowerCase()}"
+		title = "${command.category} - ${command.name}"
+		color = cyan
+		description = command.description
+		field {
+			title = "Syntax"
+			description = command.syntax
 		}
+		field {
+			title = "Example"
+			description = command.example
+		}
+		field {
+			title = "Learn More"
+			description = "[Documentation on ${command.name}]($helpLink)"
+		}
+	}
 
-fun listCommandsEmbed(commandSets: List<CommandSet>, avatarUrl: String) =
-		embed {
-			title = "Commands"
-			color = green
-			thumbnail = avatarUrl
-			commandSets.forEach { set ->
+fun listCommandsEmbed(commandSets: List<CommandSet>, avatarUrl: String, serverPrefix: String) =
+	embed {
+		title = "Commands"
+		color = green
+		description = "`$serverPrefix` causes a regular command invoke\n" +
+			"`${serverPrefix.repeat(2)}` causes a silent command invoke"
+		thumbnail = avatarUrl
+
+		commandSets
+			.sortedBy { set -> set.categoryName }
+			.forEach { set ->
 				field {
 					title = set.categoryName
 					description = set
-							.getCommandNames()
-							.joinToString(", ")
+						.getCommandNames()
+						.distinct()
+						.joinToString(", ")
 					inline = false
 				}
 			}
-		}
+	}
 
 fun pingEmbed(latency: Long): MessageEmbed? {
 	val status = when {
