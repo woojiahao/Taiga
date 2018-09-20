@@ -1,0 +1,13 @@
+{
+	"buildNumber": "3.1",
+	"buildTitle": "Quality of Life Improvements",
+	"changes": [
+		"`history` command without arguments now returns the invoker's history",
+		"Channel overrides for muted role created when new channel is created",
+		"Silent invokes now work when the prefix is duplicated"
+	],
+	"releaseDate": "20 September 2018",
+	"contributors": [
+		"@Chill#4048"
+	]
+}
