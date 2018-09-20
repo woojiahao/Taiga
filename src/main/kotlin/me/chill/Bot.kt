@@ -3,6 +3,7 @@ package me.chill
 import me.chill.credential.Credentials
 import me.chill.database.setupDatabase
 import me.chill.events.InputEvent
+import me.chill.events.OnChannelCreationEvent
 import me.chill.events.OnJoinEvent
 import me.chill.events.OnLeaveEvent
 import me.chill.framework.CommandContainer
@@ -26,7 +27,7 @@ fun main(args: Array<String>) {
 		.setStatus(OnlineStatus.ONLINE)
 		.setToken(credentials!!.token)
 		.setGame(Game.playing("${credentials!!.defaultPrefix}help"))
-		.addEventListener(OnJoinEvent(), OnLeaveEvent(), InputEvent())
+		.addEventListener(OnJoinEvent(), OnLeaveEvent(), OnChannelCreationEvent(), InputEvent())
 		.build()
 	credentials!!.botOwnerId = jda.asBot().applicationInfo.complete().owner.id
 }
