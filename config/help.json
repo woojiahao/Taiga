@@ -125,9 +125,9 @@
 		},
 		{
 			"name": "history",
-			"description": "Displays the history of a specific member",
-			"syntax": "history { User ID/Mention }",
-			"example": "history @Chill",
+			"description": "Displays the history of a specific member, if no arguments are given, the invoker's history is retrieved",
+			"syntax": "history ({ User ID/Mention })",
+			"example": "history (@Chill#4048)",
 			"category": "Moderation"
 		},
 		{
