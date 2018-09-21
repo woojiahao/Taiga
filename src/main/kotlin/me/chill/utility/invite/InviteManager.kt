@@ -12,8 +12,11 @@ import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.entities.Message
 import net.dv8tion.jda.core.entities.MessageChannel
 
-fun containsInvite(message: String) =
-	message.contains(Regex("(https?://)?(www\\.)?(discord\\.(gg|io|me|li)|discordapp\\.com/invite)/.+[a-z]"))
+private val inviteRegex = Regex("(https?://)?(www\\.)?(discord\\.(gg|io|me|li)|discordapp\\.com/invite)/.+[a-z]")
+
+fun isInvite(message: String) = message.matches(inviteRegex)
+
+fun containsInvite(message: String) = message.contains(inviteRegex)
 
 fun manageInviteSent(sender: Member, guild: Guild, channel: MessageChannel, message: Message) {
 	val senderId = sender.user.id

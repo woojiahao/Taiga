@@ -1,5 +1,6 @@
 package me.chill.commands
 
+import me.chill.arguments.types.DiscordInvite
 import me.chill.arguments.types.Prefix
 import me.chill.arguments.types.Word
 import me.chill.database.operations.*
@@ -132,6 +133,21 @@ fun administrationCommands() = commands("Administration") {
 					"${guild.name} Preferences",
 					allPreferences,
 					thumbnail = null
+				)
+			)
+		}
+	}
+
+	command("addinvite") {
+		expects(DiscordInvite())
+		execute {
+			val invite = arguments[0]!!.str()
+			addToWhitelist(guild.id, invite)
+			respond(
+				successEmbed(
+					"Invite Added To Whitelist",
+					"Invite: $invite is now whitelisted and can be sent by any member",
+					null
 				)
 			)
 		}

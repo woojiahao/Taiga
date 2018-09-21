@@ -17,7 +17,8 @@ fun setupDatabase(databaseUrl: String) {
 			Raider,
 			Suggestion,
 			Macro,
-			UserInvite
+			UserInvite,
+			InviteWhitelist
 		)
 	}
 }
@@ -78,8 +79,13 @@ object Macro : Table() {
 	val macroDescription = text("macro_description")
 }
 
-object UserInvite: Table() {
+object UserInvite : Table() {
 	val serverId = varchar("server_id", 20).primaryKey()
 	val userId = varchar("user_id", 20).primaryKey()
 	val invitesSent = integer("invites_sent")
+}
+
+object InviteWhitelist : Table() {
+	val serverId = varchar("server_id", 20).primaryKey()
+	val inviteLink = text("invite_link").primaryKey()
 }
