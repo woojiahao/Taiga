@@ -153,16 +153,9 @@
 		},
 		{
 			"name": "ban",
-			"description": "Bans a user from the server, regardless of whether they are on the server or not",
-			"syntax": "ban { User ID/Mention } { Ban Reason }",
+			"description": "Bans a user/list of users from the server",
+			"syntax": "ban { User ID List (,) } { Ban Reason }",
 			"example": "ban @Chill#4048 raid",
-			"category": "Moderation"
-		},
-		{
-			"name": "banall",
-			"description": "Bans all users from the server",
-			"syntax": "banall { User ID List (,) } { Ban Reason }",
-			"example": "banall 416016773226168321,302385772718325760 Raiders",
 			"category": "Moderation"
 		},
 		{

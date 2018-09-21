@@ -94,34 +94,16 @@ fun moderationCommands() = commands("Moderation") {
 	}
 
 	command("ban") {
-		expects(UserId(true), Sentence())
-		execute {
-			val target = jda.findUser(arguments[0]!!.str())
-			val banReason = arguments[1]!!.str()
-			guild.controller.ban(target, 1, banReason).complete()
-			respond(
-				successEmbed(
-					"User Banned",
-					"User: **${target.name}** has been banned for **$banReason**"
-				)
-			)
-		}
-	}
-
-	command("banall") {
 		expects(ArgumentList(UserId(true)), Sentence())
 		execute {
 			val banList = arguments[0]!!.str().split(",")
-			val banReason = "Mass Ban: ${arguments[1]!!.str()}"
-			Thread {
-				banList.forEach { target ->
-					guild.controller.ban(jda.findUser(target), 1, banReason).complete()
-					Thread.sleep(300)
-				}
-			}.start()
+			val banReason = arguments[1]!!.str()
+			banList.forEach { target ->
+				guild.controller.ban(jda.findUser(target), 1, banReason).complete()
+			}
 			respond(
 				successEmbed(
-					"Mass Ban",
+					"Banning Users",
 					"Banning users: ${banList.joinToString(", ")}",
 					null
 				)
