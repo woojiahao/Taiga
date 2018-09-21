@@ -58,8 +58,14 @@ fun administrationCommands() = commands("Administration") {
 		expects(Prefix())
 		execute {
 			val newPrefix = arguments[0]!!.str()
+			val botAsMember = guild.getMember(jda.selfUser)
+			val originalNickname = if (botAsMember.nickname != null) {
+				botAsMember.nickname.substring(0, botAsMember.nickname.lastIndexOf("("))
+			} else {
+				botAsMember.effectiveName
+			}
 			editPrefix(guild.id, newPrefix)
-			guild.controller.setNickname(guild.getMember(jda.selfUser), "${guild.getMember(jda.selfUser).nickname} (${newPrefix}help)").complete()
+			guild.controller.setNickname(guild.getMember(jda.selfUser), "${originalNickname} (${newPrefix}help)").complete()
 			respond(
 				successEmbed(
 					"${guild.name} Prefix Changed",
