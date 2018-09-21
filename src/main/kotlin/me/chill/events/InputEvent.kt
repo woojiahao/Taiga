@@ -14,6 +14,7 @@ import me.chill.raidManger
 import me.chill.settings.noWay
 import me.chill.utility.jda.failureEmbed
 import me.chill.utility.jda.send
+import net.dv8tion.jda.core.Permission
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.entities.MessageChannel
@@ -120,10 +121,11 @@ class InputEvent : ListenerAdapter() {
 				event.message.delete().complete()
 			}
 		} catch (e: InsufficientPermissionException) {
+			if (e.permission == Permission.MESSAGE_READ) return
 			messageChannel.send(
 				failureEmbed(
 					"Failed to invoke command",
-					"You need the permission: **${e.permission.getName()}** to use **$attemptedCommandMacro**"
+					"You need to give me the permission to **${e.permission.getName()}** to use **$attemptedCommandMacro**"
 				)
 			)
 		}
