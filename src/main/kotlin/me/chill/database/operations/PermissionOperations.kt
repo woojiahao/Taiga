@@ -24,6 +24,7 @@ fun removePermission(commandName: String, serverId: String) {
 fun editPermission(commandName: String, serverId: String, roleId: String) {
 	transaction {
 		Permission.update({ selectKey(serverId, commandName) }) {
+
 			it[permission] = roleId
 		}
 	}

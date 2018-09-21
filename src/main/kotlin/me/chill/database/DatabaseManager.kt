@@ -16,7 +16,8 @@ fun setupDatabase(databaseUrl: String) {
 			Strike,
 			Raider,
 			Suggestion,
-			Macro
+			Macro,
+			UserInvite
 		)
 	}
 }
@@ -75,4 +76,10 @@ object Macro : Table() {
 	val serverId = varchar("server_id", 20).primaryKey()
 	val macroName = text("macro_name").primaryKey()
 	val macroDescription = text("macro_description")
+}
+
+object UserInvite: Table() {
+	val serverId = varchar("server_id", 20).primaryKey()
+	val userId = varchar("user_id", 20).primaryKey()
+	val invitesSent = integer("invites_sent")
 }

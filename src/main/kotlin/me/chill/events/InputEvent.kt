@@ -12,6 +12,8 @@ import me.chill.framework.CommandContainer
 import me.chill.logging.normalLog
 import me.chill.raidManger
 import me.chill.settings.noWay
+import me.chill.utility.invite.containsInvite
+import me.chill.utility.invite.manageInviteSent
 import me.chill.utility.jda.failureEmbed
 import me.chill.utility.jda.send
 import net.dv8tion.jda.core.Permission
@@ -37,6 +39,11 @@ class InputEvent : ListenerAdapter() {
 		val serverPrefix = getPrefix(server.id)
 
 		handleRaider(invoker, server, messageChannel) ?: return
+
+		if (containsInvite(message)) {
+			manageInviteSent(invoker, server, messageChannel, event.message)
+			return
+		}
 
 		if (!message.startsWith(serverPrefix)) return
 
