@@ -54,6 +54,7 @@ fun administrationCommands() = commands("Administration") {
 		}
 	}
 
+	// todo: introduce regex to check for where the <prefix>help is found?
 	command("setprefix") {
 		expects(Prefix())
 		execute {

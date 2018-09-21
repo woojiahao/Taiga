@@ -5,9 +5,10 @@
 		"Merged `ban` and `banall` into 1 command, as per [Issue #5](https://github.com/woojiahao/Taiga/issues/5)",
 		"Added a limit flag for `ArgumentList`",
 		"Fixed lack of perms message to be clearer",
-		"Lack of READ_MESSAGE permission no longer shows error",
+		"Lack of READ_MESSAGE and WRITE_MESSAGE permission no longer shows error",
 		"Added Discord invite checking",
-		"Added Discord invite whitelisting"
+		"Added Discord invite whitelisting",
+		"Bot name changes to reflect the current prefix"
 	],
 	"releaseDate": "21 September 2018",
 	"contributors": [
