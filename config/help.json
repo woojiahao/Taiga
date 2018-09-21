@@ -65,14 +65,14 @@
 		},
 		{
 			"name": "addinvite",
-			"description": "Adds an invite to the whitelist",
+			"description": "Adds an invite to the whitelist, only the owner can add invites",
 			"syntax": "addinvite { Discord Invite Link }",
 			"example": "addinvite https://discord.gg/xtDNfyw",
 			"category": "Administration"
 		},
 		{
 			"name": "removeinvite",
-			"description": "Removes an invite from the whitelist",
+			"description": "Removes an invite from the whitelist, only the owner can remove invites",
 			"syntax": "removeinvite { Discord Invite Link }",
 			"example": "removeinvite https://discord.gg/xtDNfyw",
 			"category": "Administration"

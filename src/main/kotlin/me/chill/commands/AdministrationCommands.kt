@@ -175,7 +175,8 @@ fun administrationCommands() = commands("Administration") {
 				successEmbed(
 					"${guild.name} Whitelist",
 					if (whitelist.isBlank()) "No invites whitelisted"
-					else whitelist
+					else whitelist,
+					null
 				)
 			)
 		}

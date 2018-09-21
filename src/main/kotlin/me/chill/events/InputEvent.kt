@@ -13,6 +13,7 @@ import me.chill.logging.normalLog
 import me.chill.raidManger
 import me.chill.settings.noWay
 import me.chill.utility.invite.containsInvite
+import me.chill.utility.invite.extractInvite
 import me.chill.utility.invite.manageInviteSent
 import me.chill.utility.jda.failureEmbed
 import me.chill.utility.jda.send
@@ -41,8 +42,11 @@ class InputEvent : ListenerAdapter() {
 		handleRaider(invoker, server, messageChannel) ?: return
 
 		if (containsInvite(message)) {
-			manageInviteSent(invoker, server, messageChannel, event.message)
-			return
+			val extractedInvite = extractInvite(message)
+			if (!hasInviteInWhitelist(server.id, extractedInvite) && !invoker.isOwner) {
+				manageInviteSent(invoker, server, messageChannel, event.message)
+				return
+			}
 		}
 
 		if (!message.startsWith(serverPrefix)) return
