@@ -1,6 +1,6 @@
 {
 	"buildNumber": "3.2",
-	"buildTitle": "Minor Adjustments",
+	"buildTitle": "Invite Checking",
 	"changes": [
 		"Merged `ban` and `banall` into 1 command, as per [Issue #5](https://github.com/woojiahao/Taiga/issues/5)",
 		"Added a limit flag for `ArgumentList`",
