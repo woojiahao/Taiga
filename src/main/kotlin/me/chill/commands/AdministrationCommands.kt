@@ -59,7 +59,7 @@ fun administrationCommands() = commands("Administration") {
 		execute {
 			val newPrefix = arguments[0]!!.str()
 			editPrefix(guild.id, newPrefix)
-			guild.controller.setNickname(guild.getMember(jda.selfUser), "${jda.selfUser.name} (${newPrefix}help)").complete()
+			guild.controller.setNickname(guild.getMember(jda.selfUser), "${guild.getMember(jda.selfUser).nickname} (${newPrefix}help)").complete()
 			respond(
 				successEmbed(
 					"${guild.name} Prefix Changed",
