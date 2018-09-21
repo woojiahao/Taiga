@@ -62,6 +62,27 @@
 			"syntax": "getpreferences",
 			"example": "getpreferences",
 			"category": "Administration"
+		},
+		{
+			"name": "addinvite",
+			"description": "Adds an invite to the whitelist",
+			"syntax": "addinvite { Discord Invite Link }",
+			"example": "addinvite https://discord.gg/xtDNfyw",
+			"category": "Administration"
+		},
+		{
+			"name": "removeinvite",
+			"description": "Removes an invite from the whitelist",
+			"syntax": "removeinvite { Discord Invite Link }",
+			"example": "removeinvite https://discord.gg/xtDNfyw",
+			"category": "Administration"
+		},
+		{
+			"name": "whitelist",
+			"description": "Displays all the whitelisted invites for the server",
+			"syntax": "whitelist",
+			"example": "whitelist",
+			"category": "Administration"
 		}
 	],
 	"Welcome": [

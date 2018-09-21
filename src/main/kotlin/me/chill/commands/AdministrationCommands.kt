@@ -170,10 +170,12 @@ fun administrationCommands() = commands("Administration") {
 
 	command("whitelist") {
 		execute {
+			val whitelist = getWhitelist(guild.id)
 			respond(
 				successEmbed(
 					"${guild.name} Whitelist",
-					getWhitelist(guild.id)
+					if (whitelist.isBlank()) "No invites whitelisted"
+					else whitelist
 				)
 			)
 		}
