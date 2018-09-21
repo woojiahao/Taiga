@@ -132,7 +132,7 @@ class InputEvent : ListenerAdapter() {
 				event.message.delete().complete()
 			}
 		} catch (e: InsufficientPermissionException) {
-			if (e.permission == Permission.MESSAGE_READ) return
+			if (e.permission == Permission.MESSAGE_READ || e.permission == Permission.MESSAGE_WRITE) return
 			messageChannel.send(
 				failureEmbed(
 					"Failed to invoke command",
