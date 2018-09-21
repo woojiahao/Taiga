@@ -152,6 +152,32 @@ fun administrationCommands() = commands("Administration") {
 			)
 		}
 	}
+
+	command("removeinvite") {
+		expects(DiscordInvite(true))
+		execute {
+			val invite = arguments[0]!!.str()
+			removeFromWhitelist(guild.id, invite)
+			respond(
+				successEmbed(
+					"Invite Removed From Whitelist",
+					"Invite: $invite has been removed from the whitelist",
+					null
+				)
+			)
+		}
+	}
+
+	command("whitelist") {
+		execute {
+			respond(
+				successEmbed(
+					"${guild.name} Whitelist",
+					getWhitelist(guild.id)
+				)
+			)
+		}
+	}
 }
 
 private fun setChannel(targetChannel: TargetChannel, channel: MessageChannel, guild: Guild) {
