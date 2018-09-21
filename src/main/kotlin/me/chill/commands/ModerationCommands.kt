@@ -94,13 +94,10 @@ fun moderationCommands() = commands("Moderation") {
 	}
 
 	command("ban") {
-		expects(ArgumentList(UserId(true)), Sentence())
+		expects(ArgumentList(UserId(true), limit = 30), Sentence())
 		execute {
 			val banList = arguments[0]!!.str().split(",")
 			val banReason = arguments[1]!!.str()
-			banList.forEach { target ->
-				guild.controller.ban(jda.findUser(target), 1, banReason).complete()
-			}
 			respond(
 				successEmbed(
 					"Banning Users",
@@ -108,6 +105,9 @@ fun moderationCommands() = commands("Moderation") {
 					null
 				)
 			)
+			banList.forEach { target ->
+				guild.controller.ban(jda.findUser(target), 1, banReason).complete()
+			}
 		}
 	}
 
