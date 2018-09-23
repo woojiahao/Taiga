@@ -3,7 +3,7 @@ from docs_assistant.command_overview_docs import command_overview_docs_update
 from docs_assistant.command_info import command_info_update
 from docs_assistant.command_overview_main import command_overview_main_update
 
-# command_overview_docs_update()
-# command_info_update()
+command_overview_docs_update()
+command_info_update()
 command_overview_main_update()
-# commit("Updated documentation")
+commit("Updated documentation")
