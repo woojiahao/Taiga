@@ -22,7 +22,9 @@ fun hasUser(userId: String, serverId: String) =
 
 fun getUserCount(userId: String, serverId: String) =
 	transaction {
-		UserInvite.select { userMatch(userId, serverId) }.first()[UserInvite.invitesSent]
+		val count = UserInvite.select { userMatch(userId, serverId) }
+		if (count.empty()) 0
+		else count.first()[UserInvite.invitesSent]
 	}
 
 fun incrementInviteCount(userId: String, serverId: String) {

@@ -21,7 +21,6 @@ fun containsInvite(message: String) = message.contains(inviteRegex)
 fun extractInvite(message: String) =
 	inviteRegex.find(message)!!.value
 
-
 fun manageInviteSent(sender: Member, guild: Guild, channel: MessageChannel, message: Message) {
 	val senderId = sender.user.id
 	val guildId = guild.id

@@ -1,6 +1,7 @@
 package me.chill.embed.types
 
 import me.chill.database.operations.getStrikeCount
+import me.chill.database.operations.getUserCount
 import me.chill.database.states.TimeMultiplier
 import me.chill.infraction.UserInfractionRecord
 import me.chill.settings.cyan
@@ -37,7 +38,8 @@ fun historyEmbed(guild: Guild, user: User, jda: JDA, userInfractionRecord: UserI
 				"${user.name}#${user.discriminator} has **${userInfractionRecord.getStrikes().size}** infraction(s)\n" +
 				"Current Strike Count: **${getStrikeCount(guild.id, user.id)}/3**\n" +
 				"Join Date: **$joinDate**\n" +
-				"Creation Date: **${user.creationTime.format(dateTimeFormatter)}**"
+				"Creation Date: **${user.creationTime.format(dateTimeFormatter)}**\n" +
+				"Invites Sent: **${getUserCount(user.id, guild.id)}/5**"
 		}
 
 		field {}
