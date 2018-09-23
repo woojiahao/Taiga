@@ -18,7 +18,7 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter
 
 class OnLeaveEvent : ListenerAdapter() {
 	override fun onGuildMemberLeave(event: GuildMemberLeaveEvent?) {
-		if (event == null) throw TaigaException("Event object was null during member leave")
+		event ?: throw TaigaException("Event object was null during member leave")
 
 		val serverId = event.guild.id
 		val member = event.member
@@ -28,7 +28,7 @@ class OnLeaveEvent : ListenerAdapter() {
 	}
 
 	override fun onGuildLeave(event: GuildLeaveEvent?) {
-		if (event == null) throw TaigaException("Event object was null during bot leave")
+		event ?: throw TaigaException("Event object was null during bot leave")
 
 		val serverId = event.guild.id
 

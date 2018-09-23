@@ -16,11 +16,11 @@ class Credentials(configuration: Configuration?) {
 			database = System.getenv("JDBC_DATABASE_URL")
 			defaultPrefix = System.getenv("PREFIX")
 
-			if (token == null) throw TaigaException("Set a token environment variable in Heroku to proceed")
-			if (database == null) throw TaigaException("Set up Heroku Postgres to proceed")
-			if (defaultPrefix == null) throw TaigaException("Set a default prefix environment variable in Heroku to proceed")
+			token ?: throw TaigaException("Set a token environment variable in Heroku to proceed")
+			database ?: throw TaigaException("Set up Heroku Postgres to proceed")
+			defaultPrefix ?: throw TaigaException("Set a default prefix environment variable in Heroku to proceed")
 		} else {
-			if (configuration == null) throw TaigaException("Configuration cannot be null for a local instance of Taiga")
+			configuration ?: throw TaigaException("Configuration cannot be null for a local instance of Taiga")
 
 			token = configuration.token
 			database = configuration.database

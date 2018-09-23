@@ -20,6 +20,7 @@ import me.chill.utility.jda.send
 import net.dv8tion.jda.core.Permission
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member
+import net.dv8tion.jda.core.entities.Message
 import net.dv8tion.jda.core.entities.MessageChannel
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent
 import net.dv8tion.jda.core.exceptions.InsufficientPermissionException
@@ -27,6 +28,8 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter
 import java.util.*
 
 class InputEvent : ListenerAdapter() {
+	private val permissionIgnoreList = arrayOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_READ)
+
 	override fun onMessageReceived(event: MessageReceivedEvent?) {
 		event ?: throw TaigaException("Event object was null during message receive")
 
@@ -40,24 +43,11 @@ class InputEvent : ListenerAdapter() {
 		val serverPrefix = getPrefix(server.id)
 
 		handleRaider(invoker, server, messageChannel) ?: return
-
-		if (containsInvite(message)) {
-			val extractedInvite = extractInvite(message)
-			if (!hasInviteInWhitelist(server.id, extractedInvite) && !invoker.isOwner) {
-				manageInviteSent(invoker, server, messageChannel, event.message)
-				return
-			}
-		}
-
+		if (!handleInvite(message, invoker, server, messageChannel, event.message)) return
 		if (!message.startsWith(serverPrefix)) return
 
 		val silentInvoke = message.startsWith(serverPrefix.repeat(2))
-
-		val commandParts = if (!silentInvoke) {
-			message.substring(serverPrefix.length).split(" ").toTypedArray()
-		} else {
-			message.substring(serverPrefix.repeat(2).length).split(" ").toTypedArray()
-		}
+		val commandParts = message.substring(serverPrefix.repeat(if (!silentInvoke) 1 else 2).length).split(" ").toTypedArray()
 		val attemptedCommandMacro = commandParts[0]
 
 		if (attemptedCommandMacro.isBlank()) return
@@ -90,20 +80,8 @@ class InputEvent : ListenerAdapter() {
 			return
 		}
 
-		var arguments: Array<String>? = null
-		var selectedCommand: Command? = null
-		for (i in 0 until commands.size) {
-			val command = commands[i]
-			val expectedArgSize = command.argumentTypes.size
-			val compiledArguments = formArguments(commandParts, command)
-			if (compiledArguments != null && compiledArguments.size == expectedArgSize) {
-				arguments = compiledArguments
-				selectedCommand = command
-				break
-			}
-		}
-
-		if (arguments == null || selectedCommand == null) {
+		val selection = matchCommand(commands, commandParts)
+		if (selection == null) {
 			messageChannel.send(
 				insufficientArgumentsEmbed(
 					serverPrefix,
@@ -113,6 +91,8 @@ class InputEvent : ListenerAdapter() {
 			)
 			return
 		}
+
+		var (arguments, selectedCommand) = selection
 
 		if (selectedCommand.argumentTypes.isNotEmpty()) {
 			val parseMap = parseArguments(selectedCommand, server, arguments)
@@ -128,11 +108,9 @@ class InputEvent : ListenerAdapter() {
 			event.message.addReaction("\uD83D\uDC40").complete()
 			selectedCommand.run(serverPrefix, event.jda, event.guild, event.member, messageChannel, arguments)
 			normalLog(selectedCommand)
-			if (silentInvoke) {
-				event.message.delete().complete()
-			}
+			if (silentInvoke) event.message.delete().complete()
 		} catch (e: InsufficientPermissionException) {
-			if (e.permission == Permission.MESSAGE_READ || e.permission == Permission.MESSAGE_WRITE) return
+			if (permissionIgnoreList.contains(e.permission)) return
 			messageChannel.send(
 				failureEmbed(
 					"Failed to invoke command",
@@ -141,6 +119,34 @@ class InputEvent : ListenerAdapter() {
 			)
 		}
 	}
+}
+
+private fun matchCommand(commandList: Array<Command>, commandParts: Array<String>): Pair<Array<String>, Command>? {
+	for (i in 0 until commandList.size) {
+		val command = commandList[i]
+		val expectedArgSize = command.argumentTypes.size
+		val compiledArguments = formArguments(commandParts, command)
+		if (compiledArguments != null && compiledArguments.size == expectedArgSize) {
+			return Pair(compiledArguments, command)
+		}
+	}
+
+	return null
+}
+
+private fun handleInvite(
+	message: String, invoker: Member,
+	server: Guild, messageChannel: MessageChannel,
+	originalMessage: Message): Boolean {
+	if (containsInvite(message)) {
+		val extractedInvite = extractInvite(message)
+		if (!hasInviteInWhitelist(server.id, extractedInvite) && !invoker.isOwner) {
+			manageInviteSent(invoker, server, messageChannel, originalMessage)
+			return false
+		}
+	}
+
+	return true
 }
 
 private fun handleRaider(invoker: Member, server: Guild, messageChannel: MessageChannel): Boolean? {
