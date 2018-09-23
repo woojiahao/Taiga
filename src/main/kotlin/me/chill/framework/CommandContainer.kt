@@ -42,7 +42,7 @@ class CommandContainer private constructor() {
 
 		fun getGlobalCommands() = commandList().asSequence().filter { it.getGlobal() }.map { it.name }.distinct().toList()
 
-		fun commandList() = commandSets.map { it.commands }.flatten()
+		fun commandList() = commandSets.map { it.commands }.flatten().distinct()
 	}
 }
 
