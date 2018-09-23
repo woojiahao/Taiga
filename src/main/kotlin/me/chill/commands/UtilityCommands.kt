@@ -1,6 +1,6 @@
 package me.chill.commands
 
-import com.google.gson.GsonBuilder
+import com.google.gson.Gson
 import com.google.gson.JsonObject
 import me.chill.arguments.types.CommandName
 import me.chill.database.operations.getPrefix
@@ -116,18 +116,48 @@ fun utilityCommands() = commands("Utility") {
 				return@execute
 			}
 
-			val gson = GsonBuilder().create()
-			val changelogDetails = gson.fromJson<JsonObject>(FileReader(File(latestChangeLog)), JsonObject::class.java)
-
-			val buildTitle = changelogDetails["buildTitle"].asString
-			val changes = changelogDetails["changes"].asJsonArray.mapIndexed { index, s -> "${index + 1}. ${s.asString}" }.joinToString("\n")
-			val releaseDate = changelogDetails["releaseDate"].asString
-			val contributors = changelogDetails["contributors"].asJsonArray.joinToString("\n") { cont -> "- ${cont.asString}" }
-			val buildVersion = changelogDetails["buildNumber"].asString
-
+			val log = extractChangelog(latestChangeLog)
 			respond(
-				changeLogEmbed(jda.selfUser.name, buildVersion, changes, buildTitle, releaseDate, contributors)
+				changeLogEmbed(
+					jda.selfUser.name,
+					log[ChangeLogComponents.BuildVersion]!!,
+					log[ChangeLogComponents.Changes]!!,
+					log[ChangeLogComponents.Title]!!,
+					log[ChangeLogComponents.ReleaseDate]!!,
+					log[ChangeLogComponents.Contributors]!!
+				)
 			)
 		}
 	}
+}
+
+private fun extractChangelog(changelogName: String) = extract(changelogName)
+
+private fun extractChangelog(changelog: Int) = extract("changelog_$changelog.json")
+
+private fun extract(title: String): Map<ChangeLogComponents, String> {
+	val changelogDetails = Gson().fromJson<JsonObject>(FileReader(File(title)), JsonObject::class.java)
+
+	val buildTitle = changelogDetails["buildTitle"].asString
+	val changes = changelogDetails["changes"]
+		.asJsonArray
+		.mapIndexed { index, s ->
+			"${index + 1}. ${s.asString}"
+		}
+		.joinToString("\n")
+	val releaseDate = changelogDetails["releaseDate"].asString
+	val contributors = changelogDetails["contributors"].asJsonArray.joinToString("\n") { cont -> "- ${cont.asString}" }
+	val buildVersion = changelogDetails["buildNumber"].asString
+
+	return mapOf(
+		ChangeLogComponents.Title to buildTitle,
+		ChangeLogComponents.Changes to changes,
+		ChangeLogComponents.ReleaseDate to releaseDate,
+		ChangeLogComponents.Contributors to contributors,
+		ChangeLogComponents.BuildVersion to buildVersion
+	)
+}
+
+private enum class ChangeLogComponents {
+	Title, Changes, ReleaseDate, Contributors, BuildVersion
 }
