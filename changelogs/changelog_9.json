@@ -9,7 +9,8 @@
 		"`HelpUtility` can now derive the category name of a command without it being explicitly included in `help.json`",
 		"`history` command now displays information about invite spam",
 		"Changelogs can now be viewed back and displayed",
-		"Restriction for command names to start with letter or digit imposed"
+		"Restriction for command names to start with letter or digit imposed",
+		"Python scripts now auto generate and commit changes directly to the documentation pages"
 	],
 	"releaseDate": "23 September 2018",
 	"contributors": [

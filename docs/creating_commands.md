@@ -197,18 +197,15 @@ format:
 	"name": "",
 	"description": "",
 	"syntax": "",
-	"example": "",
-	"category": ""
+	"example": ""
 }
 ```
 
-Then, if you wish to generate the documentation for the documentation site, run the following command in the root 
-directory, using the output to replace the existing markdowns:
-```bash 
+Then, to update all affected `.md` files, simply run the following Python script:
+
+```bash
 $ cd scripts
-$ python documentation_command_overview_generator.py
-$ python command_information_generator.py
-$ python main_command_overview_generator.py
+$ python update_docs.py
 ```
 
 **Note:** You should have Python 3.6 and higher installed on your machine.
