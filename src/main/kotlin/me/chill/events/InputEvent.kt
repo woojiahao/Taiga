@@ -86,7 +86,7 @@ class InputEvent : ListenerAdapter() {
 				insufficientArgumentsEmbed(
 					serverPrefix,
 					attemptedCommandMacro,
-					commands.map { it.argumentTypes.size }.toTypedArray()
+					commands.map { it.argumentTypes.size }.sorted().toTypedArray()
 				)
 			)
 			return
