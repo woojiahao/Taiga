@@ -2,6 +2,7 @@ package me.chill.commands
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import me.chill.arguments.types.ChangeLog
 import me.chill.arguments.types.CommandName
 import me.chill.database.operations.getPrefix
 import me.chill.embed.types.*
@@ -116,7 +117,24 @@ fun utilityCommands() = commands("Utility") {
 				return@execute
 			}
 
-			val log = extractChangelog(latestChangeLog)
+			val log = extractChangelog(latestChangeLog, true)
+			respond(
+				changeLogEmbed(
+					jda.selfUser.name,
+					log[ChangeLogComponents.BuildVersion]!!,
+					log[ChangeLogComponents.Changes]!!,
+					log[ChangeLogComponents.Title]!!,
+					log[ChangeLogComponents.ReleaseDate]!!,
+					log[ChangeLogComponents.Contributors]!!
+				)
+			)
+		}
+	}
+
+	command("changelog") {
+		expects(ChangeLog())
+		execute {
+			val log = extractChangelog(arguments[0]!!.str())
 			respond(
 				changeLogEmbed(
 					jda.selfUser.name,
@@ -131,9 +149,8 @@ fun utilityCommands() = commands("Utility") {
 	}
 }
 
-private fun extractChangelog(changelogName: String) = extract(changelogName)
-
-private fun extractChangelog(changelog: Int) = extract("changelog_$changelog.json")
+private fun extractChangelog(changelog: String, isName: Boolean = false) =
+	extract(if (isName) changelog else "changelogs/changelog_$changelog.json")
 
 private fun extract(title: String): Map<ChangeLogComponents, String> {
 	val changelogDetails = Gson().fromJson<JsonObject>(FileReader(File(title)), JsonObject::class.java)

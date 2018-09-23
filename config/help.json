@@ -266,6 +266,13 @@
 			"syntax": "botinfo",
 			"example": "botinfo",
 			"category": "Utility"
+		},
+		{
+			"name": "changelog",
+			"description": "Displays the latest changelog if no argument is given, displays a specific changelog if one can be found",
+			"syntax": "changelog ({ Changelog Name })",
+			"example": "changelog (1)",
+			"category": "Utility"
 		}
 	],
 	"Role": [
