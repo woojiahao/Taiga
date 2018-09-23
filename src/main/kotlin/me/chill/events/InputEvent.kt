@@ -50,7 +50,7 @@ class InputEvent : ListenerAdapter() {
 		val commandParts = message.substring(serverPrefix.repeat(if (!silentInvoke) 1 else 2).length).split(" ").toTypedArray()
 		val attemptedCommandMacro = commandParts[0]
 
-		if (attemptedCommandMacro.isBlank()) return
+		if (attemptedCommandMacro.isBlank() || !attemptedCommandMacro[0].isLetterOrDigit()) return
 
 		if (hasMacro(server.id, attemptedCommandMacro)) {
 			if (commandParts.size == 1) messageChannel.send(getMacro(server.id, attemptedCommandMacro))

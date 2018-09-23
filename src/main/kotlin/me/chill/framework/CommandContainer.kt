@@ -12,6 +12,9 @@ class CommandContainer private constructor() {
 			.forEach { it.invoke(null) }
 
 		commandList().forEach { command ->
+			if (!command.name[0].isLetterOrDigit()) {
+				throw TaigaException("Command name must start with a letter or digit")
+			}
 			val overloadedCommands = getCommand(command.name)
 			overloadedCommands.forEach { overloadedCommand ->
 				if (overloadedCommand != command) {
