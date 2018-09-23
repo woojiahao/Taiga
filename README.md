@@ -7,6 +7,7 @@
 ## Commands Overview
 More information about commands can be found on the [website](https://woojiahao.github.io/Taiga)
 
+<!--blk-1-->
 1. [Administration](https://github.com/woojiahao/Taiga#Administration)
 2. [Welcome](https://github.com/woojiahao/Taiga#Welcome)
 3. [Moderation](https://github.com/woojiahao/Taiga#Moderation)
@@ -17,7 +18,6 @@ More information about commands can be found on the [website](https://woojiahao.
 8. [Suggestion](https://github.com/woojiahao/Taiga#Suggestion)
 9. [Animal](https://github.com/woojiahao/Taiga#Animal)
 10. [Macro](https://github.com/woojiahao/Taiga#Macro)
-
 ### Administration
 |Name|Description|
 |---|---|
@@ -26,11 +26,13 @@ More information about commands can be found on the [website](https://woojiahao.
 |`setsuggestion`|Sets the suggestion channel, uses the default channel if not set|
 |`setup`|Sets up the bot for moderation like adding the muted roles and overriding channel permissions|
 |`getprefix`|Displays the current prefix set for the current server|
-|`setprefix`|Sets the current prefix for the server, prefix cannot be more than 3 characters long|
+|`setprefix`|Sets the current prefix for the server, prefix cannot be more than 3 characters long and cannot be composed of all letters/digits|
 |`gettimemultiplier`|Displays the current time multiplier|
 |`settimemultiplier`|Sets the time multiplier, multipliers include: S, M, H, D|
 |`getpreferences`|Displays all the properties set for the server|
-
+|`addinvite`|Adds an invite to the whitelist, only the owner can add invites|
+|`removeinvite`|Removes an invite from the whitelist, only the owner can remove invites|
+|`whitelist`|Displays all the whitelisted invites for the server|
 ### Welcome
 |Name|Description|
 |---|---|
@@ -39,41 +41,36 @@ More information about commands can be found on the [website](https://woojiahao.
 |`getwelcomeenabled`|Displays whether bot welcomes are enabled or disabled|
 |`getwelcomemessage`|Displays what the bot will print when a new member joins the server|
 |`setwelcomemessage`|Sets the welcome message for new members|
-
 ### Moderation
 |Name|Description|
 |---|---|
 |`echo`|Echos a message into another channel, the message to echo cannot contain mentions|
 |`nuke`|Nukes a certain number of messages, from 0 up to 99|
 |`mute`|Mutes a user for a specified period of time, defaulted to minutes|
-|`history`|Displays the history of a specific member|
+|`history`|Displays the history of a specific member, if no arguments are given, the invoker's history is retrieved|
 |`strike`|Infracts a user|
 |`warn`|Infracts a user with a 0 weight strike|
 |`wiperecord`|Wipes the user's record from the database|
-|`ban`|Bans a user from the server, regardless of whether they are on the server or not|
-|`banall`|Bans all users from the server|
+|`ban`|Bans a user/list of users (up to 30) from the server at once|
 |`unban`|Unbans a user and leaves a mark on their history|
 |`gag`|Temporarily mutes a user for 5 minutes to allow moderators to handle an ongoing situation|
 |`clearstrike`|Removes a strike from a user|
-
 ### Permission
 |Name|Description|
 |---|---|
 |`setpermission`|Sets the permission of a command to be available to a role and higher|
 |`setpermissioncategory`|Sets the permission of all commands in a category to be available to the same role and higher|
 |`viewpermissions`|Views all the permissions set in the server|
-
 ### Utility
 |Name|Description|
 |---|---|
-|`commands`|Displays all the commands available to the user|
-|`help`|Displays a help card for the user to learn more about a specific command|
+|`help`|Displays a help card for the user to learn more about a specific command, pass no arguments and it will display all commands available to you|
 |`invite`|Displays all invite links related to me such as my development server and to invite me to your server|
 |`ping`|Displays the ping for me|
 |`serverinfo`|Displays information about the server|
 |`source`|Displays all links related to my source code|
 |`botinfo`|Displays information about the bot|
-
+|`changelog`|Displays the latest changelog if no argument is given, displays a specific changelog if one can be found|
 ### Role
 |Name|Description|
 |---|---|
@@ -83,7 +80,6 @@ More information about commands can be found on the [website](https://woojiahao.
 |`setjoinrole`|Sets the join role that will be assigned to new members on join in the server|
 |`clearjoinrole`|Clears the join role|
 |`unassign`|Removes a role from the user, the role must not be higher than my role|
-
 ### Raid
 |Name|Description|
 |---|---|
@@ -96,7 +92,6 @@ More information about commands can be found on the [website](https://woojiahao.
 |`viewraiders`|Displays all the raiders in the server|
 |`freeraider`|Removes a user from the raid list and unmutes them|
 |`freeallraiders`|Removes all users from the raid list and unmutes them|
-
 ### Suggestion
 |Name|Description|
 |---|---|
@@ -106,14 +101,12 @@ More information about commands can be found on the [website](https://woojiahao.
 |`pooldeny`|Denies the latest suggestion in the pool|
 |`suggest`|Adds a suggestion to the suggestion pool|
 |`respond`|Responds to a suggestion|
-
 ### Animal
 |Name|Description|
 |---|---|
 |`cat`|Displays a cat picture/GIF|
 |`dog`|Displays a dog picture/GIF|
 |`bird`|Displays a bird picture/GIF|
-
 ### Macro
 |Name|Description|
 |---|---|
@@ -121,6 +114,7 @@ More information about commands can be found on the [website](https://woojiahao.
 |`addmacro`|Adds a macro to the server|
 |`editmacro`|Edits an existing macro on the server|
 |`removemacro`|Removes an existing macro from the server|
+<!--blk-1-end-->
 
 ## Credits
 Taiga's command framework is heavily inspired by @Fox#0001 HotBot.
