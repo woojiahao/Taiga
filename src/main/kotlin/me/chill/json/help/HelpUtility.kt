@@ -1,7 +1,6 @@
 package me.chill.json.help
 
 import com.google.gson.Gson
-import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import me.chill.commandInfo
 import me.chill.exception.TaigaException
@@ -16,12 +15,14 @@ fun loadHelp(): List<CommandInfo> {
 	val list = mutableListOf<CommandInfo>()
 	val commandInfoList = gson.fromJson<JsonObject>(FileReader(File("config/help.json")), JsonObject::class.java)
 
-	commandInfoList
-		.entrySet()
-		.map { gson.fromJson(it.value, JsonArray::class.java) }
-		.forEach {
-			it.forEach { info -> list.add(gson.fromJson(info, CommandInfo::class.java)) }
+	for (info in commandInfoList.entrySet()) {
+		val categoryName = info.key
+		info.value.asJsonArray.forEach {
+			val entry = gson.fromJson(it, CommandInfo::class.java)
+			entry.category = categoryName
+			list.add(entry)
 		}
+	}
 	CommandContainer.commandList().forEach {
 		if (!list.asSequence().map { info -> info.name }.contains(it.name)) {
 			throw TaigaException("Command: ${it.name} does not have a help in help.json")
@@ -36,6 +37,6 @@ val Command.syntax get() = "$serverPrefix${findCommand(name).syntax}"
 
 val Command.example get() = "$serverPrefix${findCommand(name).example}"
 
-val Command.category get() = findCommand(name).category
+val Command.category get() = findCommand(name).category!!
 
 val Command.description get() = findCommand(name).description

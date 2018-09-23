@@ -5,10 +5,11 @@
 		"Introduced continuous integration",
 		"Refactored code to reduce code duplication",
 		"Updated documentation site for recent changes",
-		"If `help.json` does not contain command information, an error is displayed",
-		"`help.json` now displays additional information such as number of arguments",
+		"If `help.json` does not contain command information, an error is thrown",
+		"`HelpUtility` can now derive the category name of a command without it being explicitly included in `help.json`",
 		"`history` command now displays information about invite spam",
-		"Changelogs can now be viewed back and displayed"
+		"Changelogs can now be viewed back and displayed",
+		"Restriction for command names to start with letter or digit imposed"
 	],
 	"releaseDate": "23 September 2018",
 	"contributors": [

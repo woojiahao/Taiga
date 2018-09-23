@@ -4,4 +4,4 @@ data class CommandInfo(val name: String,
 					   val description: String,
 					   val syntax: String,
 					   val example: String,
-					   val category: String)
+					   var category: String? = null)
