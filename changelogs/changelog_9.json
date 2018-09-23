@@ -2,7 +2,6 @@
 	"buildNumber": "3.3",
 	"buildTitle": "Improvements for developers",
 	"changes": [
-		"Introduced continuous integration",
 		"Refactored code to reduce code duplication",
 		"Updated documentation site for recent changes",
 		"If `help.json` does not contain command information, an error is thrown",
