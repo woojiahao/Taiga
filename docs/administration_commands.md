@@ -56,7 +56,7 @@ Displays the current prefix set for the current server
 
 ## setprefix
 ### Description {docsify-ignore}
-Sets the current prefix for the server, prefix cannot be more than 3 characters long
+Sets the current prefix for the server, prefix cannot be more than 3 characters long and cannot be composed of all letters/digits
 ### Syntax {docsify-ignore}
 
 > setprefix { New prefix }
@@ -97,3 +97,37 @@ Displays all the properties set for the server
 ### Example {docsify-ignore}
 
 > getpreferences
+
+## addinvite
+### Description {docsify-ignore}
+Adds an invite to the whitelist, only the owner can add invites
+### Syntax {docsify-ignore}
+
+> addinvite { Discord Invite Link }
+
+### Example {docsify-ignore}
+
+> addinvite https://discord.gg/xtDNfyw
+
+## removeinvite
+### Description {docsify-ignore}
+Removes an invite from the whitelist, only the owner can remove invites
+### Syntax {docsify-ignore}
+
+> removeinvite { Discord Invite Link }
+
+### Example {docsify-ignore}
+
+> removeinvite https://discord.gg/xtDNfyw
+
+## whitelist
+### Description {docsify-ignore}
+Displays all the whitelisted invites for the server
+### Syntax {docsify-ignore}
+
+> whitelist
+
+### Example {docsify-ignore}
+
+> whitelist
+

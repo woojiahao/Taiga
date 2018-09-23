@@ -122,7 +122,7 @@
 			"name": "mute",
 			"description": "Mutes a user for a specified period of time, defaulted to minutes",
 			"syntax": "mute { User Mention/ID } { Duration } { Reason }",
-			"example": "mute @Chill 15 Stop"
+			"example": "mute @Chill#4048 15 Stop"
 		},
 		{
 			"name": "history",
@@ -134,19 +134,19 @@
 			"name": "strike",
 			"description": "Infracts a user",
 			"syntax": "strike { User ID/Mention } { Strike weight (0-3) } { Strike reason }",
-			"example": "strike @Chill 1 Big dum"
+			"example": "strike @Chill#4048 1 Big dum"
 		},
 		{
 			"name": "warn",
 			"description": "Infracts a user with a 0 weight strike",
 			"syntax": "strike { User ID/Mention } { Strike reason }",
-			"example": "warn @Chill Stop this nonsense"
+			"example": "warn @Chill#4048 Stop this nonsense"
 		},
 		{
 			"name": "wiperecord",
 			"description": "Wipes the user's record from the database",
 			"syntax": "wiperecord { User ID/Mention }",
-			"example": "wiperecord @Chill"
+			"example": "wiperecord @Chill#4048"
 		},
 		{
 			"name": "ban",
@@ -242,7 +242,7 @@
 			"name": "assign",
 			"description": "Assigns a role to the specified user, the role must not be higher than my role",
 			"syntax": "assign { User Mention/ID } { Role ID }",
-			"example": "assign @Chill 482335631402336266"
+			"example": "assign @Chill#4048 482335631402336266"
 		},
 		{
 			"name": "getjoinrole",
@@ -272,7 +272,7 @@
 			"name": "unassign",
 			"description": "Removes a role from the user, the role must not be higher than my role",
 			"syntax": "unassign { User Mention/ID } { Role ID }",
-			"example": "unassign @Chill 482335631402336266"
+			"example": "unassign @Chill#4048 482335631402336266"
 		}
 	],
 	"Raid": [
@@ -322,7 +322,7 @@
 			"name": "freeraider",
 			"description": "Removes a user from the raid list and unmutes them",
 			"syntax": "freeraider { User ID/Mention }",
-			"example": "freeraider @Chill"
+			"example": "freeraider @Chill#4048"
 		},
 		{
 			"name": "freeallraiders",

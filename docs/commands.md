@@ -18,10 +18,13 @@
 |[`setsuggestion`](administration_commands.md?id=setsuggestion)|Sets the suggestion channel, uses the default channel if not set|
 |[`setup`](administration_commands.md?id=setup)|Sets up the bot for moderation like adding the muted roles and overriding channel permissions|
 |[`getprefix`](administration_commands.md?id=getprefix)|Displays the current prefix set for the current server|
-|[`setprefix`](administration_commands.md?id=setprefix)|Sets the current prefix for the server, prefix cannot be more than 3 characters long|
+|[`setprefix`](administration_commands.md?id=setprefix)|Sets the current prefix for the server, prefix cannot be more than 3 characters long and cannot be composed of all letters/digits|
 |[`gettimemultiplier`](administration_commands.md?id=gettimemultiplier)|Displays the current time multiplier|
 |[`settimemultiplier`](administration_commands.md?id=settimemultiplier)|Sets the time multiplier, multipliers include: S, M, H, D|
 |[`getpreferences`](administration_commands.md?id=getpreferences)|Displays all the properties set for the server|
+|[`addinvite`](administration_commands.md?id=addinvite)|Adds an invite to the whitelist, only the owner can add invites|
+|[`removeinvite`](administration_commands.md?id=removeinvite)|Removes an invite from the whitelist, only the owner can remove invites|
+|[`whitelist`](administration_commands.md?id=whitelist)|Displays all the whitelisted invites for the server|
 
 ### [Welcome](welcome_commands.md)
 |Name|Description|
@@ -38,12 +41,11 @@
 |[`echo`](moderation_commands.md?id=echo)|Echos a message into another channel, the message to echo cannot contain mentions|
 |[`nuke`](moderation_commands.md?id=nuke)|Nukes a certain number of messages, from 0 up to 99|
 |[`mute`](moderation_commands.md?id=mute)|Mutes a user for a specified period of time, defaulted to minutes|
-|[`history`](moderation_commands.md?id=history)|Displays the history of a specific member|
+|[`history`](moderation_commands.md?id=history)|Displays the history of a specific member, if no arguments are given, the invoker's history is retrieved|
 |[`strike`](moderation_commands.md?id=strike)|Infracts a user|
 |[`warn`](moderation_commands.md?id=warn)|Infracts a user with a 0 weight strike|
 |[`wiperecord`](moderation_commands.md?id=wiperecord)|Wipes the user's record from the database|
-|[`ban`](moderation_commands.md?id=ban)|Bans a user from the server, regardless of whether they are on the server or not|
-|[`banall`](moderation_commands.md?id=banall)|Bans all users from the server|
+|[`ban`](moderation_commands.md?id=ban)|Bans a user/list of users (up to 30) from the server at once|
 |[`unban`](moderation_commands.md?id=unban)|Unbans a user and leaves a mark on their history|
 |[`gag`](moderation_commands.md?id=gag)|Temporarily mutes a user for 5 minutes to allow moderators to handle an ongoing situation|
 |[`clearstrike`](moderation_commands.md?id=clearstrike)|Removes a strike from a user|
@@ -58,13 +60,13 @@
 ### [Utility](utility_commands.md)
 |Name|Description|
 |---|---|
-|[`commands`](utility_commands.md?id=commands)|Displays all the commands available to the user|
-|[`help`](utility_commands.md?id=help)|Displays a help card for the user to learn more about a specific command|
+|[`help`](utility_commands.md?id=help)|Displays a help card for the user to learn more about a specific command, pass no arguments and it will display all commands available to you|
 |[`invite`](utility_commands.md?id=invite)|Displays all invite links related to me such as my development server and to invite me to your server|
 |[`ping`](utility_commands.md?id=ping)|Displays the ping for me|
 |[`serverinfo`](utility_commands.md?id=serverinfo)|Displays information about the server|
 |[`source`](utility_commands.md?id=source)|Displays all links related to my source code|
 |[`botinfo`](utility_commands.md?id=botinfo)|Displays information about the bot|
+|[`changelog`](utility_commands.md?id=changelog)|Displays the latest changelog if no argument is given, displays a specific changelog if one can be found|
 
 ### [Role](role_commands.md)
 |Name|Description|

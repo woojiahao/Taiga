@@ -53,3 +53,4 @@ Sets the welcome message for new members
 ### Example {docsify-ignore}
 
 > setwelcomemessage Welcome to the server! Have a seat and make sure to read our rules!
+

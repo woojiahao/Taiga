@@ -42,3 +42,4 @@ Removes an existing macro from the server
 ### Example {docsify-ignore}
 
 > removemacro hi
+

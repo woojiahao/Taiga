@@ -1,25 +1,14 @@
 # Utility Commands
-## commands
-### Description {docsify-ignore}
-Displays all the commands available to the user
-### Syntax {docsify-ignore}
-
-> commands
-
-### Example {docsify-ignore}
-
-> commands
-
 ## help
 ### Description {docsify-ignore}
-Displays a help card for the user to learn more about a specific command
+Displays a help card for the user to learn more about a specific command, pass no arguments and it will display all commands available to you
 ### Syntax {docsify-ignore}
 
-> help { Command Name }
+> help ({ Command Name })
 
 ### Example {docsify-ignore}
 
-> help ping
+> help (ping)
 
 ## invite
 ### Description {docsify-ignore}
@@ -75,3 +64,15 @@ Displays information about the bot
 ### Example {docsify-ignore}
 
 > botinfo
+
+## changelog
+### Description {docsify-ignore}
+Displays the latest changelog if no argument is given, displays a specific changelog if one can be found
+### Syntax {docsify-ignore}
+
+> changelog ({ Changelog Name })
+
+### Example {docsify-ignore}
+
+> changelog (1)
+

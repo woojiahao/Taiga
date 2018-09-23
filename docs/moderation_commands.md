@@ -30,18 +30,18 @@ Mutes a user for a specified period of time, defaulted to minutes
 
 ### Example {docsify-ignore}
 
-> mute @Chill 15 Stop
+> mute @Chill#4048 15 Stop
 
 ## history
 ### Description {docsify-ignore}
-Displays the history of a specific member
+Displays the history of a specific member, if no arguments are given, the invoker's history is retrieved
 ### Syntax {docsify-ignore}
 
-> history { User ID/Mention }
+> history ({ User ID/Mention })
 
 ### Example {docsify-ignore}
 
-> history @Chill
+> history (@Chill#4048)
 
 ## strike
 ### Description {docsify-ignore}
@@ -52,7 +52,7 @@ Infracts a user
 
 ### Example {docsify-ignore}
 
-> strike @Chill 1 Big dum
+> strike @Chill#4048 1 Big dum
 
 ## warn
 ### Description {docsify-ignore}
@@ -63,7 +63,7 @@ Infracts a user with a 0 weight strike
 
 ### Example {docsify-ignore}
 
-> warn @Chill Stop this nonsense
+> warn @Chill#4048 Stop this nonsense
 
 ## wiperecord
 ### Description {docsify-ignore}
@@ -74,29 +74,18 @@ Wipes the user's record from the database
 
 ### Example {docsify-ignore}
 
-> wiperecord @Chill
+> wiperecord @Chill#4048
 
 ## ban
 ### Description {docsify-ignore}
-Bans a user from the server, regardless of whether they are on the server or not
+Bans a user/list of users (up to 30) from the server at once
 ### Syntax {docsify-ignore}
 
-> ban { User ID/Mention } { Ban Reason }
+> ban { User ID List (,) } { Ban Reason }
 
 ### Example {docsify-ignore}
 
 > ban @Chill#4048 raid
-
-## banall
-### Description {docsify-ignore}
-Bans all users from the server
-### Syntax {docsify-ignore}
-
-> banall { User ID List (,) } { Ban Reason }
-
-### Example {docsify-ignore}
-
-> banall 416016773226168321,302385772718325760 Raiders
 
 ## unban
 ### Description {docsify-ignore}
@@ -130,5 +119,4 @@ Removes a strike from a user
 ### Example {docsify-ignore}
 
 > clearstrike @Chill#4048 1
-
 

@@ -8,7 +8,7 @@ Assigns a role to the specified user, the role must not be higher than my role
 
 ### Example {docsify-ignore}
 
-> assign @Chill 482335631402336266
+> assign @Chill#4048 482335631402336266
 
 ## getjoinrole
 ### Description {docsify-ignore}
@@ -63,4 +63,5 @@ Removes a role from the user, the role must not be higher than my role
 
 ### Example {docsify-ignore}
 
-> unassign @Chill 482335631402336266
+> unassign @Chill#4048 482335631402336266
+

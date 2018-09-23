@@ -85,7 +85,7 @@ Removes a user from the raid list and unmutes them
 
 ### Example {docsify-ignore}
 
-> freeraider @Chill
+> freeraider @Chill#4048
 
 ## freeallraiders
 ### Description {docsify-ignore}
@@ -97,3 +97,4 @@ Removes all users from the raid list and unmutes them
 ### Example {docsify-ignore}
 
 > freeallraiders
+

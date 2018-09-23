@@ -31,3 +31,4 @@ Displays a bird picture/GIF
 ### Example {docsify-ignore}
 
 > bird
+

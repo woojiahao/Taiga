@@ -31,3 +31,4 @@ Views all the permissions set in the server
 ### Example {docsify-ignore}
 
 > viewpermissions
+
