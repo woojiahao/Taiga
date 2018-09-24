@@ -2,10 +2,10 @@ package me.chill.commands
 
 import com.google.gson.Gson
 import com.google.gson.JsonArray
-import com.google.gson.JsonObject
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
 import me.chill.utility.jda.failureEmbed
+import me.chill.utility.readAPI
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -14,14 +14,14 @@ fun animalCommands() = commands("Animal") {
 	setGlobal()
 	command("cat") {
 		execute {
-			val result = Gson().fromJson(URL("https://aws.random.cat/meow").readText(), JsonObject::class.java)
+			val result = "https://aws.random.cat/meow".readAPI()
 			respond(result["file"].asString)
 		}
 	}
 
 	command("dog") {
 		execute {
-			val result = Gson().fromJson(URL("https://random.dog/woof.json").readText(), JsonObject::class.java)
+			val result = "https://random.dog/woof.json".readAPI()
 			respond(result["url"].asString)
 		}
 	}

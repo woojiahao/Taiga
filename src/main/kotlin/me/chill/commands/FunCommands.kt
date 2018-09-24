@@ -30,7 +30,7 @@ fun funCommands() = commands("Fun") {
 		execute {
 			val memberList = guild.members
 			val randomUser = memberList[Random().nextInt(memberList.size + 1)]
-			respond("(づ｡◕‿‿◕｡)づ Have a cookie :cookie: ${randomUser.asMention} courtesy of ${invoker.asMention}")
+			respond(cookieGiving(randomUser.asMention, invoker.asMention))
 		}
 	}
 
