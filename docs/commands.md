@@ -57,6 +57,7 @@
 |[`setpermission`](permission_commands.md?id=setpermission)|Sets the permission of a command to be available to a role and higher|
 |[`setpermissioncategory`](permission_commands.md?id=setpermissioncategory)|Sets the permission of all commands in a category to be available to the same role and higher|
 |[`viewpermissions`](permission_commands.md?id=viewpermissions)|Views all the permissions set in the server|
+|[`setglobal`](permission_commands.md?id=setglobal)|Sets a category of commands to be available to everyone|
 
 ### [Utility](utility_commands.md)
 |Name|Description|

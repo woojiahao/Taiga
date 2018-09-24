@@ -32,3 +32,14 @@ Views all the permissions set in the server
 
 > viewpermissions
 
+## setglobal
+### Description {docsify-ignore}
+Sets a category of commands to be available to everyone
+### Syntax {docsify-ignore}
+
+> setglobal { Category Name }
+
+### Example {docsify-ignore}
+
+> setglobal Fun
+

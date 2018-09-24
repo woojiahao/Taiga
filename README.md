@@ -62,6 +62,7 @@ More information about commands can be found on the [website](https://woojiahao.
 |`setpermission`|Sets the permission of a command to be available to a role and higher|
 |`setpermissioncategory`|Sets the permission of all commands in a category to be available to the same role and higher|
 |`viewpermissions`|Views all the permissions set in the server|
+|`setglobal`|Sets a category of commands to be available to everyone|
 ### Utility
 |Name|Description|
 |---|---|
