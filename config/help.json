@@ -421,6 +421,12 @@
 			"description": "Clapifies a sentence",
 			"syntax": "clapify { Sentence }",
 			"example": "clapify This is a test"
+		},
+		{
+			"name": "flip",
+			"description": "Flips a coin",
+			"syntax": "flip",
+			"example": "flip"
 		}
 	]
 }
