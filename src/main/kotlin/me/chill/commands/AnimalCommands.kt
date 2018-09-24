@@ -1,13 +1,11 @@
 package me.chill.commands
 
-import com.google.gson.Gson
 import com.google.gson.JsonArray
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
 import me.chill.utility.jda.unknownErrorEmbed
 import me.chill.utility.readAPI
-import java.net.HttpURLConnection
-import java.net.URL
+import me.chill.utility.strictReadAPI
 
 @CommandCategory
 fun animalCommands() = commands("Animal") {
@@ -28,19 +26,14 @@ fun animalCommands() = commands("Animal") {
 
 	command("bird") {
 		execute {
-			val api = "http://shibe.online/api/birds?count=1&urls=true&httpsUrls=true"
-			val url = URL(api)
-			val conn = url.openConnection() as HttpURLConnection
-			conn.requestMethod = "GET"
-			conn.setRequestProperty("Content-Type", "application/json")
-			conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36")
+			val (status, data) = "http://shibe.online/api/birds?count=1&urls=true&httpsUrls=true".strictReadAPI<JsonArray>()
 
-			if (conn.responseCode >= 400) {
+			if (!status || data == null) {
 				respond(unknownErrorEmbed("bird"))
+				return@execute
 			}
 
-			val jsonResponse = conn.inputStream.bufferedReader().readLine()
-			respond(Gson().fromJson(jsonResponse, JsonArray::class.java)[0].asString)
+			respond(data[0].asString)
 		}
 	}
 }

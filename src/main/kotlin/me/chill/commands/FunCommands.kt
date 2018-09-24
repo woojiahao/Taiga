@@ -1,6 +1,5 @@
 package me.chill.commands
 
-import com.google.gson.Gson
 import com.google.gson.JsonObject
 import me.chill.arguments.types.Sentence
 import me.chill.arguments.types.UserId
@@ -8,8 +7,7 @@ import me.chill.framework.CommandCategory
 import me.chill.framework.commands
 import me.chill.utility.jda.unknownErrorEmbed
 import me.chill.utility.str
-import java.net.HttpURLConnection
-import java.net.URL
+import me.chill.utility.strictReadAPI
 import java.util.*
 
 @CommandCategory
@@ -48,20 +46,12 @@ fun funCommands() = commands("Fun") {
 
 	command("meme") {
 		execute {
-			val api = "https://api.imgflip.com/get_memes"
-			val url = URL(api)
-			val conn = url.openConnection() as HttpURLConnection
-			conn.requestMethod = "GET"
-			conn.setRequestProperty("Content-Type", "application/json")
-			conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36")
+			val (status, data) = "https://api.imgflip.com/get_memes".strictReadAPI<JsonObject>()
 
-			if (conn.responseCode >= 400) {
+			if (!status || data == null) {
 				respond(unknownErrorEmbed("meme"))
 				return@execute
 			}
-
-			val jsonResponse = conn.inputStream.bufferedReader().readLine()
-			val data = Gson().fromJson(jsonResponse, JsonObject::class.java)
 
 			if (!data["success"].asBoolean) {
 				respond(unknownErrorEmbed("meme"))
