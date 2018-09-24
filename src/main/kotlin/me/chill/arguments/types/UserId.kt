@@ -9,6 +9,7 @@ class UserId(private val globalSearch: Boolean = false) : Argument {
 	override fun check(guild: Guild, arg: String): ArgumentParseMap {
 		var userId = arg
 		if (arg.startsWith("<@") && arg.endsWith(">")) userId = arg.substring(2, arg.length - 1)
+		if (arg.startsWith("<@!") && arg.endsWith(">")) userId = arg.substring(3, arg.length - 1)
 
 		if (userId.toLongOrNull() == null) {
 			return ArgumentParseMap(false, "ID: **$userId** is not valid")
