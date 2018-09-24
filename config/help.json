@@ -414,5 +414,13 @@
 			"syntax": "removemacro { Macro Name }",
 			"example": "removemacro hi"
 		}
+	],
+	"Fun": [
+		{
+			"name": "clapify",
+			"description": "Clapifies a sentence",
+			"syntax": "clapify { Sentence }",
+			"example": "clapify This is a test"
+		}
 	]
 }
