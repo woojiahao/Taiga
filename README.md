@@ -18,6 +18,7 @@ More information about commands can be found on the [website](https://woojiahao.
 8. [Suggestion](https://github.com/woojiahao/Taiga#Suggestion)
 9. [Animal](https://github.com/woojiahao/Taiga#Animal)
 10. [Macro](https://github.com/woojiahao/Taiga#Macro)
+11. [Fun](https://github.com/woojiahao/Taiga#Fun)
 ### Administration
 |Name|Description|
 |---|---|
@@ -114,6 +115,14 @@ More information about commands can be found on the [website](https://woojiahao.
 |`addmacro`|Adds a macro to the server|
 |`editmacro`|Edits an existing macro on the server|
 |`removemacro`|Removes an existing macro from the server|
+### Fun
+|Name|Description|
+|---|---|
+|`clapify`|Clapifies a sentence|
+|`flip`|Flips a coin|
+|`cookie`|Give someone a cookie, if you don't pass any arguments, a cookie is given to a random stranger|
+|`meme`|Displays a random popular meme from Imgflip|
+|`joke`|Tells a joke|
 <!--blk-1-end-->
 
 ## Credits

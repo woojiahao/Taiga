@@ -9,6 +9,7 @@
 8. [Suggestion](commands.md?id=Suggestion)
 9. [Animal](commands.md?id=Animal)
 10. [Macro](commands.md?id=Macro)
+11. [Fun](commands.md?id=Fun)
 
 ### [Administration](administration_commands.md)
 |Name|Description|
@@ -115,3 +116,12 @@
 |[`addmacro`](macro_commands.md?id=addmacro)|Adds a macro to the server|
 |[`editmacro`](macro_commands.md?id=editmacro)|Edits an existing macro on the server|
 |[`removemacro`](macro_commands.md?id=removemacro)|Removes an existing macro from the server|
+
+### [Fun](fun_commands.md)
+|Name|Description|
+|---|---|
+|[`clapify`](fun_commands.md?id=clapify)|Clapifies a sentence|
+|[`flip`](fun_commands.md?id=flip)|Flips a coin|
+|[`cookie`](fun_commands.md?id=cookie)|Give someone a cookie, if you don't pass any arguments, a cookie is given to a random stranger|
+|[`meme`](fun_commands.md?id=meme)|Displays a random popular meme from Imgflip|
+|[`joke`](fun_commands.md?id=joke)|Tells a joke|
