@@ -51,6 +51,19 @@ fun permissionCommands() = commands("Permission") {
 		}
 	}
 
+	command("setglobal") {
+		expects(CategoryName())
+		execute {
+			val commandNames = CommandContainer.getSet(arguments[0]!!.str()).getCommandNames()
+			val everyoneRole = guild.getRolesByName("@everyone", false)[0]
+			commandNames.forEach { name ->
+				if (hasPermission(name, guild.id)) editPermission(name, guild.id, everyoneRole.id)
+				else addPermission(name, guild.id, everyoneRole.id)
+			}
+			respond("All commands in **${arguments[0]!!.str()}** is now available to everyone")
+		}
+	}
+
 	command("setpermissioncategory") {
 		expects(CategoryName(), RoleId())
 		execute {

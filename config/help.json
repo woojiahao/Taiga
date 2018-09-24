@@ -191,6 +191,12 @@
 			"description": "Views all the permissions set in the server",
 			"syntax": "viewpermissions",
 			"example": "viewpermissions"
+		},
+		{
+			"name": "setglobal",
+			"description": "Sets a category of commands to be available to everyone",
+			"syntax": "setglobal { Category Name }",
+			"example": "setglobal Fun"
 		}
 	],
 	"Utility": [
