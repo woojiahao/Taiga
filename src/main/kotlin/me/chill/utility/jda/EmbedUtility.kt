@@ -1,10 +1,7 @@
 package me.chill.utility.jda
 
 import me.chill.embed.EmbedCreator
-import me.chill.settings.green
-import me.chill.settings.happy
-import me.chill.settings.red
-import me.chill.settings.shock
+import me.chill.settings.*
 import net.dv8tion.jda.core.entities.MessageEmbed
 
 inline fun embed(create: EmbedCreator.() -> Unit): MessageEmbed? {
@@ -26,3 +23,16 @@ fun successEmbed(title: String, description: String, thumbnail: String? = happy,
 
 fun failureEmbed(title: String, description: String, thumbnail: String? = shock, color: Int? = red) =
 	simpleEmbed(title, description, thumbnail, color)
+
+fun unknownErrorEmbed(commandName: String) =
+	embed {
+		title = "Something went wrong"
+		description = "Something went wrong when using **$commandName**"
+		color = red
+		thumbnail = myBad
+
+		field {
+			title = "How to fix?"
+			description = "You can join my [development server](https://discord.gg/xtDNfyw) and file an issue or open an issue on my [repository](https://github.com/woojiahao/Taiga)"
+		}
+	}
