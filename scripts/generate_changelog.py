@@ -1,10 +1,13 @@
 import datetime
 import json
-import sys
+import os
 
 
-def generate_changelog(name):
-    changelog_file = f"../changelogs/changelog_{name}.json"
+def generate_changelog():
+    for root, dirs, files in os.walk("../changelogs"):
+        latest = max([int(file[file.index("_") + 1: file.rindex(".")]) for file in files])
+
+    changelog_file = f"../changelogs/changelog_{latest + 1}.json"
     contents = {
         "buildNumber": "",
         "buildTitle": "Improvements",
@@ -19,7 +22,4 @@ def generate_changelog(name):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) < 2:
-        print("Pass in the only name of the changelog")
-    else:
-        generate_changelog(sys.argv[1])
+    generate_changelog()

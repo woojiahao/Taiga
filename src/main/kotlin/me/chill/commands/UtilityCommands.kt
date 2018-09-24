@@ -102,7 +102,7 @@ fun utilityCommands() = commands("Utility") {
 				.listFiles()
 				.map { file ->
 					val fileName = file.name
-					fileName.substring(fileName.indexOf("_") + 1, fileName.lastIndexOf("."))
+					fileName.substring(fileName.indexOf("_") + 1, fileName.lastIndexOf(".")).toInt()
 				}
 				.max()!!
 

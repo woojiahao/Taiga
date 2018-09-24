@@ -2,8 +2,9 @@
 	"buildNumber": "3.4",
 	"buildTitle": "Improvements & Fun!",
 	"changes": [
-		"Added a `clapify command`",
-		"Included a Python script to automatically generate changelog files"
+		"Added a bunch of fun commands, like `clapify`, `cookie`, `flip`, `meme`",
+		"Included a Python script to automatically generate changelog files",
+		"Created a set of API utilities to read an API and retrieve JSON data"
 	],
 	"releaseDate": "24 September 2018",
 	"contributors": [
