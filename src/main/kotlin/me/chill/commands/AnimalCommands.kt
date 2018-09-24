@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonArray
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
-import me.chill.utility.jda.failureEmbed
+import me.chill.utility.jda.unknownErrorEmbed
 import me.chill.utility.readAPI
 import java.net.HttpURLConnection
 import java.net.URL
@@ -36,12 +36,7 @@ fun animalCommands() = commands("Animal") {
 			conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36")
 
 			if (conn.responseCode >= 400) {
-				respond(
-					failureEmbed(
-						"Bird API Failed",
-						"Something bad happened when calling the bird API"
-					)
-				)
+				respond(unknownErrorEmbed("bird"))
 			}
 
 			val jsonResponse = conn.inputStream.bufferedReader().readLine()

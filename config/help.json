@@ -433,6 +433,12 @@
 			"description": "Give someone a cookie, if you don't pass any arguments, a cookie is given to a random stranger",
 			"syntax": "cookie ({ Receiver })",
 			"example": "cookie"
+		},
+		{
+			"name": "meme",
+			"description": "Displays a random popular meme from Imgflip",
+			"syntax": "meme",
+			"example": "meme"
 		}
 	]
 }
