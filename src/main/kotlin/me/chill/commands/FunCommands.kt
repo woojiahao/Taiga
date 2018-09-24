@@ -6,6 +6,7 @@ import me.chill.arguments.types.UserId
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
 import me.chill.utility.jda.unknownErrorEmbed
+import me.chill.utility.readAPI
 import me.chill.utility.str
 import me.chill.utility.strictReadAPI
 import java.util.*
@@ -60,6 +61,17 @@ fun funCommands() = commands("Fun") {
 
 			val memes = data["data"].asJsonObject["memes"].asJsonArray.map { i -> i.asJsonObject["url"].asString }
 			respond(memes[Random().nextInt(memes.size + 1)])
+		}
+	}
+
+	command("joke") {
+		execute {
+			val data = "https://08ad1pao69.execute-api.us-east-1.amazonaws.com/dev/random_joke".readAPI()
+			Thread {
+				respond("**Q:** ${data["setup"].asString}")
+				Thread.sleep(1000)
+				respond("**A:** ${data["punchline"]}")
+			}.start()
 		}
 	}
 }

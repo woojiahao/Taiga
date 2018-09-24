@@ -2,7 +2,7 @@
 	"buildNumber": "3.4",
 	"buildTitle": "Improvements & Fun!",
 	"changes": [
-		"Added a bunch of fun commands, like `clapify`, `cookie`, `flip`, `meme`",
+		"Added a bunch of fun commands, like `clapify`, `cookie`, `flip`, `meme`, `joke`",
 		"Included a Python script to automatically generate changelog files",
 		"Created a set of API utilities to read an API and retrieve JSON data"
 	],

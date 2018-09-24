@@ -439,6 +439,12 @@
 			"description": "Displays a random popular meme from Imgflip",
 			"syntax": "meme",
 			"example": "meme"
+		},
+		{
+			"name": "joke",
+			"description": "Tells a joke",
+			"syntax": "joke",
+			"example": "joke"
 		}
 	]
 }
