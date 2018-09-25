@@ -1,6 +1,6 @@
 package me.chill.events
 
-import me.chill.exception.TaigaException
+import me.chill.exception.ListenerEventException
 import me.chill.roles.getRole
 import me.chill.roles.hasRole
 import me.chill.utility.jda.failureEmbed
@@ -11,7 +11,7 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter
 
 class OnChannelCreationEvent : ListenerAdapter() {
 	override fun onTextChannelCreate(event: TextChannelCreateEvent?) {
-		event ?: throw TaigaException("Event object was null during channel creation")
+		event ?: throw ListenerEventException("Event object was null during channel creation")
 
 		if (!event.guild.hasRole("muted")) {
 			event.channel.send(

@@ -4,7 +4,7 @@ import me.chill.database.operations.clearPermissions
 import me.chill.database.operations.getChannel
 import me.chill.database.operations.removeServerPreference
 import me.chill.database.states.TargetChannel
-import me.chill.exception.TaigaException
+import me.chill.exception.ListenerEventException
 import me.chill.settings.lost
 import me.chill.settings.red
 import me.chill.utility.getDateTime
@@ -18,7 +18,7 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter
 
 class OnLeaveEvent : ListenerAdapter() {
 	override fun onGuildMemberLeave(event: GuildMemberLeaveEvent?) {
-		event ?: throw TaigaException("Event object was null during member leave")
+		event ?: throw ListenerEventException("Event object was null during member leave")
 
 		val serverId = event.guild.id
 		val member = event.member
@@ -28,7 +28,7 @@ class OnLeaveEvent : ListenerAdapter() {
 	}
 
 	override fun onGuildLeave(event: GuildLeaveEvent?) {
-		event ?: throw TaigaException("Event object was null during bot leave")
+		event ?: throw ListenerEventException("Event object was null during bot leave")
 
 		val serverId = event.guild.id
 

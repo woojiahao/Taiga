@@ -3,7 +3,7 @@ package me.chill.events
 import me.chill.database.operations.*
 import me.chill.database.states.TargetChannel
 import me.chill.embed.types.newMemberJoinEmbed
-import me.chill.exception.TaigaException
+import me.chill.exception.ListenerEventException
 import me.chill.framework.CommandContainer
 import me.chill.roles.addRoleToUser
 import me.chill.roles.assignRole
@@ -19,7 +19,7 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter
 
 class OnJoinEvent : ListenerAdapter() {
 	override fun onGuildMemberJoin(event: GuildMemberJoinEvent?) {
-		event ?: throw TaigaException("Event object was null during member join")
+		event ?: throw ListenerEventException("Event object was null during member join")
 
 		val guild = event.guild
 		val guildId = guild.id
@@ -52,7 +52,7 @@ class OnJoinEvent : ListenerAdapter() {
 	}
 
 	override fun onGuildJoin(event: GuildJoinEvent?) {
-		event ?: throw TaigaException("Event object was null during bot join")
+		event ?: throw ListenerEventException("Event object was null during bot join")
 
 		val serverId = event.guild.id
 		val defaultChannelId = event.guild.defaultChannel!!.id

@@ -6,7 +6,7 @@ import me.chill.credentials
 import me.chill.database.operations.*
 import me.chill.embed.types.insufficientArgumentsEmbed
 import me.chill.embed.types.invalidArgumentsEmbed
-import me.chill.exception.TaigaException
+import me.chill.exception.ListenerEventException
 import me.chill.framework.Command
 import me.chill.framework.CommandContainer
 import me.chill.logging.macroLog
@@ -38,7 +38,7 @@ class InputEvent : ListenerAdapter() {
 }
 
 private fun handleInput(event: MessageReceivedEvent?) {
-	event ?: throw TaigaException("Event object was null during message receive")
+	event ?: throw ListenerEventException("Event object was null during message receive")
 
 	if (event.member == null || event.member!!.user.isBot) return
 
