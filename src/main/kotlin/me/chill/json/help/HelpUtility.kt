@@ -3,7 +3,7 @@ package me.chill.json.help
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import me.chill.commandInfo
-import me.chill.exception.TaigaException
+import me.chill.exception.CommandException
 import me.chill.framework.Command
 import me.chill.framework.CommandContainer
 import java.io.File
@@ -25,7 +25,7 @@ fun loadHelp(): List<CommandInfo> {
 	}
 	CommandContainer.getCommandList().forEach {
 		if (!list.asSequence().map { info -> info.name }.contains(it.name)) {
-			throw TaigaException("Command: ${it.name} does not have a help in help.json")
+			throw CommandException(it.name, "Command not have a help in help.json")
 		}
 	}
 	return list

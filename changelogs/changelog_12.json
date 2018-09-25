@@ -5,7 +5,8 @@
 		"Specialized exceptions were created for different scenarios, with specific formats",
 		"Code clean up for readability",
 		"Enforced end arguments restriction",
-		"Enforced restriction for all commands to at least implement an execute body"
+		"Enforced restriction for all commands to at least implement an execute body",
+		"Added documentation for the new set of exceptions"
 	],
 	"releaseDate": "25 September 2018",
 	"contributors": []

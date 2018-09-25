@@ -17,6 +17,12 @@ fun animalCommands() = commands("Animal") {
 		}
 	}
 
+	command("test") {
+		execute {
+
+		}
+	}
+
 	command("dog") {
 		execute {
 			val result = "https://random.dog/woof.json".readAPI()
