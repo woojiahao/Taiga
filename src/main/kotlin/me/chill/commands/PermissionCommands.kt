@@ -1,5 +1,6 @@
 package me.chill.commands
 
+import me.chill.arguments.types.ArgumentMix
 import me.chill.arguments.types.CategoryName
 import me.chill.arguments.types.CommandName
 import me.chill.arguments.types.RoleId
@@ -52,20 +53,33 @@ fun permissionCommands() = commands("Permission") {
 	}
 
 	command("setglobal") {
-		expects(CategoryName())
+		expects(ArgumentMix(CategoryName(), CommandName()))
 		execute {
-			val commandNames = CommandContainer.getCommandSet(arguments[0]!!.str()).getCommandNames()
+			val target = arguments[0]!!.str()
 			val everyoneRole = guild.getRolesByName("@everyone", false)[0]
-			commandNames.forEach { name ->
-				if (hasPermission(name, guild.id)) editPermission(name, guild.id, everyoneRole.id)
-				else addPermission(name, guild.id, everyoneRole.id)
-			}
-			respond(
-				successEmbed(
-					"Set Category Permission Success!",
-					"All commands in **${arguments[0]!!.str()}** is now available to everyone"
+
+			if (CommandContainer.hasCommand(target)) {
+				if (hasPermission(target, guild.id)) editPermission(target, guild.id, everyoneRole.id)
+				else addPermission(target, guild.id, everyoneRole.id)
+				respond(
+					successEmbed(
+						"Set Permission Success!",
+						"Command: **$target** is now available to everyone"
+					)
 				)
-			)
+			} else {
+				val commandNames = CommandContainer.getCommandSet(target).getCommandNames()
+				commandNames.forEach { name ->
+					if (hasPermission(name, guild.id)) editPermission(name, guild.id, everyoneRole.id)
+					else addPermission(name, guild.id, everyoneRole.id)
+				}
+				respond(
+					successEmbed(
+						"Set Category Permission Success!",
+						"All commands in **${arguments[0]!!.str()}** is now available to everyone"
+					)
+				)
+			}
 		}
 	}
 
