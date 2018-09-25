@@ -32,7 +32,7 @@ fun funCommands() = commands("Fun") {
 
 	command("cookie") {
 		execute {
-			val memberList = guild.members
+			val memberList = guild.members.filter { member -> !member.user.isBot }
 			val randomUser = memberList[Random().nextInt(memberList.size + 1)]
 			respond(cookieGiving(randomUser.asMention, invoker.asMention))
 		}
