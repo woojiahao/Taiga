@@ -22,6 +22,7 @@ import java.time.format.DateTimeFormatter
 fun historyEmbed(guild: Guild, user: User, jda: JDA, userInfractionRecord: UserInfractionRecord) =
 	embed {
 		val dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+		val jodaFormatter = DateTimeFormat.forPattern("dd-MM-yyyy")
 		val joinDate = if (guild.getMember(user) == null) {
 			"User is not on the server"
 		} else {
@@ -56,9 +57,10 @@ fun historyEmbed(guild: Guild, user: User, jda: JDA, userInfractionRecord: UserI
 				field {
 					title = "ID :: ${userStrike.strikeId} :: Weight :: ${userStrike.strikeWeight}"
 					description =
-						"This infraction is **$isExpired**\n" +
+						"This infraction expires on **${jodaFormatter.print(userStrike.expiryDate)}** " +
+						"and is **$isExpired**\n" +
 						"Issued by **${jda.findUser(userStrike.actingModeratorId).name}** " +
-						"on **${DateTimeFormat.forPattern("dd-MM-yyyy").print(userStrike.strikeDate)}**\n" +
+						"on **${jodaFormatter.print(userStrike.strikeDate)}**\n" +
 						"__**Reason:**__\n${userStrike.strikeReason}"
 				}
 			}
