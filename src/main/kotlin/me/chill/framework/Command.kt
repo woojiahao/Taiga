@@ -40,6 +40,7 @@ class Command(val name: String, val category: String) {
 		commandInformation[Input] = emptyArray<String>()
 	}
 
+	// todo: convert the last arg thing to a list and check the list instead
 	fun expects(vararg args: Argument) {
 		val sentenceNotLast = args.any { it is Sentence } && args.indexOf(args.find { it is Sentence }) != args.size - 1
 		val moreThanOneSentence = args.indexOf(args.find { it is Sentence }) != args.lastIndexOf(args.find { it is Sentence })

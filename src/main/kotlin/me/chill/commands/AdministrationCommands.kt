@@ -193,7 +193,9 @@ private fun setChannel(targetChannel: TargetChannel, channel: MessageChannel, gu
 	channel.send(
 		successEmbed(
 			"Channel Assigned",
-			"${targetChannel.name} channel has been assigned to #${channel.name} in **${guild.name}**"))
+			"${targetChannel.name} channel has been assigned to #${channel.name} in **${guild.name}**"
+		)
+	)
 }
 
 private fun setupMuted(guild: Guild) {
@@ -202,11 +204,13 @@ private fun setupMuted(guild: Guild) {
 
 	val muted = guild.getRole(mutedName)
 
-	guild.textChannels.forEach { channel ->
-		val hasOverride = channel.rolePermissionOverrides.any {
-			it.role.name.toLowerCase() == mutedName.toLowerCase()
+	guild.textChannels.forEach {
+		val hasOverride = it.rolePermissionOverrides.any { perm ->
+			perm.role.name.toLowerCase() == mutedName.toLowerCase()
 		}
 
-		if (!hasOverride) channel.createPermissionOverride(muted).setDeny(Permission.MESSAGE_WRITE).queue()
+		if (!hasOverride) {
+			it.createPermissionOverride(muted).setDeny(Permission.MESSAGE_WRITE).queue()
+		}
 	}
 }

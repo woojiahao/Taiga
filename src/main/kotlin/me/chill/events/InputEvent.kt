@@ -146,7 +146,9 @@ private fun matchCommand(commandList: Array<Command>, commandParts: Array<String
 private fun handleInvite(
 	message: String, invoker: Member,
 	server: Guild, messageChannel: MessageChannel,
-	originalMessage: Message): Boolean {
+	originalMessage: Message
+): Boolean {
+
 	if (containsInvite(message)) {
 		val extractedInvite = extractInvite(message)
 		if (!hasInviteInWhitelist(server.id, extractedInvite) && !invoker.isOwner) {

@@ -177,9 +177,7 @@ private fun extract(title: String): Map<ChangeLogComponents, String?> {
 	val buildTitle = changelogDetails["buildTitle"].asString
 	val changes = changelogDetails["changes"]
 		.asJsonArray
-		.mapIndexed { index, s ->
-			"${index + 1}. ${s.asString}"
-		}
+		.mapIndexed { index, s -> "${index + 1}. ${s.asString}" }
 		.joinToString("\n")
 	val releaseDate = changelogDetails["releaseDate"].asString
 	val contributors = changelogDetails["contributors"].asJsonArray.joinToString("\n") { "- ${it.asString}" }

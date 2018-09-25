@@ -37,15 +37,18 @@ class CommandContainer private constructor() {
 
 		fun hasCategory(category: String) = commandSets.stream().anyMatch { it.categoryName == category }
 
-		fun getCommandSet(category: String) = commandSets.stream().filter { it.categoryName == category }.toArray()[0]!! as CommandSet
+		fun getCommandSet(category: String) =
+			commandSets.stream().filter { it.categoryName == category }.toArray()[0]!! as CommandSet
 
 		fun getCommand(command: String) = getCommandList().filter { it.name == command }.toTypedArray()
 
 		fun getCommandNames() = getCommandList().map { it.name }.toTypedArray().distinct()
 
-		fun getGlobalCommands() = getCommandList().asSequence().filter { it.getGlobal() }.map { it.name }.distinct().toList()
+		fun getGlobalCommands() =
+			getCommandList().asSequence().filter { it.getGlobal() }.map { it.name }.distinct().toList()
 
-		fun getCommandList() = commandSets.map { it.commands }.flatten()
+		fun getCommandList() =
+			commandSets.map { it.commands }.flatten()
 	}
 }
 

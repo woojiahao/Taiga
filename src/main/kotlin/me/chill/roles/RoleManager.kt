@@ -94,8 +94,7 @@ fun Guild.createRole(roleName: String) =
  * Status of the check is represented by a message embed.
  * 	If a message embed is present, the pre-checking failed, else, it passed
  */
-private fun preChecking(guild: Guild, roleId: String,
-						targetId: String): MessageEmbed? {
+private fun preChecking(guild: Guild, roleId: String, targetId: String): MessageEmbed? {
 	val role = guild.getRoleById(roleId)
 	return when {
 		role == null -> roleOperationFailureEmbed("Role: **$roleId** does not exist in **${guild.name}**")

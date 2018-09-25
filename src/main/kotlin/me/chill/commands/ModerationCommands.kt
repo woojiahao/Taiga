@@ -182,18 +182,20 @@ fun moderationCommands() = commands("Moderation") {
 	}
 }
 
-private fun strikeUser(guild: Guild, targetId: String, channel: MessageChannel,
-					   strikeWeight: Int, strikeReason: String, invoker: Member) {
+private fun strikeUser(
+	guild: Guild, targetId: String, channel: MessageChannel,
+	strikeWeight: Int, strikeReason: String, invoker: Member
+) {
+
 	val guildId = guild.id
 	val target = guild.getMemberById(targetId)
 	val loggingChannel = guild.getTextChannelById(getChannel(TargetChannel.Logging, guildId))
 
 	addStrike(guildId, targetId, strikeWeight, strikeReason, invoker.user.id)
 	val strikeCount = getStrikeCount(guildId, targetId)
-	guild.getMemberById(targetId)
-		.sendPrivateMessage(
-			userStrikeNotificationEmbed(guild.name, strikeReason, strikeWeight, strikeCount)
-		)
+	guild
+		.getMemberById(targetId)
+		.sendPrivateMessage(userStrikeNotificationEmbed(guild.name, strikeReason, strikeWeight, strikeCount))
 
 	loggingChannel.send(strikeSuccessEmbed(strikeWeight, target, strikeReason))
 
@@ -204,9 +206,12 @@ private fun strikeUser(guild: Guild, targetId: String, channel: MessageChannel,
 	}
 }
 
-private fun muteUser(guild: Guild, channel: MessageChannel,
-					 target: Member, reason: String,
-					 duration: Int = 1, timeMultiplier: TimeMultiplier? = null) {
+private fun muteUser(
+	guild: Guild, channel: MessageChannel,
+	target: Member, reason: String,
+	duration: Int = 1, timeMultiplier: TimeMultiplier? = null
+) {
+
 	val loggingChannel = guild.getTextChannelById(getChannel(TargetChannel.Logging, guild.id))
 	val targetId = target.user.id
 
