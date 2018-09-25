@@ -43,6 +43,10 @@ this set of commands and seamlessly integrate them into Taiga
 category
 
 ## New Command
+All commands that are created must implement a `execute` body otherwise, a `CommandException` is thrown.
+
+All commands must start with a letter or digit, no symbols will be allowed, otherwise, a `CommandException` is thrown.
+
 All commands that are created for a specific category will go within the `commands` lambda and follow the following syntax:
 ```kotlin
 @CommandCategory
@@ -122,6 +126,14 @@ otherwise, there will be an exception thrown during run time.
 
 To overload the command, just name the new command to be the same as the original and then, modify the behavior and 
 arguments list.
+
+### Multi-Args
+Taiga supports the use of multi-args at the same position in an argument list.
+
+The class `ArgumentMix` provides such a feature and it expects a list of the potential arguments that will be given to that 
+position.
+
+The argument types passed to the constructor of an ArgumentMix must all be unique, otherwise a `CommandException` is thrown.
 
 ## New Argument Type
 ### Structure
