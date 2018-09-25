@@ -23,7 +23,7 @@ fun loadHelp(): List<CommandInfo> {
 			list.add(entry)
 		}
 	}
-	CommandContainer.commandList().forEach {
+	CommandContainer.getCommandList().forEach {
 		if (!list.asSequence().map { info -> info.name }.contains(it.name)) {
 			throw TaigaException("Command: ${it.name} does not have a help in help.json")
 		}
@@ -36,7 +36,5 @@ fun findCommand(commandName: String) = commandInfo!!.first { it.name == commandN
 val Command.syntax get() = "$serverPrefix${findCommand(name).syntax}"
 
 val Command.example get() = "$serverPrefix${findCommand(name).example}"
-
-val Command.category get() = findCommand(name).category!!
 
 val Command.description get() = findCommand(name).description

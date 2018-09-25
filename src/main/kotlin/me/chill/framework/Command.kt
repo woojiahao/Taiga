@@ -12,7 +12,7 @@ import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.entities.MessageChannel
 import net.dv8tion.jda.core.entities.MessageEmbed
 
-class Command(var name: String) {
+class Command(val name: String, val category: String) {
 	private var action: (Command.(Map<ContainerKey, Any?>) -> Unit)? = null
 
 	private val commandInformation: MutableMap<ContainerKey, Any?> = mutableMapOf()

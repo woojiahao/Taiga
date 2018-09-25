@@ -40,8 +40,15 @@ private fun setup() {
 		Credentials(configurations)
 	}
 
+	println("Setting up database")
 	setupDatabase(credentials!!.database!!)
+
+	println("Loading commands")
 	CommandContainer.loadContainer()
+
+	println("Loading help")
 	commandInfo = loadHelp()
+
+	println("Loading raid manager")
 	raidManger = RaidManager()
 }

@@ -5,7 +5,7 @@ class CommandSet(val categoryName: String) {
 	private var isGlobal = false
 
 	inline fun command(name: String, create: Command.() -> Unit) {
-		val command = Command(name)
+		val command = Command(name, categoryName)
 		command.create()
 		commands.add(command)
 	}

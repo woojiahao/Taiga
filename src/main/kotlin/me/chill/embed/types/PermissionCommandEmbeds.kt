@@ -1,24 +1,31 @@
 package me.chill.embed.types
 
-import me.chill.database.operations.getPermission
-import me.chill.database.operations.hasPermission
+import me.chill.database.operations.viewPermissions
 import me.chill.framework.CommandContainer
 import me.chill.settings.green
 import me.chill.utility.jda.embed
 import net.dv8tion.jda.core.entities.Guild
 
-fun generatePermission(commandName: String, guild: Guild) =
-	if (hasPermission(commandName, guild.id)) Pair(commandName, getPermission(commandName, guild.id))
-	else Pair(commandName, guild.roles[0].id)
+data class Permission(val commandName: String, val permissionName: String)
 
+fun generatePermissions(guild: Guild): Map<String, MutableList<Permission>> {
+	val permissions = viewPermissions(guild.id)
+	val highestRoleName = guild.roles[0].name
+	val permissionMap = CommandContainer.commandSets.associate { it.categoryName to mutableListOf<Permission>() }
 
-fun generatePermissionsList(guild: Guild, commandNames: Array<String>) =
-	commandNames
-		.map {
-			val permission = generatePermission(it, guild)
-			"**${permission.first}** :: ${guild.getRoleById(permission.second).name}"
+	CommandContainer
+		.getCommandList()
+		.asSequence()
+		.distinctBy { it.name }
+		.forEach {
+			val name =
+				if (!permissions.keys.contains(it.name)) highestRoleName
+				else guild.getRoleById(permissions[it.name]!!).name
+			permissionMap[it.category]?.add(Permission(it.name, name))
 		}
-		.joinToString("\n") { "- $it" }
+
+	return permissionMap
+}
 
 fun listPermissionsEmbed(guild: Guild) =
 	embed {
@@ -26,11 +33,12 @@ fun listPermissionsEmbed(guild: Guild) =
 		color = green
 		thumbnail = guild.iconUrl
 
-		CommandContainer.commandSets.forEach {
+		generatePermissions(guild).forEach { category, permissionList ->
 			field {
-				title = it.categoryName
-				description = generatePermissionsList(guild, it.getCommandNames())
-				inline = false
+				title = category
+				description = permissionList.joinToString("\n") {
+					"- **${it.commandName}** :: ${it.permissionName}"
+				}
 			}
 		}
 	}

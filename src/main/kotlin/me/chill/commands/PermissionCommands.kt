@@ -54,7 +54,7 @@ fun permissionCommands() = commands("Permission") {
 	command("setglobal") {
 		expects(CategoryName())
 		execute {
-			val commandNames = CommandContainer.getSet(arguments[0]!!.str()).getCommandNames()
+			val commandNames = CommandContainer.getCommandSet(arguments[0]!!.str()).getCommandNames()
 			val everyoneRole = guild.getRolesByName("@everyone", false)[0]
 			commandNames.forEach { name ->
 				if (hasPermission(name, guild.id)) editPermission(name, guild.id, everyoneRole.id)
@@ -74,7 +74,7 @@ fun permissionCommands() = commands("Permission") {
 			val roleId = arguments[1]!!.str()
 
 			val highestRole = roles[0].id
-			val commandSet = CommandContainer.getSet(categoryName)
+			val commandSet = CommandContainer.getCommandSet(categoryName)
 			commandSet.commands.forEach { command ->
 				val commandName = command.name
 				if (roleId == highestRole) {

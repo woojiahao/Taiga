@@ -36,17 +36,13 @@ fun hasPermission(commandName: String, serverId: String) =
 	}
 
 
-fun viewPermissions(serverId: String): MutableMap<String, String> {
-	val commandMap = mutableMapOf<String, String>()
+fun viewPermissions(serverId: String) =
 	transaction {
-		val results = Permission.select {
-			Permission.serverId eq serverId
-		}
-
-		results.forEach { commandMap[it[Permission.commandName]] = it[Permission.permission] }
+		Permission
+			.select { Permission.serverId eq serverId }
+			.associate { it[Permission.commandName] to it[Permission.permission] }
+			.toMutableMap()
 	}
-	return commandMap
-}
 
 fun batchAddPermissions(commandNames: List<String>, serverId: String, roleId: String) {
 	transaction {

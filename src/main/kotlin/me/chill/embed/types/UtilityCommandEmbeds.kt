@@ -3,7 +3,6 @@ package me.chill.embed.types
 import me.chill.framework.Command
 import me.chill.framework.CommandContainer
 import me.chill.framework.CommandSet
-import me.chill.json.help.category
 import me.chill.json.help.description
 import me.chill.json.help.example
 import me.chill.json.help.syntax

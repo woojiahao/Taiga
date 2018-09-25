@@ -11,7 +11,7 @@ class CommandContainer private constructor() {
 			.getMethodsAnnotatedWith(CommandCategory::class.java)
 			.forEach { it.invoke(null) }
 
-		commandList().forEach { command ->
+		getCommandList().forEach { command ->
 			if (!command.name[0].isLetterOrDigit()) {
 				throw TaigaException("Command name must start with a letter or digit")
 			}
@@ -37,15 +37,15 @@ class CommandContainer private constructor() {
 
 		fun hasCategory(category: String) = commandSets.stream().anyMatch { it.categoryName == category }
 
-		fun getSet(category: String) = commandSets.stream().filter { it.categoryName == category }.toArray()[0]!! as CommandSet
+		fun getCommandSet(category: String) = commandSets.stream().filter { it.categoryName == category }.toArray()[0]!! as CommandSet
 
-		fun getCommand(command: String) = commandList().filter { it.name == command }.toTypedArray()
+		fun getCommand(command: String) = getCommandList().filter { it.name == command }.toTypedArray()
 
-		fun getCommandNames() = commandList().map { it.name }.toTypedArray()
+		fun getCommandNames() = getCommandList().map { it.name }.toTypedArray().distinct()
 
-		fun getGlobalCommands() = commandList().asSequence().filter { it.getGlobal() }.map { it.name }.distinct().toList()
+		fun getGlobalCommands() = getCommandList().asSequence().filter { it.getGlobal() }.map { it.name }.distinct().toList()
 
-		fun commandList() = commandSets.map { it.commands }.flatten().distinct()
+		fun getCommandList() = commandSets.map { it.commands }.flatten()
 	}
 }
 
