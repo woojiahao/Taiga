@@ -13,7 +13,8 @@ def generate_changelog():
         "buildTitle": "Improvements",
         "changes": [],
         "releaseDate": f"{datetime.datetime.now().strftime('%d %B %Y')}",
-        "contributors": []
+        "contributors": [],
+        "commands": []
     }
     with open(changelog_file, "w") as file:
         json.dump(contents, file)

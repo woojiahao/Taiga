@@ -47,7 +47,7 @@ fun changeLogEmbed(botName: String, buildVersion: String,
 
 		commands?.let {
 			field {
-				title = "Updated Commands"
+				title = "New Commands"
 				description = commands
 				inline = true
 			}
