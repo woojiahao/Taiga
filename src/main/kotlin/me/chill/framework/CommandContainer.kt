@@ -1,6 +1,6 @@
 package me.chill.framework
 
-import me.chill.exception.TaigaException
+import me.chill.exception.CommandException
 import org.reflections.Reflections
 import org.reflections.scanners.MethodAnnotationsScanner
 
@@ -13,13 +13,13 @@ class CommandContainer private constructor() {
 
 		getCommandList().forEach { command ->
 			if (!command.name[0].isLetterOrDigit()) {
-				throw TaigaException("Command name must start with a letter or digit")
+				throw CommandException("Command name must start with a letter or digit")
 			}
 			val overloadedCommands = getCommand(command.name)
 			overloadedCommands.forEach { overloadedCommand ->
 				if (overloadedCommand != command) {
 					if (overloadedCommand.argumentTypes.size == command.argumentTypes.size) {
-						throw TaigaException("Unable to overload command: ${command.name} with the same number of argument types")
+						throw CommandException("Unable to overload command: ${command.name} with the same number of argument types")
 					}
 				}
 			}
