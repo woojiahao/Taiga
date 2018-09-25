@@ -69,6 +69,7 @@
 |[`source`](utility_commands.md?id=source)|Displays all links related to my source code|
 |[`botinfo`](utility_commands.md?id=botinfo)|Displays information about the bot|
 |[`changelog`](utility_commands.md?id=changelog)|Displays the latest changelog if no argument is given, displays a specific changelog if one can be found|
+|[`google`](utility_commands.md?id=google)|Performs and displays a google search of a query|
 
 ### [Role](role_commands.md)
 |Name|Description|
@@ -126,3 +127,4 @@
 |[`cookie`](fun_commands.md?id=cookie)|Give someone a cookie, if you don't pass any arguments, a cookie is given to a random stranger|
 |[`meme`](fun_commands.md?id=meme)|Displays a random popular meme from Imgflip|
 |[`joke`](fun_commands.md?id=joke)|Tells a joke|
+|[`emote`](fun_commands.md?id=emote)|Displays an emote based on the name if it can be found in any of the servers Taiga is in|

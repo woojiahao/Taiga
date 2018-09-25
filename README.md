@@ -73,6 +73,7 @@ More information about commands can be found on the [website](https://woojiahao.
 |`source`|Displays all links related to my source code|
 |`botinfo`|Displays information about the bot|
 |`changelog`|Displays the latest changelog if no argument is given, displays a specific changelog if one can be found|
+|`google`|Performs and displays a google search of a query|
 ### Role
 |Name|Description|
 |---|---|
@@ -124,6 +125,7 @@ More information about commands can be found on the [website](https://woojiahao.
 |`cookie`|Give someone a cookie, if you don't pass any arguments, a cookie is given to a random stranger|
 |`meme`|Displays a random popular meme from Imgflip|
 |`joke`|Tells a joke|
+|`emote`|Displays an emote based on the name if it can be found in any of the servers Taiga is in|
 <!--blk-1-end-->
 
 ## Credits

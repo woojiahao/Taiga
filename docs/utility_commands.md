@@ -76,3 +76,14 @@ Displays the latest changelog if no argument is given, displays a specific chang
 
 > changelog (1)
 
+## google
+### Description {docsify-ignore}
+Performs and displays a google search of a query
+### Syntax {docsify-ignore}
+
+> google { Search Query }
+
+### Example {docsify-ignore}
+
+> google Why is the sky blue?
+

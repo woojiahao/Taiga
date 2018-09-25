@@ -54,3 +54,14 @@ Tells a joke
 
 > joke
 
+## emote
+### Description {docsify-ignore}
+Displays an emote based on the name if it can be found in any of the servers Taiga is in
+### Syntax {docsify-ignore}
+
+> emote { Emote Name }
+
+### Example {docsify-ignore}
+
+> emote blaze
+
