@@ -18,6 +18,7 @@
 		"@Chill#4048"
 	],
 	"commands": [
-		"google"
+		"google",
+		"emoji"
 	]
 }

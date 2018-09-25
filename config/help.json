@@ -457,6 +457,12 @@
 			"description": "Tells a joke",
 			"syntax": "joke",
 			"example": "joke"
+		},
+		{
+			"name": "emote",
+			"description": "Displays an emote based on the name if it can be found in any of the servers Taiga is in",
+			"syntax": "emote { Emote Name }",
+			"example": "emote blaze"
 		}
 	]
 }

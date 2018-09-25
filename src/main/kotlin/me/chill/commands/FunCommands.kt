@@ -1,6 +1,7 @@
 package me.chill.commands
 
 import com.google.gson.JsonObject
+import me.chill.arguments.types.EmoteName
 import me.chill.arguments.types.Sentence
 import me.chill.arguments.types.UserId
 import me.chill.framework.CommandCategory
@@ -72,6 +73,14 @@ fun funCommands() = commands("Fun") {
 				Thread.sleep(1000)
 				respond("**A:** ${data["punchline"]}")
 			}.start()
+		}
+	}
+
+	command("emote") {
+		expects(EmoteName())
+		execute {
+			val emote = guild.getEmoteById(arguments[0]!!.str())
+			respond("<:${emote.name}:${emote.id}>")
 		}
 	}
 }
