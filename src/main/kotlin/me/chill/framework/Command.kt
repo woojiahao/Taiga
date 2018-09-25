@@ -43,12 +43,7 @@ class Command(val name: String, val category: String) {
 
 	fun expects(vararg args: Argument) {
 		val endArgCheck = checkForEndArguments(*args)
-		if (!endArgCheck.first) {
-			val exceptionMessage = StringBuilder("\n\n\tCommand: $name\n")
-			exceptionMessage.append("\tReason: ${endArgCheck.second}\n")
-			exceptionMessage.append("\tFix: https://woojiahao.github.io/Taiga/#/argument_types?id=end-arguments\n")
-			throw EndArgumentException(exceptionMessage.toString())
-		}
+		if (!endArgCheck.first) throw EndArgumentException(name, endArgCheck.second)
 
 		this.commandInformation[ArgumentTypes] = args
 	}
