@@ -13,6 +13,7 @@ class EmoteName : Argument {
 			val foundEmote = guild.jda.guilds
 				.filter { it.getEmotesByName(arg, true).size > 0 }[0]
 				.getEmotesByName(arg, true)[0].id
+			print(foundEmote)
 			ArgumentParseMap(true, parsedValue = foundEmote)
 		}
 	}
