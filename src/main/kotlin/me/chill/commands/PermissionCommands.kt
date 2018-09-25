@@ -60,7 +60,12 @@ fun permissionCommands() = commands("Permission") {
 				if (hasPermission(name, guild.id)) editPermission(name, guild.id, everyoneRole.id)
 				else addPermission(name, guild.id, everyoneRole.id)
 			}
-			respond("All commands in **${arguments[0]!!.str()}** is now available to everyone")
+			respond(
+				successEmbed(
+					"Set Category Permission Success!",
+					"All commands in **${arguments[0]!!.str()}** is now available to everyone"
+				)
+			)
 		}
 	}
 
