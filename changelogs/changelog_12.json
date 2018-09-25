@@ -1,0 +1,12 @@
+{
+	"buildNumber": "3.6",
+	"buildTitle": "Improvements for developers",
+	"changes": [
+		"Specialized exceptions were created for different scenarios, with specific formats",
+		"Code clean up for readability",
+		"Enforced end arguments restriction",
+		"Enforced restriction for all commands to at least implement an execute body"
+	],
+	"releaseDate": "25 September 2018",
+	"contributors": []
+}
