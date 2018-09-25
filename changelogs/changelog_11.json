@@ -6,7 +6,8 @@
 		"`viewpermissions` now a lot faster thanks to several optimizations",
 		"`viewpermissions` duplicate bug fixed",
 		"`setglobal` command displays in embed",
-		"commands sections included for changelogs for a separate field if necessary"
+		"Changelogs now can optionally include a commands array to display newly added commands",
+		"Removed database optimization section from documentation"
 	],
 	"releaseDate": "25 September 2018",
 	"contributors": [

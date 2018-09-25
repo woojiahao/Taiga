@@ -169,7 +169,8 @@ private fun extract(title: String): Map<ChangeLogComponents, String?> {
 	val buildVersion = changelogDetails["buildNumber"].asString
 	val commands: String? =
 		if (changelogDetails.has("commands")) {
-			changelogDetails["commands"].asJsonArray.joinToString("\n") { "- `${it.asString}`" }
+			if (changelogDetails["commands"].asJsonArray.size() == 0) "No new commands added"
+			else changelogDetails["commands"].asJsonArray.joinToString("\n") { "- `${it.asString}`" }
 		} else {
 			null
 		}
