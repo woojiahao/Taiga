@@ -54,7 +54,7 @@ private fun handleInput(event: MessageReceivedEvent?) {
 
 	val silentInvoke = message.startsWith(serverPrefix.repeat(2))
 	val commandParts = message.substring(serverPrefix.repeat(if (!silentInvoke) 1 else 2).length).split(" ").toTypedArray()
-	val attemptedCommandMacro = commandParts[0]
+	val attemptedCommandMacro = commandParts[0].toLowerCase()
 
 	if (attemptedCommandMacro.isBlank() || !attemptedCommandMacro[0].isLetterOrDigit()) return
 
