@@ -9,6 +9,7 @@ import me.chill.embed.types.invalidArgumentsEmbed
 import me.chill.exception.TaigaException
 import me.chill.framework.Command
 import me.chill.framework.CommandContainer
+import me.chill.logging.macroLog
 import me.chill.logging.normalLog
 import me.chill.raidManger
 import me.chill.settings.noWay
@@ -59,7 +60,10 @@ private fun handleInput(event: MessageReceivedEvent?) {
 	if (attemptedCommandMacro.isBlank() || !attemptedCommandMacro[0].isLetterOrDigit()) return
 
 	if (hasMacro(server.id, attemptedCommandMacro)) {
-		if (commandParts.size == 1) messageChannel.send(getMacro(server.id, attemptedCommandMacro))
+		if (commandParts.size == 1) {
+			messageChannel.send(getMacro(server.id, attemptedCommandMacro))
+			macroLog(attemptedCommandMacro, invoker, messageChannel, server)
+		}
 		return
 	}
 

@@ -9,7 +9,9 @@
 		"Changelogs now can optionally include a commands array to display newly added commands",
 		"Removed database optimization section from documentation",
 		"`history` now displays the exact expiry date of a strike",
-		"`getpreferences` is now formatted neatly"
+		"`getpreferences` is now formatted neatly",
+		"Command invokes now ignore casing",
+		"Macro use is now logged"
 	],
 	"releaseDate": "25 September 2018",
 	"contributors": [

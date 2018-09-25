@@ -6,3 +6,4 @@ const val cyan = 52937
 const val green = 5631940
 const val orange = 16761614
 const val yellow = 16771751
+const val pink = 16743153

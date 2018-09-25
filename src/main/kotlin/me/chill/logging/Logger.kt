@@ -4,11 +4,13 @@ import me.chill.database.operations.getChannel
 import me.chill.database.states.TargetChannel
 import me.chill.framework.Command
 import me.chill.settings.blue
+import me.chill.settings.pink
 import me.chill.utility.getDateTime
 import me.chill.utility.jda.embed
 import me.chill.utility.jda.printChannel
 import me.chill.utility.jda.printMember
 import me.chill.utility.jda.send
+import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.entities.MessageChannel
 
@@ -23,6 +25,21 @@ fun normalLog(command: Command) {
 		)
 	)
 }
+
+fun macroLog(macroName: String, invoker: Member, channel: MessageChannel, guild: Guild) {
+	guild.getTextChannelById(getChannel(TargetChannel.Logging, guild.id)).send(macroLogEmbed(macroName, invoker, channel))
+}
+
+private fun macroLogEmbed(macroName: String, invoker: Member, channel: MessageChannel) =
+	embed {
+		title = "Macro Used"
+		color = pink
+		description = "**$macroName** was used by ${printMember(invoker)} in ${printChannel(channel)}"
+		footer {
+			message = getDateTime()
+			iconUrl = invoker.user.avatarUrl
+		}
+	}
 
 private fun normalLogEmbed(commandName: String, invoker: Member, channel: MessageChannel) =
 	embed {
