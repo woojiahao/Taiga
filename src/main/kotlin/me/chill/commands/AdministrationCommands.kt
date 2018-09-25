@@ -6,6 +6,7 @@ import me.chill.arguments.types.Word
 import me.chill.database.operations.*
 import me.chill.database.states.TargetChannel
 import me.chill.database.states.TimeMultiplier
+import me.chill.embed.types.preferenceEmbed
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
 import me.chill.roles.createRole
@@ -135,14 +136,7 @@ fun administrationCommands() = commands("Administration") {
 
 	command("getpreferences") {
 		execute {
-			val allPreferences = getAllPreferences(guild.id)
-			respond(
-				successEmbed(
-					"${guild.name} Preferences",
-					allPreferences,
-					thumbnail = null
-				)
-			)
+			respond(preferenceEmbed(guild, getAllPreferences(guild.id)))
 		}
 	}
 

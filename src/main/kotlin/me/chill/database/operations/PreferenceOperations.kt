@@ -3,10 +3,24 @@ package me.chill.database.operations
 import me.chill.credentials
 import me.chill.database.Preference
 import me.chill.database.states.TimeMultiplier
-import org.apache.commons.lang3.text.WordUtils
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.statements.UpdateStatement
 import org.jetbrains.exposed.sql.transactions.transaction
+
+data class ServerPreference (
+	val serverId: String,
+	val prefix: String,
+	val joinChannel: String,
+	val loggingChannel: String,
+	val suggestionChannel: String,
+	val messageLimit: Int,
+	val messageDuration: Int,
+	val roleExcluded: String?,
+	val welcomeDisabled: Boolean,
+	val welcomeMessage: String,
+	val timeMultiplier: TimeMultiplier,
+	val onJoinRole: String?
+)
 
 fun addServerPreference(serverId: String, defaultChannelId: String) {
 	transaction {
@@ -47,5 +61,18 @@ fun updatePreferences(serverId: String, updateStatement: Preference.(UpdateState
 fun getAllPreferences(serverId: String) =
 	transaction {
 		val result = Preference.select { Preference.serverId eq serverId }.first()
-		Preference.columns.joinToString("\n") { "**${WordUtils.capitalize(it.name.replace("_", " "))}**\n${result[it]}\n" }
+		ServerPreference(
+			result[Preference.serverId],
+			result[Preference.prefix],
+			result[Preference.joinChannel],
+			result[Preference.loggingChannel],
+			result[Preference.suggestionChannel],
+			result[Preference.raidMessageLimit],
+			result[Preference.raidMessageDuration],
+			result[Preference.raidRoleExcluded],
+			result[Preference.disableWelcome],
+			result[Preference.welcomeMessage],
+			TimeMultiplier.valueOf(result[Preference.timeMultiplier]),
+			result[Preference.onJoinRole]
+		)
 	}

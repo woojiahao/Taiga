@@ -8,7 +8,8 @@
 		"`setglobal` command displays in embed",
 		"Changelogs now can optionally include a commands array to display newly added commands",
 		"Removed database optimization section from documentation",
-		"`history` now displays the exact expiry date of a strike"
+		"`history` now displays the exact expiry date of a strike",
+		"`getpreferences` is now formatted neatly"
 	],
 	"releaseDate": "25 September 2018",
 	"contributors": [
