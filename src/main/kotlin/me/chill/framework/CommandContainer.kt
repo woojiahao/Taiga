@@ -1,5 +1,6 @@
 package me.chill.framework
 
+import me.chill.arguments.types.ArgumentMix
 import me.chill.exception.CommandException
 import org.reflections.Reflections
 import org.reflections.scanners.MethodAnnotationsScanner
@@ -7,29 +8,8 @@ import org.reflections.scanners.MethodAnnotationsScanner
 class CommandContainer private constructor() {
 	init {
 		val reflections = Reflections("me.chill.commands", MethodAnnotationsScanner())
-		reflections
-			.getMethodsAnnotatedWith(CommandCategory::class.java)
-			.forEach { it.invoke(null) }
-
-		getCommandList().forEach { command ->
-			command.getAction() ?: throw CommandException(command.name, "All commands must implement an execute body")
-
-			if (!command.name[0].isLetterOrDigit()) {
-				throw CommandException(command.name, "Command name must start with a letter or digit")
-			}
-
-			val overloadedCommands = getCommand(command.name)
-			overloadedCommands.forEach { overloadedCommand ->
-				if (overloadedCommand != command) {
-					if (overloadedCommand.argumentTypes.size == command.argumentTypes.size) {
-						throw CommandException(
-							command.name,
-							"Unable to overload command with the same number of argument types: ${overloadedCommand.argumentTypes.size}"
-						)
-					}
-				}
-			}
-		}
+		reflections.getMethodsAnnotatedWith(CommandCategory::class.java).forEach { it.invoke(null) }
+		checkCommands()
 	}
 
 	companion object {
@@ -55,6 +35,38 @@ class CommandContainer private constructor() {
 
 		fun getCommandList() =
 			commandSets.map { it.commands }.flatten()
+	}
+
+	private fun checkCommands() {
+		getCommandList().forEach {
+			it.getAction() ?: throw CommandException(it.name, "All commands must implement an execute body")
+
+			if (!it.name[0].isLetterOrDigit()) {
+				throw CommandException(it.name, "Command name must start with a letter or digit")
+			}
+
+			if (it.argumentTypes.any { arg -> arg.javaClass == ArgumentMix::class.java }) {
+				val argMix = it.argumentTypes.filter { arg -> arg.javaClass == ArgumentMix::class.java }[0] as ArgumentMix
+				if (argMix.arguments.distinctBy { mix -> mix.javaClass }.size != argMix.arguments.size) {
+					throw CommandException(
+						it.name,
+						"Unable to create an ArgumentMix of the same argument type"
+					)
+				}
+			}
+
+			val overloadedCommands = getCommand(it.name)
+			overloadedCommands.forEach { overloadedCommand ->
+				if (overloadedCommand != it) {
+					if (overloadedCommand.argumentTypes.size == it.argumentTypes.size) {
+						throw CommandException(
+							it.name,
+							"Unable to overload command with the same number of argument types: ${overloadedCommand.argumentTypes.size}"
+						)
+					}
+				}
+			}
+		}
 	}
 }
 

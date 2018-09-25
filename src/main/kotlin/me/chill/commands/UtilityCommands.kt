@@ -2,7 +2,10 @@ package me.chill.commands
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
-import me.chill.arguments.types.*
+import me.chill.arguments.types.ArgumentMix
+import me.chill.arguments.types.CategoryName
+import me.chill.arguments.types.ChangeLog
+import me.chill.arguments.types.Sentence
 import me.chill.database.operations.getPrefix
 import me.chill.embed.types.*
 import me.chill.framework.CommandCategory
@@ -61,7 +64,7 @@ fun utilityCommands() = commands("Utility") {
 	}
 
 	command("help") {
-		expects(ArgumentMix(CategoryName(), CommandName()))
+		expects(ArgumentMix(CategoryName(), CategoryName()))
 		execute {
 			val attempt = arguments[0]!!.str()
 			if (CommandContainer.hasCommand(attempt)) {

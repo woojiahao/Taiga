@@ -4,9 +4,14 @@ import me.chill.arguments.Argument
 import me.chill.arguments.ArgumentParseMap
 import net.dv8tion.jda.core.entities.Guild
 
-class ArgumentList(private val argumentType: Argument,
-				   private val pipes: Char = ',',
-				   private val limit: Int = -1) : Argument {
+/**
+ * Represents a list of the same argument type
+ */
+class ArgumentList(
+	private val argumentType: Argument,
+	private val pipes: Char = ',',
+	private val limit: Int = -1
+) : Argument {
 	override fun check(guild: Guild, arg: String): ArgumentParseMap {
 		val parsedValues = mutableListOf<String>()
 
