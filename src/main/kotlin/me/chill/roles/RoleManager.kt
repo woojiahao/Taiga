@@ -13,7 +13,7 @@ import net.dv8tion.jda.core.entities.*
  */
 fun assignRole(guild: Guild, channel: MessageChannel, roleId: String, targetId: String) {
 	val preCheckingResults = preChecking(guild, roleId, targetId)
-	if (preCheckingResults != null) {
+	preCheckingResults?.let {
 		channel.send(preCheckingResults)
 		return
 	}
@@ -30,7 +30,7 @@ fun assignRole(guild: Guild, channel: MessageChannel, roleId: String, targetId: 
  */
 fun assignRole(guild: Guild, roleId: String, targetId: String) {
 	val preCheckingResults = preChecking(guild, roleId, targetId)
-	if (preCheckingResults != null) return
+	preCheckingResults?.let { return }
 
 	guild.addRoleToUser(guild.getMemberById(targetId), guild.getRoleById(roleId))
 }
@@ -42,7 +42,7 @@ fun assignRole(guild: Guild, roleId: String, targetId: String) {
  */
 fun removeRole(guild: Guild, channel: MessageChannel, roleId: String, targetId: String) {
 	val preCheckingResults = preChecking(guild, roleId, targetId)
-	if (preCheckingResults != null) {
+	preCheckingResults?.let {
 		channel.send(preCheckingResults)
 		return
 	}
@@ -60,7 +60,7 @@ fun removeRole(guild: Guild, channel: MessageChannel, roleId: String, targetId: 
  */
 fun removeRole(guild: Guild, roleId: String, targetId: String) {
 	val preCheckingResults = preChecking(guild, roleId, targetId)
-	if (preCheckingResults != null) return
+	preCheckingResults?.let { return }
 
 	guild.removeRoleFromUser(guild.getMemberById(targetId), guild.getRoleById(roleId))
 }

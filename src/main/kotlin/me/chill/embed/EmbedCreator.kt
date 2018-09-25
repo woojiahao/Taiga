@@ -30,15 +30,14 @@ class EmbedCreator {
 	fun build(): MessageEmbed? {
 		val builder = EmbedBuilder()
 
-		if (color != null) builder.setColor(color!!)
+		color?.let { builder.setColor(color!!) }
+		title?.let { builder.setTitle(title) }
+		thumbnail?.let { builder.setThumbnail(thumbnail) }
+		author?.let { builder.setAuthor(author) }
+		description?.let { builder.setDescription(description) }
+		image?.let { builder.setImage(image) }
 
-		if (title != null) builder.setTitle(title)
-		if (thumbnail != null) builder.setThumbnail(thumbnail)
-		if (author != null) builder.setAuthor(author)
-		if (description != null) builder.setDescription(description)
-		if (image != null) builder.setImage(image)
-
-		if (footer != null) builder.setFooter(footer!!.message, footer!!.iconUrl)
+		footer?.let { builder.setFooter(footer!!.message, footer!!.iconUrl) }
 
 		fields.forEach { builder.addField(it.title, it.description, it.inline) }
 

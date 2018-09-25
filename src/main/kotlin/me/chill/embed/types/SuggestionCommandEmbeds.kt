@@ -27,7 +27,7 @@ fun publicSuggestionEmbed(suggesterName: String, suggesterAvatar: String,
 			}
 		}
 
-		if (suggestionResponseReason != null) {
+		suggestionResponseReason?.let {
 			field {
 				title = "Reason"
 				description = suggestionResponseReason
