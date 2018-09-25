@@ -7,8 +7,7 @@ fun parseArguments(command: Command, guild: Guild, args: Array<String>): ParseMa
 	val expectedArgs = command.argumentTypes
 	val parseMap = ParseMap()
 
-	val zipped = expectedArgs.zip(args)
-	for (pair in zipped) {
+	for (pair in expectedArgs.zip(args)) {
 		val result = pair.first.check(guild, pair.second)
 		val status = result.status
 		val parsedValue = result.parsedValue

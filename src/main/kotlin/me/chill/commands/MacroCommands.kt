@@ -19,7 +19,16 @@ fun macroCommands() = commands("Macro") {
 	command("listmacros") {
 		execute {
 			val macroList = getMacroList(guild.id)
-			respond(listMacrosEmbed(guild.name, macroList.sorted().joinToString(", "), macroList.size))
+			respond(
+				listMacrosEmbed(
+					guild.name,
+					macroList
+						.asSequence()
+						.sorted()
+						.joinToString(", "),
+					macroList.size
+				)
+			)
 		}
 	}
 

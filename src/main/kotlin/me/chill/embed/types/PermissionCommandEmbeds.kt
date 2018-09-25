@@ -33,12 +33,13 @@ fun listPermissionsEmbed(guild: Guild) =
 		color = green
 		thumbnail = guild.iconUrl
 
-		generatePermissions(guild).forEach { category, permissionList ->
-			field {
-				title = category
-				description = permissionList.joinToString("\n") {
-					"- **${it.commandName}** :: ${it.permissionName}"
+		generatePermissions(guild)
+			.forEach { category, permissionList ->
+				field {
+					title = category
+					description = permissionList.joinToString("\n") {
+						"- **${it.commandName}** :: ${it.permissionName}"
+					}
 				}
 			}
-		}
 	}

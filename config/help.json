@@ -194,17 +194,17 @@
 		},
 		{
 			"name": "setglobal",
-			"description": "Sets a category of commands to be available to everyone",
-			"syntax": "setglobal { Category Name }",
-			"example": "setglobal Fun"
+			"description": "Sets a single command or category of commands to be available to everyone",
+			"syntax": "setglobal { Category/Command Name }",
+			"example": "setglobal Fun/meme"
 		}
 	],
 	"Utility": [
 		{
 			"name": "help",
-			"description": "Displays a help card for the user to learn more about a specific command, pass no arguments and it will display all commands available to you",
-			"syntax": "help ({ Command Name })",
-			"example": "help (ping)"
+			"description": "Displays a help card for the user to learn more about a specific command or category, pass no arguments and it will display all commands available to you",
+			"syntax": "help ({ Command/Category Name })",
+			"example": "help (ping)/(utility)"
 		},
 		{
 			"name": "invite",

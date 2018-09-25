@@ -1,29 +1,15 @@
 package me.chill.framework
 
-import me.chill.exception.TaigaException
+import me.chill.arguments.types.ArgumentMix
+import me.chill.exception.CommandException
 import org.reflections.Reflections
 import org.reflections.scanners.MethodAnnotationsScanner
 
 class CommandContainer private constructor() {
 	init {
 		val reflections = Reflections("me.chill.commands", MethodAnnotationsScanner())
-		reflections
-			.getMethodsAnnotatedWith(CommandCategory::class.java)
-			.forEach { it.invoke(null) }
-
-		getCommandList().forEach { command ->
-			if (!command.name[0].isLetterOrDigit()) {
-				throw TaigaException("Command name must start with a letter or digit")
-			}
-			val overloadedCommands = getCommand(command.name)
-			overloadedCommands.forEach { overloadedCommand ->
-				if (overloadedCommand != command) {
-					if (overloadedCommand.argumentTypes.size == command.argumentTypes.size) {
-						throw TaigaException("Unable to overload command: ${command.name} with the same number of argument types")
-					}
-				}
-			}
-		}
+		reflections.getMethodsAnnotatedWith(CommandCategory::class.java).forEach { it.invoke(null) }
+		checkCommands()
 	}
 
 	companion object {
@@ -37,15 +23,50 @@ class CommandContainer private constructor() {
 
 		fun hasCategory(category: String) = commandSets.stream().anyMatch { it.categoryName == category }
 
-		fun getCommandSet(category: String) = commandSets.stream().filter { it.categoryName == category }.toArray()[0]!! as CommandSet
+		fun getCommandSet(category: String) =
+			commandSets.stream().filter { it.categoryName == category }.toArray()[0]!! as CommandSet
 
 		fun getCommand(command: String) = getCommandList().filter { it.name == command }.toTypedArray()
 
 		fun getCommandNames() = getCommandList().map { it.name }.toTypedArray().distinct()
 
-		fun getGlobalCommands() = getCommandList().asSequence().filter { it.getGlobal() }.map { it.name }.distinct().toList()
+		fun getGlobalCommands() =
+			getCommandList().asSequence().filter { it.getGlobal() }.map { it.name }.distinct().toList()
 
-		fun getCommandList() = commandSets.map { it.commands }.flatten()
+		fun getCommandList() =
+			commandSets.map { it.commands }.flatten()
+	}
+
+	private fun checkCommands() {
+		getCommandList().forEach {
+			it.getAction() ?: throw CommandException(it.name, "All commands must implement an execute body")
+
+			if (!it.name[0].isLetterOrDigit()) {
+				throw CommandException(it.name, "Command name must start with a letter or digit")
+			}
+
+			if (it.argumentTypes.any { arg -> arg.javaClass == ArgumentMix::class.java }) {
+				val argMix = it.argumentTypes.filter { arg -> arg.javaClass == ArgumentMix::class.java }[0] as ArgumentMix
+				if (argMix.arguments.distinctBy { mix -> mix.javaClass }.size != argMix.arguments.size) {
+					throw CommandException(
+						it.name,
+						"Unable to create an ArgumentMix of the same argument type"
+					)
+				}
+			}
+
+			val overloadedCommands = getCommand(it.name)
+			overloadedCommands.forEach { overloadedCommand ->
+				if (overloadedCommand != it) {
+					if (overloadedCommand.argumentTypes.size == it.argumentTypes.size) {
+						throw CommandException(
+							it.name,
+							"Unable to overload command with the same number of argument types: ${overloadedCommand.argumentTypes.size}"
+						)
+					}
+				}
+			}
+		}
 	}
 }
 

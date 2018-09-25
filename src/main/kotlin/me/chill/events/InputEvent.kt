@@ -6,7 +6,7 @@ import me.chill.credentials
 import me.chill.database.operations.*
 import me.chill.embed.types.insufficientArgumentsEmbed
 import me.chill.embed.types.invalidArgumentsEmbed
-import me.chill.exception.TaigaException
+import me.chill.exception.ListenerEventException
 import me.chill.framework.Command
 import me.chill.framework.CommandContainer
 import me.chill.logging.macroLog
@@ -38,7 +38,10 @@ class InputEvent : ListenerAdapter() {
 }
 
 private fun handleInput(event: MessageReceivedEvent?) {
-	event ?: throw TaigaException("Event object was null during message receive")
+	event ?: throw ListenerEventException(
+		"User Input",
+		"Event object was null during message receive"
+	)
 
 	if (event.member == null || event.member!!.user.isBot) return
 
@@ -146,7 +149,9 @@ private fun matchCommand(commandList: Array<Command>, commandParts: Array<String
 private fun handleInvite(
 	message: String, invoker: Member,
 	server: Guild, messageChannel: MessageChannel,
-	originalMessage: Message): Boolean {
+	originalMessage: Message
+): Boolean {
+
 	if (containsInvite(message)) {
 		val extractedInvite = extractInvite(message)
 		if (!hasInviteInWhitelist(server.id, extractedInvite) && !invoker.isOwner) {

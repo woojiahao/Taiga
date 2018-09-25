@@ -62,11 +62,11 @@ More information about commands can be found on the [website](https://woojiahao.
 |`setpermission`|Sets the permission of a command to be available to a role and higher|
 |`setpermissioncategory`|Sets the permission of all commands in a category to be available to the same role and higher|
 |`viewpermissions`|Views all the permissions set in the server|
-|`setglobal`|Sets a category of commands to be available to everyone|
+|`setglobal`|Sets a single command or category of commands to be available to everyone|
 ### Utility
 |Name|Description|
 |---|---|
-|`help`|Displays a help card for the user to learn more about a specific command, pass no arguments and it will display all commands available to you|
+|`help`|Displays a help card for the user to learn more about a specific command or category, pass no arguments and it will display all commands available to you|
 |`invite`|Displays all invite links related to me such as my development server and to invite me to your server|
 |`ping`|Displays the ping for me|
 |`serverinfo`|Displays information about the server|

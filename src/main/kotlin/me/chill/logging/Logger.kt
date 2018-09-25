@@ -16,13 +16,8 @@ import net.dv8tion.jda.core.entities.MessageChannel
 
 fun normalLog(command: Command) {
 	val guild = command.guild
-	val loggingChannel = guild.getTextChannelById(getChannel(TargetChannel.Logging, guild.id))
-	loggingChannel.send(
-		normalLogEmbed(
-			command.name,
-			command.invoker,
-			command.channel
-		)
+	guild.getTextChannelById(getChannel(TargetChannel.Logging, guild.id)).send(
+		normalLogEmbed(command.name, command.invoker, command.channel)
 	)
 }
 

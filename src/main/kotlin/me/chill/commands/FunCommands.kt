@@ -87,5 +87,4 @@ fun funCommands() = commands("Fun") {
 	}
 }
 
-private fun cookieGiving(target: String, from: String) =
-	"(づ｡◕‿‿◕｡)づ Have a cookie :cookie: $target courtesy of $from"
+private fun cookieGiving(target: String, from: String) = "(づ｡◕‿‿◕｡)づ Have a cookie :cookie: $target courtesy of $from"

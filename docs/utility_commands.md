@@ -1,14 +1,14 @@
 # Utility Commands
 ## help
 ### Description {docsify-ignore}
-Displays a help card for the user to learn more about a specific command, pass no arguments and it will display all commands available to you
+Displays a help card for the user to learn more about a specific command or category, pass no arguments and it will display all commands available to you
 ### Syntax {docsify-ignore}
 
-> help ({ Command Name })
+> help ({ Command/Category Name })
 
 ### Example {docsify-ignore}
 
-> help (ping)
+> help (ping)/(utility)
 
 ## invite
 ### Description {docsify-ignore}

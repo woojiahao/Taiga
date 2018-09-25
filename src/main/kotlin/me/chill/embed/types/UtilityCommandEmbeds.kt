@@ -176,6 +176,19 @@ fun commandInfoEmbed(command: Command) =
 		}
 	}
 
+fun categoryInfoEmbed(category: CommandSet) =
+	embed {
+		title = category.categoryName
+		color = cyan
+		description = category.getCommandNames().joinToString(", ")
+
+		field {
+			title = "Learn More"
+			description = "[Documentation on ${category.categoryName}]" +
+				"(https://woojiahao.github.io/Taiga/#/${category.categoryName.toLowerCase()}_commands)"
+		}
+	}
+
 fun listCommandsEmbed(commandSets: List<CommandSet>, avatarUrl: String, serverPrefix: String) =
 	embed {
 		title = "Commands"

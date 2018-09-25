@@ -57,12 +57,12 @@
 |[`setpermission`](permission_commands.md?id=setpermission)|Sets the permission of a command to be available to a role and higher|
 |[`setpermissioncategory`](permission_commands.md?id=setpermissioncategory)|Sets the permission of all commands in a category to be available to the same role and higher|
 |[`viewpermissions`](permission_commands.md?id=viewpermissions)|Views all the permissions set in the server|
-|[`setglobal`](permission_commands.md?id=setglobal)|Sets a category of commands to be available to everyone|
+|[`setglobal`](permission_commands.md?id=setglobal)|Sets a single command or category of commands to be available to everyone|
 
 ### [Utility](utility_commands.md)
 |Name|Description|
 |---|---|
-|[`help`](utility_commands.md?id=help)|Displays a help card for the user to learn more about a specific command, pass no arguments and it will display all commands available to you|
+|[`help`](utility_commands.md?id=help)|Displays a help card for the user to learn more about a specific command or category, pass no arguments and it will display all commands available to you|
 |[`invite`](utility_commands.md?id=invite)|Displays all invite links related to me such as my development server and to invite me to your server|
 |[`ping`](utility_commands.md?id=ping)|Displays the ping for me|
 |[`serverinfo`](utility_commands.md?id=serverinfo)|Displays information about the server|

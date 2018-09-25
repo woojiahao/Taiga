@@ -1,3 +1,5 @@
 package me.chill.exception
 
-class TaigaException(message: String) : Exception(message)
+open class TaigaException(map: Map<String, String>) : Exception(
+	"\n${map.map { "\n\t${it.key}: ${it.value}" }.joinToString("")}\n"
+)
