@@ -79,8 +79,10 @@ fun funCommands() = commands("Fun") {
 	command("emote") {
 		expects(EmoteName())
 		execute {
-			val emote = guild.getEmoteById(arguments[0]!!.str())
-			respond("<:${emote.name}:${emote.id}>")
+			val emote = jda.getEmoteById(arguments[0]!!.str())
+			emote?.let { e ->
+				respond("<:${e.name}:${e.id}>")
+			}
 		}
 	}
 }
