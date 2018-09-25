@@ -45,6 +45,13 @@ class CommandContainer private constructor() {
 				throw CommandException(it.name, "Command name must start with a letter or digit")
 			}
 
+			if (it.name == it.category.toLowerCase()) {
+				throw CommandException(
+					it.name,
+					"Command names should not be the same as a category name"
+				)
+			}
+
 			if (it.argumentTypes.any { arg -> arg.javaClass == ArgumentMix::class.java }) {
 				val argMix = it.argumentTypes.filter { arg -> arg.javaClass == ArgumentMix::class.java }[0] as ArgumentMix
 				if (argMix.arguments.distinctBy { mix -> mix.javaClass }.size != argMix.arguments.size) {
