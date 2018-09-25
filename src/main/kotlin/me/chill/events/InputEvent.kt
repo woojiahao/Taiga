@@ -27,97 +27,102 @@ import net.dv8tion.jda.core.exceptions.InsufficientPermissionException
 import net.dv8tion.jda.core.hooks.ListenerAdapter
 import java.util.*
 
+private val permissionIgnoreList = arrayOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_READ)
+
 class InputEvent : ListenerAdapter() {
-	private val permissionIgnoreList = arrayOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_READ)
 
 	override fun onMessageReceived(event: MessageReceivedEvent?) {
-		event ?: throw TaigaException("Event object was null during message receive")
+		handleInput(event)
+	}
+}
 
-		if (event.member == null || event.member!!.user.isBot) return
+private fun handleInput(event: MessageReceivedEvent?) {
+	event ?: throw TaigaException("Event object was null during message receive")
 
-		val message = event.message.contentRaw.trim()
-		val messageChannel = event.channel
-		val server = event.guild
-		val invoker = event.member
+	if (event.member == null || event.member!!.user.isBot) return
 
-		val serverPrefix = getPrefix(server.id)
+	val message = event.message.contentRaw.trim()
+	val messageChannel = event.channel
+	val server = event.guild
+	val invoker = event.member
 
-		handleRaider(invoker, server, messageChannel) ?: return
-		if (!handleInvite(message, invoker, server, messageChannel, event.message)) return
-		if (!message.startsWith(serverPrefix)) return
+	val serverPrefix = getPrefix(server.id)
 
-		val silentInvoke = message.startsWith(serverPrefix.repeat(2))
-		val commandParts = message.substring(serverPrefix.repeat(if (!silentInvoke) 1 else 2).length).split(" ").toTypedArray()
-		val attemptedCommandMacro = commandParts[0]
+	handleRaider(invoker, server, messageChannel) ?: return
+	if (!handleInvite(message, invoker, server, messageChannel, event.message)) return
+	if (!message.startsWith(serverPrefix)) return
 
-		if (attemptedCommandMacro.isBlank() || !attemptedCommandMacro[0].isLetterOrDigit()) return
+	val silentInvoke = message.startsWith(serverPrefix.repeat(2))
+	val commandParts = message.substring(serverPrefix.repeat(if (!silentInvoke) 1 else 2).length).split(" ").toTypedArray()
+	val attemptedCommandMacro = commandParts[0]
 
-		if (hasMacro(server.id, attemptedCommandMacro)) {
-			if (commandParts.size == 1) messageChannel.send(getMacro(server.id, attemptedCommandMacro))
+	if (attemptedCommandMacro.isBlank() || !attemptedCommandMacro[0].isLetterOrDigit()) return
+
+	if (hasMacro(server.id, attemptedCommandMacro)) {
+		if (commandParts.size == 1) messageChannel.send(getMacro(server.id, attemptedCommandMacro))
+		return
+	}
+
+	if (!CommandContainer.hasCommand(attemptedCommandMacro)) {
+		messageChannel.send(
+			failureEmbed(
+				"Invalid Command/Macro",
+				"Command/Macro: **$attemptedCommandMacro** does not exist"
+			)
+		)
+		return
+	}
+
+	val commands = CommandContainer.getCommand(attemptedCommandMacro)
+
+	if (!checkPermissions(attemptedCommandMacro, server, invoker)) {
+		messageChannel.send(
+			failureEmbed(
+				"Insufficient Permission",
+				"You cannot invoke **$attemptedCommandMacro**, nice try",
+				thumbnail = noWay
+			)
+		)
+		return
+	}
+
+	val selection = matchCommand(commands, commandParts)
+	if (selection == null) {
+		messageChannel.send(
+			insufficientArgumentsEmbed(
+				serverPrefix,
+				attemptedCommandMacro,
+				commands.map { it.argumentTypes.size }.sorted().toTypedArray()
+			)
+		)
+		return
+	}
+
+	var (arguments, selectedCommand) = selection
+
+	if (selectedCommand.argumentTypes.isNotEmpty()) {
+		val parseMap = parseArguments(selectedCommand, server, arguments)
+		if (!parseMap.status) {
+			messageChannel.send(invalidArgumentsEmbed(serverPrefix, selectedCommand, parseMap.errMsg))
 			return
 		}
 
-		if (!CommandContainer.hasCommand(attemptedCommandMacro)) {
-			messageChannel.send(
-				failureEmbed(
-					"Invalid Command/Macro",
-					"Command/Macro: **$attemptedCommandMacro** does not exist"
-				)
+		arguments = parseMap.parsedValues.toTypedArray()
+	}
+
+	try {
+		event.message.addReaction("\uD83D\uDC40").complete()
+		selectedCommand.run(serverPrefix, event.jda, event.guild, event.member, messageChannel, arguments)
+		normalLog(selectedCommand)
+		if (silentInvoke) event.message.delete().complete()
+	} catch (e: InsufficientPermissionException) {
+		if (permissionIgnoreList.contains(e.permission)) return
+		messageChannel.send(
+			failureEmbed(
+				"Failed to invoke command",
+				"You need to give me the permission to **${e.permission.getName()}** to use **$attemptedCommandMacro**"
 			)
-			return
-		}
-
-		val commands = CommandContainer.getCommand(attemptedCommandMacro)
-
-		if (!checkPermissions(attemptedCommandMacro, server, invoker)) {
-			messageChannel.send(
-				failureEmbed(
-					"Insufficient Permission",
-					"You cannot invoke **$attemptedCommandMacro**, nice try",
-					thumbnail = noWay
-				)
-			)
-			return
-		}
-
-		val selection = matchCommand(commands, commandParts)
-		if (selection == null) {
-			messageChannel.send(
-				insufficientArgumentsEmbed(
-					serverPrefix,
-					attemptedCommandMacro,
-					commands.map { it.argumentTypes.size }.sorted().toTypedArray()
-				)
-			)
-			return
-		}
-
-		var (arguments, selectedCommand) = selection
-
-		if (selectedCommand.argumentTypes.isNotEmpty()) {
-			val parseMap = parseArguments(selectedCommand, server, arguments)
-			if (!parseMap.status) {
-				messageChannel.send(invalidArgumentsEmbed(serverPrefix, selectedCommand, parseMap.errMsg))
-				return
-			}
-
-			arguments = parseMap.parsedValues.toTypedArray()
-		}
-
-		try {
-			event.message.addReaction("\uD83D\uDC40").complete()
-			selectedCommand.run(serverPrefix, event.jda, event.guild, event.member, messageChannel, arguments)
-			normalLog(selectedCommand)
-			if (silentInvoke) event.message.delete().complete()
-		} catch (e: InsufficientPermissionException) {
-			if (permissionIgnoreList.contains(e.permission)) return
-			messageChannel.send(
-				failureEmbed(
-					"Failed to invoke command",
-					"You need to give me the permission to **${e.permission.getName()}** to use **$attemptedCommandMacro**"
-				)
-			)
-		}
+		)
 	}
 }
 
