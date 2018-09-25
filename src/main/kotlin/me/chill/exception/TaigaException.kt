@@ -1,3 +1,3 @@
 package me.chill.exception
 
-class TaigaException(message: String) : Exception(message)
+open class TaigaException(message: String) : Exception(message)
