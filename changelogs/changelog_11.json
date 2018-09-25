@@ -3,13 +3,18 @@
 	"buildTitle": "Performance Optimizations & Minor Adjustments",
 	"changes": [
 		"`cookie` now avoids bots",
-		"Permissions system was reworked",
-		"`viewpermission` duplicate bug fixed",
+		"`viewpermissions` now a lot faster thanks to several optimizations",
+		"`viewpermissions` duplicate bug fixed",
 		"`setglobal` command displays in embed",
 		"commands sections included for changelogs for a separate field if necessary"
 	],
 	"releaseDate": "25 September 2018",
 	"contributors": [
 		"@Chill#4048"
+	],
+	"commands": [
+		"cookie",
+		"viewpermissions",
+		"setglobal"
 	]
 }

@@ -125,7 +125,8 @@ fun utilityCommands() = commands("Utility") {
 					log[ChangeLogComponents.Changes]!!,
 					log[ChangeLogComponents.Title]!!,
 					log[ChangeLogComponents.ReleaseDate]!!,
-					log[ChangeLogComponents.Contributors]!!
+					log[ChangeLogComponents.Contributors]!!,
+					log[ChangeLogComponents.Commands]
 				)
 			)
 		}
@@ -142,7 +143,8 @@ fun utilityCommands() = commands("Utility") {
 					log[ChangeLogComponents.Changes]!!,
 					log[ChangeLogComponents.Title]!!,
 					log[ChangeLogComponents.ReleaseDate]!!,
-					log[ChangeLogComponents.Contributors]!!
+					log[ChangeLogComponents.Contributors]!!,
+					log[ChangeLogComponents.Commands]
 				)
 			)
 		}
@@ -152,7 +154,7 @@ fun utilityCommands() = commands("Utility") {
 private fun extractChangelog(changelog: String, isName: Boolean = false) =
 	extract(if (isName) changelog else "changelogs/changelog_$changelog.json")
 
-private fun extract(title: String): Map<ChangeLogComponents, String> {
+private fun extract(title: String): Map<ChangeLogComponents, String?> {
 	val changelogDetails = Gson().fromJson<JsonObject>(FileReader(File(title)), JsonObject::class.java)
 
 	val buildTitle = changelogDetails["buildTitle"].asString
@@ -163,18 +165,26 @@ private fun extract(title: String): Map<ChangeLogComponents, String> {
 		}
 		.joinToString("\n")
 	val releaseDate = changelogDetails["releaseDate"].asString
-	val contributors = changelogDetails["contributors"].asJsonArray.joinToString("\n") { cont -> "- ${cont.asString}" }
+	val contributors = changelogDetails["contributors"].asJsonArray.joinToString("\n") { "- ${it.asString}" }
 	val buildVersion = changelogDetails["buildNumber"].asString
+	val commands: String? =
+		if (changelogDetails.has("commands")) {
+			changelogDetails["commands"].asJsonArray.joinToString("\n") { "- `${it.asString}`" }
+		} else {
+			null
+		}
+
 
 	return mapOf(
 		ChangeLogComponents.Title to buildTitle,
 		ChangeLogComponents.Changes to changes,
 		ChangeLogComponents.ReleaseDate to releaseDate,
 		ChangeLogComponents.Contributors to contributors,
-		ChangeLogComponents.BuildVersion to buildVersion
+		ChangeLogComponents.BuildVersion to buildVersion,
+		ChangeLogComponents.Commands to commands
 	)
 }
 
 private enum class ChangeLogComponents {
-	Title, Changes, ReleaseDate, Contributors, BuildVersion
+	Title, Changes, ReleaseDate, Contributors, BuildVersion, Commands
 }

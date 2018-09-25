@@ -17,7 +17,8 @@ import net.dv8tion.jda.core.entities.MessageEmbed
 
 fun changeLogEmbed(botName: String, buildVersion: String,
 				   changelogContents: String, buildTitle: String,
-				   releaseDate: String, contributors: String) =
+				   releaseDate: String, contributors: String,
+				   commands: String?) =
 	embed {
 		title = "$botName Changelogs"
 		color = green
@@ -33,20 +34,23 @@ fun changeLogEmbed(botName: String, buildVersion: String,
 		}
 
 		field {
-			title = "Contributors"
-			description = contributors
-		}
-
-		field {
 			title = "Build Version"
 			description = buildVersion
 			inline = true
 		}
 
 		field {
-			title = "Learn More"
-			description = "[GitHub Repository](https://github.com/woojiahao/Taiga)"
+			title = "Contributors"
+			description = contributors
 			inline = true
+		}
+
+		commands?.let {
+			field {
+				title = "Updated Commands"
+				description = commands
+				inline = true
+			}
 		}
 
 		footer {
