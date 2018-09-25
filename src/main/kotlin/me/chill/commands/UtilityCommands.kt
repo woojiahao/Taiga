@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import me.chill.arguments.types.ChangeLog
 import me.chill.arguments.types.CommandName
+import me.chill.arguments.types.Sentence
 import me.chill.database.operations.getPrefix
 import me.chill.embed.types.*
 import me.chill.framework.CommandCategory
@@ -17,8 +18,10 @@ import me.chill.utility.jda.simpleEmbed
 import me.chill.utility.jda.successEmbed
 import me.chill.utility.str
 import net.dv8tion.jda.core.Permission
+import org.jsoup.Jsoup
 import java.io.File
 import java.io.FileReader
+import java.net.URLEncoder
 
 @CommandCategory
 fun utilityCommands() = commands("Utility") {
@@ -147,6 +150,20 @@ fun utilityCommands() = commands("Utility") {
 					log[ChangeLogComponents.Commands]
 				)
 			)
+		}
+	}
+
+	// Command courtesy of HotBot
+	command("google") {
+		expects(Sentence())
+		execute {
+			val links = Jsoup
+				.connect("http://www.google.com/search?q=" + URLEncoder.encode(arguments[0]!!.str(), "UTF-8"))
+				.userAgent("Mozilla/5.0")
+				.get()
+				.select(".g>.r>a")
+
+			respond(links.first().absUrl("href"))
 		}
 	}
 }

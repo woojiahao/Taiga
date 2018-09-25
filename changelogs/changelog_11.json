@@ -16,5 +16,8 @@
 	"releaseDate": "25 September 2018",
 	"contributors": [
 		"@Chill#4048"
+	],
+	"commands": [
+		"google"
 	]
 }

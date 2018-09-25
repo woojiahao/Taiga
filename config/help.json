@@ -241,6 +241,12 @@
 			"description": "Displays the latest changelog if no argument is given, displays a specific changelog if one can be found",
 			"syntax": "changelog ({ Changelog Name })",
 			"example": "changelog (1)"
+		},
+		{
+			"name": "google",
+			"description": "Performs and displays a google search of a query",
+			"syntax": "google { Search Query }",
+			"example": "google Why is the sky blue?"
 		}
 	],
 	"Role": [

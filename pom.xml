@@ -25,6 +25,7 @@
 		<postgresql.version>42.2.4</postgresql.version>
 		<reflections.version>0.9.11</reflections.version>
 		<wordutils.version>3.0</wordutils.version>
+		<jsoup.version>1.11.3</jsoup.version>
 
 		<main.class>me.chill.BotKt</main.class>
 	</properties>
@@ -98,6 +99,12 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>${wordutils.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>${jsoup.version}</version>
 		</dependency>
 	</dependencies>
 
