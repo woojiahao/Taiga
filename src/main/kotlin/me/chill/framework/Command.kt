@@ -3,6 +3,7 @@ package me.chill.framework
 import me.chill.arguments.Argument
 import me.chill.arguments.types.Sentence
 import me.chill.credentials
+import me.chill.exception.CommandException
 import me.chill.exception.EndArgumentException
 import me.chill.framework.ContainerKey.*
 import me.chill.utility.jda.send
@@ -68,8 +69,11 @@ class Command(val name: String, val category: String) {
 		commandInformation[Invoker] = invoker
 		commandInformation[Channel] = messageChannel
 		commandInformation[Input] = input
-		this.action!!(commandInformation)
+
+		action!!(commandInformation)
 	}
+
+	fun getAction() = action
 
 	fun respond(embed: MessageEmbed?) = channel.send(embed)
 	fun respond(message: String) = channel.send(message)

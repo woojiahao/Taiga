@@ -16,19 +16,34 @@ class Credentials(configuration: Configuration?) {
 			database = System.getenv("JDBC_DATABASE_URL")
 			defaultPrefix = System.getenv("PREFIX")
 
-			token ?: throw CredentialException("Set a token environment variable in Heroku to proceed")
-			database ?: throw CredentialException("Set up Heroku Postgres to proceed")
-			defaultPrefix ?: throw CredentialException("Set a default prefix environment variable in Heroku to proceed")
+			token ?: throw CredentialException(
+				"Token",
+				"Set a token environment variable in Heroku to proceed"
+			)
+			database ?: throw CredentialException(
+				"Database",
+				"Set up Heroku Postgres to proceed"
+			)
+			defaultPrefix ?: throw CredentialException(
+				"Default Prefix",
+				"Set a default prefix environment variable in Heroku to proceed"
+			)
 		} else {
-			configuration ?: throw CredentialException("Configuration cannot be null for a local instance of Taiga")
+			configuration ?: throw CredentialException(
+				"Configuration",
+				"Configuration cannot be null for a local instance of Taiga"
+			)
 
 			token = configuration.token
 			database = configuration.database
 			defaultPrefix = configuration.prefix
 
-			if (token == "enter your token") throw CredentialException("Set a token in the config.json to proceed")
-			if (database == "enter your database url") throw CredentialException("Set a database url in the config.json to proceed")
-			if (defaultPrefix == "enter your prefix") throw CredentialException("Set up a prefix in the config.json to proceed")
+			if (token == "enter your token")
+				throw CredentialException("Token", "Set a token in the config.json to proceed")
+			if (database == "enter your database url")
+				throw CredentialException("Database", "Set a database url in the config.json to proceed")
+			if (defaultPrefix == "enter your prefix")
+				throw CredentialException("Default Prefix:", "Set up a prefix in the config.json to proceed")
 		}
 	}
 }

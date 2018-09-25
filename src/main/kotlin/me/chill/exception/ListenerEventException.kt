@@ -1,3 +1,8 @@
 package me.chill.exception
 
-class ListenerEventException(message: String) : TaigaException(message)
+class ListenerEventException(
+	eventName: String, message: String
+) : TaigaException(
+	"\n\n\tEvent: $eventName" +
+		"\n\tReason: $message\n"
+)

@@ -19,7 +19,10 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter
 
 class OnJoinEvent : ListenerAdapter() {
 	override fun onGuildMemberJoin(event: GuildMemberJoinEvent?) {
-		event ?: throw ListenerEventException("Event object was null during member join")
+		event ?: throw ListenerEventException(
+			"On Member Join",
+			"Event object was null during member join"
+		)
 
 		val guild = event.guild
 		val guildId = guild.id
@@ -52,7 +55,10 @@ class OnJoinEvent : ListenerAdapter() {
 	}
 
 	override fun onGuildJoin(event: GuildJoinEvent?) {
-		event ?: throw ListenerEventException("Event object was null during bot join")
+		event ?: throw ListenerEventException(
+			"On Bot Join",
+			"Event object was null during bot join"
+		)
 
 		val serverId = event.guild.id
 		val defaultChannelId = event.guild.defaultChannel!!.id

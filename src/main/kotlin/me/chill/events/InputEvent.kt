@@ -38,7 +38,10 @@ class InputEvent : ListenerAdapter() {
 }
 
 private fun handleInput(event: MessageReceivedEvent?) {
-	event ?: throw ListenerEventException("Event object was null during message receive")
+	event ?: throw ListenerEventException(
+		"User Input",
+		"Event object was null during message receive"
+	)
 
 	if (event.member == null || event.member!!.user.isBot) return
 

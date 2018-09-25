@@ -11,7 +11,10 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter
 
 class OnChannelCreationEvent : ListenerAdapter() {
 	override fun onTextChannelCreate(event: TextChannelCreateEvent?) {
-		event ?: throw ListenerEventException("Event object was null during channel creation")
+		event ?: throw ListenerEventException(
+			"On Channel Creation",
+			"Event object was null during channel creation"
+		)
 
 		if (!event.guild.hasRole("muted")) {
 			event.channel.send(
