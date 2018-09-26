@@ -70,26 +70,15 @@ fun funCommands() = commands("Fun") {
 
 	command("emote") {
 		expects(EmoteName())
-		execute {
-			val emote = jda.getEmoteById(arguments[0]!!.str())
-			emote?.let { e ->
-				respond("<:${e.name}:${e.id}>")
-			}
-		}
+		execute { jda.getEmoteById(arguments[0]!!.str())?.let { e -> respond("<:${e.name}:${e.id}>") } }
 	}
 
 	command("cat") {
-		execute {
-			val result = "https://aws.random.cat/meow".readAPI()
-			respond(result["file"].asString)
-		}
+		execute { respond("https://aws.random.cat/meow".readAPI()["file"].asString) }
 	}
 
 	command("dog") {
-		execute {
-			val result = "https://random.dog/woof.json".readAPI()
-			respond(result["url"].asString)
-		}
+		execute { respond("https://random.dog/woof.json".readAPI()["url"].asString) }
 	}
 
 	command("bird") {

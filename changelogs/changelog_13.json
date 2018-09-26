@@ -1,0 +1,15 @@
+{
+	"buildNumber": "3.7",
+	"buildTitle": "Improvements",
+	"changes": [
+		"`RoleId` argument type can now receive the role's name without spaces",
+		"`setpermissioncategory` removed and replaced with `setpermission`",
+		"`setpermission` now works with both category names and command names",
+		"Animal commands moved to the Fun category"
+	],
+	"releaseDate": "26 September 2018",
+	"contributors": [
+		"@Chill#4048"
+	],
+	"commands": []
+}
