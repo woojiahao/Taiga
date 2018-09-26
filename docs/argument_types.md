@@ -30,10 +30,12 @@ Arguments passed will be checked to confirm that they are a valid integer.
 * **upperRange** - Integers passed will be checked to ensure they are not greater than the specified upperRange
 
 ### RoleId
-Arguments passed will be checked to confirm that they correspond to an existing role id of a role in the server
+Arguments passed will be checked to confirm that they correspond to an existing role id of a role in the server.
+
+Arguments can also be the name of the role without any spaces.
 
 ### Sentence
-Arguments passed will be checked to confirm that the argument is not blank
+Arguments passed will be checked to confirm that the argument is not blank.
 
 ### UserId
 Arguments passed will be checked to confirm that the argument is a valid user id of a user in the server.
@@ -104,6 +106,3 @@ Returns the first emote that matches the name passed.
 
 ### StrikeId
 Arguments passed will be checked to ensure they are an existing strike id within the server.
-
-
-
