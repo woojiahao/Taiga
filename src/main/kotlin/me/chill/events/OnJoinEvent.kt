@@ -12,6 +12,7 @@ import me.chill.utility.getDateTime
 import me.chill.utility.jda.failureEmbed
 import me.chill.utility.jda.printMember
 import me.chill.utility.jda.send
+import me.chill.utility.jda.successEmbed
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent
 import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent
@@ -63,7 +64,13 @@ class OnJoinEvent : ListenerAdapter() {
 		val serverId = event.guild.id
 		val defaultChannelId = event.guild.defaultChannel!!.id
 
-		println("Joined ${event.guild.name}::$serverId on ${getDateTime()}")
+		event.guild.jda.getTextChannelById("482338281946742786").send(
+			successEmbed(
+				"Server Join",
+				"Joined ${event.guild.name}::$serverId on ${getDateTime()}"
+			)
+		)
+
 		addServerPreference(serverId, defaultChannelId)
 		loadGlobalPermissions(event.guild)
 	}

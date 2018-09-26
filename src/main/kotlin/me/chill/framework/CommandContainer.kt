@@ -15,9 +15,7 @@ class CommandContainer private constructor() {
 	companion object {
 		val commandSets = mutableListOf<CommandSet>()
 
-		fun loadContainer() {
-			CommandContainer()
-		}
+		fun loadContainer() { CommandContainer() }
 
 		fun hasCommand(command: String) = commandSets.stream().anyMatch { it.hasCommand(command) }
 
@@ -36,45 +34,6 @@ class CommandContainer private constructor() {
 		fun getCommandList() =
 			commandSets.map { it.commands }.flatten()
 	}
-
-	private fun checkCommands() {
-		getCommandList().forEach {
-			it.getAction() ?: throw CommandException(it.name, "All commands must implement an execute body")
-
-			if (!it.name[0].isLetterOrDigit()) {
-				throw CommandException(it.name, "Command name must start with a letter or digit")
-			}
-
-			if (it.name == it.category.toLowerCase()) {
-				throw CommandException(
-					it.name,
-					"Command names should not be the same as a category name"
-				)
-			}
-
-			if (it.argumentTypes.any { arg -> arg.javaClass == ArgumentMix::class.java }) {
-				val argMix = it.argumentTypes.filter { arg -> arg.javaClass == ArgumentMix::class.java }[0] as ArgumentMix
-				if (argMix.arguments.distinctBy { mix -> mix.javaClass }.size != argMix.arguments.size) {
-					throw CommandException(
-						it.name,
-						"Unable to create an ArgumentMix of the same argument type"
-					)
-				}
-			}
-
-			val overloadedCommands = getCommand(it.name)
-			overloadedCommands.forEach { overloadedCommand ->
-				if (overloadedCommand != it) {
-					if (overloadedCommand.argumentTypes.size == it.argumentTypes.size) {
-						throw CommandException(
-							it.name,
-							"Unable to overload command with the same number of argument types: ${overloadedCommand.argumentTypes.size}"
-						)
-					}
-				}
-			}
-		}
-	}
 }
 
 inline fun commands(categoryName: String, create: CommandSet.() -> Unit) {
@@ -82,4 +41,43 @@ inline fun commands(categoryName: String, create: CommandSet.() -> Unit) {
 	set.create()
 	set.commands.forEach { it.setGlobal(set.getGlobal()) }
 	CommandContainer.commandSets.add(set)
+}
+
+private fun checkCommands() {
+	CommandContainer.getCommandList().forEach {
+		it.getAction() ?: throw CommandException(it.name, "All commands must implement an execute body")
+
+		if (!it.name[0].isLetterOrDigit()) {
+			throw CommandException(it.name, "Command name must start with a letter or digit")
+		}
+
+		if (it.name == it.category.toLowerCase()) {
+			throw CommandException(
+				it.name,
+				"Command names should not be the same as a category name"
+			)
+		}
+
+		if (it.argumentTypes.any { arg -> arg.javaClass == ArgumentMix::class.java }) {
+			val argMix = it.argumentTypes.filter { arg -> arg.javaClass == ArgumentMix::class.java }[0] as ArgumentMix
+			if (argMix.arguments.distinctBy { mix -> mix.javaClass }.size != argMix.arguments.size) {
+				throw CommandException(
+					it.name,
+					"Unable to create an ArgumentMix of the same argument type"
+				)
+			}
+		}
+
+		val overloadedCommands = CommandContainer.getCommand(it.name)
+		overloadedCommands.forEach { overloadedCommand ->
+			if (overloadedCommand != it) {
+				if (overloadedCommand.argumentTypes.size == it.argumentTypes.size) {
+					throw CommandException(
+						it.name,
+						"Unable to overload command with the same number of argument types: ${overloadedCommand.argumentTypes.size}"
+					)
+				}
+			}
+		}
+	}
 }

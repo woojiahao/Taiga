@@ -11,6 +11,7 @@ import me.chill.utility.getDateTime
 import me.chill.utility.jda.embed
 import me.chill.utility.jda.printMember
 import me.chill.utility.jda.send
+import me.chill.utility.jda.successEmbed
 import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.events.guild.GuildLeaveEvent
 import net.dv8tion.jda.core.events.guild.member.GuildMemberLeaveEvent
@@ -38,7 +39,13 @@ class OnLeaveEvent : ListenerAdapter() {
 
 		val serverId = event.guild.id
 
-		println("Left ${event.guild.name}::$serverId on ${getDateTime()}")
+		event.guild.jda.getTextChannelById("482338281946742786").send(
+			successEmbed(
+				"Server Leave",
+				"Left ${event.guild.name}::$serverId on ${getDateTime()}"
+			)
+		)
+
 		removeServerPreference(serverId)
 		clearPermissions(serverId)
 	}
