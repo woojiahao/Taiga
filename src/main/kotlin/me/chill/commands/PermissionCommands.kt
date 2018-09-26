@@ -18,37 +18,41 @@ import org.apache.commons.lang3.text.WordUtils
 
 @CommandCategory
 fun permissionCommands() = commands("Permission") {
+	command("viewpermissions") { execute { respond(listPermissionsEmbed(guild)) } }
+
 	command("setpermission") {
-		expects(CommandName(), RoleId())
+		expects(ArgumentMix(CommandName(), CategoryName()), RoleId())
 		execute {
 			val roles = guild.roles
 			val serverId = guild.id
 
-			val commandName = arguments[0]!!.str()
+			val target = arguments[0]!!.str()
 			val roleId = arguments[1]!!.str()
 
 			val highestRole = roles[0].id
-			if (roleId == highestRole) {
-				removePermission(commandName, serverId)
-			} else {
-				if (hasPermission(commandName, serverId)) {
-					editPermission(commandName, serverId, roleId)
-				} else {
-					addPermission(commandName, serverId, roleId)
+
+			when {
+				CommandContainer.hasCommand(target) -> {
+					handlePermissionAssignment(roleId, highestRole, target, serverId)
+					respond(
+						successEmbed(
+							"Set Command Permission Success!",
+							"Command: **$target** has been assigned to **${guild.getRoleById(roleId).name}**"
+						)
+					)
+				}
+
+				CommandContainer.hasCategory(target) -> {
+					CommandContainer.getCommandSet(WordUtils.capitalize(target)).commands.forEach { command ->
+						handlePermissionAssignment(roleId, highestRole, command.name, serverId)
+					}
+					respond(
+						successEmbed(
+							"Set Category Permission Success!",
+							"All commands in **$categoryName** has been assigned to **${guild.getRoleById(roleId).name}**")
+					)
 				}
 			}
-			respond(
-				successEmbed(
-					"Set Command Permission Success!",
-					"Command: **$commandName** has been assigned to **${guild.getRoleById(roleId).name}**"
-				)
-			)
-		}
-	}
-
-	command("viewpermissions") {
-		execute {
-			respond(listPermissionsEmbed(guild))
 		}
 	}
 
@@ -58,59 +62,43 @@ fun permissionCommands() = commands("Permission") {
 			val target = arguments[0]!!.str()
 			val everyoneRole = guild.getRolesByName("@everyone", false)[0]
 
-			if (CommandContainer.hasCommand(target)) {
-				if (hasPermission(target, guild.id)) editPermission(target, guild.id, everyoneRole.id)
-				else addPermission(target, guild.id, everyoneRole.id)
-				respond(
-					successEmbed(
-						"Set Permission Success!",
-						"Command: **$target** is now available to everyone"
+			when {
+				CommandContainer.hasCommand(target) -> {
+					if (hasPermission(target, guild.id)) editPermission(target, guild.id, everyoneRole.id)
+					else addPermission(target, guild.id, everyoneRole.id)
+					respond(
+						successEmbed(
+							"Set Permission Success!",
+							"Command: **$target** is now available to everyone"
+						)
 					)
-				)
-			} else {
-				val commandNames = CommandContainer.getCommandSet(target).getCommandNames()
-				commandNames.forEach { name ->
-					if (hasPermission(name, guild.id)) editPermission(name, guild.id, everyoneRole.id)
-					else addPermission(name, guild.id, everyoneRole.id)
 				}
-				respond(
-					successEmbed(
-						"Set Category Permission Success!",
-						"All commands in **${arguments[0]!!.str()}** is now available to everyone"
+				else -> {
+					val commandNames = CommandContainer.getCommandSet(target).getCommandNames()
+					commandNames.forEach { name ->
+						if (hasPermission(name, guild.id)) editPermission(name, guild.id, everyoneRole.id)
+						else addPermission(name, guild.id, everyoneRole.id)
+					}
+					respond(
+						successEmbed(
+							"Set Category Permission Success!",
+							"All commands in **${arguments[0]!!.str()}** is now available to everyone"
+						)
 					)
-				)
+				}
 			}
 		}
 	}
+}
 
-	command("setpermissioncategory") {
-		expects(CategoryName(), RoleId())
-		execute {
-			val roles = guild.roles
-			val serverId = guild.id
-
-			val categoryName = WordUtils.capitalize(arguments[0]!!.str())
-			val roleId = arguments[1]!!.str()
-
-			val highestRole = roles[0].id
-			val commandSet = CommandContainer.getCommandSet(categoryName)
-			commandSet.commands.forEach { command ->
-				val commandName = command.name
-				if (roleId == highestRole) {
-					removePermission(commandName, serverId)
-				} else {
-					if (hasPermission(commandName, serverId)) {
-						editPermission(commandName, serverId, roleId)
-					} else {
-						addPermission(commandName, serverId, roleId)
-					}
-				}
-			}
-			respond(
-				successEmbed(
-					"Set Category Permission Success!",
-					"All commands in **$categoryName** has been assigned to **${guild.getRoleById(roleId).name}**")
-			)
+private fun handlePermissionAssignment(roleId: String, highestRole: String, commandName: String, serverId: String) {
+	if (roleId == highestRole) {
+		removePermission(commandName, serverId)
+	} else {
+		if (hasPermission(commandName, serverId)) {
+			editPermission(commandName, serverId, roleId)
+		} else {
+			addPermission(commandName, serverId, roleId)
 		}
 	}
 }

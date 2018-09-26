@@ -176,15 +176,9 @@
 	"Permission": [
 		{
 			"name": "setpermission",
-			"description": "Sets the permission of a command to be available to a role and higher",
-			"syntax": "setpermission { Command Name } { Role ID }",
+			"description": "Sets the permission of a command/category to be available to a role and higher",
+			"syntax": "setpermission { Command/Category Name } { Role ID }",
 			"example": "setpermission ping 482335855277768717"
-		},
-		{
-			"name": "setpermissioncategory",
-			"description": "Sets the permission of all commands in a category to be available to the same role and higher",
-			"syntax": "setpermissioncategory { Command Name } { Role ID }",
-			"example": "setpermissioncategory ping 482335855277768717"
 		},
 		{
 			"name": "viewpermissions",
