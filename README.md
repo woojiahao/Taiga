@@ -16,9 +16,8 @@ More information about commands can be found on the [website](https://woojiahao.
 6. [Role](https://github.com/woojiahao/Taiga#Role)
 7. [Raid](https://github.com/woojiahao/Taiga#Raid)
 8. [Suggestion](https://github.com/woojiahao/Taiga#Suggestion)
-9. [Animal](https://github.com/woojiahao/Taiga#Animal)
-10. [Macro](https://github.com/woojiahao/Taiga#Macro)
-11. [Fun](https://github.com/woojiahao/Taiga#Fun)
+9. [Macro](https://github.com/woojiahao/Taiga#Macro)
+10. [Fun](https://github.com/woojiahao/Taiga#Fun)
 ### Administration
 |Name|Description|
 |---|---|
@@ -59,8 +58,7 @@ More information about commands can be found on the [website](https://woojiahao.
 ### Permission
 |Name|Description|
 |---|---|
-|`setpermission`|Sets the permission of a command to be available to a role and higher|
-|`setpermissioncategory`|Sets the permission of all commands in a category to be available to the same role and higher|
+|`setpermission`|Sets the permission of a command/category to be available to a role and higher|
 |`viewpermissions`|Views all the permissions set in the server|
 |`setglobal`|Sets a single command or category of commands to be available to everyone|
 ### Utility
@@ -104,12 +102,6 @@ More information about commands can be found on the [website](https://woojiahao.
 |`pooldeny`|Denies the latest suggestion in the pool|
 |`suggest`|Adds a suggestion to the suggestion pool|
 |`respond`|Responds to a suggestion|
-### Animal
-|Name|Description|
-|---|---|
-|`cat`|Displays a cat picture/GIF|
-|`dog`|Displays a dog picture/GIF|
-|`bird`|Displays a bird picture/GIF|
 ### Macro
 |Name|Description|
 |---|---|
@@ -126,6 +118,9 @@ More information about commands can be found on the [website](https://woojiahao.
 |`meme`|Displays a random popular meme from Imgflip|
 |`joke`|Tells a joke|
 |`emote`|Displays an emote based on the name if it can be found in any of the servers Taiga is in|
+|`cat`|Displays a cat picture/GIF|
+|`dog`|Displays a dog picture/GIF|
+|`bird`|Displays a bird picture/GIF|
 <!--blk-1-end-->
 
 ## Credits

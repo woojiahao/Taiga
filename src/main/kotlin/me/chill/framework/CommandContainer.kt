@@ -6,16 +6,14 @@ import org.reflections.Reflections
 import org.reflections.scanners.MethodAnnotationsScanner
 
 class CommandContainer private constructor() {
-	init {
-		val reflections = Reflections("me.chill.commands", MethodAnnotationsScanner())
-		reflections.getMethodsAnnotatedWith(CommandCategory::class.java).forEach { it.invoke(null) }
-		checkCommands()
-	}
-
 	companion object {
 		val commandSets = mutableListOf<CommandSet>()
 
-		fun loadContainer() { CommandContainer() }
+		fun loadContainer() {
+			val reflections = Reflections("me.chill.commands", MethodAnnotationsScanner())
+			reflections.getMethodsAnnotatedWith(CommandCategory::class.java).forEach { it.invoke(null) }
+			checkCommands()
+		}
 
 		fun hasCommand(command: String) = commandSets.stream().anyMatch { it.hasCommand(command) }
 

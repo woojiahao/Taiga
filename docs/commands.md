@@ -7,9 +7,8 @@
 6. [Role](commands.md?id=Role)
 7. [Raid](commands.md?id=Raid)
 8. [Suggestion](commands.md?id=Suggestion)
-9. [Animal](commands.md?id=Animal)
-10. [Macro](commands.md?id=Macro)
-11. [Fun](commands.md?id=Fun)
+9. [Macro](commands.md?id=Macro)
+10. [Fun](commands.md?id=Fun)
 
 ### [Administration](administration_commands.md)
 |Name|Description|
@@ -54,8 +53,7 @@
 ### [Permission](permission_commands.md)
 |Name|Description|
 |---|---|
-|[`setpermission`](permission_commands.md?id=setpermission)|Sets the permission of a command to be available to a role and higher|
-|[`setpermissioncategory`](permission_commands.md?id=setpermissioncategory)|Sets the permission of all commands in a category to be available to the same role and higher|
+|[`setpermission`](permission_commands.md?id=setpermission)|Sets the permission of a command/category to be available to a role and higher|
 |[`viewpermissions`](permission_commands.md?id=viewpermissions)|Views all the permissions set in the server|
 |[`setglobal`](permission_commands.md?id=setglobal)|Sets a single command or category of commands to be available to everyone|
 
@@ -104,13 +102,6 @@
 |[`suggest`](suggestion_commands.md?id=suggest)|Adds a suggestion to the suggestion pool|
 |[`respond`](suggestion_commands.md?id=respond)|Responds to a suggestion|
 
-### [Animal](animal_commands.md)
-|Name|Description|
-|---|---|
-|[`cat`](animal_commands.md?id=cat)|Displays a cat picture/GIF|
-|[`dog`](animal_commands.md?id=dog)|Displays a dog picture/GIF|
-|[`bird`](animal_commands.md?id=bird)|Displays a bird picture/GIF|
-
 ### [Macro](macro_commands.md)
 |Name|Description|
 |---|---|
@@ -128,3 +119,6 @@
 |[`meme`](fun_commands.md?id=meme)|Displays a random popular meme from Imgflip|
 |[`joke`](fun_commands.md?id=joke)|Tells a joke|
 |[`emote`](fun_commands.md?id=emote)|Displays an emote based on the name if it can be found in any of the servers Taiga is in|
+|[`cat`](fun_commands.md?id=cat)|Displays a cat picture/GIF|
+|[`dog`](fun_commands.md?id=dog)|Displays a dog picture/GIF|
+|[`bird`](fun_commands.md?id=bird)|Displays a bird picture/GIF|

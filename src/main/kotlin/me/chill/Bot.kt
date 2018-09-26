@@ -51,4 +51,6 @@ private fun setup() {
 
 	println("Loading raid manager")
 	raidManger = RaidManager()
+
+	println("Bot has loaded")
 }
