@@ -1,5 +1,6 @@
 package me.chill.commands
 
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import me.chill.arguments.types.EmoteName
 import me.chill.arguments.types.Sentence
@@ -17,9 +18,7 @@ fun funCommands() = commands("Fun") {
 	setGlobal()
 	command("clapify") {
 		expects(Sentence())
-		execute {
-			respond(arguments[0]!!.str().split(Regex("\\s+")).joinToString(" :clap: "))
-		}
+		execute { respond(arguments[0]!!.str().split(Regex("\\s+")).joinToString(" :clap: ")) }
 	}
 
 	command("flip") {
@@ -41,21 +40,14 @@ fun funCommands() = commands("Fun") {
 
 	command("cookie") {
 		expects(UserId())
-		execute {
-			respond(cookieGiving(guild.getMemberById(arguments[0]!!.str()).asMention, invoker.asMention))
-		}
+		execute { respond(cookieGiving(guild.getMemberById(arguments[0]!!.str()).asMention, invoker.asMention)) }
 	}
 
 	command("meme") {
 		execute {
 			val (status, data) = "https://api.imgflip.com/get_memes".strictReadAPI<JsonObject>()
 
-			if (!status || data == null) {
-				respond(unknownErrorEmbed("meme"))
-				return@execute
-			}
-
-			if (!data["success"].asBoolean) {
+			if (!status || data == null || !data["success"].asBoolean) {
 				respond(unknownErrorEmbed("meme"))
 				return@execute
 			}
@@ -83,6 +75,33 @@ fun funCommands() = commands("Fun") {
 			emote?.let { e ->
 				respond("<:${e.name}:${e.id}>")
 			}
+		}
+	}
+
+	command("cat") {
+		execute {
+			val result = "https://aws.random.cat/meow".readAPI()
+			respond(result["file"].asString)
+		}
+	}
+
+	command("dog") {
+		execute {
+			val result = "https://random.dog/woof.json".readAPI()
+			respond(result["url"].asString)
+		}
+	}
+
+	command("bird") {
+		execute {
+			val (status, data) = "http://shibe.online/api/birds?count=1&urls=true&httpsUrls=true".strictReadAPI<JsonArray>()
+
+			if (!status || data == null) {
+				respond(unknownErrorEmbed("bird"))
+				return@execute
+			}
+
+			respond(data[0].asString)
 		}
 	}
 }

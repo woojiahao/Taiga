@@ -375,26 +375,6 @@
 			"example": "respond 12345667 Declined Not enough support"
 		}
 	],
-	"Animal": [
-		{
-			"name": "cat",
-			"description": "Displays a cat picture/GIF",
-			"syntax": "cat",
-			"example": "cat"
-		},
-		{
-			"name": "dog",
-			"description": "Displays a dog picture/GIF",
-			"syntax": "dog",
-			"example": "dog"
-		},
-		{
-			"name": "bird",
-			"description": "Displays a bird picture/GIF",
-			"syntax": "bird",
-			"example": "bird"
-		}
-	],
 	"Macro": [
 		{
 			"name": "listmacros",
@@ -457,6 +437,24 @@
 			"description": "Displays an emote based on the name if it can be found in any of the servers Taiga is in",
 			"syntax": "emote { Emote Name }",
 			"example": "emote blaze"
+		},
+		{
+			"name": "cat",
+			"description": "Displays a cat picture/GIF",
+			"syntax": "cat",
+			"example": "cat"
+		},
+		{
+			"name": "dog",
+			"description": "Displays a dog picture/GIF",
+			"syntax": "dog",
+			"example": "dog"
+		},
+		{
+			"name": "bird",
+			"description": "Displays a bird picture/GIF",
+			"syntax": "bird",
+			"example": "bird"
 		}
 	]
 }
