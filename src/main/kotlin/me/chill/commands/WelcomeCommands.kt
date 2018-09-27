@@ -1,8 +1,8 @@
 package me.chill.commands
 
 import me.chill.arguments.types.Sentence
+import me.chill.database.operations.LoggingType
 import me.chill.database.operations.editWelcomeMessage
-import me.chill.database.operations.getWelcomeDisabled
 import me.chill.database.states.WelcomeState
 import me.chill.embed.types.newMemberJoinEmbed
 import me.chill.framework.CommandCategory
@@ -15,7 +15,7 @@ import me.chill.utility.str
 fun welcomeCommands() = commands("Welcome") {
 	command("getwelcomeenabled") {
 		execute {
-			val isWelcomeDisabled = getWelcomeDisabled(guild.id)
+			val isWelcomeDisabled = LoggingType.Welcome.getIsDisabled(guild.id)
 			val welcomeState = when (isWelcomeDisabled) {
 				false -> WelcomeState.Enabled
 				true -> WelcomeState.Disabled
