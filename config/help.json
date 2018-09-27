@@ -1,10 +1,10 @@
 {
 	"Administration": [
 		{
-			"name": "set",
+			"name": "setchannel",
 			"description": "Sets the logging, welcome or suggestion channel",
-			"syntax": "set { Target Type For Channel (Logging/Welcome/Suggestion) }",
-			"example": "set logging"
+			"syntax": "setchannel { Target Type For Channel (Logging/Welcome/Suggestion) }",
+			"example": "setchannel logging"
 		},
 		{
 			"name": "setup",

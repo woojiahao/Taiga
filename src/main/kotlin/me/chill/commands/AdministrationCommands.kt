@@ -33,8 +33,7 @@ private val preferences = arrayOf(
 
 @CommandCategory
 fun administrationCommands() = commands("Administration") {
-	// todo: rename to setchannel
-	command("set") {
+	command("setchannel") {
 		expects(Word(TargetChannel.getNames()))
 		execute {
 			val type = TargetChannel.valueOf(WordUtils.capitalize(arguments[0]!!.str()))
