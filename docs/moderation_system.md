@@ -7,7 +7,7 @@ chances are given to each and every user.
 
 ## Muted Role
 In order for the moderation system of Taiga to work effectively, you have to set up the muted role via the use of the 
-`?setup` command. 
+`setup` command. 
 
 More information on this can be found in the [bot basics](bot_basics.md?id=muted-role) section of the documentation.
 
@@ -21,6 +21,10 @@ Taiga offers 4 time multipliers:
 
 These time multipliers work in conjunction with commands like `mute` as they specify how long each time unit passed to
 these commands last for.
+
+The default multiplier applied is in **minutes**.
+
+You can edit the time multiplier of your server using the `set multiplier { time multiplier }` command. 
 
 ## Mute
 You can mute users for a specific duration of time using the `mute` command, following such a format:

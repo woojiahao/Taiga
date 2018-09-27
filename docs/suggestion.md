@@ -2,9 +2,12 @@
 Taiga supports the use of suggestions in order to allow members of your server to provide feedback and suggestions on the
 server.
 
+The suggestion system is disabled by default when Taiga first joins a server. However, you can enable it with the 
+`enable suggestion` command.
+
 ## Set up
-Before enabling the suggestion system, ensure that you have run `setsuggestion` in the appropriate channel that you want
-the suggestions to appear in first.
+Before enabling the suggestion system, ensure that you have run `setchannel suggestion` in the appropriate channel or 
+that `set suggestion { target channel }` where the target channel is the channel you want the suggestions to appear.
 
 ## Making Suggestions
 Suggestions can be made via the `suggest` command, and when a suggestion is made, it will be added to the suggestion 

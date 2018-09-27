@@ -2,7 +2,7 @@
 ## Prefix
 > The default prefix to invoke Taiga is `?`
 
-This can be customized for each server, by running the `setprefix` command.
+This can be customized for each server, by running the `set prefix { desired prefix }` command.
 
 ## Set Up
 ### Permissions
@@ -21,7 +21,7 @@ control.](raid_control.md)
 **Note:** Before proceeding, ensure that you don't have another role called `muted` (casing does not matter), if you do
 have one, be sure to remove it.
 
-Run the `?setup` command to allow Taiga to create a `muted` role as well as include channel overrides for that role. 
+Run the `setup` command to allow Taiga to create a `muted` role as well as include channel overrides for that role. 
 
 After the role has been added, move it above the roles you wish to be able to mute via Taiga.
 
@@ -31,4 +31,4 @@ Taiga offers a wide array of preferences that you can tweak, a detailed guide on
 ## Command Use
 > All commands by default are only available to only the Owner and the people who hold the highest role in the server.
 
-You can configure which commands are available to users by using the `setpermission` and `setpermissioncategory` commands
+You can configure which commands are available to users by using the `setpermission` command.
