@@ -31,10 +31,16 @@
 			"example": "getpreferences"
 		},
 		{
-			"name": "preference",
-			"description": "Displays the details of a specific preference set (prefix/multiplier/logging/join/suggestion/messagelimit/messageduration/raidexcluded/welcomeenabled/welcomemessage/joinrole)",
-			"syntax": "preference { Preference (prefix/multiplier/logging/join/suggestion/messagelimit/messageduration/raidexcluded/welcomeenabled/welcomemessage/joinrole) }",
-			"example": "preference prefix"
+			"name": "setpreference",
+			"description": "Sets the value for a preference",
+			"syntax": "setpreference { Preference (prefix/multiplier/logging/join/suggestion/messagelimit/messageduration/raidexcluded/welcomeenabled/welcomemessage/joinrole) } { Value }",
+			"example": "setpreference messagelimit 5"
+		},
+		{
+			"name": "getpreference",
+			"description": "Displays the details of a specific preference set",
+			"syntax": "getpreference { Preference (prefix/multiplier/logging/join/suggestion/messagelimit/messageduration/raidexcluded/welcomeenabled/welcomemessage/joinrole) }",
+			"example": "getpreference prefix"
 		},
 		{
 			"name": "addinvite",

@@ -1,8 +1,6 @@
 package me.chill.commands
 
-import me.chill.arguments.types.DiscordInvite
-import me.chill.arguments.types.Prefix
-import me.chill.arguments.types.Word
+import me.chill.arguments.types.*
 import me.chill.database.operations.*
 import me.chill.database.states.TargetChannel
 import me.chill.database.states.TimeMultiplier
@@ -15,24 +13,34 @@ import me.chill.roles.getRole
 import me.chill.roles.hasRole
 import me.chill.settings.clap
 import me.chill.utility.jda.cleanEmbed
+import me.chill.utility.jda.failureEmbed
 import me.chill.utility.jda.printChannel
 import me.chill.utility.jda.successEmbed
 import me.chill.utility.str
+import net.dv8tion.jda.core.JDA
 import net.dv8tion.jda.core.Permission
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.entities.MessageEmbed
 import org.apache.commons.lang3.text.WordUtils
 
+private val preferences = arrayOf(
+	"prefix", "multiplier", "logging",
+	"join", "suggestion", "messagelimit",
+	"messageduration", "raidexcluded",
+	"welcomemessage", "joinrole"
+)
+
 @CommandCategory
 fun administrationCommands() = commands("Administration") {
+	// todo: rename to setchannel
 	command("set") {
-		expects(Word(arrayOf("logging", "join", "suggestion")))
+		expects(Word(TargetChannel.getNames()))
 		execute {
 			val type = TargetChannel.valueOf(WordUtils.capitalize(arguments[0]!!.str()))
 			type.edit(guild.id, channel.id)
 			respond(
-				successEmbed(
+				cleanEmbed(
 					"Channel Assigned",
 					"${type.name} channel has been assigned to <#${channel.id}> in **${guild.name}**"
 				)
@@ -50,78 +58,6 @@ fun administrationCommands() = commands("Administration") {
 						"Remember to move the `muted` role higher in order for it to take effect"
 				)
 			)
-		}
-	}
-
-	// todo: introduce regex to check for where the <prefix>help is found?
-	command("setprefix") {
-		expects(Prefix())
-		execute {
-			val newPrefix = arguments[0]!!.str()
-			val botAsMember = guild.getMember(jda.selfUser)
-			val originalNickname = if (botAsMember.nickname != null) {
-				botAsMember.nickname.substring(0, botAsMember.nickname.lastIndexOf("("))
-			} else {
-				botAsMember.effectiveName
-			}
-			editPrefix(guild.id, newPrefix)
-			guild.controller.setNickname(guild.getMember(jda.selfUser), "$originalNickname (${newPrefix}help)").complete()
-			respond(
-				successEmbed(
-					"${guild.name} Prefix Changed",
-					"Prefix has been changed to **$newPrefix**"
-				)
-			)
-		}
-	}
-	command("settimemultiplier") {
-		val timeMultiplers = TimeMultiplier.values()
-		val inclusion = mutableListOf<String>()
-		val shortForm = timeMultiplers.map { it.name }
-		val longForm = timeMultiplers.map { it.fullTerm }
-		val longFormPlural = timeMultiplers.map { "${it.fullTerm}s" }
-		inclusion.addAll(shortForm)
-		inclusion.addAll(longForm)
-		inclusion.addAll(longFormPlural)
-		expects(Word(inclusion = inclusion.toTypedArray()))
-		execute {
-			val newTimeMultiplier = arguments[0]!!.str()
-
-			val timeMultiplier = when {
-				shortForm.map { short -> short.toLowerCase() }.contains(newTimeMultiplier) ->
-					TimeMultiplier.valueOf(newTimeMultiplier.toUpperCase())
-				longForm.contains(newTimeMultiplier) ->
-					timeMultiplers.filter { multiplier -> multiplier.fullTerm == newTimeMultiplier }[0]
-				longFormPlural.contains(newTimeMultiplier) ->
-					timeMultiplers.filter { multiplier -> "${multiplier.fullTerm}s" == newTimeMultiplier }[0]
-				else -> TimeMultiplier.M
-			}
-
-			editTimeMultiplier(guild.id, timeMultiplier)
-			respond(
-				successEmbed(
-					"Time Multiplier",
-					"Time multiplier for **${guild.name}** has been set to **${timeMultiplier.fullTerm}s**"
-				)
-			)
-		}
-	}
-
-	command("getpreferences") {
-		execute {
-			respond(preferenceEmbed(guild, getAllPreferences(guild.id)))
-		}
-	}
-
-	command("preference") {
-		expects(Word(arrayOf(
-			"prefix", "multiplier", "logging",
-			"join", "suggestion", "messagelimit",
-			"messageduration", "raidexcluded",
-			"welcomemessage", "joinrole"
-		)))
-		execute {
-			respond(displayPreference(arguments[0]!!.str(), guild, invoker))
 		}
 	}
 
@@ -198,6 +134,195 @@ fun administrationCommands() = commands("Administration") {
 			)
 		}
 	}
+
+	// todo: introduce regex to check for where the <prefix>help is found?
+	command("setprefix") {
+		expects(Prefix())
+		execute {
+			val newPrefix = arguments[0]!!.str()
+			val botAsMember = guild.getMember(jda.selfUser)
+			val originalNickname = if (botAsMember.nickname != null) {
+				botAsMember.nickname.substring(0, botAsMember.nickname.lastIndexOf("("))
+			} else {
+				botAsMember.effectiveName
+			}
+			editPrefix(guild.id, newPrefix)
+			guild.controller.setNickname(guild.getMember(jda.selfUser), "$originalNickname (${newPrefix}help)").complete()
+			respond(
+				successEmbed(
+					"${guild.name} Prefix Changed",
+					"Prefix has been changed to **$newPrefix**"
+				)
+			)
+		}
+	}
+	command("settimemultiplier") {
+		expects(Word(TimeMultiplier.getNames()))
+		execute {
+			val multiplier = arguments[0]!!.str()
+
+			val timeMultiplier = when (multiplier) {
+				"m", "s", "h", "d" -> TimeMultiplier.valueOf(multiplier.toUpperCase())
+				"minute", "second", "hour", "day" -> TimeMultiplier.values().first { mul -> mul.fullTerm == multiplier }
+				else -> TimeMultiplier.M
+			}
+
+			editTimeMultiplier(guild.id, timeMultiplier)
+			respond(
+				successEmbed(
+					"Time Multiplier",
+					"Time multiplier for **${guild.name}** has been set to **${timeMultiplier.fullTerm}s**"
+				)
+			)
+		}
+	}
+
+	command("getpreferences") {
+		execute {
+			respond(preferenceEmbed(guild, getAllPreferences(guild.id)))
+		}
+	}
+
+	command("getpreference") {
+		expects(Word(preferences))
+		execute {
+			respond(displayPreference(arguments[0]!!.str(), guild, invoker))
+		}
+	}
+
+	command("setpreference") {
+		expects(Word(preferences), Sentence())
+		execute {
+			respond(setPreference(arguments[0]!!.str(), arguments[1]!!.str(), guild, invoker, jda))
+		}
+	}
+}
+
+private fun setPreference(preference: String, input: String, guild: Guild, invoker: Member, jda: JDA): MessageEmbed? {
+	return when (preference) {
+		"prefix" -> {
+			val parseMap = Prefix().check(guild, input)
+			if (!parseMap.status) {
+				return failureEmbed("Unable to change prefix", parseMap.errMsg)
+			}
+
+			setPrefix(input, guild.getMember(jda.selfUser), guild)
+			cleanEmbed("${guild.name} Prefix Changed", "Prefix has been changed to **$input**")
+		}
+		"multiplier" -> {
+			val parseMap = Word(TimeMultiplier.getNames()).check(guild, input)
+			if (!parseMap.status) {
+				return failureEmbed("Unable to change multiplier", parseMap.errMsg)
+			}
+
+			setMultiplier(input, guild.id)
+			cleanEmbed("${guild.name} Multiplier Changed", "Multiplier has been changed to **$input**")
+		}
+		"logging", "join", "suggestion" -> {
+			val type = TargetChannel.valueOf(WordUtils.capitalize(preference))
+			val parseMap = ChannelId().check(guild, input)
+			if (!parseMap.status) {
+				return failureEmbed("Unable to set channel", parseMap.errMsg)
+			}
+
+			type.edit(guild.id, parseMap.parsedValue)
+			cleanEmbed(
+				"Channel Assigned",
+				"${type.name} channel has been assigned to <#${parseMap.parsedValue}> in **${guild.name}**"
+			)
+		}
+
+		"messagelimit" -> {
+			val parseMap = Integer(1).check(guild, input)
+			if (!parseMap.status) {
+				return failureEmbed("Unable to set raid message limit", parseMap.errMsg)
+			}
+
+			editRaidMessageLimit(guild.id, input.toInt())
+			cleanEmbed(
+				"Raid Message Limit",
+				"Raid message limit for **${guild.name}** has been set to **${input.toInt()}** messages"
+			)
+		}
+
+		"messageduration" -> {
+			val parseMap = Integer(1).check(guild, input)
+			if (!parseMap.status) {
+				return failureEmbed("Unable to set raid message duration", parseMap.errMsg)
+			}
+
+			editRaidMessageDuration(guild.id, input.toInt())
+			cleanEmbed(
+				"Raid Message Duration",
+				"Raid message duration for **${guild.name}** has been set to **${input.toInt()}** seconds"
+			)
+		}
+		"raidexcluded" -> {
+			val parseMap = RoleId().check(guild, input)
+			if (!parseMap.status) {
+				return failureEmbed("Unable to set raid role excluded", parseMap.errMsg)
+			}
+
+			editRaidRoleExcluded(guild.id, parseMap.parsedValue)
+			cleanEmbed(
+				"Raid Role Excluded",
+				"**${guild.getRoleById(parseMap.parsedValue).name} and higher** will be excluded from the raid filter"
+			)
+		}
+
+		"welcomemessage" -> {
+			editWelcomeMessage(guild.id, input)
+			newMemberJoinEmbed(guild, invoker)
+		}
+
+		"joinrole" -> {
+			val parseMap = RoleId().check(guild, input)
+			if (!parseMap.status) {
+				return failureEmbed("Unable to set member on join role", parseMap.errMsg)
+			}
+
+			val roleId = parseMap.parsedValue
+			if (roleId == guild.getRolesByName("@everyone", false)[0].id) {
+				return failureEmbed(
+					"Unable to set member on join role",
+					"You cannot assign that role to members on join!"
+				)
+			}
+
+			editJoinRole(guild.id, roleId)
+			cleanEmbed(
+				"Member On Join",
+				"New members will be assigned **${guild.getRoleById(roleId).name}** on join"
+			)
+		}
+
+		else -> null
+	}
+
+}
+
+private fun setChannel() {
+
+}
+
+private fun setMultiplier(multiplier: String, guildId: String) {
+	val timeMultiplier = when (multiplier) {
+		"m", "s", "h", "d" -> TimeMultiplier.valueOf(multiplier.toUpperCase())
+		"minute", "second", "hour", "day" -> TimeMultiplier.values().first { mul -> mul.fullTerm == multiplier }
+		else -> TimeMultiplier.M
+	}
+
+	editTimeMultiplier(guildId, timeMultiplier)
+}
+
+private fun setPrefix(newPrefix: String, botAsMember: Member, guild: Guild) {
+	val originalNickname = if (botAsMember.nickname != null) {
+		botAsMember.nickname.substring(0, botAsMember.nickname.lastIndexOf("("))
+	} else {
+		botAsMember.effectiveName
+	}
+	editPrefix(guild.id, newPrefix)
+	guild.controller.setNickname(guild.getMemberById(botAsMember.user.id), "$originalNickname (${newPrefix}help)").complete()
 }
 
 private fun displayPreference(preference: String, guild: Guild, invoker: Member): MessageEmbed? {
@@ -209,8 +334,16 @@ private fun displayPreference(preference: String, guild: Guild, invoker: Member)
 			cleanEmbed(
 				"Time Multiplier",
 				"Current time multiplier for **$name** is in **${getTimeMultiplier(id).fullTerm}s**")
-		"logging", "join", "suggestion" ->
-			loggingTypeChannelInformation(guild, TargetChannel.valueOf(WordUtils.capitalize(preference)))
+		"logging", "join", "suggestion" -> {
+			val targetChannel = TargetChannel.valueOf(WordUtils.capitalize(preference))
+			val targetName = targetChannel.name
+
+			return cleanEmbed(
+				"$targetName Channel",
+				"Current ${targetName.toLowerCase()} channel is ${printChannel(guild.getTextChannelById(targetChannel.get(guild.id)))}\n" +
+					"${targetName}s are currently **${targetChannel.disableStatus(guild.id)}**"
+			)!!
+		}
 
 		"messagelimit" -> cleanEmbed(
 			"Raid Message Limit",
@@ -243,16 +376,6 @@ private fun displayPreference(preference: String, guild: Guild, invoker: Member)
 
 		else -> null
 	}
-}
-
-private fun loggingTypeChannelInformation(guild: Guild, targetChannel: TargetChannel): MessageEmbed {
-	val targetName = targetChannel.name
-
-	return cleanEmbed(
-		"$targetName Channel",
-		"Current ${targetName.toLowerCase()} channel is ${printChannel(guild.getTextChannelById(targetChannel.get(guild.id)))}\n" +
-			"${targetName}s are currently **${targetChannel.disableStatus(guild.id)}**"
-	)!!
 }
 
 private fun setupMuted(guild: Guild) {
