@@ -9,12 +9,13 @@ Welcome to Taiga's documentation site. This site covers everything you need to k
 
 1. **Just invited Taiga?** [Setting Up Taiga.](bot_basics.md)
 2. **Unsure about a command?** [Commands Overview.](commands.md)
-3. **Want to host Taiga as a bot of your own?** [Installation Guide.](installation.md)
-4. **How does Taiga handle moderation?** [Moderation System Introduction.](moderation_system.md)
-5. **Raid Control Inquiries?** [Raid Control Introduction.](raid_control.md)
-6. **Customizing Taiga?** [Setting Preferences Guide.](setting_preferences.md)
-7. **Adding your own commands?** [Command Framework Guide.](creating_commands.md)
-8. **Writing up some changelogs?** [Changelog Guide.](changelog_guide.md)
+3. **Want to know the latest updates to Taiga?** [Recent changelog](recent_changelog.md)
+4. **Want to host Taiga as a bot of your own?** [Installation Guide.](installation.md)
+5. **How does Taiga handle moderation?** [Moderation System Introduction.](moderation_system.md)
+6. **Raid Control Inquiries?** [Raid Control Introduction.](raid_control.md)
+7. **Customizing Taiga?** [Setting Preferences Guide.](setting_preferences.md)
+8. **Adding your own commands?** [Command Framework Guide.](creating_commands.md)
+9. **Writing up some changelogs?** [Changelog Guide.](changelog_guide.md)
 
 ## Invites
 [Invite me to your server](https://discordapp.com/oauth2/authorize?client_id=482340927709511682&scope=bot&permissions=8)
@@ -37,6 +38,7 @@ If you have found an issue with Taiga and wish to report it, use GitHub's [issue
 4. [GSON](https://github.com/google/gson)
 5. [Exposed](https://github.com/JetBrains/Exposed)
 6. [Apache Commons](https://mvnrepository.com/artifact/org.apache.commons/commons-lang3/3.8)
+7. [JSoup](https://jsoup.org/)
 
 ## Credits
 Taiga is heavily inspired by @Fox#0001's HotBot.
