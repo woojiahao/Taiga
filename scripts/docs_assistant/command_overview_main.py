@@ -4,7 +4,7 @@ from docs_assistant import file_path, main_readme_path
 
 def command_overview_main_update():
     content = generate_content()
-    with open(main_readme_path, 'r') as file:
+    with open(main_readme_path, 'r', encoding='utf8') as file:
         data = file.read()
     
     start = data.index("<!--blk-1-->\n")
