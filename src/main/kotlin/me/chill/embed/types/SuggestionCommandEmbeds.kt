@@ -51,3 +51,15 @@ fun suggestionInformationEmbed(suggester: User, suggestion: UserSuggestion) =
 			description = suggestion.suggesterId
 		}
 	}
+
+fun suggestionDisabledEmbed(serverPrefix: String) =
+	embed {
+		title = "Suggestion System Disabled"
+		description = "Unable to use suggestion commands as the suggestion system is disabled"
+		color = red
+
+		field {
+			title = "How to enable it?"
+			description = "You can enable the suggestion system via `${serverPrefix}enable suggestion`"
+		}
+	}

@@ -6,6 +6,7 @@ import me.chill.arguments.types.Word
 import me.chill.database.operations.*
 import me.chill.database.states.TargetChannel
 import me.chill.embed.types.publicSuggestionEmbed
+import me.chill.embed.types.suggestionDisabledEmbed
 import me.chill.embed.types.suggestionInformationEmbed
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
@@ -22,6 +23,10 @@ import me.chill.utility.str
 fun suggestionCommands() = commands("Suggestion") {
 	command("poolinfo") {
 		execute {
+			if (TargetChannel.Suggestion.isDisabled(guild.id)) {
+				respond(suggestionDisabledEmbed(serverPrefix))
+				return@execute
+			}
 			respond(
 				simpleEmbed(
 					"${guild.name} Suggestion Pool",
@@ -35,6 +40,10 @@ fun suggestionCommands() = commands("Suggestion") {
 
 	command("pooltop") {
 		execute {
+			if (TargetChannel.Suggestion.isDisabled(guild.id)) {
+				respond(suggestionDisabledEmbed(serverPrefix))
+				return@execute
+			}
 			if (getPoolSize(guild.id) == 0) {
 				respond(
 					simpleEmbed(
@@ -54,6 +63,10 @@ fun suggestionCommands() = commands("Suggestion") {
 	command("suggest") {
 		expects(Sentence())
 		execute {
+			if (TargetChannel.Suggestion.isDisabled(guild.id)) {
+				respond(suggestionDisabledEmbed(serverPrefix))
+				return@execute
+			}
 			addSuggestionToPool(guild.id, invoker.user.id, arguments[0]!!.str())
 			respond(
 				successEmbed(
@@ -67,6 +80,10 @@ fun suggestionCommands() = commands("Suggestion") {
 
 	command("pooldeny") {
 		execute {
+			if (TargetChannel.Suggestion.isDisabled(guild.id)) {
+				respond(suggestionDisabledEmbed(serverPrefix))
+				return@execute
+			}
 			val latestSuggestion = getLatestSuggestionInPool(guild.id)
 			denyLatestSuggestionInPool(guild.id)
 			respond("Suggestion Denied:")
@@ -76,6 +93,10 @@ fun suggestionCommands() = commands("Suggestion") {
 
 	command("poolaccept") {
 		execute {
+			if (TargetChannel.Suggestion.isDisabled(guild.id)) {
+				respond(suggestionDisabledEmbed(serverPrefix))
+				return@execute
+			}
 			val latestSuggestion = getLatestSuggestionInPool(guild.id)
 
 			val suggester = jda.findUser(latestSuggestion.suggesterId)
@@ -107,6 +128,10 @@ fun suggestionCommands() = commands("Suggestion") {
 			Sentence()
 		)
 		execute {
+			if (TargetChannel.Suggestion.isDisabled(guild.id)) {
+				respond(suggestionDisabledEmbed(serverPrefix))
+				return@execute
+			}
 			val messageId = arguments[0]!!.str()
 			val status = arguments[1]!!.str()
 
