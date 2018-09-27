@@ -35,6 +35,8 @@ object Preference : Table() {
 	val welcomeMessage = text("welcome_message")
 	val timeMultiplier = varchar("time_multiplier", 1)
 	val onJoinRole = varchar("on_join_role", 20).nullable()
+	val disableLogging = bool("disable_logging")
+	val disableSuggestion = bool("disable_suggestion")
 }
 
 object UserRecord : Table() {

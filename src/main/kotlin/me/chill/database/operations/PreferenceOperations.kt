@@ -19,7 +19,9 @@ data class ServerPreference (
 	val welcomeDisabled: Boolean,
 	val welcomeMessage: String,
 	val timeMultiplier: TimeMultiplier,
-	val onJoinRole: String?
+	val onJoinRole: String?,
+	val loggingDisabled: Boolean,
+	val suggestionDisabled: Boolean
 )
 
 fun addServerPreference(serverId: String, defaultChannelId: String) {
@@ -37,6 +39,8 @@ fun addServerPreference(serverId: String, defaultChannelId: String) {
 			it[welcomeMessage] = "Welcome! Remember to read #rules-and-info"
 			it[timeMultiplier] = TimeMultiplier.M.name
 			it[onJoinRole] = null
+			it[disableLogging] = true
+			it[disableSuggestion] = true
 		}
 	}
 }
@@ -73,6 +77,8 @@ fun getAllPreferences(serverId: String) =
 			result[Preference.disableWelcome],
 			result[Preference.welcomeMessage],
 			TimeMultiplier.valueOf(result[Preference.timeMultiplier]),
-			result[Preference.onJoinRole]
+			result[Preference.onJoinRole],
+			result[Preference.disableLogging],
+			result[Preference.disableSuggestion]
 		)
 	}

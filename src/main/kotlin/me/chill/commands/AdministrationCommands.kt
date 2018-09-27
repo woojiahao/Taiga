@@ -14,6 +14,7 @@ import me.chill.roles.getRole
 import me.chill.roles.hasRole
 import me.chill.settings.orange
 import me.chill.settings.serve
+import me.chill.utility.jda.failureEmbed
 import me.chill.utility.jda.send
 import me.chill.utility.jda.simpleEmbed
 import me.chill.utility.jda.successEmbed
@@ -137,6 +138,58 @@ fun administrationCommands() = commands("Administration") {
 	command("getpreferences") {
 		execute {
 			respond(preferenceEmbed(guild, getAllPreferences(guild.id)))
+		}
+	}
+
+	command("setpreference") {
+		val words = arrayOf(
+			"tm", "timemultiplier",
+			"rml", "messagelimit",
+			"rmd", "messageduration",
+			"rre", "roleexcluded",
+			"jr", "joinrole"
+		)
+
+		expects(Word(words), Word())
+		execute {
+			val preference = arguments[0]!!.str()
+			val setting = arguments[1]!!.str()
+			when (preference) {
+				"tm", "timemultiplier" -> {
+				}
+				"rml", "messagelimit" -> {
+					val limit = setting.toIntOrNull()
+					if (limit == null) {
+						respond(
+							failureEmbed(
+								"Invalid Setting",
+								"Message limit: **$setting** is invalid, pass an integer the next time"
+							)
+						)
+						return@execute
+					}
+
+					if (limit < 1) {
+						respond(
+							failureEmbed(
+								"Invalid setting",
+								"Message limit: **$limit** cannot be less than 1"
+							)
+						)
+					}
+
+
+				}
+				"rmd", "messageduration" -> {
+
+				}
+				"rre", "roleexcluded" -> {
+
+				}
+				"jr", "joinrole" -> {
+
+				}
+			}
 		}
 	}
 
