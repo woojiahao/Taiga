@@ -25,34 +25,16 @@
 			"example": "getpreferences"
 		},
 		{
-			"name": "setpreference",
+			"name": "set",
 			"description": "Sets the value for a preference",
-			"syntax": "setpreference { Preference (prefix/multiplier/logging/join/suggestion/messagelimit/messageduration/raidexcluded/welcomeenabled/welcomemessage/joinrole) } { Value }",
-			"example": "setpreference messagelimit 5"
+			"syntax": "set { Preference (prefix/multiplier/logging/join/suggestion/messagelimit/messageduration/raidexcluded/welcomeenabled/welcomemessage/joinrole) } { Value }",
+			"example": "set messagelimit 5"
 		},
 		{
-			"name": "getpreference",
+			"name": "get",
 			"description": "Displays the details of a specific preference set",
-			"syntax": "getpreference { Preference (prefix/multiplier/logging/join/suggestion/messagelimit/messageduration/raidexcluded/welcomeenabled/welcomemessage/joinrole) }",
-			"example": "getpreference prefix"
-		},
-		{
-			"name": "addinvite",
-			"description": "Adds an invite to the whitelist, only the owner can add invites",
-			"syntax": "addinvite { Discord Invite Link }",
-			"example": "addinvite https://discord.gg/xtDNfyw"
-		},
-		{
-			"name": "removeinvite",
-			"description": "Removes an invite from the whitelist, only the owner can remove invites",
-			"syntax": "removeinvite { Discord Invite Link }",
-			"example": "removeinvite https://discord.gg/xtDNfyw"
-		},
-		{
-			"name": "whitelist",
-			"description": "Displays all the whitelisted invites for the server",
-			"syntax": "whitelist",
-			"example": "whitelist"
+			"syntax": "get { Preference (prefix/multiplier/logging/join/suggestion/messagelimit/messageduration/raidexcluded/welcomeenabled/welcomemessage/joinrole) }",
+			"example": "get prefix"
 		},
 		{
 			"name": "disable",
@@ -369,6 +351,26 @@
 			"description": "Displays a bird picture/GIF",
 			"syntax": "bird",
 			"example": "bird"
+		}
+	],
+	"Invite": [
+		{
+			"name": "addinvite",
+			"description": "Adds an invite to the whitelist, only the owner can add invites",
+			"syntax": "addinvite { Discord Invite Link }",
+			"example": "addinvite https://discord.gg/xtDNfyw"
+		},
+		{
+			"name": "removeinvite",
+			"description": "Removes an invite from the whitelist, only the owner can remove invites",
+			"syntax": "removeinvite { Discord Invite Link }",
+			"example": "removeinvite https://discord.gg/xtDNfyw"
+		},
+		{
+			"name": "whitelist",
+			"description": "Displays all the whitelisted invites for the server",
+			"syntax": "whitelist",
+			"example": "whitelist"
 		}
 	]
 }

@@ -60,50 +60,6 @@ fun administrationCommands() = commands("Administration") {
 		}
 	}
 
-	command("addinvite") {
-		expects(DiscordInvite())
-		execute {
-			val invite = arguments[0]!!.str()
-			addToWhitelist(guild.id, invite)
-			respond(
-				successEmbed(
-					"Invite Added To Whitelist",
-					"Invite: $invite is now whitelisted and can be sent by any member",
-					null
-				)
-			)
-		}
-	}
-
-	command("removeinvite") {
-		expects(DiscordInvite(true))
-		execute {
-			val invite = arguments[0]!!.str()
-			removeFromWhitelist(guild.id, invite)
-			respond(
-				successEmbed(
-					"Invite Removed From Whitelist",
-					"Invite: $invite has been removed from the whitelist",
-					null
-				)
-			)
-		}
-	}
-
-	command("whitelist") {
-		execute {
-			val whitelist = getWhitelist(guild.id)
-			respond(
-				successEmbed(
-					"${guild.name} Whitelist",
-					if (whitelist.isBlank()) "No invites whitelisted"
-					else whitelist,
-					null
-				)
-			)
-		}
-	}
-
 	command("disable") {
 		expects(Word(TargetChannel.getNames()))
 		execute {
@@ -162,14 +118,14 @@ fun administrationCommands() = commands("Administration") {
 		}
 	}
 
-	command("getpreference") {
+	command("get") {
 		expects(Word(preferences))
 		execute {
 			respond(displayPreference(arguments[0]!!.str(), guild, invoker))
 		}
 	}
 
-	command("setpreference") {
+	command("set") {
 		expects(Word(preferences), Sentence())
 		execute {
 			respond(setPreference(arguments[0]!!.str(), arguments[1]!!.str(), guild, invoker, jda))
