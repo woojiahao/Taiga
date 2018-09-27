@@ -5,6 +5,36 @@ Welcome to Taiga's documentation site. This site covers everything you need to k
 
 ![alt text](home_image.png "Taiga Aisaka")
 
+## Features
+* **Raid Control 👮**
+	
+	Taiga offers a built in [raid control system](https://woojiahao.github.io/Taiga/#/raid_control) system that is able
+	to catch, track and record raiders and allow you to properly and easily manage them.
+	
+* **User Management 📚**
+	
+	Taiga has a simple to use [user management system](https://woojiahao.github.io/Taiga/#/moderation_system), allowing 
+	you to mute, warn, strike users as well as view their history and various information such as the number of unwanted 
+	invites they have sent before etc.
+	
+* **Invite Handling ⛔**
+
+	Taiga's watchful eye also catches unwanted Discord invites and deals with these ruffians accordingly.	
+
+* **Suggestions System 🔉**
+
+	Taiga has a built in [suggestion system](https://woojiahao.github.io/Taiga/#/suggestion) that allows your members
+	to provide feedback to you.
+
+* **Customization 📝**
+
+	Taiga comes with an open and easy to customize [preference system](https://woojiahao.github.io/Taiga/#/setting_preferences),
+	giving you minute control over the different aspects of her.
+
+* **Fun ⛷️**
+	
+	Taiga has fun commands for you to mess around with!
+
 ## Documentation Navigator
 
 1. **Just invited Taiga?** [Setting Up Taiga.](bot_basics.md)
