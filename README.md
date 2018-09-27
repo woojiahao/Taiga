@@ -9,38 +9,25 @@ More information about commands can be found on the [website](https://woojiahao.
 
 <!--blk-1-->
 1. [Administration](https://github.com/woojiahao/Taiga#Administration)
-2. [Welcome](https://github.com/woojiahao/Taiga#Welcome)
-3. [Moderation](https://github.com/woojiahao/Taiga#Moderation)
-4. [Permission](https://github.com/woojiahao/Taiga#Permission)
-5. [Utility](https://github.com/woojiahao/Taiga#Utility)
-6. [Role](https://github.com/woojiahao/Taiga#Role)
-7. [Raid](https://github.com/woojiahao/Taiga#Raid)
-8. [Suggestion](https://github.com/woojiahao/Taiga#Suggestion)
-9. [Macro](https://github.com/woojiahao/Taiga#Macro)
-10. [Fun](https://github.com/woojiahao/Taiga#Fun)
+2. [Moderation](https://github.com/woojiahao/Taiga#Moderation)
+3. [Permission](https://github.com/woojiahao/Taiga#Permission)
+4. [Utility](https://github.com/woojiahao/Taiga#Utility)
+5. [Role](https://github.com/woojiahao/Taiga#Role)
+6. [Raid](https://github.com/woojiahao/Taiga#Raid)
+7. [Suggestion](https://github.com/woojiahao/Taiga#Suggestion)
+8. [Macro](https://github.com/woojiahao/Taiga#Macro)
+9. [Fun](https://github.com/woojiahao/Taiga#Fun)
+10. [Invite](https://github.com/woojiahao/Taiga#Invite)
 ### Administration
 |Name|Description|
 |---|---|
-|`setjoin`|Sets the join channel, uses the default channel if not set|
-|`setlog`|Sets the logging channel, uses the default channel if not set|
-|`setsuggestion`|Sets the suggestion channel, uses the default channel if not set|
+|`setchannel`|Sets the logging, welcome or suggestion channel|
 |`setup`|Sets up the bot for moderation like adding the muted roles and overriding channel permissions|
-|`getprefix`|Displays the current prefix set for the current server|
-|`setprefix`|Sets the current prefix for the server, prefix cannot be more than 3 characters long and cannot be composed of all letters/digits|
-|`gettimemultiplier`|Displays the current time multiplier|
-|`settimemultiplier`|Sets the time multiplier, multipliers include: S, M, H, D|
-|`getpreferences`|Displays all the properties set for the server|
-|`addinvite`|Adds an invite to the whitelist, only the owner can add invites|
-|`removeinvite`|Removes an invite from the whitelist, only the owner can remove invites|
-|`whitelist`|Displays all the whitelisted invites for the server|
-### Welcome
-|Name|Description|
-|---|---|
-|`disablewelcome`|Disables bot welcomes for new members|
-|`enablewelcome`|Enables bot welcomes for new members|
-|`getwelcomeenabled`|Displays whether bot welcomes are enabled or disabled|
-|`getwelcomemessage`|Displays what the bot will print when a new member joins the server|
-|`setwelcomemessage`|Sets the welcome message for new members|
+|`preferences`|Displays all the properties set for the server|
+|`set`|Sets the value for a preference|
+|`get`|Displays the details of a specific preference set|
+|`disable`|Disables a specific logging type, welcome/logging/suggestion|
+|`enable`|Enables a specific logging type, welcome/logging/suggestion|
 ### Moderation
 |Name|Description|
 |---|---|
@@ -76,20 +63,12 @@ More information about commands can be found on the [website](https://woojiahao.
 |Name|Description|
 |---|---|
 |`assign`|Assigns a role to the specified user, the role must not be higher than my role|
-|`getjoinrole`|Displays the join role that will be assigned to new members on join in the server|
 |`roles`|Displays all roles and their IDs in the server|
-|`setjoinrole`|Sets the join role that will be assigned to new members on join in the server|
 |`clearjoinrole`|Clears the join role|
 |`unassign`|Removes a role from the user, the role must not be higher than my role|
 ### Raid
 |Name|Description|
 |---|---|
-|`setraidmessageduration`|Sets how long the user messages are tracked in seconds for raid control|
-|`getraidmessagelimit`|Displays how many user messages are tracked for raid control|
-|`setraidmessagelimit`|Sets the number of user messages are tracked for raid control|
-|`getraidroleexcluded`|Displays what roles are being excluded from raid filter|
-|`setraidroleexcluded`|Sets the role that is being excluded from the raid filter, any role higher than this is also automatically excluded|
-|`getraidmessageduration`|Displays how long user messages are tracked in seconds for raid control|
 |`viewraiders`|Displays all the raiders in the server|
 |`freeraider`|Removes a user from the raid list and unmutes them|
 |`freeallraiders`|Removes all users from the raid list and unmutes them|
@@ -121,6 +100,12 @@ More information about commands can be found on the [website](https://woojiahao.
 |`cat`|Displays a cat picture/GIF|
 |`dog`|Displays a dog picture/GIF|
 |`bird`|Displays a bird picture/GIF|
+### Invite
+|Name|Description|
+|---|---|
+|`addinvite`|Adds an invite to the whitelist, only the owner can add invites|
+|`removeinvite`|Removes an invite from the whitelist, only the owner can remove invites|
+|`whitelist`|Displays all the whitelisted invites for the server|
 <!--blk-1-end-->
 
 ## Credits

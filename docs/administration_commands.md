@@ -1,36 +1,14 @@
 # Administration Commands
-## setjoin
+## setchannel
 ### Description {docsify-ignore}
-Sets the join channel, uses the default channel if not set
+Sets the logging, welcome or suggestion channel
 ### Syntax {docsify-ignore}
 
-> setjoin
+> setchannel { Target Type For Channel (Logging/Welcome/Suggestion) }
 
 ### Example {docsify-ignore}
 
-> setjoin
-
-## setlog
-### Description {docsify-ignore}
-Sets the logging channel, uses the default channel if not set
-### Syntax {docsify-ignore}
-
-> setlog
-
-### Example {docsify-ignore}
-
-> setlog
-
-## setsuggestion
-### Description {docsify-ignore}
-Sets the suggestion channel, uses the default channel if not set
-### Syntax {docsify-ignore}
-
-> setjoin
-
-### Example {docsify-ignore}
-
-> setjoin
+> setchannel logging
 
 ## setup
 ### Description {docsify-ignore}
@@ -43,51 +21,7 @@ Sets up the bot for moderation like adding the muted roles and overriding channe
 
 > setup
 
-## getprefix
-### Description {docsify-ignore}
-Displays the current prefix set for the current server
-### Syntax {docsify-ignore}
-
-> getprefix
-
-### Example {docsify-ignore}
-
-> getprefix
-
-## setprefix
-### Description {docsify-ignore}
-Sets the current prefix for the server, prefix cannot be more than 3 characters long and cannot be composed of all letters/digits
-### Syntax {docsify-ignore}
-
-> setprefix { New prefix }
-
-### Example {docsify-ignore}
-
-> setprefix ++
-
-## gettimemultiplier
-### Description {docsify-ignore}
-Displays the current time multiplier
-### Syntax {docsify-ignore}
-
-> gettimemultiplier
-
-### Example {docsify-ignore}
-
-> gettimemultiplier
-
-## settimemultiplier
-### Description {docsify-ignore}
-Sets the time multiplier, multipliers include: S, M, H, D
-### Syntax {docsify-ignore}
-
-> settimemultiplier { Multiplier }
-
-### Example {docsify-ignore}
-
-> settimemultipler H
-
-## getpreferences
+## preferences
 ### Description {docsify-ignore}
 Displays all the properties set for the server
 ### Syntax {docsify-ignore}
@@ -98,36 +32,47 @@ Displays all the properties set for the server
 
 > getpreferences
 
-## addinvite
+## set
 ### Description {docsify-ignore}
-Adds an invite to the whitelist, only the owner can add invites
+Sets the value for a preference
 ### Syntax {docsify-ignore}
 
-> addinvite { Discord Invite Link }
+> set { Preference (prefix/multiplier/logging/join/suggestion/messagelimit/messageduration/raidexcluded/welcomeenabled/welcomemessage/joinrole) } { Value }
 
 ### Example {docsify-ignore}
 
-> addinvite https://discord.gg/xtDNfyw
+> set messagelimit 5
 
-## removeinvite
+## get
 ### Description {docsify-ignore}
-Removes an invite from the whitelist, only the owner can remove invites
+Displays the details of a specific preference set
 ### Syntax {docsify-ignore}
 
-> removeinvite { Discord Invite Link }
+> get { Preference (prefix/multiplier/logging/join/suggestion/messagelimit/messageduration/raidexcluded/welcomeenabled/welcomemessage/joinrole) }
 
 ### Example {docsify-ignore}
 
-> removeinvite https://discord.gg/xtDNfyw
+> get prefix
 
-## whitelist
+## disable
 ### Description {docsify-ignore}
-Displays all the whitelisted invites for the server
+Disables a specific logging type, welcome/logging/suggestion
 ### Syntax {docsify-ignore}
 
-> whitelist
+> disable { Logging Type (Welcome/Logging/Suggestion) }
 
 ### Example {docsify-ignore}
 
-> whitelist
+> disable logging
+
+## enable
+### Description {docsify-ignore}
+Enables a specific logging type, welcome/logging/suggestion
+### Syntax {docsify-ignore}
+
+> enable { Logging Type (Welcome/Logging/Suggestion) }
+
+### Example {docsify-ignore}
+
+> enable logging
 

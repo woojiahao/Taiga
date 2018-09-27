@@ -1,39 +1,25 @@
 # Commands Overview
 1. [Administration](commands.md?id=Administration)
-2. [Welcome](commands.md?id=Welcome)
-3. [Moderation](commands.md?id=Moderation)
-4. [Permission](commands.md?id=Permission)
-5. [Utility](commands.md?id=Utility)
-6. [Role](commands.md?id=Role)
-7. [Raid](commands.md?id=Raid)
-8. [Suggestion](commands.md?id=Suggestion)
-9. [Macro](commands.md?id=Macro)
-10. [Fun](commands.md?id=Fun)
+2. [Moderation](commands.md?id=Moderation)
+3. [Permission](commands.md?id=Permission)
+4. [Utility](commands.md?id=Utility)
+5. [Role](commands.md?id=Role)
+6. [Raid](commands.md?id=Raid)
+7. [Suggestion](commands.md?id=Suggestion)
+8. [Macro](commands.md?id=Macro)
+9. [Fun](commands.md?id=Fun)
+10. [Invite](commands.md?id=Invite)
 
 ### [Administration](administration_commands.md)
 |Name|Description|
 |---|---|
-|[`setjoin`](administration_commands.md?id=setjoin)|Sets the join channel, uses the default channel if not set|
-|[`setlog`](administration_commands.md?id=setlog)|Sets the logging channel, uses the default channel if not set|
-|[`setsuggestion`](administration_commands.md?id=setsuggestion)|Sets the suggestion channel, uses the default channel if not set|
+|[`setchannel`](administration_commands.md?id=setchannel)|Sets the logging, welcome or suggestion channel|
 |[`setup`](administration_commands.md?id=setup)|Sets up the bot for moderation like adding the muted roles and overriding channel permissions|
-|[`getprefix`](administration_commands.md?id=getprefix)|Displays the current prefix set for the current server|
-|[`setprefix`](administration_commands.md?id=setprefix)|Sets the current prefix for the server, prefix cannot be more than 3 characters long and cannot be composed of all letters/digits|
-|[`gettimemultiplier`](administration_commands.md?id=gettimemultiplier)|Displays the current time multiplier|
-|[`settimemultiplier`](administration_commands.md?id=settimemultiplier)|Sets the time multiplier, multipliers include: S, M, H, D|
-|[`getpreferences`](administration_commands.md?id=getpreferences)|Displays all the properties set for the server|
-|[`addinvite`](administration_commands.md?id=addinvite)|Adds an invite to the whitelist, only the owner can add invites|
-|[`removeinvite`](administration_commands.md?id=removeinvite)|Removes an invite from the whitelist, only the owner can remove invites|
-|[`whitelist`](administration_commands.md?id=whitelist)|Displays all the whitelisted invites for the server|
-
-### [Welcome](welcome_commands.md)
-|Name|Description|
-|---|---|
-|[`disablewelcome`](welcome_commands.md?id=disablewelcome)|Disables bot welcomes for new members|
-|[`enablewelcome`](welcome_commands.md?id=enablewelcome)|Enables bot welcomes for new members|
-|[`getwelcomeenabled`](welcome_commands.md?id=getwelcomeenabled)|Displays whether bot welcomes are enabled or disabled|
-|[`getwelcomemessage`](welcome_commands.md?id=getwelcomemessage)|Displays what the bot will print when a new member joins the server|
-|[`setwelcomemessage`](welcome_commands.md?id=setwelcomemessage)|Sets the welcome message for new members|
+|[`preferences`](administration_commands.md?id=preferences)|Displays all the properties set for the server|
+|[`set`](administration_commands.md?id=set)|Sets the value for a preference|
+|[`get`](administration_commands.md?id=get)|Displays the details of a specific preference set|
+|[`disable`](administration_commands.md?id=disable)|Disables a specific logging type, welcome/logging/suggestion|
+|[`enable`](administration_commands.md?id=enable)|Enables a specific logging type, welcome/logging/suggestion|
 
 ### [Moderation](moderation_commands.md)
 |Name|Description|
@@ -73,21 +59,13 @@
 |Name|Description|
 |---|---|
 |[`assign`](role_commands.md?id=assign)|Assigns a role to the specified user, the role must not be higher than my role|
-|[`getjoinrole`](role_commands.md?id=getjoinrole)|Displays the join role that will be assigned to new members on join in the server|
 |[`roles`](role_commands.md?id=roles)|Displays all roles and their IDs in the server|
-|[`setjoinrole`](role_commands.md?id=setjoinrole)|Sets the join role that will be assigned to new members on join in the server|
 |[`clearjoinrole`](role_commands.md?id=clearjoinrole)|Clears the join role|
 |[`unassign`](role_commands.md?id=unassign)|Removes a role from the user, the role must not be higher than my role|
 
 ### [Raid](raid_commands.md)
 |Name|Description|
 |---|---|
-|[`setraidmessageduration`](raid_commands.md?id=setraidmessageduration)|Sets how long the user messages are tracked in seconds for raid control|
-|[`getraidmessagelimit`](raid_commands.md?id=getraidmessagelimit)|Displays how many user messages are tracked for raid control|
-|[`setraidmessagelimit`](raid_commands.md?id=setraidmessagelimit)|Sets the number of user messages are tracked for raid control|
-|[`getraidroleexcluded`](raid_commands.md?id=getraidroleexcluded)|Displays what roles are being excluded from raid filter|
-|[`setraidroleexcluded`](raid_commands.md?id=setraidroleexcluded)|Sets the role that is being excluded from the raid filter, any role higher than this is also automatically excluded|
-|[`getraidmessageduration`](raid_commands.md?id=getraidmessageduration)|Displays how long user messages are tracked in seconds for raid control|
 |[`viewraiders`](raid_commands.md?id=viewraiders)|Displays all the raiders in the server|
 |[`freeraider`](raid_commands.md?id=freeraider)|Removes a user from the raid list and unmutes them|
 |[`freeallraiders`](raid_commands.md?id=freeallraiders)|Removes all users from the raid list and unmutes them|
@@ -122,3 +100,10 @@
 |[`cat`](fun_commands.md?id=cat)|Displays a cat picture/GIF|
 |[`dog`](fun_commands.md?id=dog)|Displays a dog picture/GIF|
 |[`bird`](fun_commands.md?id=bird)|Displays a bird picture/GIF|
+
+### [Invite](invite_commands.md)
+|Name|Description|
+|---|---|
+|[`addinvite`](invite_commands.md?id=addinvite)|Adds an invite to the whitelist, only the owner can add invites|
+|[`removeinvite`](invite_commands.md?id=removeinvite)|Removes an invite from the whitelist, only the owner can remove invites|
+|[`whitelist`](invite_commands.md?id=whitelist)|Displays all the whitelisted invites for the server|
