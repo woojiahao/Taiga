@@ -1,8 +1,8 @@
 package me.chill.events
 
-import me.chill.database.states.TargetChannel
 import me.chill.database.operations.clearPermissions
 import me.chill.database.operations.removeServerPreference
+import me.chill.database.states.TargetChannel
 import me.chill.exception.ListenerEventException
 import me.chill.settings.lost
 import me.chill.settings.red
@@ -27,7 +27,7 @@ class OnLeaveEvent : ListenerAdapter() {
 		val member = event.member
 
 		val loggingChannel = event.guild.getTextChannelById(TargetChannel.Logging.get(serverId))
-		loggingChannel.send(memberLeaveEmbed(member))
+		if (!TargetChannel.Logging.isDisabled(serverId)) loggingChannel.send(memberLeaveEmbed(member))
 	}
 
 	override fun onGuildLeave(event: GuildLeaveEvent?) {
