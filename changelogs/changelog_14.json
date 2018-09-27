@@ -3,7 +3,7 @@
 	"buildTitle": "Major rework of the preference system",
 	"changes": [
 		"Logging states for welcome, logging and suggestion can now be enabled or disabled",
-		"Command logging is now disabled by default",
+		"Command logging and welcome messages are now disabled by default",
 		"Changelog section added to documentation",
 		"Removed preference getters and setters, replacing them with a single `set` command",
 		"Single preferences can now be retrieved via `get`",

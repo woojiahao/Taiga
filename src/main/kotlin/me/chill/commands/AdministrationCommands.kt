@@ -90,29 +90,7 @@ fun administrationCommands() = commands("Administration") {
 		}
 	}
 
-	// todo: introduce regex to check for where the <prefix>help is found?
-	command("setprefix") {
-		expects(Prefix())
-		execute {
-			val newPrefix = arguments[0]!!.str()
-			val botAsMember = guild.getMember(jda.selfUser)
-			val originalNickname = if (botAsMember.nickname != null) {
-				botAsMember.nickname.substring(0, botAsMember.nickname.lastIndexOf("("))
-			} else {
-				botAsMember.effectiveName
-			}
-			editPrefix(guild.id, newPrefix)
-			guild.controller.setNickname(guild.getMember(jda.selfUser), "$originalNickname (${newPrefix}help)").complete()
-			respond(
-				successEmbed(
-					"${guild.name} Prefix Changed",
-					"Prefix has been changed to **$newPrefix**"
-				)
-			)
-		}
-	}
-
-	command("getpreferences") {
+	command("preferences") {
 		execute {
 			respond(preferenceEmbed(guild, getAllPreferences(guild.id)))
 		}

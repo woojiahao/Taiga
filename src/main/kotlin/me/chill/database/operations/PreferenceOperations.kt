@@ -35,10 +35,10 @@ fun addServerPreference(serverId: String, defaultChannelId: String) {
 			it[raidMessageLimit] = 5
 			it[raidMessageDuration] = 3
 			it[raidRoleExcluded] = null
-			it[disableWelcome] = false
 			it[welcomeMessage] = "Welcome! Remember to read #rules-and-info"
 			it[timeMultiplier] = TimeMultiplier.M.name
 			it[onJoinRole] = null
+			it[disableWelcome] = true
 			it[disableLogging] = true
 			it[disableSuggestion] = true
 		}

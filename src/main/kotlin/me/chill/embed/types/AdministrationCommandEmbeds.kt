@@ -1,6 +1,7 @@
 package me.chill.embed.types
 
 import me.chill.database.operations.ServerPreference
+import me.chill.database.states.TargetChannel
 import me.chill.settings.cyan
 import me.chill.utility.jda.embed
 import me.chill.utility.jda.printChannel
@@ -11,7 +12,7 @@ fun preferenceEmbed(guild: Guild, preference: ServerPreference) =
 		title = "${guild.name} Preferences"
 		color = cyan
 		thumbnail = guild.iconUrl
-		description = "The following are the preferences set for ${guild.name}(**${preference.serverId}**)\n\n" +
+		description = "The following are the preferences set for ${guild.name}(${preference.serverId})\n\n" +
 			"An extensive guide on how to customize preferences for Taiga can be found [here](https://woojiahao.github.io/Taiga/#/setting_preferences)"
 
 		field {
@@ -21,10 +22,21 @@ fun preferenceEmbed(guild: Guild, preference: ServerPreference) =
 		}
 
 		field {
-			title = "Channel Assignment"
-			description = "**Join Channel** -> ${printChannel(guild.getTextChannelById(preference.joinChannel))}\n" +
-				"**Logging Channel** -> ${printChannel(guild.getTextChannelById(preference.loggingChannel))}\n" +
-				"**Suggestion Channel** -> ${printChannel(guild.getTextChannelById(preference.suggestionChannel))}"
+			title = "Join Channel"
+			description = "${printChannel(guild.getTextChannelById(preference.joinChannel))}\n" +
+				"Join messages are currently **${TargetChannel.disableStatus(preference.welcomeDisabled)}**"
+		}
+
+		field {
+			title = "Logging Channel"
+			description = "${printChannel(guild.getTextChannelById(preference.loggingChannel))}\n" +
+				"Command logging is currently **${TargetChannel.disableStatus(preference.loggingDisabled)}**"
+		}
+
+		field {
+			title = "Suggestion Channel"
+			description = "${printChannel(guild.getTextChannelById(preference.suggestionChannel))}\n" +
+				"Suggestion system is currently **${TargetChannel.disableStatus(preference.suggestionDisabled)}**"
 		}
 
 		field {
@@ -38,7 +50,7 @@ fun preferenceEmbed(guild: Guild, preference: ServerPreference) =
 		}
 
 		field {
-			val isWelcomeDisabled = if(preference.welcomeDisabled) {
+			val isWelcomeDisabled = if (preference.welcomeDisabled) {
 				"disabled"
 			} else {
 				"enabled"
