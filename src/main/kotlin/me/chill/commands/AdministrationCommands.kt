@@ -14,11 +14,8 @@ import me.chill.roles.createRole
 import me.chill.roles.getRole
 import me.chill.roles.hasRole
 import me.chill.settings.clap
-import me.chill.settings.orange
-import me.chill.settings.serve
 import me.chill.utility.jda.cleanEmbed
 import me.chill.utility.jda.printChannel
-import me.chill.utility.jda.simpleEmbed
 import me.chill.utility.jda.successEmbed
 import me.chill.utility.str
 import net.dv8tion.jda.core.Permission
@@ -77,31 +74,6 @@ fun administrationCommands() = commands("Administration") {
 			)
 		}
 	}
-
-	command("getprefix") {
-		execute {
-			respond(
-				simpleEmbed(
-					"${guild.name} Prefix",
-					"Current prefix is: **$serverPrefix**",
-					serve,
-					orange
-				)
-			)
-		}
-	}
-
-	command("gettimemultiplier") {
-		execute {
-			respond(
-				successEmbed(
-					"Time Multiplier",
-					"Current time multiplier for **${guild.name}** is in **${getTimeMultiplier(guild.id).fullTerm}s**"
-				)
-			)
-		}
-	}
-
 	command("settimemultiplier") {
 		val timeMultiplers = TimeMultiplier.values()
 		val inclusion = mutableListOf<String>()
@@ -145,7 +117,7 @@ fun administrationCommands() = commands("Administration") {
 		expects(Word(arrayOf(
 			"prefix", "multiplier", "logging",
 			"join", "suggestion", "messagelimit",
-			"messageduration", "raidexcluded", "welcomeenabled",
+			"messageduration", "raidexcluded",
 			"welcomemessage", "joinrole"
 		)))
 		execute {
@@ -255,8 +227,6 @@ private fun displayPreference(preference: String, guild: Guild, invoker: Member)
 				if (raidRoleExcluded == null) "No role is being filtered"
 				else "**${guild.getRoleById(raidRoleExcluded).name} and higher** are excluded from the raid filter")
 		}
-		"welcomeenabled" ->
-			cleanEmbed("Welcomes", "Welcomes are ${TargetChannel.Join.disableStatus(id)} in **$name**")
 
 		"welcomemessage" -> newMemberJoinEmbed(guild, invoker)
 

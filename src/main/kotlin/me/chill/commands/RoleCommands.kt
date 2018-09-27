@@ -3,7 +3,6 @@ package me.chill.commands
 import me.chill.arguments.types.RoleId
 import me.chill.arguments.types.UserId
 import me.chill.database.operations.editJoinRole
-import me.chill.database.operations.getJoinRole
 import me.chill.database.operations.hasJoinRole
 import me.chill.database.operations.removeJoinRole
 import me.chill.embed.types.listRolesEmbed
@@ -12,7 +11,6 @@ import me.chill.framework.commands
 import me.chill.roles.assignRole
 import me.chill.roles.removeRole
 import me.chill.settings.clap
-import me.chill.settings.serve
 import me.chill.utility.jda.failureEmbed
 import me.chill.utility.jda.successEmbed
 import me.chill.utility.str
@@ -37,19 +35,6 @@ fun roleCommands() = commands("Role") {
 		expects(UserId(), RoleId())
 		execute {
 			removeRole(guild, channel, arguments[1]!!.str(), arguments[0]!!.str())
-		}
-	}
-
-	command("getjoinrole") {
-		execute {
-			val message =
-				if (!hasJoinRole(guild.id)) {
-					"**${guild.name}** currently does not have an auto-assigned role for new members"
-				} else {
-					val roleId = getJoinRole(guild.id)
-					"New members will be assigned **${guild.getRoleById(roleId).name}** on join"
-				}
-			respond(successEmbed("Member On Join", message, serve))
 		}
 	}
 

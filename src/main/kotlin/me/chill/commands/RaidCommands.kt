@@ -9,7 +9,6 @@ import me.chill.framework.commands
 import me.chill.roles.getMutedRole
 import me.chill.roles.removeRole
 import me.chill.settings.clap
-import me.chill.settings.serve
 import me.chill.utility.int
 import me.chill.utility.jda.failureEmbed
 import me.chill.utility.jda.successEmbed
@@ -54,44 +53,6 @@ fun raidCommands() = commands("Raid") {
 				successEmbed(
 					"Raid Role Excluded",
 					"**${guild.getRoleById(roleId).name} and higher** will be excluded from the raid filter"
-				)
-			)
-		}
-	}
-
-	command("getraidmessageduration") {
-		execute {
-			respond(
-				successEmbed(
-					"Raid Message Duration",
-					"The raid message duration for **${guild.name}** is **${getRaidMessageDuration(guild.id)}** seconds",
-					serve
-				)
-			)
-		}
-	}
-
-	command("getraidmessagelimit") {
-		execute {
-			respond(
-				successEmbed(
-					"Raid Message Limit",
-					"The raid message limit for **${guild.name}** is **${getRaidMessageLimit(guild.id)}** messages",
-					serve
-				)
-			)
-		}
-	}
-
-	command("getraidroleexcluded") {
-		execute {
-			val raidRoleExcluded = getRaidRoleExcluded(guild.id)
-			respond(
-				successEmbed(
-					"Raid Role Excluded",
-					if (raidRoleExcluded == null) "No role is being filtered"
-					else "**${guild.getRoleById(raidRoleExcluded).name} and higher** are excluded from the raid filter",
-					serve
 				)
 			)
 		}
