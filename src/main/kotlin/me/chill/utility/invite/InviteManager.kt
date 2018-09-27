@@ -1,6 +1,7 @@
 package me.chill.utility.invite
 
 import me.chill.database.operations.*
+import me.chill.database.states.TargetChannel
 import me.chill.settings.red
 import me.chill.utility.jda.embed
 import me.chill.utility.jda.printChannel

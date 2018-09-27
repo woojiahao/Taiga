@@ -24,6 +24,9 @@ fun successEmbed(title: String, description: String, thumbnail: String? = happy,
 fun failureEmbed(title: String, description: String, thumbnail: String? = shock, color: Int? = red) =
 	simpleEmbed(title, description, thumbnail, color)
 
+fun cleanEmbed(title: String, description: String) =
+	simpleEmbed(title, description, null, orange)
+
 fun unknownErrorEmbed(commandName: String) =
 	embed {
 		title = "Something went wrong"

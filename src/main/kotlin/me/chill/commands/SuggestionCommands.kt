@@ -4,6 +4,7 @@ import me.chill.arguments.types.Sentence
 import me.chill.arguments.types.SuggestionId
 import me.chill.arguments.types.Word
 import me.chill.database.operations.*
+import me.chill.database.states.TargetChannel
 import me.chill.embed.types.publicSuggestionEmbed
 import me.chill.embed.types.suggestionInformationEmbed
 import me.chill.framework.CommandCategory

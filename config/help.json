@@ -43,6 +43,12 @@
 			"example": "getpreferences"
 		},
 		{
+			"name": "preference",
+			"description": "Displays the details of a specific preference set (prefix/multiplier/logging/join/suggestion/messagelimit/messageduration/raidexcluded/welcomeenabled/welcomemessage/joinrole)",
+			"syntax": "preference { Preference (prefix/multiplier/logging/join/suggestion/messagelimit/messageduration/raidexcluded/welcomeenabled/welcomemessage/joinrole) }",
+			"example": "preference prefix"
+		},
+		{
 			"name": "addinvite",
 			"description": "Adds an invite to the whitelist, only the owner can add invites",
 			"syntax": "addinvite { Discord Invite Link }",

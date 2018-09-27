@@ -2,7 +2,7 @@ package me.chill.arguments.types
 
 import me.chill.arguments.Argument
 import me.chill.arguments.ArgumentParseMap
-import me.chill.database.operations.TargetChannel
+import me.chill.database.states.TargetChannel
 import me.chill.database.operations.hasSuggestion
 import net.dv8tion.jda.core.entities.Guild
 

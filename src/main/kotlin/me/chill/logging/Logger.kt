@@ -1,6 +1,6 @@
 package me.chill.logging
 
-import me.chill.database.operations.TargetChannel
+import me.chill.database.states.TargetChannel
 import me.chill.framework.Command
 import me.chill.settings.blue
 import me.chill.settings.pink

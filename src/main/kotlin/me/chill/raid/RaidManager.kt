@@ -1,6 +1,7 @@
 package me.chill.raid
 
 import me.chill.database.operations.*
+import me.chill.database.states.TargetChannel
 import me.chill.roles.addRoleToUser
 import me.chill.roles.getMutedRole
 import me.chill.utility.jda.*

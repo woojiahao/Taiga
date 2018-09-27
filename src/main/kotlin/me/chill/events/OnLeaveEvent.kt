@@ -1,6 +1,6 @@
 package me.chill.events
 
-import me.chill.database.operations.TargetChannel
+import me.chill.database.states.TargetChannel
 import me.chill.database.operations.clearPermissions
 import me.chill.database.operations.removeServerPreference
 import me.chill.exception.ListenerEventException
