@@ -190,7 +190,7 @@ fun administrationCommands() = commands("Administration") {
 		expects(Word(arrayOf("welcome", "logging", "suggestion")))
 		execute {
 			val type = LoggingType.valueOf(WordUtils.capitalize(arguments[0]!!.str()))
-			alterLoggingState(guild.id, type, true)
+			type.disable(guild.id)
 			respond(
 				successEmbed(
 					"${type.name} Disabled",
@@ -205,7 +205,7 @@ fun administrationCommands() = commands("Administration") {
 		expects(Word(arrayOf("welcome", "logging", "suggestion")))
 		execute {
 			val type = LoggingType.valueOf(WordUtils.capitalize(arguments[0]!!.str()))
-			alterLoggingState(guild.id, type, false)
+			type.enable(guild.id)
 			respond(
 				successEmbed(
 					"${type.name} Enabled",
@@ -214,13 +214,6 @@ fun administrationCommands() = commands("Administration") {
 				)
 			)
 		}
-	}
-}
-
-private fun alterLoggingState(guildId: String, type: LoggingType, state: Boolean) {
-	when (state) {
-		true -> type.disable(guildId)
-		false -> type.enable(guildId)
 	}
 }
 
