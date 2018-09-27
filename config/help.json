@@ -1,22 +1,10 @@
 {
 	"Administration": [
 		{
-			"name": "setjoin",
-			"description": "Sets the join channel, uses the default channel if not set",
-			"syntax": "setjoin",
-			"example": "setjoin"
-		},
-		{
-			"name": "setlog",
-			"description": "Sets the logging channel, uses the default channel if not set",
-			"syntax": "setlog",
-			"example": "setlog"
-		},
-		{
-			"name": "setsuggestion",
-			"description": "Sets the suggestion channel, uses the default channel if not set",
-			"syntax": "setjoin",
-			"example": "setjoin"
+			"name": "set",
+			"description": "Sets the logging, welcome or suggestion channel",
+			"syntax": "set { Target Type For Channel (Logging/Welcome/Suggestion) }",
+			"example": "set logging"
 		},
 		{
 			"name": "setup",
@@ -86,18 +74,6 @@
 		}
 	],
 	"Welcome": [
-		{
-			"name": "disablewelcome",
-			"description": "Disables bot welcomes for new members",
-			"syntax": "disablewelcome",
-			"example": "disablewelcome"
-		},
-		{
-			"name": "enablewelcome",
-			"description": "Enables bot welcomes for new members",
-			"syntax": "enablewelcome",
-			"example": "enablewelcome"
-		},
 		{
 			"name": "getwelcomeenabled",
 			"description": "Displays whether bot welcomes are enabled or disabled",

@@ -14,7 +14,7 @@ enum class LoggingType {
 	private fun editLoggingDisabled(serverId: String, status: Boolean) =
 		updatePreferences(serverId) { it[getCol(this@LoggingType)] = status }
 
-	fun getIsDisabled(serverId: String) = getPreference(serverId, getCol(this)) as Boolean
+	fun isDisabled(serverId: String) = getPreference(serverId, getCol(this)) as Boolean
 	fun enable(serverId: String) = editLoggingDisabled(serverId, false)
 	fun disable(serverId: String) = editLoggingDisabled(serverId, true)
 }

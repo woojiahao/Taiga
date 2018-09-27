@@ -4,7 +4,6 @@ import me.chill.arguments.types.DiscordInvite
 import me.chill.arguments.types.Prefix
 import me.chill.arguments.types.Word
 import me.chill.database.operations.*
-import me.chill.database.states.TargetChannel
 import me.chill.database.states.TimeMultiplier
 import me.chill.embed.types.preferenceEmbed
 import me.chill.framework.CommandCategory
@@ -15,32 +14,26 @@ import me.chill.roles.hasRole
 import me.chill.settings.clap
 import me.chill.settings.orange
 import me.chill.settings.serve
-import me.chill.utility.jda.send
 import me.chill.utility.jda.simpleEmbed
 import me.chill.utility.jda.successEmbed
 import me.chill.utility.str
 import net.dv8tion.jda.core.Permission
 import net.dv8tion.jda.core.entities.Guild
-import net.dv8tion.jda.core.entities.MessageChannel
 import org.apache.commons.lang3.text.WordUtils
 
 @CommandCategory
 fun administrationCommands() = commands("Administration") {
-	command("setlog") {
+	command("set") {
+		expects(Word(arrayOf("logging", "join", "suggestion")))
 		execute {
-			setChannel(TargetChannel.Logging, channel, guild)
-		}
-	}
-
-	command("setjoin") {
-		execute {
-			setChannel(TargetChannel.Join, channel, guild)
-		}
-	}
-
-	command("setsuggestion") {
-		execute {
-			setChannel(TargetChannel.Suggestion, channel, guild)
+			val type = TargetChannel.valueOf(WordUtils.capitalize(arguments[0]!!.str()))
+			type.edit(guild.id, channel.id)
+			respond(
+				successEmbed(
+					"Channel Assigned",
+					"${type.name} channel has been assigned to <#${channel.id}> in **${guild.name}**"
+				)
+			)
 		}
 	}
 
@@ -215,19 +208,6 @@ fun administrationCommands() = commands("Administration") {
 			)
 		}
 	}
-}
-
-private fun setChannel(targetChannel: TargetChannel, channel: MessageChannel, guild: Guild) {
-	val channelId = channel.id
-	val serverId = guild.id
-
-	editChannel(targetChannel, serverId, channelId)
-	channel.send(
-		successEmbed(
-			"Channel Assigned",
-			"${targetChannel.name} channel has been assigned to #${channel.name} in **${guild.name}**"
-		)
-	)
 }
 
 private fun setupMuted(guild: Guild) {

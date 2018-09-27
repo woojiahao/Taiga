@@ -15,7 +15,7 @@ import me.chill.utility.str
 fun welcomeCommands() = commands("Welcome") {
 	command("getwelcomeenabled") {
 		execute {
-			val isWelcomeDisabled = LoggingType.Welcome.getIsDisabled(guild.id)
+			val isWelcomeDisabled = LoggingType.Welcome.isDisabled(guild.id)
 			val welcomeState = when (isWelcomeDisabled) {
 				false -> WelcomeState.Enabled
 				true -> WelcomeState.Disabled

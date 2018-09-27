@@ -2,7 +2,6 @@ package me.chill.commands
 
 import me.chill.arguments.types.*
 import me.chill.database.operations.*
-import me.chill.database.states.TargetChannel
 import me.chill.database.states.TimeMultiplier
 import me.chill.embed.types.*
 import me.chill.framework.CommandCategory
