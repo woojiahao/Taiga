@@ -73,14 +73,6 @@
 			"example": "enable logging"
 		}
 	],
-	"Welcome": [
-		{
-			"name": "setwelcomemessage",
-			"description": "Sets the welcome message for new members",
-			"syntax": "setwelcomemessage { Welcome message }",
-			"example": "setwelcomemessage Welcome to the server! Have a seat and make sure to read our rules!"
-		}
-	],
 	"Moderation": [
 		{
 			"name": "echo",
