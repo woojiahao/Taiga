@@ -156,26 +156,6 @@ fun administrationCommands() = commands("Administration") {
 			)
 		}
 	}
-	command("settimemultiplier") {
-		expects(Word(TimeMultiplier.getNames()))
-		execute {
-			val multiplier = arguments[0]!!.str()
-
-			val timeMultiplier = when (multiplier) {
-				"m", "s", "h", "d" -> TimeMultiplier.valueOf(multiplier.toUpperCase())
-				"minute", "second", "hour", "day" -> TimeMultiplier.values().first { mul -> mul.fullTerm == multiplier }
-				else -> TimeMultiplier.M
-			}
-
-			editTimeMultiplier(guild.id, timeMultiplier)
-			respond(
-				successEmbed(
-					"Time Multiplier",
-					"Time multiplier for **${guild.name}** has been set to **${timeMultiplier.fullTerm}s**"
-				)
-			)
-		}
-	}
 
 	command("getpreferences") {
 		execute {
