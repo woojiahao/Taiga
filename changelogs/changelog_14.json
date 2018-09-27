@@ -1,13 +1,14 @@
 {
-	"buildNumber": "3.8",
-	"buildTitle": "Reworking of the preference system",
+	"buildNumber": "4.0",
+	"buildTitle": "Major rework of the preference system",
 	"changes": [
 		"Logging states for welcome, logging and suggestion can now be enabled or disabled",
 		"Command logging is now disabled by default",
 		"Changelog section added to documentation",
-		"Removed preference getters and setters, replacing them with a single `setpreference` command",
-		"Single preferences can now be retrieved via `getpreference`",
-		"Logging, Welcome and Suggestion channels are all now set using the `set` command"
+		"Removed preference getters and setters, replacing them with a single `set` command",
+		"Single preferences can now be retrieved via `get`",
+		"Logging, Welcome and Suggestion channels are all now set using the `setchannel` command",
+		"Invite commands moved to the Invite category"
 	],
 	"releaseDate": "27 September 2018",
 	"contributors": [
@@ -16,7 +17,8 @@
 	"commands": [
 		"enable",
 		"disable",
-		"getpreference",
-		"set"
+		"get",
+		"set",
+		"setchannel"
 	]
 }

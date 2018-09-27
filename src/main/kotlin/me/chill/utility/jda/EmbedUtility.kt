@@ -25,7 +25,7 @@ fun failureEmbed(title: String, description: String, thumbnail: String? = shock,
 	simpleEmbed(title, description, thumbnail, color)
 
 fun cleanEmbed(title: String, description: String) =
-	simpleEmbed(title, description, null, orange)
+	simpleEmbed(title, description, null, green)
 
 fun unknownErrorEmbed(commandName: String) =
 	embed {
