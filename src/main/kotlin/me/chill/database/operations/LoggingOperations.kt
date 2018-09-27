@@ -11,11 +11,11 @@ enum class LoggingType {
 			Suggestion -> Preference.disableSuggestion
 			Logging -> Preference.disableLogging
 		}
-
-	fun getIsDisabled(serverId: String) = getPreference(serverId, getCol(this)) as Boolean
-	fun enable(serverId: String) = editLoggingDisabled(serverId, true)
-	fun disable(serverId: String) = editLoggingDisabled(serverId, false)
 	private fun editLoggingDisabled(serverId: String, status: Boolean) =
 		updatePreferences(serverId) { it[getCol(this@LoggingType)] = status }
+
+	fun getIsDisabled(serverId: String) = getPreference(serverId, getCol(this)) as Boolean
+	fun enable(serverId: String) = editLoggingDisabled(serverId, false)
+	fun disable(serverId: String) = editLoggingDisabled(serverId, true)
 }
 

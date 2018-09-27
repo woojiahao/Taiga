@@ -71,6 +71,18 @@
 			"description": "Displays all the whitelisted invites for the server",
 			"syntax": "whitelist",
 			"example": "whitelist"
+		},
+		{
+			"name": "disable",
+			"description": "Disables a specific logging type, welcome/logging/suggestion",
+			"syntax": "disable { Logging Type (Welcome/Logging/Suggestion) }",
+			"example": "disable logging"
+		},
+		{
+			"name": "enable",
+			"description": "Enables a specific logging type, welcome/logging/suggestion",
+			"syntax": "enable { Logging Type (Welcome/Logging/Suggestion) }",
+			"example": "enable logging"
 		}
 	],
 	"Welcome": [

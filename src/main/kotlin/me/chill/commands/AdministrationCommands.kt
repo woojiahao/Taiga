@@ -12,9 +12,9 @@ import me.chill.framework.commands
 import me.chill.roles.createRole
 import me.chill.roles.getRole
 import me.chill.roles.hasRole
+import me.chill.settings.clap
 import me.chill.settings.orange
 import me.chill.settings.serve
-import me.chill.utility.jda.failureEmbed
 import me.chill.utility.jda.send
 import me.chill.utility.jda.simpleEmbed
 import me.chill.utility.jda.successEmbed
@@ -22,6 +22,7 @@ import me.chill.utility.str
 import net.dv8tion.jda.core.Permission
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.MessageChannel
+import org.apache.commons.lang3.text.WordUtils
 
 @CommandCategory
 fun administrationCommands() = commands("Administration") {
@@ -141,58 +142,6 @@ fun administrationCommands() = commands("Administration") {
 		}
 	}
 
-	command("setpreference") {
-		val words = arrayOf(
-			"tm", "timemultiplier",
-			"rml", "messagelimit",
-			"rmd", "messageduration",
-			"rre", "roleexcluded",
-			"jr", "joinrole"
-		)
-
-		expects(Word(words), Word())
-		execute {
-			val preference = arguments[0]!!.str()
-			val setting = arguments[1]!!.str()
-			when (preference) {
-				"tm", "timemultiplier" -> {
-				}
-				"rml", "messagelimit" -> {
-					val limit = setting.toIntOrNull()
-					if (limit == null) {
-						respond(
-							failureEmbed(
-								"Invalid Setting",
-								"Message limit: **$setting** is invalid, pass an integer the next time"
-							)
-						)
-						return@execute
-					}
-
-					if (limit < 1) {
-						respond(
-							failureEmbed(
-								"Invalid setting",
-								"Message limit: **$limit** cannot be less than 1"
-							)
-						)
-					}
-
-
-				}
-				"rmd", "messageduration" -> {
-
-				}
-				"rre", "roleexcluded" -> {
-
-				}
-				"jr", "joinrole" -> {
-
-				}
-			}
-		}
-	}
-
 	command("addinvite") {
 		expects(DiscordInvite())
 		execute {
@@ -235,6 +184,43 @@ fun administrationCommands() = commands("Administration") {
 				)
 			)
 		}
+	}
+
+	command("disable") {
+		expects(Word(arrayOf("welcome", "logging", "suggestion")))
+		execute {
+			val type = LoggingType.valueOf(WordUtils.capitalize(arguments[0]!!.str()))
+			alterLoggingState(guild.id, type, true)
+			respond(
+				successEmbed(
+					"${type.name} Disabled",
+					"${type.name}s have been disabled for **${guild.name}**",
+					clap
+				)
+			)
+		}
+	}
+
+	command("enable") {
+		expects(Word(arrayOf("welcome", "logging", "suggestion")))
+		execute {
+			val type = LoggingType.valueOf(WordUtils.capitalize(arguments[0]!!.str()))
+			alterLoggingState(guild.id, type, false)
+			respond(
+				successEmbed(
+					"${type.name} Enabled",
+					"${type.name}s have been enabled for **${guild.name}**",
+					clap
+				)
+			)
+		}
+	}
+}
+
+private fun alterLoggingState(guildId: String, type: LoggingType, state: Boolean) {
+	when (state) {
+		true -> type.disable(guildId)
+		false -> type.enable(guildId)
 	}
 }
 
