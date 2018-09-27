@@ -29,7 +29,7 @@ fun manageInviteSent(sender: Member, guild: Guild, channel: MessageChannel, mess
 
 	message.delete().complete()
 	channel.send("${sender.asMention} do not send invites")
-	guild.getTextChannelById(getChannel(TargetChannel.Logging, guildId)).send(inviteCaughtEmbed(sender, guild, channel, message))
+	guild.getTextChannelById(TargetChannel.Logging.get(guildId)).send(inviteCaughtEmbed(sender, guild, channel, message))
 
 	if (getUserCount(senderId, guildId) >= 5) {
 		guild.controller.ban(sender, 1, "Spamming invite links").complete()

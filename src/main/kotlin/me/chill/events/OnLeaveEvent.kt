@@ -2,7 +2,6 @@ package me.chill.events
 
 import me.chill.database.operations.TargetChannel
 import me.chill.database.operations.clearPermissions
-import me.chill.database.operations.getChannel
 import me.chill.database.operations.removeServerPreference
 import me.chill.exception.ListenerEventException
 import me.chill.settings.lost
@@ -27,7 +26,7 @@ class OnLeaveEvent : ListenerAdapter() {
 		val serverId = event.guild.id
 		val member = event.member
 
-		val loggingChannel = event.guild.getTextChannelById(getChannel(TargetChannel.Logging, serverId))
+		val loggingChannel = event.guild.getTextChannelById(TargetChannel.Logging.get(serverId))
 		loggingChannel.send(memberLeaveEmbed(member))
 	}
 

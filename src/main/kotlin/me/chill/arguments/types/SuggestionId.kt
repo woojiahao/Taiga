@@ -3,7 +3,6 @@ package me.chill.arguments.types
 import me.chill.arguments.Argument
 import me.chill.arguments.ArgumentParseMap
 import me.chill.database.operations.TargetChannel
-import me.chill.database.operations.getChannel
 import me.chill.database.operations.hasSuggestion
 import net.dv8tion.jda.core.entities.Guild
 
@@ -13,7 +12,7 @@ class SuggestionId : Argument {
 			return ArgumentParseMap(false, "Suggestion ID: **$arg** is not found")
 		}
 
-		val suggestionChannel = guild.getTextChannelById(getChannel(TargetChannel.Suggestion, guild.id))
+		val suggestionChannel = guild.getTextChannelById(TargetChannel.Suggestion.get(guild.id))
 		if (suggestionChannel.getMessageById(arg) == null) {
 			return ArgumentParseMap(false, "Unable to find suggestion ID: **$arg** in suggestions channel")
 		}

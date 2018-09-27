@@ -1,7 +1,6 @@
 package me.chill.logging
 
 import me.chill.database.operations.TargetChannel
-import me.chill.database.operations.getChannel
 import me.chill.framework.Command
 import me.chill.settings.blue
 import me.chill.settings.pink
@@ -16,13 +15,13 @@ import net.dv8tion.jda.core.entities.MessageChannel
 
 fun normalLog(command: Command) {
 	val guild = command.guild
-	guild.getTextChannelById(getChannel(TargetChannel.Logging, guild.id)).send(
+	guild.getTextChannelById(TargetChannel.Logging.get(guild.id)).send(
 		normalLogEmbed(command.name, command.invoker, command.channel)
 	)
 }
 
 fun macroLog(macroName: String, invoker: Member, channel: MessageChannel, guild: Guild) {
-	guild.getTextChannelById(getChannel(TargetChannel.Logging, guild.id)).send(macroLogEmbed(macroName, invoker, channel))
+	guild.getTextChannelById(TargetChannel.Logging.get(guild.id)).send(macroLogEmbed(macroName, invoker, channel))
 }
 
 private fun macroLogEmbed(macroName: String, invoker: Member, channel: MessageChannel) =

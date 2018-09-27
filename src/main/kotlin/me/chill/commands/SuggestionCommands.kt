@@ -82,7 +82,7 @@ fun suggestionCommands() = commands("Suggestion") {
 			respond("Suggestion Accepted:")
 			respond(suggestionInformationEmbed(suggester, latestSuggestion))
 
-			val suggestionChannelId = me.chill.database.operations.getChannel(TargetChannel.Suggestion, guild.id)
+			val suggestionChannelId = TargetChannel.Suggestion.get(guild.id)
 			val suggestionChannel = guild.getTextChannelById(suggestionChannelId)
 			val messageAction = suggestionChannel.sendMessage(
 				publicSuggestionEmbed(
@@ -109,7 +109,7 @@ fun suggestionCommands() = commands("Suggestion") {
 			val messageId = arguments[0]!!.str()
 			val status = arguments[1]!!.str()
 
-			val suggestionChannel = guild.getTextChannelById(me.chill.database.operations.getChannel(TargetChannel.Suggestion, guild.id))
+			val suggestionChannel = guild.getTextChannelById(TargetChannel.Suggestion.get(guild.id))
 			val message = suggestionChannel.getMessageById(messageId).complete()
 			val original = message.embeds[0]
 			val suggesterName = original.title.substring(original.title.lastIndexOf(" "))
