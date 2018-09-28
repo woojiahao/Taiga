@@ -10,8 +10,8 @@ import me.chill.embed.types.listMacrosEmbed
 import me.chill.embed.types.macroEditEmbed
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
-import me.chill.utility.jda.failureEmbed
-import me.chill.utility.jda.successEmbed
+import me.chill.utility.failureEmbed
+import me.chill.utility.successEmbed
 import me.chill.utility.str
 
 @CommandCategory

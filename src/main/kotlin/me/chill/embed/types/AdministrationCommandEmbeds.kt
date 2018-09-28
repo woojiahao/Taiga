@@ -3,8 +3,8 @@ package me.chill.embed.types
 import me.chill.database.operations.ServerPreference
 import me.chill.database.states.TargetChannel
 import me.chill.settings.cyan
-import me.chill.utility.jda.embed
-import me.chill.utility.jda.printChannel
+import me.chill.utility.embed
+import me.chill.utility.printChannel
 import net.dv8tion.jda.core.entities.Guild
 
 fun preferenceEmbed(guild: Guild, preference: ServerPreference) =

@@ -7,9 +7,9 @@ import me.chill.database.operations.removeJoinRole
 import me.chill.embed.types.listRolesEmbed
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
-import me.chill.roles.assignRole
-import me.chill.roles.removeRole
-import me.chill.utility.jda.successEmbed
+import me.chill.utility.assignRole
+import me.chill.utility.removeRole
+import me.chill.utility.successEmbed
 import me.chill.utility.str
 
 @CommandCategory

@@ -1,10 +1,10 @@
 package me.chill.events
 
 import me.chill.exception.ListenerEventException
-import me.chill.roles.getRole
-import me.chill.roles.hasRole
-import me.chill.utility.jda.failureEmbed
-import me.chill.utility.jda.send
+import me.chill.utility.getRole
+import me.chill.utility.hasRole
+import me.chill.utility.failureEmbed
+import me.chill.utility.send
 import net.dv8tion.jda.core.Permission
 import net.dv8tion.jda.core.events.channel.text.TextChannelCreateEvent
 import net.dv8tion.jda.core.hooks.ListenerAdapter

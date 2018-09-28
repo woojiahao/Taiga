@@ -12,7 +12,7 @@ import me.chill.embed.types.listPermissionsEmbed
 import me.chill.framework.CommandCategory
 import me.chill.framework.CommandContainer
 import me.chill.framework.commands
-import me.chill.utility.jda.successEmbed
+import me.chill.utility.successEmbed
 import me.chill.utility.str
 import org.apache.commons.lang3.text.WordUtils
 

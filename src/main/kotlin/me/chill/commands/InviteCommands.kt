@@ -6,7 +6,7 @@ import me.chill.database.operations.getWhitelist
 import me.chill.database.operations.removeFromWhitelist
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
-import me.chill.utility.jda.successEmbed
+import me.chill.utility.successEmbed
 import me.chill.utility.str
 
 @CommandCategory

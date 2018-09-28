@@ -7,18 +7,11 @@ import me.chill.database.states.TimeMultiplier
 import me.chill.embed.types.*
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
-import me.chill.roles.assignRole
-import me.chill.roles.getMutedRole
-import me.chill.roles.hasRole
-import me.chill.roles.removeRole
 import me.chill.settings.clap
 import me.chill.settings.cyan
 import me.chill.settings.noWay
 import me.chill.settings.orange
-import me.chill.utility.getDateTime
-import me.chill.utility.int
-import me.chill.utility.jda.*
-import me.chill.utility.str
+import me.chill.utility.*
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.entities.MessageChannel
@@ -151,7 +144,8 @@ fun moderationCommands() = commands("Moderation") {
 				guild.getMemberById(arguments[0]!!.str()),
 				"You have been gagged whilst moderators handle an ongoing conflict. Please be patient.",
 				5,
-				TimeMultiplier.M)
+				TimeMultiplier.M
+			)
 		}
 	}
 

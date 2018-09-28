@@ -8,8 +8,8 @@ import me.chill.json.help.example
 import me.chill.json.help.syntax
 import me.chill.settings.*
 import me.chill.utility.getDateTime
-import me.chill.utility.jda.embed
-import me.chill.utility.jda.printMember
+import me.chill.utility.embed
+import me.chill.utility.printMember
 import net.dv8tion.jda.core.JDA
 import net.dv8tion.jda.core.OnlineStatus
 import net.dv8tion.jda.core.entities.Guild

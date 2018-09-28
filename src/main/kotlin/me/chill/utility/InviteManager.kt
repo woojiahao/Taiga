@@ -1,12 +1,8 @@
-package me.chill.utility.invite
+package me.chill.utility
 
 import me.chill.database.operations.*
 import me.chill.database.states.TargetChannel
 import me.chill.settings.red
-import me.chill.utility.jda.embed
-import me.chill.utility.jda.printChannel
-import me.chill.utility.jda.printMember
-import me.chill.utility.jda.send
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.entities.Message

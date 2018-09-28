@@ -11,9 +11,9 @@ import me.chill.framework.commands
 import me.chill.settings.blue
 import me.chill.settings.fondling
 import me.chill.settings.serve
-import me.chill.utility.jda.failureEmbed
-import me.chill.utility.jda.simpleEmbed
-import me.chill.utility.jda.successEmbed
+import me.chill.utility.failureEmbed
+import me.chill.utility.simpleEmbed
+import me.chill.utility.successEmbed
 import me.chill.utility.str
 import net.dv8tion.jda.core.Permission
 import org.jsoup.Jsoup

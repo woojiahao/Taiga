@@ -7,10 +7,10 @@ import me.chill.exception.ListenerEventException
 import me.chill.settings.lost
 import me.chill.settings.red
 import me.chill.utility.getDateTime
-import me.chill.utility.jda.embed
-import me.chill.utility.jda.printMember
-import me.chill.utility.jda.send
-import me.chill.utility.jda.successEmbed
+import me.chill.utility.embed
+import me.chill.utility.printMember
+import me.chill.utility.send
+import me.chill.utility.successEmbed
 import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.events.guild.GuildLeaveEvent
 import net.dv8tion.jda.core.events.guild.member.GuildMemberLeaveEvent

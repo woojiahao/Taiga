@@ -7,7 +7,7 @@ import me.chill.arguments.types.Sentence
 import me.chill.arguments.types.UserId
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
-import me.chill.utility.jda.unknownErrorEmbed
+import me.chill.utility.unknownErrorEmbed
 import me.chill.utility.readAPI
 import me.chill.utility.str
 import me.chill.utility.strictReadAPI

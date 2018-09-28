@@ -14,11 +14,11 @@ import me.chill.logging.macroLog
 import me.chill.logging.normalLog
 import me.chill.raidManger
 import me.chill.settings.noWay
-import me.chill.utility.invite.containsInvite
-import me.chill.utility.invite.extractInvite
-import me.chill.utility.invite.manageInviteSent
-import me.chill.utility.jda.failureEmbed
-import me.chill.utility.jda.send
+import me.chill.utility.containsInvite
+import me.chill.utility.extractInvite
+import me.chill.utility.manageInviteSent
+import me.chill.utility.failureEmbed
+import me.chill.utility.send
 import net.dv8tion.jda.core.Permission
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member

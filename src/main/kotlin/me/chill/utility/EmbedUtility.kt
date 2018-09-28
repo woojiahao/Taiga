@@ -1,4 +1,4 @@
-package me.chill.utility.jda
+package me.chill.utility
 
 import me.chill.embed.EmbedCreator
 import me.chill.settings.*

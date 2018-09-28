@@ -3,10 +3,9 @@ package me.chill.framework
 import me.chill.arguments.Argument
 import me.chill.arguments.types.Sentence
 import me.chill.credentials
-import me.chill.exception.CommandException
 import me.chill.exception.EndArgumentException
 import me.chill.framework.ContainerKey.*
-import me.chill.utility.jda.send
+import me.chill.utility.send
 import net.dv8tion.jda.core.JDA
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member

@@ -1,6 +1,6 @@
 package me.chill
 
-import me.chill.credential.Credentials
+import me.chill.json.configuration.Credentials
 import me.chill.database.setupDatabase
 import me.chill.events.InputEvent
 import me.chill.events.OnChannelCreationEvent

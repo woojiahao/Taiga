@@ -1,4 +1,4 @@
-package me.chill.credential
+package me.chill.json.configuration
 
 import me.chill.exception.CredentialException
 import me.chill.json.configuration.Configuration

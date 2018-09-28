@@ -2,9 +2,7 @@ package me.chill.raid
 
 import me.chill.database.operations.*
 import me.chill.database.states.TargetChannel
-import me.chill.roles.addRoleToUser
-import me.chill.roles.getMutedRole
-import me.chill.utility.jda.*
+import me.chill.utility.*
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.entities.MessageChannel

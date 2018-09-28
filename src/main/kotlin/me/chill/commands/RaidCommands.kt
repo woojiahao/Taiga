@@ -7,11 +7,11 @@ import me.chill.database.operations.getPrefix
 import me.chill.database.operations.getRaiders
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
-import me.chill.roles.getMutedRole
-import me.chill.roles.removeRole
+import me.chill.utility.getMutedRole
+import me.chill.utility.removeRole
 import me.chill.settings.clap
-import me.chill.utility.jda.failureEmbed
-import me.chill.utility.jda.successEmbed
+import me.chill.utility.failureEmbed
+import me.chill.utility.successEmbed
 import me.chill.utility.str
 
 @CommandCategory

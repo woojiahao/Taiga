@@ -1,9 +1,5 @@
-package me.chill.roles
+package me.chill.utility
 
-import me.chill.utility.jda.failureEmbed
-import me.chill.utility.jda.printMember
-import me.chill.utility.jda.send
-import me.chill.utility.jda.successEmbed
 import net.dv8tion.jda.core.entities.*
 
 /**

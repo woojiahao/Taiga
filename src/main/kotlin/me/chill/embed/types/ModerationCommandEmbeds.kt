@@ -8,9 +8,9 @@ import me.chill.settings.cyan
 import me.chill.settings.green
 import me.chill.settings.orange
 import me.chill.settings.red
-import me.chill.utility.jda.embed
-import me.chill.utility.jda.findUser
-import me.chill.utility.jda.printMember
+import me.chill.utility.embed
+import me.chill.utility.findUser
+import me.chill.utility.printMember
 import net.dv8tion.jda.core.JDA
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member

@@ -5,7 +5,7 @@ import me.chill.json.help.findCommand
 import me.chill.json.help.syntax
 import me.chill.settings.red
 import me.chill.settings.shock
-import me.chill.utility.jda.embed
+import me.chill.utility.embed
 
 fun invalidArgumentsEmbed(serverPrefix: String, command: Command, errMsg: String) =
 	embed {

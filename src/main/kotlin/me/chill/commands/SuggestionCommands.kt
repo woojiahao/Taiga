@@ -14,9 +14,9 @@ import me.chill.settings.blue
 import me.chill.settings.green
 import me.chill.settings.orange
 import me.chill.settings.red
-import me.chill.utility.jda.findUser
-import me.chill.utility.jda.simpleEmbed
-import me.chill.utility.jda.successEmbed
+import me.chill.utility.findUser
+import me.chill.utility.simpleEmbed
+import me.chill.utility.successEmbed
 import me.chill.utility.str
 
 @CommandCategory

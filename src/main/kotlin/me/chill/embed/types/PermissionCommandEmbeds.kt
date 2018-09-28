@@ -3,7 +3,7 @@ package me.chill.embed.types
 import me.chill.database.operations.viewPermissions
 import me.chill.framework.CommandContainer
 import me.chill.settings.green
-import me.chill.utility.jda.embed
+import me.chill.utility.embed
 import net.dv8tion.jda.core.entities.Guild
 
 data class Permission(val commandName: String, val permissionName: String)

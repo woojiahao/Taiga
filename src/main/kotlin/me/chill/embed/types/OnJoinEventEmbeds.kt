@@ -2,7 +2,7 @@ package me.chill.embed.types
 
 import me.chill.database.operations.getWelcomeMessage
 import me.chill.settings.green
-import me.chill.utility.jda.embed
+import me.chill.utility.embed
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member
 
