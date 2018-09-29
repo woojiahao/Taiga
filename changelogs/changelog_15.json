@@ -1,0 +1,15 @@
+{
+	"buildNumber": "4.1",
+	"buildTitle": "Interactive Embeds & Anime!",
+	"changes": [
+		"Added the concept of interactive embeds",
+		"Built an anime search tool using AniList api"
+	],
+	"releaseDate": "29 September 2018",
+	"contributors": [
+		"@Chill#4048"
+	],
+	"commands": [
+		"anime"
+	]
+}
