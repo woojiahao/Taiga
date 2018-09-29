@@ -13,8 +13,8 @@ import me.chill.settings.fondling
 import me.chill.settings.serve
 import me.chill.utility.failureEmbed
 import me.chill.utility.simpleEmbed
-import me.chill.utility.successEmbed
 import me.chill.utility.str
+import me.chill.utility.successEmbed
 import net.dv8tion.jda.core.Permission
 import org.jsoup.Jsoup
 import java.io.File
@@ -29,6 +29,20 @@ fun utilityCommands() = commands("Utility") {
 			val jda = jda
 			val latency = jda.ping
 			respond(pingEmbed(latency))
+		}
+	}
+
+	command("source") {
+		execute {
+			respond(
+				simpleEmbed(
+					"Sources",
+					"- [GitHub repository](https://github.com/woojiahao/Taiga)\n" +
+						"- [Website](https://woojiahao.github.io/Taiga)",
+					serve,
+					blue
+				)
+			)
 		}
 	}
 

@@ -26,6 +26,7 @@
 		<reflections.version>0.9.11</reflections.version>
 		<wordutils.version>3.0</wordutils.version>
 		<jsoup.version>1.11.3</jsoup.version>
+		<khttp.version>0.1.0</khttp.version>
 
 		<main.class>me.chill.BotKt</main.class>
 	</properties>
@@ -115,7 +116,7 @@
 		<dependency>
 			<groupId>khttp</groupId>
 			<artifactId>khttp</artifactId>
-			<version>0.1.0</version>
+			<version>${khttp.version}</version>
 		</dependency>
 
 	</dependencies>

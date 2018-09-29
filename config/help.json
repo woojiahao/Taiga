@@ -145,6 +145,12 @@
 			"example": "invite"
 		},
 		{
+			"name": "source",
+			"description": "Displays all links related to my source code",
+			"syntax": "source",
+			"example": "source"
+		},
+		{
 			"name": "ping",
 			"description": "Displays the ping for me",
 			"syntax": "ping",
@@ -368,11 +374,12 @@
 		}
 	],
 	"Developer": [
+		,
 		{
-			"name": "source",
-			"description": "Displays all links related to my source code",
-			"syntax": "source",
-			"example": "source"
+			"name": "issues",
+			"description": "Displays the current set of issues on the Taiga GitHub repository if no arguments is passed, otherwise, it will select and display information about a specific issue",
+			"syntax": "issues ({ Issue Number })",
+			"example": "issues (5)"
 		}
 	]
 }

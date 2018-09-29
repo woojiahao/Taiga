@@ -10,7 +10,6 @@ class CommandContainer private constructor() {
 		val commandSets = mutableListOf<CommandSet>()
 
 		fun loadContainer() {
-			println("Loading commands")
 			val reflections = Reflections("me.chill.commands", MethodAnnotationsScanner())
 			reflections.getMethodsAnnotatedWith(CommandCategory::class.java).forEach { it.invoke(null) }
 			checkCommands()

@@ -11,10 +11,6 @@ import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.entities.MessageChannel
 
 class RaidManager {
-	init {
-		println("Loading raid manager")
-	}
-
 	private val raiders = mutableMapOf<String, RaiderList>()
 
 	/**
