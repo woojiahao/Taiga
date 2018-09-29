@@ -349,8 +349,8 @@
 		{
 			"name": "anime",
 			"description": "Searches for animes based on a search term",
-			"syntax": "anime",
-			"example": "anime"
+			"syntax": "anime { Search Terms }",
+			"example": "anime konosuba"
 		}
 	],
 	"Invite": [

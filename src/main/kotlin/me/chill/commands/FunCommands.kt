@@ -1,16 +1,18 @@
 package me.chill.commands
 
+import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import khttp.post
 import me.chill.arguments.types.EmoteName
 import me.chill.arguments.types.Sentence
 import me.chill.arguments.types.UserId
+import me.chill.embed.types.animeInformationEmbed
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
-import me.chill.utility.readAPI
-import me.chill.utility.str
-import me.chill.utility.strictReadAPI
-import me.chill.utility.unknownErrorEmbed
+import me.chill.interactiveEmbedManager
+import me.chill.utility.*
+import org.json.JSONObject
 import java.util.*
 
 @CommandCategory
@@ -97,7 +99,102 @@ fun funCommands() = commands("Fun") {
 	command("anime") {
 		expects(Sentence())
 		execute {
-			val animeSelected = arguments[0]!!.str()
+			val searchTerm = arguments[0]!!.str()
+			val endpoint = "https://graphql.anilist.co"
+			val query = """
+				query (${'$'}id: Int, ${'$'}page: Int, ${'$'}perPage: Int, ${'$'}search: String) {
+					Page (page: ${'$'}page, perPage: ${'$'}perPage) {
+					pageInfo {
+						total
+						currentPage
+						lastPage
+						hasNextPage
+						perPage
+					}
+
+					media (id: ${'$'}id, search: ${'$'}search, type: ANIME) {
+						id
+						title {
+							romaji
+							english
+							native
+						}
+						startDate {
+							year
+							month
+							day
+						}
+						endDate {
+							year
+							month
+							day
+						}
+						season
+						status
+						episodes
+						duration
+						genres
+						averageScore
+						bannerImage
+						popularity
+						description
+						studios {
+							nodes {
+								name
+							}
+						}
+					}
+				}
+			}
+			""".trimIndent()
+			val variables = "{ \"search\": \"$searchTerm\" }"
+
+			val result = post(
+				endpoint,
+				mapOf(
+					"Content-Type" to "application/json",
+					"Accept" to "application/json"
+				),
+				json = JSONObject(mapOf("query" to query, "variables" to variables))
+			).text
+
+			val json = Gson().fromJson(result, JsonObject::class.java)
+			if (json["data"] == null) {
+				respond(unknownErrorEmbed("anime"))
+				return@execute
+			}
+
+			val animes = json["data"].asJsonObject["Page"].asJsonObject["media"].asJsonArray
+			if (animes.size() == 0) {
+				respond(
+					failureEmbed(
+						"Anime Search Fail",
+						"Anime: **$searchTerm** was not found"
+					)
+				)
+				return@execute
+			}
+
+			if (animes.size() == 1) {
+				respond(animeInformationEmbed(animes[0].asJsonObject))
+			} else {
+				val options = animes.map { anime ->
+					var name = anime.asJsonObject.getAsJsonObject("title")["english"]
+					if (name.isJsonNull) {
+						name = anime.asJsonObject.getAsJsonObject("title")["romaji"]
+					}
+					name.asString
+				}
+				interactiveEmbedManager.send(
+					options.toTypedArray(),
+					channel,
+					"Anime Search",
+					"The search term: **$searchTerm** returned multiple results, select the one you wish to view"
+				) { message, selection ->
+					val selectedAnime = options.indexOfFirst { option -> option == selection }
+					message.editMessage(animeInformationEmbed(animes[selectedAnime].asJsonObject)).complete()
+				}
+			}
 		}
 	}
 }

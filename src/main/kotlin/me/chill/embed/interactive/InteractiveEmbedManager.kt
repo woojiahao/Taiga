@@ -2,8 +2,6 @@ package me.chill.embed.interactive
 
 import me.chill.settings.green
 import me.chill.utility.embed
-import net.dv8tion.jda.core.entities.Guild
-import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.entities.Message
 import net.dv8tion.jda.core.entities.MessageChannel
 
@@ -33,11 +31,9 @@ class InteractiveEmbedManager {
 	}
 
 	fun send(
-		channel: MessageChannel,
-		guild: Guild,
-		invoker: Member,
-		title: String,
 		data: Array<String>,
+		channel: MessageChannel,
+		title: String,
 		description: String,
 		action: (Message, String) -> Unit
 	) {
@@ -53,7 +49,7 @@ class InteractiveEmbedManager {
 		).complete()
 
 		populateReaction(message, pagination)
-		interactiveEmbeds.add(InteractiveEmbed(guild, invoker, message, pagination, action))
+		interactiveEmbeds.add(InteractiveEmbed(message, pagination, action))
 	}
 
 	fun formatContent(pagination: Pagination): String {

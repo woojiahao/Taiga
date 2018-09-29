@@ -2,13 +2,9 @@ package me.chill.embed.interactive
 
 import me.chill.interactiveEmbedManager
 import me.chill.utility.embed
-import net.dv8tion.jda.core.entities.Guild
-import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.entities.Message
 
 data class InteractiveEmbed(
-	val guild: Guild,
-	val invoker: Member,
 	val message: Message,
 	val pagination: Pagination,
 	val action: (Message, String) -> Unit
