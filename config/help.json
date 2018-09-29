@@ -157,12 +157,6 @@
 			"example": "serverinfo"
 		},
 		{
-			"name": "source",
-			"description": "Displays all links related to my source code",
-			"syntax": "source",
-			"example": "source"
-		},
-		{
 			"name": "botinfo",
 			"description": "Displays information about the bot",
 			"syntax": "botinfo",
@@ -349,7 +343,7 @@
 		{
 			"name": "anime",
 			"description": "Searches for animes based on a search term",
-			"syntax": "anime { Search Terms }",
+			"syntax": "anime { Search Term }",
 			"example": "anime konosuba"
 		}
 	],
@@ -371,6 +365,14 @@
 			"description": "Displays all the whitelisted invites for the server",
 			"syntax": "whitelist",
 			"example": "whitelist"
+		}
+	],
+	"Developer": [
+		{
+			"name": "source",
+			"description": "Displays all links related to my source code",
+			"syntax": "source",
+			"example": "source"
 		}
 	]
 }

@@ -46,20 +46,6 @@ fun utilityCommands() = commands("Utility") {
 		}
 	}
 
-	command("source") {
-		execute {
-			respond(
-				simpleEmbed(
-					"Sources",
-					"- [GitHub repository](https://github.com/woojiahao/Taiga)\n" +
-						"- [Website](https://woojiahao.github.io/Taiga)",
-					serve,
-					blue
-				)
-			)
-		}
-	}
-
 	command("help") {
 		expects(ArgumentMix(CategoryName(), CommandName()))
 		execute {
