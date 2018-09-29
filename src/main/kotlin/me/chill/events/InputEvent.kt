@@ -14,11 +14,7 @@ import me.chill.logging.macroLog
 import me.chill.logging.normalLog
 import me.chill.raidManger
 import me.chill.settings.noWay
-import me.chill.utility.containsInvite
-import me.chill.utility.extractInvite
-import me.chill.utility.manageInviteSent
-import me.chill.utility.failureEmbed
-import me.chill.utility.send
+import me.chill.utility.*
 import net.dv8tion.jda.core.Permission
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member
@@ -176,7 +172,7 @@ private fun handleRaider(invoker: Member, server: Guild, messageChannel: Message
 		isExcludedFromRaidControl -> true
 		isAlreadyCaught -> null
 		else -> {
-			raidManger!!.manageRaid(server, messageChannel, invoker)
+			raidManger.manageRaid(server, messageChannel, invoker)
 			false
 		}
 	}

@@ -345,6 +345,12 @@
 			"description": "Displays a bird picture/GIF",
 			"syntax": "bird",
 			"example": "bird"
+		},
+		{
+			"name": "test",
+			"description": "Displays a bird picture/GIF",
+			"syntax": "bird",
+			"example": "bird"
 		}
 	],
 	"Invite": [

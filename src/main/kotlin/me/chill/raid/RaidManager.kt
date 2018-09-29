@@ -1,6 +1,9 @@
 package me.chill.raid
 
-import me.chill.database.operations.*
+import me.chill.database.operations.addRaider
+import me.chill.database.operations.getPrefix
+import me.chill.database.operations.getRaidMessageDuration
+import me.chill.database.operations.getRaidMessageLimit
 import me.chill.database.states.TargetChannel
 import me.chill.utility.*
 import net.dv8tion.jda.core.entities.Guild
@@ -8,6 +11,10 @@ import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.entities.MessageChannel
 
 class RaidManager {
+	init {
+		println("Loading raid manager")
+	}
+
 	private val raiders = mutableMapOf<String, RaiderList>()
 
 	/**

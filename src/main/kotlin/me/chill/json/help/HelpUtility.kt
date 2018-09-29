@@ -11,6 +11,8 @@ import java.io.FileReader
 
 
 fun loadHelp(): List<CommandInfo> {
+	println("Loading help information")
+
 	val gson = Gson()
 	val list = mutableListOf<CommandInfo>()
 	val commandInfoList = gson.fromJson<JsonObject>(FileReader(File("config/help.json")), JsonObject::class.java)

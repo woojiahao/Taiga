@@ -1,12 +1,10 @@
 package me.chill
 
-import me.chill.json.configuration.Credentials
 import me.chill.database.setupDatabase
-import me.chill.events.InputEvent
-import me.chill.events.OnChannelCreationEvent
-import me.chill.events.OnJoinEvent
-import me.chill.events.OnLeaveEvent
+import me.chill.embed.interactive.InteractiveEmbedManager
+import me.chill.events.*
 import me.chill.framework.CommandContainer
+import me.chill.json.configuration.Credentials
 import me.chill.json.configuration.isHerokuRunning
 import me.chill.json.configuration.loadConfigurations
 import me.chill.json.help.CommandInfo
@@ -19,7 +17,8 @@ import net.dv8tion.jda.core.entities.Game
 
 var credentials: Credentials? = null
 var commandInfo: List<CommandInfo>? = null
-var raidManger: RaidManager? = null
+val raidManger = RaidManager()
+val interactiveEmbedManager = InteractiveEmbedManager()
 fun main(args: Array<String>) {
 	setup()
 
@@ -27,7 +26,7 @@ fun main(args: Array<String>) {
 		.setStatus(OnlineStatus.ONLINE)
 		.setToken(credentials!!.token)
 		.setGame(Game.playing("${credentials!!.defaultPrefix}help"))
-		.addEventListener(OnJoinEvent(), OnLeaveEvent(), OnChannelCreationEvent(), InputEvent())
+		.addEventListener(OnJoinEvent(), OnLeaveEvent(), OnChannelCreationEvent(), InputEvent(), InteractiveEmbedEvent())
 		.build()
 	credentials!!.botOwnerId = jda.asBot().applicationInfo.complete().owner.id
 }
@@ -40,17 +39,9 @@ private fun setup() {
 		Credentials(configurations)
 	}
 
-	println("Setting up database")
 	setupDatabase(credentials!!.database!!)
-
-	println("Loading commands")
 	CommandContainer.loadContainer()
-
-	println("Loading help")
 	commandInfo = loadHelp()
-
-	println("Loading raid manager")
-	raidManger = RaidManager()
 
 	println("Bot has loaded")
 }
