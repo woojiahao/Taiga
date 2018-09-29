@@ -7,9 +7,10 @@ import me.chill.arguments.types.Sentence
 import me.chill.arguments.types.UserId
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
-import me.chill.interactiveEmbedManager
-import me.chill.settings.yellow
-import me.chill.utility.*
+import me.chill.utility.readAPI
+import me.chill.utility.str
+import me.chill.utility.strictReadAPI
+import me.chill.utility.unknownErrorEmbed
 import java.util.*
 
 @CommandCategory
@@ -93,30 +94,10 @@ fun funCommands() = commands("Fun") {
 		}
 	}
 
-	command("test") {
-		expects()
+	command("anime") {
+		expects(Sentence())
 		execute {
-			val sentence = arrayOf(
-				"apple", "orange", "banana", "pear",
-				"peach", "grapes", "papaya", "durian",
-				"rambutan", "squash", "mango"
-			)
-			interactiveEmbedManager.send(
-				channel,
-				guild,
-				invoker,
-				"Testing",
-				sentence,
-				"Select the anime"
-			) { message, selection ->
-				message.editMessage(
-					embed {
-						title = "Selection Made"
-						description = "You selected $selection"
-						color = yellow
-					}
-				).queue()
-			}
+			val animeSelected = arguments[0]!!.str()
 		}
 	}
 }

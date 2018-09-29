@@ -40,7 +40,7 @@ private fun updateOptions(message: Message, options: String, page: String) {
 			color = message.embeds[0].colorRaw
 			field {
 				title = "Option:"
-				description = options
+				description = "Select the option via the reactions\n\n$options"
 			}
 
 			footer {

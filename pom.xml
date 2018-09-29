@@ -26,7 +26,6 @@
 		<reflections.version>0.9.11</reflections.version>
 		<wordutils.version>3.0</wordutils.version>
 		<jsoup.version>1.11.3</jsoup.version>
-		<kgraphql.version>0.3.0-alpha</kgraphql.version>
 
 		<main.class>me.chill.BotKt</main.class>
 	</properties>
@@ -113,11 +112,6 @@
 			<version>${jsoup.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>com.github.pgutkowski</groupId>
-			<artifactId>kgraphql</artifactId>
-			<version>${kgraphql.version}</version>
-		</dependency>
 	</dependencies>
 
 	<build>
