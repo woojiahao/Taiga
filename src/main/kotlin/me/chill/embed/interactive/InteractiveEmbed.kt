@@ -15,6 +15,7 @@ data class InteractiveEmbed(
 			val data = pagination.getCurrentPage()?.get(selection)
 			data?.let { action(message, it) }
 			message.clearReactions().complete()
+			interactiveEmbedManager.clearEmbed(message.id)
 		} else {
 			val navigationButton = InteractiveEmote.getNavigation(option).name
 			when (navigationButton) {

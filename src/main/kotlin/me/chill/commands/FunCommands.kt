@@ -99,9 +99,10 @@ fun funCommands() = commands("Fun") {
 	command("anime") {
 		expects(Sentence())
 		execute {
-			val searchTerm = arguments[0]!!.str()
-			val endpoint = "https://graphql.anilist.co"
-			val query = """
+			Thread {
+				val searchTerm = arguments[0]!!.str()
+				val endpoint = "https://graphql.anilist.co"
+				val query = """
 				query (${'$'}id: Int, ${'$'}page: Int, ${'$'}perPage: Int, ${'$'}search: String) {
 					Page (page: ${'$'}page, perPage: ${'$'}perPage) {
 					pageInfo {
@@ -147,54 +148,55 @@ fun funCommands() = commands("Fun") {
 				}
 			}
 			""".trimIndent()
-			val variables = "{ \"search\": \"$searchTerm\" }"
+				val variables = "{ \"search\": \"$searchTerm\" }"
 
-			val result = post(
-				endpoint,
-				mapOf(
-					"Content-Type" to "application/json",
-					"Accept" to "application/json"
-				),
-				json = JSONObject(mapOf("query" to query, "variables" to variables))
-			).text
+				val result = post(
+					endpoint,
+					mapOf(
+						"Content-Type" to "application/json",
+						"Accept" to "application/json"
+					),
+					json = JSONObject(mapOf("query" to query, "variables" to variables))
+				).text
 
-			val json = Gson().fromJson(result, JsonObject::class.java)
-			if (json["data"] == null) {
-				respond(unknownErrorEmbed("anime"))
-				return@execute
-			}
+				val json = Gson().fromJson(result, JsonObject::class.java)
+				if (json["data"] == null) {
+					respond(unknownErrorEmbed("anime"))
+					return@Thread
+				}
 
-			val animes = json["data"].asJsonObject["Page"].asJsonObject["media"].asJsonArray
-			if (animes.size() == 0) {
-				respond(
-					failureEmbed(
-						"Anime Search Fail",
-						"Anime: **$searchTerm** was not found"
+				val animes = json["data"].asJsonObject["Page"].asJsonObject["media"].asJsonArray
+				if (animes.size() == 0) {
+					respond(
+						failureEmbed(
+							"Anime Search Fail",
+							"Anime: **$searchTerm** was not found"
+						)
 					)
-				)
-				return@execute
-			}
+					return@Thread
+				}
 
-			if (animes.size() == 1) {
-				respond(animeInformationEmbed(animes[0].asJsonObject))
-			} else {
-				val options = animes.map { anime ->
-					var name = anime.asJsonObject.getAsJsonObject("title")["english"]
-					if (name.isJsonNull) {
-						name = anime.asJsonObject.getAsJsonObject("title")["romaji"]
+				if (animes.size() == 1) {
+					respond(animeInformationEmbed(animes[0].asJsonObject))
+				} else {
+					val options = animes.map { anime ->
+						var name = anime.asJsonObject.getAsJsonObject("title")["english"]
+						if (name.isJsonNull) {
+							name = anime.asJsonObject.getAsJsonObject("title")["romaji"]
+						}
+						name.asString
 					}
-					name.asString
+					interactiveEmbedManager.send(
+						options.toTypedArray(),
+						channel,
+						"Anime Search",
+						"The search term: **$searchTerm** returned multiple results, select the one you wish to view"
+					) { message, selection ->
+						val selectedAnime = options.indexOfFirst { option -> option == selection }
+						message.editMessage(animeInformationEmbed(animes[selectedAnime].asJsonObject)).complete()
+					}
 				}
-				interactiveEmbedManager.send(
-					options.toTypedArray(),
-					channel,
-					"Anime Search",
-					"The search term: **$searchTerm** returned multiple results, select the one you wish to view"
-				) { message, selection ->
-					val selectedAnime = options.indexOfFirst { option -> option == selection }
-					message.editMessage(animeInformationEmbed(animes[selectedAnime].asJsonObject)).complete()
-				}
-			}
+			}.start()
 		}
 	}
 }

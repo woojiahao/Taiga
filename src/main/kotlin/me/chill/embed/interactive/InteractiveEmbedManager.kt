@@ -66,6 +66,10 @@ class InteractiveEmbedManager {
 		generateReactionList(pagination).forEach { message.addReaction(it).complete() }
 	}
 
+	fun clearEmbed(id: String) = interactiveEmbeds.find { it.message.id == id }?.let {
+		interactiveEmbeds.remove(it)
+	}
+
 	fun hasReaction(id: String, reactionName: String) = generateReactionList(getEmbed(id).pagination).contains(reactionName)
 
 	fun hasEmbed(id: String) = interactiveEmbeds.any { it.message.id == id }
