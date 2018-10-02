@@ -24,20 +24,34 @@ object Permission : Table() {
 }
 
 object Preference : Table() {
+	// General
 	val serverId = varchar("server_id", 20).primaryKey()
+
+	// Prefix
 	val prefix = varchar("prefix", 3)
+
+	// Channel Assignment
 	val joinChannel = varchar("join", 20)
 	val loggingChannel = varchar("logging", 20)
 	val suggestionChannel = varchar("suggestion", 20)
+	val disableWelcome = bool("disable_welcome")
+	val disableLogging = bool("disable_logging")
+	val disableSuggestion = bool("disable_suggestion")
+
+	// Raid
 	val raidMessageLimit = integer("raid_message_limit")
 	val raidMessageDuration = integer("raid_message_duration")
 	val raidRoleExcluded = varchar("raid_role_excluded", 20).nullable()
-	val disableWelcome = bool("disable_welcome")
+
+	// Member On Join
 	val welcomeMessage = text("welcome_message")
-	val timeMultiplier = varchar("time_multiplier", 1)
 	val onJoinRole = varchar("on_join_role", 20).nullable()
-	val disableLogging = bool("disable_logging")
-	val disableSuggestion = bool("disable_suggestion")
+
+	// Moderation
+	val timeMultiplier = varchar("time_multiplier", 1)
+
+	// Invite
+	val inviteRoleExcluded = varchar("invite_role_excluded", 20).nullable()
 }
 
 object UserRecord : Table() {

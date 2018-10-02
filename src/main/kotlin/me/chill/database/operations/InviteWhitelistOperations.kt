@@ -1,6 +1,7 @@
 package me.chill.database.operations
 
 import me.chill.database.InviteWhitelist
+import me.chill.database.Preference
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
@@ -31,3 +32,7 @@ fun getWhitelist(serverId: String) =
 			"- ${it[InviteWhitelist.inviteLink]}"
 		}
 	}
+
+fun getInviteExcluded(serverId: String) = getPreference(serverId, Preference.inviteRoleExcluded) as String?
+
+fun editInviteExcluded(serverId: String, roleId: String) = updatePreferences(serverId) { it[inviteRoleExcluded] = roleId }

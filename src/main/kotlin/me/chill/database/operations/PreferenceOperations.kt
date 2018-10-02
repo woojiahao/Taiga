@@ -21,7 +21,8 @@ data class ServerPreference (
 	val timeMultiplier: TimeMultiplier,
 	val onJoinRole: String?,
 	val loggingDisabled: Boolean,
-	val suggestionDisabled: Boolean
+	val suggestionDisabled: Boolean,
+	val inviteExcluded: String?
 )
 
 fun addServerPreference(serverId: String, defaultChannelId: String) {
@@ -41,6 +42,7 @@ fun addServerPreference(serverId: String, defaultChannelId: String) {
 			it[disableWelcome] = true
 			it[disableLogging] = true
 			it[disableSuggestion] = true
+			it[inviteRoleExcluded] = null
 		}
 	}
 }
@@ -79,6 +81,7 @@ fun getAllPreferences(serverId: String) =
 			TimeMultiplier.valueOf(result[Preference.timeMultiplier]),
 			result[Preference.onJoinRole],
 			result[Preference.disableLogging],
-			result[Preference.disableSuggestion]
+			result[Preference.disableSuggestion],
+			result[Preference.inviteRoleExcluded]
 		)
 	}

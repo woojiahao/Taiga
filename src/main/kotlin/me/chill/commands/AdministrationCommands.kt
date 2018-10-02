@@ -8,15 +8,8 @@ import me.chill.embed.types.newMemberJoinEmbed
 import me.chill.embed.types.preferenceEmbed
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
-import me.chill.utility.createRole
-import me.chill.utility.getRole
-import me.chill.utility.hasRole
 import me.chill.settings.clap
-import me.chill.utility.cleanEmbed
-import me.chill.utility.failureEmbed
-import me.chill.utility.printChannel
-import me.chill.utility.successEmbed
-import me.chill.utility.str
+import me.chill.utility.*
 import net.dv8tion.jda.core.JDA
 import net.dv8tion.jda.core.Permission
 import net.dv8tion.jda.core.entities.Guild
@@ -28,7 +21,8 @@ private val preferences = arrayOf(
 	"prefix", "multiplier", "logging",
 	"join", "suggestion", "messagelimit",
 	"messageduration", "raidexcluded",
-	"welcomemessage", "joinrole"
+	"welcomemessage", "joinrole",
+	"inviteexcluded"
 )
 
 @CommandCategory
@@ -111,6 +105,7 @@ fun administrationCommands() = commands("Administration") {
 	}
 }
 
+// todo: refactor this mess
 private fun setPreference(preference: String, input: String, guild: Guild, invoker: Member, jda: JDA): MessageEmbed? {
 	return when (preference) {
 		"prefix" -> {
@@ -209,6 +204,19 @@ private fun setPreference(preference: String, input: String, guild: Guild, invok
 			)
 		}
 
+		"inviteexcluded" -> {
+			val parseMap = RoleId().check(guild, input)
+			if (!parseMap.status) {
+				return failureEmbed("Unable to set invite role excluded", parseMap.errMsg)
+			}
+
+			editInviteExcluded(guild.id, parseMap.parsedValue)
+			cleanEmbed(
+				"Invite Role Excluded",
+				"**${guild.getRoleById(parseMap.parsedValue).name} and higher** will be excluded from the invite filter"
+			)
+		}
+
 		else -> null
 	}
 
@@ -285,6 +293,14 @@ private fun displayPreference(preference: String, guild: Guild, invoker: Member)
 					"New members will be assigned **${guild.getRoleById(roleId).name}** on join"
 				}
 			cleanEmbed("Member On Join", message)
+		}
+
+		"inviteexcluded" -> {
+			val inviteRoleExcluded = getInviteExcluded(guild.id)
+			cleanEmbed(
+				"Invite Role Excluded",
+				if (inviteRoleExcluded == null) "No role is being filtered"
+				else "**${guild.getRoleById(inviteRoleExcluded).name} and higher** are excluded from the invite filter")
 		}
 
 		else -> null

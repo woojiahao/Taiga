@@ -154,6 +154,11 @@ private fun handleInvite(
 	if (containsInvite(message)) {
 		val extractedInvite = extractInvite(message)
 		if (!hasInviteInWhitelist(server.id, extractedInvite) && !invoker.isOwner) {
+			if (invoker.roles.isNotEmpty() && getInviteExcluded(server.id) != null) {
+				if (invoker.roles[0].position >= server.getRoleById(getInviteExcluded(server.id)).position) {
+					return true
+				}
+			}
 			manageInviteSent(invoker, server, messageChannel, originalMessage)
 			return false
 		}

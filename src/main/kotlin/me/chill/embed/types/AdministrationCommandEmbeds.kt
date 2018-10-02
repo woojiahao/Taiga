@@ -50,11 +50,7 @@ fun preferenceEmbed(guild: Guild, preference: ServerPreference) =
 		}
 
 		field {
-			val isWelcomeDisabled = if (preference.welcomeDisabled) {
-				"disabled"
-			} else {
-				"enabled"
-			}
+			val isWelcomeDisabled = TargetChannel.disableStatus(preference.welcomeDisabled)
 			val newMemberMessage = StringBuilder("Welcomes are **$isWelcomeDisabled** for the server.\n")
 			preference.onJoinRole?.let {
 				newMemberMessage.append("New members will be assigned **${guild.getRoleById(it).name}** on join.\n")
@@ -63,6 +59,15 @@ fun preferenceEmbed(guild: Guild, preference: ServerPreference) =
 
 			title = "New Members"
 			description = newMemberMessage.toString()
+		}
+
+		field {
+			val message = StringBuilder("Members who send **5** invites will be automatically banned.")
+			preference.inviteExcluded?.let {
+				message.append("\nMembers with the role **${guild.getRoleById(preference.inviteExcluded).name} and higher** will not be caught for sending invites")
+			}
+			title = "Invites"
+			description = message.toString()
 		}
 
 		field {
