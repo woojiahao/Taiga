@@ -9,10 +9,21 @@ import me.chill.framework.CommandContainer
 import java.io.File
 import java.io.FileReader
 
+data class ArgumentList(
+	val name: String,
+	val args: List<String>
+)
+
+data class CommandInfo(
+	val name: String,
+	val description: String,
+	val syntax: String,
+	val example: String,
+	var category: String? = null,
+	val argumentList: MutableList<ArgumentList>? = mutableListOf()
+)
 
 fun loadHelp(): List<CommandInfo> {
-	println("Loading help information")
-
 	val gson = Gson()
 	val list = mutableListOf<CommandInfo>()
 	val commandInfoList = gson.fromJson<JsonObject>(FileReader(File("config/help.json")), JsonObject::class.java)
@@ -40,3 +51,5 @@ val Command.syntax get() = "$serverPrefix${findCommand(name).syntax}"
 val Command.example get() = "$serverPrefix${findCommand(name).example}"
 
 val Command.description get() = findCommand(name).description
+
+val Command.argumentList get() = findCommand(name).argumentList?.toList()

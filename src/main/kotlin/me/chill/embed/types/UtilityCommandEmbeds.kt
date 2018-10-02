@@ -3,12 +3,13 @@ package me.chill.embed.types
 import me.chill.framework.Command
 import me.chill.framework.CommandContainer
 import me.chill.framework.CommandSet
+import me.chill.json.help.argumentList
 import me.chill.json.help.description
 import me.chill.json.help.example
 import me.chill.json.help.syntax
 import me.chill.settings.*
-import me.chill.utility.getDateTime
 import me.chill.utility.embed
+import me.chill.utility.getDateTime
 import me.chill.utility.printMember
 import net.dv8tion.jda.core.JDA
 import net.dv8tion.jda.core.OnlineStatus
@@ -162,14 +163,25 @@ fun commandInfoEmbed(command: Command) =
 		title = "${command.category} - ${command.name}"
 		color = cyan
 		description = command.description
+
 		field {
 			title = "Syntax"
 			description = command.syntax
 		}
+
+
+		command.argumentList?.forEach { arg ->
+			field {
+				title = arg.name
+				description = arg.args.joinToString(", ")
+			}
+		}
+
 		field {
 			title = "Example"
 			description = command.example
 		}
+
 		field {
 			title = "Learn More"
 			description = "[Documentation on ${command.name}]($helpLink)"

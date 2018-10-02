@@ -6,6 +6,12 @@ import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
 
+data class Configuration(
+	val token: String = "enter your token",
+	val database: String = "enter your database url",
+	val prefix: String = "enter your prefix"
+)
+
 private val gson = GsonBuilder().create()
 
 private const val configPath = "config/config.json"

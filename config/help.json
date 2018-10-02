@@ -2,9 +2,20 @@
 	"Administration": [
 		{
 			"name": "setchannel",
-			"description": "Sets the logging, welcome or suggestion channel",
-			"syntax": "setchannel { Target Type For Channel (Logging/Welcome/Suggestion) }",
-			"example": "setchannel logging"
+			"description": "Sets the channel to a specific channel type",
+			"syntax": "setchannel { Channel Type }",
+			"example": "setchannel logging",
+			"argumentList": [
+				{
+					"name": "Channel Type",
+					"args": [
+						"logging",
+						"join",
+						"suggestion",
+						"useractivity"
+					]
+				}
+			]
 		},
 		{
 			"name": "setup",
@@ -21,26 +32,86 @@
 		{
 			"name": "set",
 			"description": "Sets the value for a preference",
-			"syntax": "set { Preference (prefix/multiplier/logging/join/suggestion/messagelimit/messageduration/raidexcluded/welcomeenabled/welcomemessage/joinrole) } { Value }",
-			"example": "set messagelimit 5"
+			"syntax": "set { Preference } { Value }",
+			"example": "set messagelimit 5",
+			"argumentList": [
+				{
+					"name": "Preference",
+					"args": [
+						"prefix",
+						"multiplier",
+						"logging",
+						"join",
+						"suggestion",
+						"useractivity",
+						"messagelimit",
+						"messageduration",
+						"raidexcluded",
+						"welcomemessage",
+						"joinrole",
+						"inviteexcluded"
+					]
+				}
+			]
 		},
 		{
 			"name": "get",
 			"description": "Displays the details of a specific preference set",
-			"syntax": "get { Preference (prefix/multiplier/logging/join/suggestion/messagelimit/messageduration/raidexcluded/welcomeenabled/welcomemessage/joinrole) }",
-			"example": "get prefix"
+			"syntax": "get { Preference }",
+			"example": "get prefix",
+			"argumentList": [
+				{
+					"name": "Preference",
+					"args": [
+						"prefix",
+						"multiplier",
+						"logging",
+						"join",
+						"suggestion",
+						"useractivity",
+						"messagelimit",
+						"messageduration",
+						"raidexcluded",
+						"welcomemessage",
+						"joinrole",
+						"inviteexcluded"
+					]
+				}
+			]
 		},
 		{
 			"name": "disable",
-			"description": "Disables a specific logging type, welcome/logging/suggestion",
-			"syntax": "disable { Logging Type (Welcome/Logging/Suggestion) }",
-			"example": "disable logging"
+			"description": "Disables a specific channel type",
+			"syntax": "disable { Channel Type }",
+			"example": "disable logging",
+			"argumentList": [
+				{
+					"name": "Channel Type",
+					"args": [
+						"logging",
+						"join",
+						"suggestion",
+						"useractivity"
+					]
+				}
+			]
 		},
 		{
 			"name": "enable",
-			"description": "Enables a specific logging type, welcome/logging/suggestion",
-			"syntax": "enable { Logging Type (Welcome/Logging/Suggestion) }",
-			"example": "enable logging"
+			"description": "Enables a specific channel type",
+			"syntax": "enable { Channel Type }",
+			"example": "enable logging",
+			"argumentList": [
+				{
+					"name": "Channel Type",
+					"args": [
+						"logging",
+						"join",
+						"suggestion",
+						"useractivity"
+					]
+				}
+			]
 		}
 	],
 	"Moderation": [
@@ -185,8 +256,8 @@
 		{
 			"name": "assign",
 			"description": "Assigns a role to the specified user, the role must not be higher than my role",
-			"syntax": "assign { User Mention/ID } { Role ID }",
-			"example": "assign @Chill#4048 482335631402336266"
+			"syntax": "assign { User Mention/ID } { Role Name/ID }",
+			"example": "assign @Chill#4048 Administrator"
 		},
 		{
 			"name": "roles",
@@ -203,8 +274,8 @@
 		{
 			"name": "unassign",
 			"description": "Removes a role from the user, the role must not be higher than my role",
-			"syntax": "unassign { User Mention/ID } { Role ID }",
-			"example": "unassign @Chill#4048 482335631402336266"
+			"syntax": "unassign { User Mention/ID } { Role Name/ID }",
+			"example": "unassign @Chill#4048 Administrator"
 		}
 	],
 	"Raid": [
@@ -261,8 +332,17 @@
 		{
 			"name": "respond",
 			"description": "Responds to a suggestion",
-			"syntax": "respond { Suggestion Message ID } { Status (Accepted/Declined) } { Reason }",
-			"example": "respond 12345667 Declined Not enough support"
+			"syntax": "respond { Suggestion Message ID } { Status } { Reason }",
+			"example": "respond 12345667 Declined Not enough support",
+			"argumentList": [
+				{
+					"name": "Status",
+					"args": [
+						"Accepted",
+						"Declined"
+					]
+				}
+			]
 		}
 	],
 	"Macro": [

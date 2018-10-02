@@ -7,7 +7,8 @@
 		"Invite whitelisting now extends to users with roles named `Administrator` and `Moderator`",
 		"Invite whitelisting role introduced to allow users with that role or higher to evade the invite filter",
 		"Fixed the Python script bug for auto-docs generation",
-		"Added an array in help.json to display the included words"
+		"Added an array in help.json to display the included words",
+		"`help` now displays all the included words for a command if any"
 	],
 	"releaseDate": "02 October 2018",
 	"contributors": [
