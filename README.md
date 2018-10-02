@@ -62,7 +62,7 @@ More information about commands can be found on the [website](https://woojiahao.
 |Name|Description|
 |---|---|
 |`echo`|Echos a message into another channel, the message to echo cannot contain mentions|
-|`nuke`|Nukes a certain number of messages, from 0 up to 99|
+|`nuke`|Nukes a certain number of messages, from 0 up to 99, you can alternatively pass a valid Regex expression such that only messages that contain the matching regex will be deleted|
 |`mute`|Mutes a user for a specified period of time, defaulted to minutes|
 |`history`|Displays the history of a specific member, if no arguments are given, the invoker's history is retrieved|
 |`strike`|Infracts a user|
@@ -78,6 +78,7 @@ More information about commands can be found on the [website](https://woojiahao.
 |`setpermission`|Sets the permission of a command/category to be available to a role and higher|
 |`viewpermissions`|Views all the permissions set in the server|
 |`setglobal`|Sets a single command or category of commands to be available to everyone|
+|`viewbotpermissions`|Displays the permissions that the bot has on the server|
 ### Utility
 |Name|Description|
 |---|---|
@@ -89,6 +90,7 @@ More information about commands can be found on the [website](https://woojiahao.
 |`botinfo`|Displays information about the bot|
 |`changelog`|Displays the latest changelog if no argument is given, displays a specific changelog if one can be found|
 |`google`|Performs and displays a google search of a query|
+|`pin`|Pins some text to the channel|
 ### Role
 |Name|Description|
 |---|---|

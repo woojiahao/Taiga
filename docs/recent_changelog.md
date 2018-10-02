@@ -1,19 +1,14 @@
 # Recent Changes
-## Tidy up of code & Lyrics!
-Build **4.2** was released on **02 October 2018**
+## Command Heaven
+Build **4.3** was released on **02 October 2018**
 ### Changes
-1. Added user tracking for Discord username changes, which can be toggled on/off
-2. Introduced extension method for Members to check if they have valid permission
-3. Invite whitelisting now extends to users with roles named `Administrator` and `Moderator`
-4. Invite whitelisting role introduced to allow users with that role or higher to evade the invite filter
-5. Fixed the Python script bug for auto-docs generation
-6. Added an array in help.json to display the included words
-7. `help` now displays all the included words for a command if any
-8. Each command now spins a new thread to run to prevent blocking
-9. Added a section for the APIs used and how to get the keys
+1. `RegexArg` argument type was introduced for regular expression parsing
+2. `nuke` is now overloaded to take in a regular expression such that the nuke will only apply to messages that contain the regular expression
+3. Fixed the global flag issue, now global flags for each command is nullable so if it stays null, it will inherit from the set, else it will keep its state
 
 ### New Commands
-1. lyrics
+1. viewbotpermissions
+2. pin
 
 ### Contributors
-* @Chill#4048
+* @Chil#4048

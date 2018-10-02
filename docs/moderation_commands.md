@@ -12,14 +12,14 @@ Echos a message into another channel, the message to echo cannot contain mention
 
 ## nuke
 ### Description {docsify-ignore}
-Nukes a certain number of messages, from 0 up to 99
+Nukes a certain number of messages, from 0 up to 99, you can alternatively pass a valid Regex expression such that only messages that contain the matching regex will be deleted
 ### Syntax {docsify-ignore}
 
-> nuke { Number to nuke, 0-99 }
+> nuke { Number to nuke, 0-99 } ({ Regex Expression })
 
 ### Example {docsify-ignore}
 
-> nuke 10
+> nuke 10 (\d+)
 
 ## mute
 ### Description {docsify-ignore}

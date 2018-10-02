@@ -25,7 +25,7 @@
 |Name|Description|
 |---|---|
 |[`echo`](moderation_commands.md?id=echo)|Echos a message into another channel, the message to echo cannot contain mentions|
-|[`nuke`](moderation_commands.md?id=nuke)|Nukes a certain number of messages, from 0 up to 99|
+|[`nuke`](moderation_commands.md?id=nuke)|Nukes a certain number of messages, from 0 up to 99, you can alternatively pass a valid Regex expression such that only messages that contain the matching regex will be deleted|
 |[`mute`](moderation_commands.md?id=mute)|Mutes a user for a specified period of time, defaulted to minutes|
 |[`history`](moderation_commands.md?id=history)|Displays the history of a specific member, if no arguments are given, the invoker's history is retrieved|
 |[`strike`](moderation_commands.md?id=strike)|Infracts a user|
@@ -42,6 +42,7 @@
 |[`setpermission`](permission_commands.md?id=setpermission)|Sets the permission of a command/category to be available to a role and higher|
 |[`viewpermissions`](permission_commands.md?id=viewpermissions)|Views all the permissions set in the server|
 |[`setglobal`](permission_commands.md?id=setglobal)|Sets a single command or category of commands to be available to everyone|
+|[`viewbotpermissions`](permission_commands.md?id=viewbotpermissions)|Displays the permissions that the bot has on the server|
 
 ### [Utility](utility_commands.md)
 |Name|Description|
@@ -54,6 +55,7 @@
 |[`botinfo`](utility_commands.md?id=botinfo)|Displays information about the bot|
 |[`changelog`](utility_commands.md?id=changelog)|Displays the latest changelog if no argument is given, displays a specific changelog if one can be found|
 |[`google`](utility_commands.md?id=google)|Performs and displays a google search of a query|
+|[`pin`](utility_commands.md?id=pin)|Pins some text to the channel|
 
 ### [Role](role_commands.md)
 |Name|Description|

@@ -87,3 +87,14 @@ Performs and displays a google search of a query
 
 > google Why is the sky blue?
 
+## pin
+### Description {docsify-ignore}
+Pins some text to the channel
+### Syntax {docsify-ignore}
+
+> pin { Content To Pin }
+
+### Example {docsify-ignore}
+
+> pin Some resources: www.google.com
+

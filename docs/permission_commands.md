@@ -32,3 +32,14 @@ Sets a single command or category of commands to be available to everyone
 
 > setglobal Fun/meme
 
+## viewbotpermissions
+### Description {docsify-ignore}
+Displays the permissions that the bot has on the server
+### Syntax {docsify-ignore}
+
+> viewbotpermissions
+
+### Example {docsify-ignore}
+
+> viewbotpermissions
+
