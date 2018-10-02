@@ -30,6 +30,19 @@ fun moderationCommands() = commands("Moderation") {
 		}
 	}
 
+	command("nuke") {
+		expects(Integer(0, 99), RegexArg())
+		execute {
+			val regex = Regex(arguments[1]!!.str())
+			guild.deleteMessagesFromChannel(
+				channel.id,
+				channel.getMessageHistory(arguments[0]!!.int() + 1) { msg ->
+					regex.containsMatchIn(msg.contentRaw)
+				}
+			)
+		}
+	}
+
 	command("echo") {
 		expects(ChannelId(), Sentence())
 		execute {

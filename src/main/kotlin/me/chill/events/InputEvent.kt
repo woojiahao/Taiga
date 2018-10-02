@@ -1,7 +1,6 @@
 package me.chill.events
 
 import me.chill.arguments.parseArguments
-import me.chill.arguments.types.Sentence
 import me.chill.database.operations.*
 import me.chill.database.states.TargetChannel
 import me.chill.embed.types.insufficientArgumentsEmbed
@@ -9,6 +8,7 @@ import me.chill.embed.types.invalidArgumentsEmbed
 import me.chill.exception.ListenerEventException
 import me.chill.framework.Command
 import me.chill.framework.CommandContainer
+import me.chill.framework.endArgumentList
 import me.chill.logging.macroLog
 import me.chill.logging.normalLog
 import me.chill.raidManger
@@ -182,7 +182,7 @@ private fun formArguments(commandParts: Array<String>, c: Command): Array<String
 	if (commandParts.size > 1) {
 		val argTypes = c.argumentTypes
 		arguments = when {
-			argTypes.any { it is Sentence } -> {
+			argTypes.any { endArgumentList.contains(it.javaClass) } -> {
 				val sentenceArgPosition = argTypes.size
 
 				if (commandParts.size - 1 < sentenceArgPosition) return null

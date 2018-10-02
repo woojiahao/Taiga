@@ -123,9 +123,9 @@
 		},
 		{
 			"name": "nuke",
-			"description": "Nukes a certain number of messages, from 0 up to 99",
-			"syntax": "nuke { Number to nuke, 0-99 }",
-			"example": "nuke 10"
+			"description": "Nukes a certain number of messages, from 0 up to 99, you can alternatively pass a valid Regex expression such that only messages that contain the matching regex will be deleted",
+			"syntax": "nuke { Number to nuke, 0-99 } ({ Regex Expression })",
+			"example": "nuke 10 (\\d+)"
 		},
 		{
 			"name": "mute",

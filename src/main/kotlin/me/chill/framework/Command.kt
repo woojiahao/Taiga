@@ -1,6 +1,7 @@
 package me.chill.framework
 
 import me.chill.arguments.Argument
+import me.chill.arguments.types.RegexArg
 import me.chill.arguments.types.Sentence
 import me.chill.credentials
 import me.chill.exception.EndArgumentException
@@ -12,13 +13,15 @@ import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.entities.MessageChannel
 import net.dv8tion.jda.core.entities.MessageEmbed
 
+val endArgumentList = arrayOf<Class<*>>(
+	Sentence::class.java,
+	RegexArg::class.java
+)
+
 class Command(val name: String, val category: String) {
 	private var action: (Command.(Map<ContainerKey, Any?>) -> Unit)? = null
 	private val commandInformation: MutableMap<ContainerKey, Any?> = mutableMapOf()
 	private var isGlobal = false
-	private val endArgumentList = arrayOf<Class<*>>(
-		Sentence::class.java
-	)
 
 	val guild get() = commandInformation[Server] as Guild
 	val invoker get() = commandInformation[Invoker] as Member
