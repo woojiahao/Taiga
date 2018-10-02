@@ -101,6 +101,7 @@
 |[`dog`](fun_commands.md?id=dog)|Displays a dog picture/GIF|
 |[`bird`](fun_commands.md?id=bird)|Displays a bird picture/GIF|
 |[`anime`](fun_commands.md?id=anime)|Searches for animes based on a search term|
+|[`lyrics`](fun_commands.md?id=lyrics)|Searches for the lyrics of a song based on the song name|
 
 ### [Invite](invite_commands.md)
 |Name|Description|

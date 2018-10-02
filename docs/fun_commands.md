@@ -109,3 +109,14 @@ Searches for animes based on a search term
 
 > anime konosuba
 
+## lyrics
+### Description {docsify-ignore}
+Searches for the lyrics of a song based on the song name
+### Syntax {docsify-ignore}
+
+> lyrics { Song Name }
+
+### Example {docsify-ignore}
+
+> lyrics never going to give you up
+

@@ -131,6 +131,7 @@ More information about commands can be found on the [website](https://woojiahao.
 |`dog`|Displays a dog picture/GIF|
 |`bird`|Displays a bird picture/GIF|
 |`anime`|Searches for animes based on a search term|
+|`lyrics`|Searches for the lyrics of a song based on the song name|
 ### Invite
 |Name|Description|
 |---|---|
