@@ -12,8 +12,8 @@ import me.chill.embed.types.listPermissionsEmbed
 import me.chill.framework.CommandCategory
 import me.chill.framework.CommandContainer
 import me.chill.framework.commands
-import me.chill.utility.successEmbed
 import me.chill.utility.str
+import me.chill.utility.successEmbed
 import org.apache.commons.lang3.text.WordUtils
 
 @CommandCategory
@@ -21,7 +21,7 @@ fun permissionCommands() = commands("Permission") {
 	command("viewpermissions") { execute { respond(listPermissionsEmbed(guild)) } }
 
 	command("setpermission") {
-		expects(ArgumentMix(CommandName(), CategoryName()), RoleId())
+		expects(ArgumentMix("Invalid Command/Category Name", CommandName(), CategoryName()), RoleId())
 		execute {
 			val roles = guild.roles
 			val serverId = guild.id
@@ -57,7 +57,7 @@ fun permissionCommands() = commands("Permission") {
 	}
 
 	command("setglobal") {
-		expects(ArgumentMix(CategoryName(), CommandName()))
+		expects(ArgumentMix("Invalid Command/Category Name", CategoryName(), CommandName()))
 		execute {
 			val target = arguments[0]!!.str()
 			val everyoneRole = guild.getRolesByName("@everyone", false)[0]

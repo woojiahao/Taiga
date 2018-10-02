@@ -61,7 +61,7 @@ fun utilityCommands() = commands("Utility") {
 	}
 
 	command("help") {
-		expects(ArgumentMix(CategoryName(), CommandName()))
+		expects(ArgumentMix("Invalid Command/Category Name", CategoryName(), CommandName()))
 		execute {
 			val attempt = arguments[0]!!.str()
 			if (CommandContainer.hasCommand(attempt)) {
