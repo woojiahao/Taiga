@@ -48,7 +48,13 @@ class RaidManager {
 	}
 
 	private fun raiderCaught(guild: Guild, member: Member, channel: MessageChannel) {
-		guild.addRoleToUser(member, guild.getMutedRole()!!)
+
+		try {
+			guild.addRoleToUser(member, guild.getMutedRole()!!)
+		} catch (e: Exception) {
+			channel.send(failureEmbed("Mute Failed", "Unable to apply mute as `muted` role is higher than my role"))
+		}
+
 		addRaider(guild.id, member.user.id)
 
 		member.sendPrivateMessage(

@@ -1,5 +1,6 @@
 package me.chill.utility
 
+import me.chill.credentials
 import net.dv8tion.jda.core.JDA
 import net.dv8tion.jda.core.entities.*
 
@@ -31,3 +32,29 @@ fun Guild.deleteMessagesFromChannel(channelId: String, messagesToDelete: List<Me
  */
 fun MessageChannel.getMessageHistory(messagesToRetrieve: Int, filter: (Message) -> Boolean = { true }) =
 	MessageHistory(this).retrievePast(messagesToRetrieve).complete().filter { filter(it) }
+
+fun Member.hasPermission(guild: Guild, intendedRole: String?, vararg additionalExclusion: String): Boolean {
+	val userIsBotOwner = user.id == credentials!!.botOwnerId
+	if (isOwner || userIsBotOwner) return true
+
+	intendedRole?.let {
+		val isIntendedRoleEveryone = guild.getRolesByName("@everyone", false)[0].id == it
+		if (isIntendedRoleEveryone) return true
+	}
+
+	val userHasRoles = roles.isNotEmpty()
+	if (!userHasRoles && intendedRole != null) return false
+
+	for (exclusion in additionalExclusion) {
+		val match = guild.getRolesByName(exclusion, true)
+		if (match.isEmpty()) continue
+		val roleMatch = match[0]
+		if (roles.any { it.id == roleMatch.id }) return true
+	}
+
+	intendedRole?.let {
+		return roles[0].position >= guild.getRoleById(it).position
+	}
+
+	return false
+}

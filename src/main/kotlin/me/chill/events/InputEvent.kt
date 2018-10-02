@@ -2,7 +2,6 @@ package me.chill.events
 
 import me.chill.arguments.parseArguments
 import me.chill.arguments.types.Sentence
-import me.chill.credentials
 import me.chill.database.operations.*
 import me.chill.database.states.TargetChannel
 import me.chill.embed.types.insufficientArgumentsEmbed
@@ -35,12 +34,10 @@ class InputEvent : ListenerAdapter() {
 }
 
 private fun handleInput(event: MessageReceivedEvent?) {
-	event ?: throw ListenerEventException(
-		"User Input",
-		"Event object was null during message receive"
-	)
+	event ?: throw ListenerEventException("User Input", "event is null")
 
-	if (event.member == null || event.member!!.user.isBot) return
+	event.member ?: return
+	if (event.member.user.isBot) return
 
 	val message = event.message.contentRaw.trim()
 	val messageChannel = event.channel
@@ -84,9 +81,7 @@ private fun handleInput(event: MessageReceivedEvent?) {
 	if (!checkPermissions(attemptedCommandMacro, server, invoker)) {
 		messageChannel.send(
 			failureEmbed(
-				"Insufficient Permission",
-				"You cannot invoke **$attemptedCommandMacro**, nice try",
-				thumbnail = noWay
+				"Insufficient Permission", "You cannot invoke **$attemptedCommandMacro**, nice try", noWay
 			)
 		)
 		return
@@ -150,15 +145,13 @@ private fun handleInvite(
 	server: Guild, messageChannel: MessageChannel,
 	originalMessage: Message
 ): Boolean {
-
 	if (containsInvite(message)) {
+		if (invoker.hasPermission(server, getInviteExcluded(server.id), "Administrator", "Moderator")) {
+			return true
+		}
+
 		val extractedInvite = extractInvite(message)
-		if (!hasInviteInWhitelist(server.id, extractedInvite) && !invoker.isOwner) {
-			if (invoker.roles.isNotEmpty() && getInviteExcluded(server.id) != null) {
-				if (invoker.roles[0].position >= server.getRoleById(getInviteExcluded(server.id)).position) {
-					return true
-				}
-			}
+		if (!hasInviteInWhitelist(server.id, extractedInvite)) {
 			manageInviteSent(invoker, server, messageChannel, originalMessage)
 			return false
 		}
@@ -167,43 +160,19 @@ private fun handleInvite(
 	return true
 }
 
-private fun handleRaider(invoker: Member, server: Guild, messageChannel: MessageChannel): Boolean? {
-	val isExcludedFromRaidControl =
-		invoker.roles.isNotEmpty()
-			&& getRaidRoleExcluded(server.id) != null
-			&& invoker.roles[0].position >= server.getRoleById(getRaidRoleExcluded(server.id)).position
-	val isAlreadyCaught = hasRaider(server.id, invoker.user.id)
-	return when {
-		isExcludedFromRaidControl -> true
-		isAlreadyCaught -> null
+private fun handleRaider(invoker: Member, server: Guild, messageChannel: MessageChannel) =
+	when {
+		invoker.hasPermission(server, getRaidRoleExcluded(server.id), "Administrator", "Moderator") -> true
+		hasRaider(server.id, invoker.user.id) -> null
 		else -> {
 			raidManger.manageRaid(server, messageChannel, invoker)
 			false
 		}
 	}
-}
 
-private fun checkPermissions(attemptedCommandMacro: String, server: Guild, invoker: Member): Boolean {
-	val serverId = server.id
-	val everyoneRoleId = server.getRolesByName("@everyone", false)[0].id
-	if (hasPermission(attemptedCommandMacro, serverId)) {
-		val expectedPermission = getPermission(attemptedCommandMacro, serverId)
-		val expectedPermissionPosition = server.getRoleById(expectedPermission).position
-
-		val roleHasPermission = invoker.roles.isNotEmpty() && invoker.roles[0].position < expectedPermissionPosition
-		val rolelessHasPermission = invoker.roles.isEmpty() && expectedPermission != everyoneRoleId
-
-		if (rolelessHasPermission || roleHasPermission) {
-			return false
-		}
-	} else {
-		val highestRolePosition = server.roles[0].position
-		val canInvoke = invoker.roles.isNotEmpty() && invoker.roles[0].position >= highestRolePosition
-		val isBotOwner = invoker.user.id == credentials!!.botOwnerId
-		if (!(isBotOwner || invoker.isOwner || canInvoke)) return false
-	}
-
-	return true
+private fun checkPermissions(commandName: String, server: Guild, invoker: Member): Boolean {
+	val intendedPermission = if (hasPermission(commandName, server.id)) getPermission(commandName, server.id) else null
+	return invoker.hasPermission(server, intendedPermission)
 }
 
 private fun formArguments(commandParts: Array<String>, c: Command): Array<String>? {

@@ -222,10 +222,6 @@ private fun setPreference(preference: String, input: String, guild: Guild, invok
 
 }
 
-private fun setChannel() {
-
-}
-
 private fun setMultiplier(multiplier: String, guildId: String) {
 	val timeMultiplier = when (multiplier) {
 		"m", "s", "h", "d" -> TimeMultiplier.valueOf(multiplier.toUpperCase())
