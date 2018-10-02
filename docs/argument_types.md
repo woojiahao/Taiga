@@ -6,6 +6,7 @@ an EndArgumentException is thrown during command initialization.
 The current list of end arguments include:
 
 * Sentence
+* RegexArg
 
 ## Types
 ### CategoryName
@@ -88,6 +89,7 @@ passing value.
 ArgumentMix cannot have the same argument type passed to it.
 
 #### Mandatory Checks {docsify-ignore}
+* **failReason** - Reason that is displayed to the user when the argument mix does not find any match
 * **arguments** - List of argument types to check for
 
 ### ChangeLog
@@ -106,3 +108,6 @@ Returns the first emote that matches the name passed.
 
 ### StrikeId
 Arguments passed will be checked to ensure they are an existing strike id within the server.
+
+### RegexArg
+Arguments passed will be checked to ensure they are a valid regular expression
