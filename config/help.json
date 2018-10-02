@@ -431,6 +431,12 @@
 			"description": "Searches for animes based on a search term",
 			"syntax": "anime { Search Term }",
 			"example": "anime konosuba"
+		},
+		{
+			"name": "lyrics",
+			"description": "Searches for the lyrics of a song based on the song name",
+			"syntax": "lyrics { Song Name }",
+			"example": "lyrics never going to give you up"
 		}
 	],
 	"Invite": [

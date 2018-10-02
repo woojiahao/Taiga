@@ -9,7 +9,9 @@ import java.io.FileWriter
 data class Configuration(
 	val token: String = "enter your token",
 	val database: String = "enter your database url",
-	val prefix: String = "enter your prefix"
+	val prefix: String = "enter your prefix",
+	val lyricsApiKey: String = "enter your lyrics API key",
+	val songNameApiKey: String = "enter your song name API key"
 )
 
 private val gson = GsonBuilder().create()

@@ -5,7 +5,8 @@ import me.chill.settings.green
 import me.chill.utility.embed
 import org.apache.commons.lang3.text.WordUtils
 
-fun animeInformationEmbed(data: JsonObject) = embed {
+fun animeInformationEmbed(data: JsonObject) =
+	embed {
 	var name = data.getAsJsonObject("title")["english"]
 	if (name.isJsonNull) {
 		name = data.getAsJsonObject("title")["romaji"]

@@ -7,13 +7,23 @@ import khttp.post
 import me.chill.arguments.types.EmoteName
 import me.chill.arguments.types.Sentence
 import me.chill.arguments.types.UserId
+import me.chill.credentials
 import me.chill.embed.types.animeInformationEmbed
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
 import me.chill.interactiveEmbedManager
+import me.chill.settings.green
 import me.chill.utility.*
 import org.json.JSONObject
+import java.net.URLEncoder
 import java.util.*
+
+data class Song(
+	val artist: String,
+	val songName: String
+) {
+	fun getTitle() = "$songName by $artist"
+}
 
 @CommandCategory
 fun funCommands() = commands("Fun") {
@@ -62,11 +72,9 @@ fun funCommands() = commands("Fun") {
 	command("joke") {
 		execute {
 			val data = "https://08ad1pao69.execute-api.us-east-1.amazonaws.com/dev/random_joke".readAPI()
-			Thread {
-				respond("**Q:** ${data["setup"].asString}")
-				Thread.sleep(1000)
-				respond("**A:** ${data["punchline"]}")
-			}.start()
+			respond("**Q:** ${data["setup"].asString}")
+			Thread.sleep(1000)
+			respond("**A:** ${data["punchline"]}")
 		}
 	}
 
@@ -93,6 +101,72 @@ fun funCommands() = commands("Fun") {
 			}
 
 			respond(data[0].asString)
+		}
+	}
+
+	command("lyrics") {
+		expects(Sentence())
+		execute {
+			if (credentials?.lyricsApiKey == null || credentials?.songNameApiKey == null) {
+				respond(failureEmbed(
+					"No API Key Given",
+					"`lyric` command needs an API key to search for the lyrics, let the bot owner know"
+				))
+				return@execute
+			}
+
+			val songName = arguments[0]!!.str()
+			val songNameEndPoint = "http://ws.audioscrobbler.com/2.0/" +
+				"?method=track.search" +
+				"&track=${URLEncoder.encode(songName, "UTF-8")}" +
+				"&api_key=${credentials?.songNameApiKey}" +
+				"&format=json"
+			val songMatches = songNameEndPoint.readAPI()
+
+			val results = songMatches.getAsJsonObject("results")
+			val resultCount = results["opensearch:totalResults"].asString.toInt()
+			if (resultCount == 0) {
+				respond(failureEmbed("Song Name Invalid", "Song name: **$songName** is not valid"))
+				return@execute
+			}
+
+			if (resultCount > 1) {
+				val tracks = results.getAsJsonObject("trackmatches").getAsJsonArray("track")
+				val options = mutableListOf<Song>()
+				for (track in tracks) {
+					val artist = track.asJsonObject["artist"].asString
+					if (options.any { t -> t.artist == artist }) continue
+
+					val name = track.asJsonObject["name"].asString
+					options.add(Song(artist, name))
+				}
+
+				interactiveEmbedManager.send(
+					options.map { song -> song.getTitle() }.toTypedArray(),
+					channel,
+					"Lyric Search",
+					"Song: **$songName** returned multiple results, select the one you wish to view"
+				) { message, s ->
+					val matchingSong = options[options.asSequence().map { song -> song.getTitle() }.indexOfFirst { i -> i == s }]
+					val lyricsEndPoint = "https://orion.apiseeds.com/api/music/lyric/" +
+						"${matchingSong.artist}/" +
+						"${matchingSong.songName}?" +
+						"apikey=${credentials?.lyricsApiKey}"
+					val lyrics = lyricsEndPoint.strictReadAPI<JsonObject>()
+					if (!lyrics.first || lyrics.second!!.has("error")) {
+						respond(unknownErrorEmbed("lyrics"))
+						return@send
+					}
+
+					message.editMessage(
+						embed {
+							title = matchingSong.getTitle()
+							color = green
+							description = lyrics.second?.getAsJsonObject("result")?.getAsJsonObject("track")!!["text"].asString
+						}
+					).complete()
+				}
+			}
 		}
 	}
 
