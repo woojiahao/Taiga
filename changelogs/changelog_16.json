@@ -1,0 +1,18 @@
+{
+	"buildNumber": "4.2",
+	"buildTitle": "Tidy up of code & Lots of fun commands!",
+	"changes": [
+		"Added user tracking for Discord username changes, which can be toggled on/off",
+		"Introduced extension method for Members to check if they have valid permission",
+		"Invite whitelisting now extends to users with roles named `Administrator` and `Moderator`",
+		"Invite whitelisting role introduced to allow users with that role or higher to evade the invite filter",
+		"Fixed the Python script bug for auto-docs generation",
+		"Added an array in help.json to display the included words"
+	],
+	"releaseDate": "02 October 2018",
+	"contributors": [
+		"@Chill#4048"
+	],
+	"commands": [
+	]
+}
