@@ -13,13 +13,13 @@
 ### [Administration](administration_commands.md)
 |Name|Description|
 |---|---|
-|[`setchannel`](administration_commands.md?id=setchannel)|Sets the logging, welcome or suggestion channel|
+|[`setchannel`](administration_commands.md?id=setchannel)|Sets the channel to a specific channel type|
 |[`setup`](administration_commands.md?id=setup)|Sets up the bot for moderation like adding the muted roles and overriding channel permissions|
 |[`preferences`](administration_commands.md?id=preferences)|Displays all the properties set for the server|
 |[`set`](administration_commands.md?id=set)|Sets the value for a preference|
 |[`get`](administration_commands.md?id=get)|Displays the details of a specific preference set|
-|[`disable`](administration_commands.md?id=disable)|Disables a specific logging type, welcome/logging/suggestion|
-|[`enable`](administration_commands.md?id=enable)|Enables a specific logging type, welcome/logging/suggestion|
+|[`disable`](administration_commands.md?id=disable)|Disables a specific channel type|
+|[`enable`](administration_commands.md?id=enable)|Enables a specific channel type|
 
 ### [Moderation](moderation_commands.md)
 |Name|Description|
@@ -48,9 +48,9 @@
 |---|---|
 |[`help`](utility_commands.md?id=help)|Displays a help card for the user to learn more about a specific command or category, pass no arguments and it will display all commands available to you|
 |[`invite`](utility_commands.md?id=invite)|Displays all invite links related to me such as my development server and to invite me to your server|
+|[`source`](utility_commands.md?id=source)|Displays all links related to my source code|
 |[`ping`](utility_commands.md?id=ping)|Displays the ping for me|
 |[`serverinfo`](utility_commands.md?id=serverinfo)|Displays information about the server|
-|[`source`](utility_commands.md?id=source)|Displays all links related to my source code|
 |[`botinfo`](utility_commands.md?id=botinfo)|Displays information about the bot|
 |[`changelog`](utility_commands.md?id=changelog)|Displays the latest changelog if no argument is given, displays a specific changelog if one can be found|
 |[`google`](utility_commands.md?id=google)|Performs and displays a google search of a query|
@@ -100,6 +100,7 @@
 |[`cat`](fun_commands.md?id=cat)|Displays a cat picture/GIF|
 |[`dog`](fun_commands.md?id=dog)|Displays a dog picture/GIF|
 |[`bird`](fun_commands.md?id=bird)|Displays a bird picture/GIF|
+|[`anime`](fun_commands.md?id=anime)|Searches for animes based on a search term|
 
 ### [Invite](invite_commands.md)
 |Name|Description|

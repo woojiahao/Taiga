@@ -1,10 +1,14 @@
 # Administration Commands
 ## setchannel
 ### Description {docsify-ignore}
-Sets the logging, welcome or suggestion channel
+Sets the channel to a specific channel type
 ### Syntax {docsify-ignore}
 
-> setchannel { Target Type For Channel (Logging/Welcome/Suggestion) }
+> setchannel { Channel Type }
+
+### Potential Arguments {docsify-ignore}
+#### Channel Type
+logging, join, suggestion, useractivity
 
 ### Example {docsify-ignore}
 
@@ -37,7 +41,11 @@ Displays all the properties set for the server
 Sets the value for a preference
 ### Syntax {docsify-ignore}
 
-> set { Preference (prefix/multiplier/logging/join/suggestion/messagelimit/messageduration/raidexcluded/welcomeenabled/welcomemessage/joinrole) } { Value }
+> set { Preference } { Value }
+
+### Potential Arguments {docsify-ignore}
+#### Preference
+prefix, multiplier, logging, join, suggestion, useractivity, messagelimit, messageduration, raidexcluded, welcomemessage, joinrole, inviteexcluded
 
 ### Example {docsify-ignore}
 
@@ -48,7 +56,11 @@ Sets the value for a preference
 Displays the details of a specific preference set
 ### Syntax {docsify-ignore}
 
-> get { Preference (prefix/multiplier/logging/join/suggestion/messagelimit/messageduration/raidexcluded/welcomeenabled/welcomemessage/joinrole) }
+> get { Preference }
+
+### Potential Arguments {docsify-ignore}
+#### Preference
+prefix, multiplier, logging, join, suggestion, useractivity, messagelimit, messageduration, raidexcluded, welcomemessage, joinrole, inviteexcluded
 
 ### Example {docsify-ignore}
 
@@ -56,10 +68,14 @@ Displays the details of a specific preference set
 
 ## disable
 ### Description {docsify-ignore}
-Disables a specific logging type, welcome/logging/suggestion
+Disables a specific channel type
 ### Syntax {docsify-ignore}
 
-> disable { Logging Type (Welcome/Logging/Suggestion) }
+> disable { Channel Type }
+
+### Potential Arguments {docsify-ignore}
+#### Channel Type
+logging, join, suggestion, useractivity
 
 ### Example {docsify-ignore}
 
@@ -67,10 +83,14 @@ Disables a specific logging type, welcome/logging/suggestion
 
 ## enable
 ### Description {docsify-ignore}
-Enables a specific logging type, welcome/logging/suggestion
+Enables a specific channel type
 ### Syntax {docsify-ignore}
 
-> enable { Logging Type (Welcome/Logging/Suggestion) }
+> enable { Channel Type }
+
+### Potential Arguments {docsify-ignore}
+#### Channel Type
+logging, join, suggestion, useractivity
 
 ### Example {docsify-ignore}
 

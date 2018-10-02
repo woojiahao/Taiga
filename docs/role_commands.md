@@ -4,11 +4,11 @@
 Assigns a role to the specified user, the role must not be higher than my role
 ### Syntax {docsify-ignore}
 
-> assign { User Mention/ID } { Role ID }
+> assign { User Mention/ID } { Role Name/ID }
 
 ### Example {docsify-ignore}
 
-> assign @Chill#4048 482335631402336266
+> assign @Chill#4048 Administrator
 
 ## roles
 ### Description {docsify-ignore}
@@ -37,9 +37,9 @@ Clears the join role
 Removes a role from the user, the role must not be higher than my role
 ### Syntax {docsify-ignore}
 
-> unassign { User Mention/ID } { Role ID }
+> unassign { User Mention/ID } { Role Name/ID }
 
 ### Example {docsify-ignore}
 
-> unassign @Chill#4048 482335631402336266
+> unassign @Chill#4048 Administrator
 

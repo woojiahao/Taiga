@@ -21,6 +21,17 @@ Displays all invite links related to me such as my development server and to inv
 
 > invite
 
+## source
+### Description {docsify-ignore}
+Displays all links related to my source code
+### Syntax {docsify-ignore}
+
+> source
+
+### Example {docsify-ignore}
+
+> source
+
 ## ping
 ### Description {docsify-ignore}
 Displays the ping for me
@@ -42,17 +53,6 @@ Displays information about the server
 ### Example {docsify-ignore}
 
 > serverinfo
-
-## source
-### Description {docsify-ignore}
-Displays all links related to my source code
-### Syntax {docsify-ignore}
-
-> source
-
-### Example {docsify-ignore}
-
-> source
 
 ## botinfo
 ### Description {docsify-ignore}

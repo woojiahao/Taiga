@@ -1,24 +1,14 @@
 # Recent Changes
-## Major rework of the preference system
-Build **4.0** was released on **27 September 2018**
+## Tidy up of code & Lots of fun commands!
+Build **4.2** was released on **02 October 2018**
 ### Changes
-1. Logging states for welcome, logging and suggestion can now be enabled or disabled
-2. Logging, welcomes and suggestion systems are now disabled by default
-3. Changelog section added to documentation
-4. Added feature list for the READMEs
-5. Removed preference getters and setters, replacing them with a single `set` command
-6. Single preferences can now be retrieved via `get`
-7. Logging, Welcome and Suggestion channels are all now set using the `setchannel` command
-8. Invite commands moved to the Invite category
-9. `getpreferences` is now renamed to `preferences`
-
-### New Commands
-1. enable
-2. disable
-3. get
-4. set
-5. setchannel
-6. preferences
+1. Added user tracking for Discord username changes, which can be toggled on/off
+2. Introduced extension method for Members to check if they have valid permission
+3. Invite whitelisting now extends to users with roles named `Administrator` and `Moderator`
+4. Invite whitelisting role introduced to allow users with that role or higher to evade the invite filter
+5. Fixed the Python script bug for auto-docs generation
+6. Added an array in help.json to display the included words
+7. `help` now displays all the included words for a command if any
 
 ### Contributors
 * @Chill#4048

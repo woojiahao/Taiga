@@ -59,7 +59,11 @@ Adds a suggestion to the suggestion pool
 Responds to a suggestion
 ### Syntax {docsify-ignore}
 
-> respond { Suggestion Message ID } { Status (Accepted/Declined) } { Reason }
+> respond { Suggestion Message ID } { Status } { Reason }
+
+### Potential Arguments {docsify-ignore}
+#### Status
+Accepted, Declined
 
 ### Example {docsify-ignore}
 

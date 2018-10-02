@@ -51,13 +51,13 @@ More information about commands can be found on the [website](https://woojiahao.
 ### Administration
 |Name|Description|
 |---|---|
-|`setchannel`|Sets the logging, welcome or suggestion channel|
+|`setchannel`|Sets the channel to a specific channel type|
 |`setup`|Sets up the bot for moderation like adding the muted roles and overriding channel permissions|
 |`preferences`|Displays all the properties set for the server|
 |`set`|Sets the value for a preference|
 |`get`|Displays the details of a specific preference set|
-|`disable`|Disables a specific logging type, welcome/logging/suggestion|
-|`enable`|Enables a specific logging type, welcome/logging/suggestion|
+|`disable`|Disables a specific channel type|
+|`enable`|Enables a specific channel type|
 ### Moderation
 |Name|Description|
 |---|---|
@@ -83,9 +83,9 @@ More information about commands can be found on the [website](https://woojiahao.
 |---|---|
 |`help`|Displays a help card for the user to learn more about a specific command or category, pass no arguments and it will display all commands available to you|
 |`invite`|Displays all invite links related to me such as my development server and to invite me to your server|
+|`source`|Displays all links related to my source code|
 |`ping`|Displays the ping for me|
 |`serverinfo`|Displays information about the server|
-|`source`|Displays all links related to my source code|
 |`botinfo`|Displays information about the bot|
 |`changelog`|Displays the latest changelog if no argument is given, displays a specific changelog if one can be found|
 |`google`|Performs and displays a google search of a query|
@@ -130,6 +130,7 @@ More information about commands can be found on the [website](https://woojiahao.
 |`cat`|Displays a cat picture/GIF|
 |`dog`|Displays a dog picture/GIF|
 |`bird`|Displays a bird picture/GIF|
+|`anime`|Searches for animes based on a search term|
 ### Invite
 |Name|Description|
 |---|---|

@@ -8,12 +8,14 @@
 		"Invite whitelisting role introduced to allow users with that role or higher to evade the invite filter",
 		"Fixed the Python script bug for auto-docs generation",
 		"Added an array in help.json to display the included words",
-		"`help` now displays all the included words for a command if any"
+		"`help` now displays all the included words for a command if any",
+		"Each command now spins a new thread to run to prevent blocking"
 	],
 	"releaseDate": "02 October 2018",
 	"contributors": [
 		"@Chill#4048"
 	],
 	"commands": [
+		"lyrics"
 	]
 }

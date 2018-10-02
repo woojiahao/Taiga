@@ -98,3 +98,14 @@ Displays a bird picture/GIF
 
 > bird
 
+## anime
+### Description {docsify-ignore}
+Searches for animes based on a search term
+### Syntax {docsify-ignore}
+
+> anime { Search Term }
+
+### Example {docsify-ignore}
+
+> anime konosuba
+
