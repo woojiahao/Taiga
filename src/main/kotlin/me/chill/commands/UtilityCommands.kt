@@ -32,6 +32,14 @@ fun utilityCommands() = commands("Utility") {
 		}
 	}
 
+	command("pin") {
+		setGlobal(false)
+		expects(Sentence())
+		execute {
+
+		}
+	}
+
 	command("source") {
 		execute {
 			respond(

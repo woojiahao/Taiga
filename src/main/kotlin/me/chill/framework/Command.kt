@@ -21,7 +21,7 @@ val endArgumentList = arrayOf<Class<*>>(
 class Command(val name: String, val category: String) {
 	private var action: (Command.(Map<ContainerKey, Any?>) -> Unit)? = null
 	private val commandInformation: MutableMap<ContainerKey, Any?> = mutableMapOf()
-	private var isGlobal = false
+	private var isGlobal: Boolean? = null
 
 	val guild get() = commandInformation[Server] as Guild
 	val invoker get() = commandInformation[Invoker] as Member
