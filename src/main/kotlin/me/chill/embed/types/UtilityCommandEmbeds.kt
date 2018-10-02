@@ -192,7 +192,7 @@ fun categoryInfoEmbed(category: CommandSet) =
 	embed {
 		title = category.categoryName
 		color = cyan
-		description = category.getCommandNames().joinToString(", ")
+		description = category.getCommandNames().distinct().joinToString(", ")
 
 		field {
 			title = "Learn More"
