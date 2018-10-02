@@ -111,20 +111,22 @@ private fun handleInput(event: MessageReceivedEvent?) {
 		arguments = parseMap.parsedValues.toTypedArray()
 	}
 
-	try {
-		event.message.addReaction("\uD83D\uDC40").complete()
-		selectedCommand.run(serverPrefix, event.jda, event.guild, event.member, messageChannel, arguments)
-		if (!TargetChannel.Logging.isDisabled(server.id)) normalLog(selectedCommand)
-		if (silentInvoke) event.message.delete().complete()
-	} catch (e: InsufficientPermissionException) {
-		if (permissionIgnoreList.contains(e.permission)) return
-		messageChannel.send(
-			failureEmbed(
-				"Failed to invoke command",
-				"You need to give me the permission to **${e.permission.getName()}** to use **$attemptedCommandMacro**"
+	Thread {
+		try {
+			event.message.addReaction("\uD83D\uDC40").complete()
+			selectedCommand.run(serverPrefix, event.jda, event.guild, event.member, messageChannel, arguments)
+			if (!TargetChannel.Logging.isDisabled(server.id)) normalLog(selectedCommand)
+			if (silentInvoke) event.message.delete().complete()
+		} catch (e: InsufficientPermissionException) {
+			if (permissionIgnoreList.contains(e.permission)) return@Thread
+			messageChannel.send(
+				failureEmbed(
+					"Failed to invoke command",
+					"You need to give me the permission to **${e.permission.getName()}** to use **$attemptedCommandMacro**"
+				)
 			)
-		)
-	}
+		}
+	}.start()
 }
 
 private fun matchCommand(commandList: Array<Command>, commandParts: Array<String>): Pair<Array<String>, Command>? {
