@@ -16,6 +16,13 @@ def command_info_update():
             output += f"{command['description']}\n"
             output += "### Syntax {docsify-ignore}\n\n"
             output += f"> {command['syntax']}\n\n"
+
+            if 'argumentList' in command:
+                output += "### Potential Arguments {docsify-ignore}\n"
+                for arg in command['argumentList']:
+                    output += f"#### {arg['name']}\n"
+                    output += ", ".join(arg['args']) + "\n\n"
+
             output += "### Example {docsify-ignore}\n\n"
             output += f"> {command['example']}\n\n"
 

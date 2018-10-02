@@ -6,6 +6,6 @@ from docs_assistant.changelog_updater import update_changelog
 
 command_overview_docs_update()
 command_info_update()
-# command_overview_main_update()
+command_overview_main_update()
 update_changelog()
-commit("Updated documentation")
+# commit("Updated documentation")
