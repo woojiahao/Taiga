@@ -46,6 +46,7 @@ Welcome to Taiga's documentation site. This site covers everything you need to k
 7. **Customizing Taiga?** [Setting Preferences Guide.](setting_preferences.md)
 8. **Adding your own commands?** [Command Framework Guide.](creating_commands.md)
 9. **Writing up some changelogs?** [Changelog Guide.](changelog_guide.md)
+10. **Missing some API key?** [Learn how to get them](installation.md?id=api-keys)
 
 ## Invites
 [Invite me to your server](https://discordapp.com/oauth2/authorize?client_id=482340927709511682&scope=bot&permissions=8)

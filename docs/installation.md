@@ -81,3 +81,36 @@ Taiga can be hosted on both a local machine and over a Heroku instance.
 	```bash
 	$ heroku ps:scale worker=1
 	```
+	
+## API Keys
+Taiga uses some API keys to run commands. If you wish to enable these commands, you will need to obtain the API key from
+the following providers.
+
+If you are running the bot locally, add the keys to `config.json` using the key names as specified below.
+
+If you are running the bot remotely, add the keys to your environment variables using the key names as specified below.
+
+### Song Name API
+#### Provider
+[Last.FM](https://www.last.fm/api)
+
+#### config.json Key
+
+> "songNameApiKey": "&lt;key&gt;"
+
+#### Environment Variable
+
+> SONG_NAME_API="&lt;key&gt;"
+
+### Lyrics API
+#### Provider
+[Apiseeds](https://apiseeds.com/)
+
+#### config.json Key
+
+> "lyricsApiKey": "&lt;key&gt;"
+
+#### Environment Variable
+
+> LYRICS_API="&lt;key&gt;"
+

@@ -1,6 +1,6 @@
 {
 	"buildNumber": "4.2",
-	"buildTitle": "Tidy up of code & Lots of fun commands!",
+	"buildTitle": "Tidy up of code & Lyrics!",
 	"changes": [
 		"Added user tracking for Discord username changes, which can be toggled on/off",
 		"Introduced extension method for Members to check if they have valid permission",
@@ -9,7 +9,8 @@
 		"Fixed the Python script bug for auto-docs generation",
 		"Added an array in help.json to display the included words",
 		"`help` now displays all the included words for a command if any",
-		"Each command now spins a new thread to run to prevent blocking"
+		"Each command now spins a new thread to run to prevent blocking",
+		"Added a section for the APIs used and how to get the keys"
 	],
 	"releaseDate": "02 October 2018",
 	"contributors": [
