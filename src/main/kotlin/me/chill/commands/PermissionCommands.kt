@@ -8,6 +8,7 @@ import me.chill.database.operations.addPermission
 import me.chill.database.operations.editPermission
 import me.chill.database.operations.hasPermission
 import me.chill.database.operations.removePermission
+import me.chill.embed.types.listBotPermissionsEmbed
 import me.chill.embed.types.listPermissionsEmbed
 import me.chill.framework.CommandCategory
 import me.chill.framework.CommandContainer
@@ -18,6 +19,10 @@ import org.apache.commons.lang3.text.WordUtils
 
 @CommandCategory
 fun permissionCommands() = commands("Permission") {
+	command("viewbotpermissions") {
+		execute { respond(listBotPermissionsEmbed(guild.getMember(jda.selfUser).permissions)) }
+	}
+
 	command("viewpermissions") { execute { respond(listPermissionsEmbed(guild)) } }
 
 	command("setpermission") {
