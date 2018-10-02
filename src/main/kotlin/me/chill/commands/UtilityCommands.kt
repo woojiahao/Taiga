@@ -36,7 +36,8 @@ fun utilityCommands() = commands("Utility") {
 		setGlobal(false)
 		expects(Sentence())
 		execute {
-
+			val message = channel.sendMessage(arguments[0]!!.str()).complete()
+			message.pin().complete()
 		}
 	}
 

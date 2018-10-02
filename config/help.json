@@ -256,6 +256,12 @@
 			"description": "Performs and displays a google search of a query",
 			"syntax": "google { Search Query }",
 			"example": "google Why is the sky blue?"
+		},
+		{
+			"name": "pin",
+			"description": "Pins some text to the channel",
+			"syntax": "pin { Content To Pin }",
+			"example": "pin Some resources: www.google.com"
 		}
 	],
 	"Role": [
