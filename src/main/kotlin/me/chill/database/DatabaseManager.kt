@@ -34,9 +34,11 @@ object Preference : Table() {
 	val joinChannel = varchar("join", 20)
 	val loggingChannel = varchar("logging", 20)
 	val suggestionChannel = varchar("suggestion", 20)
+	val userActivityChannel = varchar("user_activity", 20)
 	val disableWelcome = bool("disable_welcome")
 	val disableLogging = bool("disable_logging")
 	val disableSuggestion = bool("disable_suggestion")
+	val disableUserActivityTracking = bool("disable_user_activity_tracking")
 
 	// Raid
 	val raidMessageLimit = integer("raid_message_limit")

@@ -19,10 +19,9 @@ import org.apache.commons.lang3.text.WordUtils
 
 private val preferences = arrayOf(
 	"prefix", "multiplier", "logging",
-	"join", "suggestion", "messagelimit",
-	"messageduration", "raidexcluded",
-	"welcomemessage", "joinrole",
-	"inviteexcluded"
+	"join", "suggestion", "useractivity",
+	"messagelimit", "messageduration", "raidexcluded",
+	"welcomemessage", "joinrole", "inviteexcluded"
 )
 
 @CommandCategory
@@ -126,7 +125,7 @@ private fun setPreference(preference: String, input: String, guild: Guild, invok
 			setMultiplier(input, guild.id)
 			cleanEmbed("${guild.name} Multiplier Changed", "Multiplier has been changed to **$input**")
 		}
-		"logging", "join", "suggestion" -> {
+		"logging", "join", "suggestion", "useractivity" -> {
 			val type = TargetChannel.valueOf(WordUtils.capitalize(preference))
 			val parseMap = ChannelId().check(guild, input)
 			if (!parseMap.status) {
@@ -251,7 +250,7 @@ private fun displayPreference(preference: String, guild: Guild, invoker: Member)
 			cleanEmbed(
 				"Time Multiplier",
 				"Current time multiplier for **$name** is in **${getTimeMultiplier(id).fullTerm}s**")
-		"logging", "join", "suggestion" -> {
+		"logging", "join", "suggestion", "useractivity" -> {
 			val targetChannel = TargetChannel.valueOf(WordUtils.capitalize(preference))
 			val targetName = targetChannel.name
 

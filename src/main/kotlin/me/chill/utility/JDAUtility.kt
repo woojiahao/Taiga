@@ -20,16 +20,11 @@ fun Member.sendPrivateMessage(embed: MessageEmbed?) =
 
 fun JDA.findUser(userId: String) = retrieveUserById(userId).complete()
 
-/**
- * Mass delete a list of messages from a specific channel
- */
+fun Guild.hasMember(user: User) = getMember(user) != null
+
 fun Guild.deleteMessagesFromChannel(channelId: String, messagesToDelete: List<Message>) =
 	this.getTextChannelById(channelId).deleteMessages(messagesToDelete).queue()
 
-/**
- * Retrieve the message history of a channel within a period of time
- * A filter can be applied if the list of messages should be filtered off by a condition
- */
 fun MessageChannel.getMessageHistory(messagesToRetrieve: Int, filter: (Message) -> Boolean = { true }) =
 	MessageHistory(this).retrievePast(messagesToRetrieve).complete().filter { filter(it) }
 

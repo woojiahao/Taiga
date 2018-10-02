@@ -40,6 +40,12 @@ fun preferenceEmbed(guild: Guild, preference: ServerPreference) =
 		}
 
 		field {
+			title = "User Activity Tracking Channel"
+			description = "${printChannel(guild.getTextChannelById(preference.userActivityChannel))}\n" +
+				"User activity tracking system is currently **${TargetChannel.disableStatus(preference.userActivityTrackingDisabled)}**"
+		}
+
+		field {
 			val raidMessage = StringBuilder("Users who send **${preference.messageLimit} messages** " +
 				"within **${preference.messageDuration} seconds** will be caught as a raider.")
 			preference.roleExcluded?.let {

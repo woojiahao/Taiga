@@ -5,13 +5,14 @@ import me.chill.database.operations.getPreference
 import me.chill.database.operations.updatePreferences
 
 enum class TargetChannel {
-	Logging, Suggestion, Join;
+	Logging, Suggestion, Join, Useractivity;
 
 	private fun getCol(targetChannel: TargetChannel) =
 		when (targetChannel) {
 			Logging -> Preference.loggingChannel
 			Join -> Preference.joinChannel
 			Suggestion -> Preference.suggestionChannel
+			Useractivity -> Preference.userActivityChannel
 		}
 
 	private fun getDisabledCol(targetChannel: TargetChannel) =
@@ -19,6 +20,7 @@ enum class TargetChannel {
 			Logging -> Preference.disableLogging
 			Join -> Preference.disableWelcome
 			Suggestion -> Preference.disableSuggestion
+			Useractivity -> Preference.disableUserActivityTracking
 		}
 
 	private fun editDisabled(serverId: String, status: Boolean) =
@@ -31,13 +33,11 @@ enum class TargetChannel {
 
 	fun isDisabled(serverId: String) = getPreference(serverId, getDisabledCol(this)) as Boolean
 
-	fun disableStatus(serverId: String): String {
-		val status = isDisabled(serverId)
-		when(status) {
-			true -> return "disabled"
-			false -> return "enabled"
+	fun disableStatus(serverId: String) =
+		when (isDisabled(serverId)) {
+			true -> "disabled"
+			false -> "enabled"
 		}
-	}
 
 	fun enable(serverId: String) = editDisabled(serverId, false)
 
@@ -46,11 +46,10 @@ enum class TargetChannel {
 	companion object {
 		fun getNames() = TargetChannel.values().map { it.name.toLowerCase() }.toTypedArray()
 
-		fun disableStatus(status: Boolean): String {
-			when(status) {
-				true -> return "disabled"
-				false -> return "enabled"
+		fun disableStatus(status: Boolean) =
+			when (status) {
+				true -> "disabled"
+				false -> "enabled"
 			}
-		}
 	}
 }

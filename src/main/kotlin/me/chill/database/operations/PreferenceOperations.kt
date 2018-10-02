@@ -22,26 +22,41 @@ data class ServerPreference (
 	val onJoinRole: String?,
 	val loggingDisabled: Boolean,
 	val suggestionDisabled: Boolean,
-	val inviteExcluded: String?
+	val inviteExcluded: String?,
+	val userActivityChannel: String,
+	val userActivityTrackingDisabled: Boolean
 )
 
 fun addServerPreference(serverId: String, defaultChannelId: String) {
 	transaction {
 		Preference.insert {
+			// General
 			it[Preference.serverId] = serverId
+
+			// Prefix
 			it[prefix] = credentials!!.defaultPrefix!!
+
+			// Channel Assignment
 			it[joinChannel] = defaultChannelId
 			it[loggingChannel] = defaultChannelId
 			it[suggestionChannel] = defaultChannelId
-			it[raidMessageLimit] = 5
-			it[raidMessageDuration] = 3
-			it[raidRoleExcluded] = null
-			it[welcomeMessage] = "Welcome! Remember to read #rules-and-info"
-			it[timeMultiplier] = TimeMultiplier.M.name
-			it[onJoinRole] = null
+			it[userActivityChannel] = defaultChannelId
 			it[disableWelcome] = true
 			it[disableLogging] = true
 			it[disableSuggestion] = true
+			it[disableUserActivityTracking] = true
+
+			// Raid
+			it[raidMessageLimit] = 5
+			it[raidMessageDuration] = 3
+			it[raidRoleExcluded] = null
+
+			// Member On Join
+			it[welcomeMessage] = "Welcome! Remember to read #rules-and-info"
+			it[timeMultiplier] = TimeMultiplier.M.name
+			it[onJoinRole] = null
+
+			// Invite
 			it[inviteRoleExcluded] = null
 		}
 	}
@@ -82,6 +97,8 @@ fun getAllPreferences(serverId: String) =
 			result[Preference.onJoinRole],
 			result[Preference.disableLogging],
 			result[Preference.disableSuggestion],
-			result[Preference.inviteRoleExcluded]
+			result[Preference.inviteRoleExcluded],
+			result[Preference.userActivityChannel],
+			result[Preference.disableUserActivityTracking]
 		)
 	}
