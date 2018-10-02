@@ -26,7 +26,14 @@ fun main(args: Array<String>) {
 		.setStatus(OnlineStatus.ONLINE)
 		.setToken(credentials!!.token)
 		.setGame(Game.playing("${credentials!!.defaultPrefix}help"))
-		.addEventListener(OnJoinEvent(), OnLeaveEvent(), OnChannelCreationEvent(), InputEvent(), InteractiveEmbedEvent())
+		.addEventListener(
+			OnJoinEvent(),
+			OnLeaveEvent(),
+			OnChannelCreationEvent(),
+			InputEvent(),
+			InteractiveEmbedEvent(),
+			OnUserActivityEvent()
+		)
 		.build()
 	credentials!!.botOwnerId = jda.asBot().applicationInfo.complete().owner.id
 }
