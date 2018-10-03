@@ -5,14 +5,8 @@ import me.chill.database.states.TargetChannel
 import me.chill.embed.types.newMemberJoinEmbed
 import me.chill.exception.ListenerEventException
 import me.chill.framework.CommandContainer
-import me.chill.utility.addRoleToUser
-import me.chill.utility.assignRole
-import me.chill.utility.getMutedRole
-import me.chill.utility.getDateTime
-import me.chill.utility.failureEmbed
-import me.chill.utility.printMember
-import me.chill.utility.send
-import me.chill.utility.successEmbed
+import me.chill.utility.*
+import net.dv8tion.jda.core.Permission
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent
 import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent
@@ -24,6 +18,8 @@ class OnJoinEvent : ListenerAdapter() {
 			"On Member Join",
 			"Event object was null during member join"
 		)
+
+		if (!event.guild.getMember(event.jda.selfUser).hasPermission(Permission.MESSAGE_WRITE)) return
 
 		val guild = event.guild
 		val guildId = guild.id

@@ -6,11 +6,8 @@ import me.chill.database.states.TargetChannel
 import me.chill.exception.ListenerEventException
 import me.chill.settings.lost
 import me.chill.settings.red
-import me.chill.utility.getDateTime
-import me.chill.utility.embed
-import me.chill.utility.printMember
-import me.chill.utility.send
-import me.chill.utility.successEmbed
+import me.chill.utility.*
+import net.dv8tion.jda.core.Permission
 import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.events.guild.GuildLeaveEvent
 import net.dv8tion.jda.core.events.guild.member.GuildMemberLeaveEvent
@@ -22,6 +19,8 @@ class OnLeaveEvent : ListenerAdapter() {
 			"On Member Leave",
 			"Event object was null during member leave"
 		)
+
+		if (!event.guild.getMember(event.jda.selfUser).hasPermission(Permission.MESSAGE_WRITE)) return
 
 		val serverId = event.guild.id
 		val member = event.member
