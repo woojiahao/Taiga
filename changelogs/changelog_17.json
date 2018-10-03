@@ -4,7 +4,9 @@
 	"changes": [
 		"`RegexArg` argument type was introduced for regular expression parsing",
 		"`nuke` is now overloaded to take in a regular expression such that the nuke will only apply to messages that contain the regular expression",
-		"Fixed the global flag issue, now global flags for each command is nullable so if it stays null, it will inherit from the set, else it will keep its state"
+		"Fixed the global flag issue, now global flags for each command is nullable so if it stays null, it will inherit from the set, else it will keep its state",
+		"Bug fixes for permissions when member joins/leaves and the bot has no write permission",
+		"Updated bot's permissions so it does not request administrative permissions outright, just the permissions it needs"
 	],
 	"releaseDate": "02 October 2018",
 	"contributors": [

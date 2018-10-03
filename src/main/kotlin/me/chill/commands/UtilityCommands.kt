@@ -57,10 +57,22 @@ fun utilityCommands() = commands("Utility") {
 
 	command("invite") {
 		execute {
+			val inviteLink = jda.asBot().getInviteUrl(
+				Permission.MANAGE_ROLES,
+				Permission.MANAGE_CHANNEL,
+				Permission.MESSAGE_MANAGE,
+				Permission.MESSAGE_WRITE,
+				Permission.MESSAGE_READ,
+				Permission.MESSAGE_ADD_REACTION,
+				Permission.BAN_MEMBERS,
+				Permission.MANAGE_EMOTES,
+				Permission.MESSAGE_EMBED_LINKS
+			)
+
 			respond(
 				simpleEmbed(
 					"Invites",
-					"- [Invite me to your server!](${jda.asBot().getInviteUrl(Permission.ADMINISTRATOR)})\n" +
+					"- [Invite me to your server!]($inviteLink)\n" +
 						"- [Join my development server](https://discord.gg/xtDNfyw)",
 					fondling,
 					blue
