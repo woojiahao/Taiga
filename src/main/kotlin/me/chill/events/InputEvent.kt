@@ -173,7 +173,11 @@ private fun handleRaider(invoker: Member, server: Guild, messageChannel: Message
 	}
 
 private fun checkPermissions(commandName: String, server: Guild, invoker: Member): Boolean {
-	val intendedPermission = if (hasPermission(commandName, server.id)) getPermission(commandName, server.id) else null
+	val intendedPermission = if (hasPermission(commandName, server.id)) {
+		getPermission(commandName, server.id)
+	} else {
+		server.roles[0].id
+	}
 	return invoker.hasPermission(server, intendedPermission)
 }
 

@@ -51,5 +51,5 @@ fun Member.hasPermission(guild: Guild, intendedRole: String?, vararg additionalE
 		return roles[0].position >= guild.getRoleById(it).position
 	}
 
-	return false
+ 	return false
 }
