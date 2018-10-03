@@ -61,11 +61,11 @@ fun removeRole(guild: Guild, roleId: String, targetId: String) {
 	guild.removeRoleFromUser(guild.getMemberById(targetId), guild.getRoleById(roleId))
 }
 
-fun Guild.hasRole(roleName: String, ignoreCase: Boolean = false) = getRolesByName(roleName, ignoreCase).isNotEmpty()
+fun Guild.hasRole(roleName: String, ignoreCase: Boolean = true) = getRolesByName(roleName, ignoreCase).isNotEmpty()
 
-fun Guild.getRole(roleName: String, ignoreCase: Boolean = false) = getRolesByName(roleName, ignoreCase).first()!!
+fun Guild.getRole(roleName: String, ignoreCase: Boolean = true) = getRolesByName(roleName, ignoreCase).first()!!
 
-fun Guild.getMutedRole() = if (getRolesByName("muted", false).isEmpty()) null else getRolesByName("muted", false).first()!!
+fun Guild.getMutedRole() = if (getRolesByName("muted", true).isEmpty()) null else getRolesByName("muted", true).first()!!
 
 /**
  * Assigns a role to a user
