@@ -14,7 +14,9 @@ class Pagination(
 		currentPage = if (currentPage == 1) total else currentPage - 1
 	}
 
-	fun getCurrentPage() = distribution[currentPage]?.toTypedArray()
+	fun getCurrentPageContent() = distribution[currentPage]?.toTypedArray()
+
+	fun getCurrentPage() = currentPage
 
 	fun hasMoreThanOnePage() = total > 1
 

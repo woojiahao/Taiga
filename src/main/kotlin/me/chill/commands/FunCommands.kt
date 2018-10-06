@@ -146,8 +146,8 @@ fun funCommands() = commands("Fun") {
 					channel,
 					"Lyric Search",
 					"Song: **$songName** returned multiple results, select the one you wish to view"
-				) { message, s ->
-					val matchingSong = options[options.asSequence().map { song -> song.getTitle() }.indexOfFirst { i -> i == s }]
+				) { message, _, selectedIndex ->
+					val matchingSong = options[selectedIndex]
 					val lyricsEndPoint = "https://orion.apiseeds.com/api/music/lyric/" +
 						"${matchingSong.artist}/" +
 						"${matchingSong.songName}?" +
@@ -268,9 +268,8 @@ fun funCommands() = commands("Fun") {
 					channel,
 					"Anime Search",
 					"The search term: **$searchTerm** returned multiple results, select the one you wish to view"
-				) { message, selection ->
-					val selectedAnime = options.indexOfFirst { option -> option == selection }
-					message.editMessage(animeInformationEmbed(animes[selectedAnime].asJsonObject)).complete()
+				) { message, _, selectedIndex ->
+					message.editMessage(animeInformationEmbed(animes[selectedIndex].asJsonObject)).complete()
 				}
 			}
 		}

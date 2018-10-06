@@ -7,13 +7,14 @@ import net.dv8tion.jda.core.entities.Message
 data class InteractiveEmbed(
 	val message: Message,
 	val pagination: Pagination,
-	val action: (Message, String) -> Unit
+	val action: (Message, String, Int) -> Unit
 ) {
 	fun optionSelected(option: String) {
 		if (InteractiveEmote.isNumber(option)) {
 			val selection = InteractiveEmote.getSelection(option).number
-			val data = pagination.getCurrentPage()?.get(selection)
-			data?.let { action(message, it) }
+			val data = pagination.getCurrentPageContent()?.get(selection)
+			val selectedIndex = ((pagination.getCurrentPage() - 1) * 10) + selection
+			data?.let { action(message, it, selectedIndex) }
 			message.clearReactions().complete()
 			interactiveEmbedManager.clearEmbed(message.id)
 		} else {

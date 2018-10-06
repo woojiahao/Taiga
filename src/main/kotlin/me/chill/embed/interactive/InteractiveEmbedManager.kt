@@ -19,7 +19,7 @@ class InteractiveEmbedManager {
 			reactionList.add(InteractiveEmote.Previous.unicode)
 		}
 
-		pagination.getCurrentPage()?.let {
+		pagination.getCurrentPageContent()?.let {
 			reactionList.addAll(InteractiveEmote.getUnicode(InteractiveEmote.numbering.subList(0, it.size)))
 		}
 
@@ -35,7 +35,7 @@ class InteractiveEmbedManager {
 		channel: MessageChannel,
 		title: String,
 		description: String,
-		action: (Message, String) -> Unit
+		action: (Message, String, Int) -> Unit
 	) {
 		val pagination = generatePagination(data)
 
@@ -53,7 +53,7 @@ class InteractiveEmbedManager {
 	}
 
 	fun formatContent(pagination: Pagination): String {
-		val content = pagination.getCurrentPage()?.let {
+		val content = pagination.getCurrentPageContent()?.let {
 			InteractiveEmote.getNumberingNames().zip(it).joinToString("\n\n") { entry -> ":${entry.first}: ${entry.second}" }
 		}
 		content ?: return "No content to be displayed"
