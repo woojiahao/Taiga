@@ -210,6 +210,10 @@ fun funCommands() = commands("Fun") {
 						genres
 						averageScore
 						bannerImage
+						coverImage {
+							large
+							medium
+						}
 						popularity
 						description
 						studios {

@@ -13,6 +13,11 @@ fun animeInformationEmbed(data: JsonObject) =
 	}
 	title = "${name.asString} (${data.getAsJsonObject("title")["native"].asString})"
 	color = green
+
+	if (!data.getAsJsonObject("coverImage")["medium"].isJsonNull) {
+		thumbnail = data.getAsJsonObject("coverImage")["medium"].asString
+	}
+
 	if (!data["bannerImage"].isJsonNull) {
 		image = data["bannerImage"].asString
 	}
