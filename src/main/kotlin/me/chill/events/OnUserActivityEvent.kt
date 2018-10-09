@@ -16,7 +16,7 @@ class OnUserActivityEvent : ListenerAdapter() {
 		for (guild in event.jda.guilds.asSequence().filter { it.hasMember(event.user) }.filterNotNull().toList()) {
 			if (TargetChannel.Useractivity.isDisabled(guild.id)) continue
 
-			val logging = guild.getTextChannelById(TargetChannel.Logging.get(guild.id))
+			val logging = guild.getTextChannelById(TargetChannel.Useractivity.get(guild.id))
 			logging.send(changeNameEmbed(event.oldName, event.newName))
 		}
 	}
