@@ -178,7 +178,7 @@ fun moderationCommands() = commands("Moderation") {
 				return@execute
 			}
 
-			removeStrike(guild.id, target, toRemove)
+			removeStrike(toRemove)
 			respond(
 				successEmbed(
 					"Strike Removed",

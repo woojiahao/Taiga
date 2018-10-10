@@ -20,9 +20,8 @@ import java.util.*
 
 data class Song(
 	val artist: String,
-	val songName: String
-) {
-	fun getTitle() = "$songName by $artist"
+	val songName: String) {
+	override fun toString() = "$songName by $artist"
 }
 
 @CommandCategory
@@ -36,8 +35,7 @@ fun funCommands() = commands("Fun") {
 	command("flip") {
 		execute {
 			respond(
-				if (Random().nextBoolean()) "Heads"
-				else "Tails"
+				if (Random().nextBoolean()) "Heads" else "Tails"
 			)
 		}
 	}
@@ -142,7 +140,7 @@ fun funCommands() = commands("Fun") {
 				}
 
 				interactiveEmbedManager.send(
-					options.map { song -> song.getTitle() }.toTypedArray(),
+					options.map { song -> song.toString() }.toTypedArray(),
 					channel,
 					"Lyric Search",
 					"Song: **$songName** returned multiple results, select the one you wish to view"
@@ -160,7 +158,7 @@ fun funCommands() = commands("Fun") {
 
 					message.editMessage(
 						embed {
-							title = matchingSong.getTitle()
+							title = matchingSong.toString()
 							color = green
 							description = lyrics.second?.getAsJsonObject("result")?.getAsJsonObject("track")!!["text"].asString
 						}

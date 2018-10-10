@@ -80,7 +80,6 @@ fun wipeRecord(serverId: String, userId: String) {
 		val strikeIds = UserRecord
 			.select { userRecordMatch(serverId, userId) }
 			.map { it[UserRecord.strikeId] }
-		UserRecord.deleteWhere { userRecordMatch(serverId, userId) }
 		Strike.deleteWhere { Strike.strikeId inList strikeIds }
 	}
 }
@@ -93,11 +92,8 @@ fun hasStrike(serverId: String, strikeId: Int) =
 	}
 
 
-fun removeStrike(serverId: String, userId: String, strikeId: Int) {
-	transaction {
-		UserRecord.deleteWhere { userRecordMatch(serverId, userId) and (UserRecord.strikeId eq strikeId) }
-		Strike.deleteWhere { Strike.strikeId eq strikeId }
-	}
+fun removeStrike(strikeId: Int) {
+	transaction { Strike.deleteWhere { Strike.strikeId eq strikeId } }
 }
 
 fun userHasStrike(serverId: String, userId: String, strikeId: Int) =

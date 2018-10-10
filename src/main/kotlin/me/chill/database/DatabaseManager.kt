@@ -1,6 +1,7 @@
 package me.chill.database
 
 import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -58,7 +59,7 @@ object Preference : Table() {
 object UserRecord : Table() {
 	val serverId = varchar("server_id", 20).primaryKey()
 	val userId = varchar("user_id", 20).primaryKey()
-	val strikeId = integer("strike_id").primaryKey().references(Strike.strikeId)
+	val strikeId = integer("strike_id").primaryKey().references(Strike.strikeId, ReferenceOption.CASCADE)
 }
 
 object Strike : Table() {
