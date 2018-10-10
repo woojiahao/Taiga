@@ -1,6 +1,7 @@
 package me.chill
 
 import me.chill.database.setupDatabase
+import me.chill.embed.EmbedManager
 import me.chill.embed.interactive.InteractiveEmbedManager
 import me.chill.events.*
 import me.chill.framework.CommandContainer
@@ -19,6 +20,7 @@ var credentials: Credentials? = null
 var commandInfo: List<CommandInfo>? = null
 val raidManger = RaidManager()
 val interactiveEmbedManager = InteractiveEmbedManager()
+val embedManager = EmbedManager()
 fun main(args: Array<String>) {
 	setup()
 

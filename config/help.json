@@ -470,5 +470,31 @@
 			"syntax": "whitelist",
 			"example": "whitelist"
 		}
+	],
+	"Embed": [
+		{
+			"name": "postembed",
+			"description": "Posts the current embed to a channel",
+			"syntax": "postembed { Channel ID/Mention }",
+			"example": "postembed #announcements"
+		},
+		{
+			"name": "getembed",
+			"description": "Displays the currently built embed",
+			"syntax": "getembed",
+			"example": "getembed"
+		},
+		{
+			"name": "clearembed",
+			"description": "Clears the currently built embed",
+			"syntax": "clearembed",
+			"example": "clearembed"
+		},
+		{
+			"name": "setembedcolor",
+			"description": "Sets the color of the embed",
+			"syntax": "setembedcolor { Hex Color }",
+			"example": "setembedcolor #8812FA"
+		}
 	]
 }
