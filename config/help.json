@@ -495,6 +495,60 @@
 			"description": "Sets the color of the embed",
 			"syntax": "setembedcolor { Hex Color }",
 			"example": "setembedcolor #8812FA"
+		},
+		{
+			"name": "setembedtitle",
+			"description": "Sets the title of the embed, title is limited to only 1024 characters long",
+			"syntax": "setembedtitle { Title }",
+			"example": "setembedtitle Rule And Information"
+		},
+		{
+			"name": "setembeddescription",
+			"description": "Sets the description of the embed, description is limited to only 1024 characters long",
+			"syntax": "setembeddescription { Description }",
+			"example": "setembeddescription These are the rules of the server"
+		},
+		{
+			"name": "setembedthumbnail",
+			"description": "Sets the thumbnail of the embed, the description must be an image url",
+			"syntax": "setembedthumbnail { Image URL }",
+			"example": "setembedthumbnail https://media.giphy.com/media/6CBGoJnEBbEWs/giphy.gif"
+		},
+		{
+			"name": "addfield",
+			"description": "Adds an empty field to the embed",
+			"syntax": "addfield",
+			"example": "addfield"
+		},
+		{
+			"name": "setfieldtitle",
+			"description": "Sets the title of a field, the title is limited to 1024 characters",
+			"syntax": "setfieldtitle { Field ID } { Title }",
+			"example": "setfieldtitle 1 1. No Advertising"
+		},
+		{
+			"name": "setfielddescription",
+			"description": "Sets the description of a field, the description is limited to 1024 characters",
+			"syntax": "setfielddescription { Field ID } { Description }",
+			"example": "setfielddescription 1 We strictly forbid members from advertising unless they have gone by us"
+		},
+		{
+			"name": "removefield",
+			"description": "Removes a field from the embed",
+			"syntax": "removefield { Field ID }",
+			"example": "removefield 1"
+		},
+		{
+			"name": "clearembeddescription",
+			"description": "Clears the description of an embed",
+			"syntax": "clearembeddescription",
+			"example": "clearembeddescription"
+		},
+		{
+			"name": "clearembedthumbnail",
+			"description": "Clears the thumbnail of an embed",
+			"syntax": "clearembedthumbnail",
+			"example": "clearembedthumbnail"
 		}
 	]
 }

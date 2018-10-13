@@ -21,6 +21,18 @@ class EmbedCreator {
 		fields.add(embedField)
 	}
 
+	fun getFieldQuantity() = fields.size
+
+	fun setFieldTitle(fieldId: Int, title: String) {
+		fields[fieldId - 1].title = title
+	}
+
+	fun setFieldDescription(fieldId: Int, description: String) {
+		fields[fieldId - 1].description = description
+	}
+
+	fun removeField(fieldId: Int) = fields.removeAt(fieldId - 1)
+
 	fun footer(create: EmbedFooter.() -> Unit) {
 		val embedFooter = EmbedFooter()
 		embedFooter.create()

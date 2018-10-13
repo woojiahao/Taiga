@@ -4,12 +4,12 @@ import me.chill.arguments.Argument
 import me.chill.arguments.ArgumentParseMap
 import net.dv8tion.jda.core.entities.Guild
 
-class Sentence(private val maxLength: Int? = null) : Argument {
+class Url : Argument {
 	override fun check(guild: Guild, arg: String): ArgumentParseMap {
-		if (arg.isBlank()) return ArgumentParseMap(false, "Sentence cannot be blank")
+		val urlRegex = Regex("https?://(www\\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_+.~#?&//=]*)")
 
-		maxLength?.let {
-			if (arg.length > maxLength) return ArgumentParseMap(false, "Sentence cannot exceed **$it** characters")
+		if (!urlRegex.matches(arg)) {
+			return ArgumentParseMap(false, "Input: **$arg** is not a valid URL")
 		}
 
 		return ArgumentParseMap(true, parsedValue = arg)

@@ -1,9 +1,6 @@
 package me.chill.commands
 
-import me.chill.arguments.types.ChannelId
-import me.chill.arguments.types.ColorCode
-import me.chill.arguments.types.EmbedFieldId
-import me.chill.arguments.types.Sentence
+import me.chill.arguments.types.*
 import me.chill.embedManager
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
@@ -43,23 +40,72 @@ fun embedCommands() = commands("Embed") {
 	}
 
 	command("setembedtitle") {
-		expects(Sentence())
+		expects(Sentence(1024))
+		execute {
+			embedManager.setTitle(guild.id, arguments[0]!!.str())
+			respond(embedManager.getEmbed(guild.id))
+		}
 	}
 
 	command("setembeddescription") {
-		expects(Sentence())
+		expects(Sentence(1024))
+		execute {
+			embedManager.setDescription(guild.id, arguments[0]!!.str())
+			respond(embedManager.getEmbed(guild.id))
+		}
 	}
 
-	command("addembedfield") {
-
+	command("clearembeddescription") {
+		execute {
+			embedManager.setDescription(guild.id, "")
+			respond(embedManager.getEmbed(guild.id))
+		}
 	}
 
-	command("setembedfield") {
+	command("setembedthumbnail") {
+		expects(Url())
+		execute {
+			embedManager.setThumbnail(guild.id, arguments[0]!!.str())
+			respond(embedManager.getEmbed(guild.id))
+		}
+	}
+
+	command("clearembedthumbnail") {
+		execute {
+			embedManager.clearThumbnail(guild.id)
+			respond(embedManager.getEmbed(guild.id))
+		}
+	}
+
+	command("addfield") {
+		execute {
+			embedManager.addField(guild.id)
+			respond(embedManager.getEmbed(guild.id))
+		}
+	}
+
+	command("setfieldtitle") {
+		expects(EmbedFieldId(), Sentence(1024))
+		execute {
+			embedManager.setFieldTitle(guild.id, arguments[0]!!.int(), arguments[1]!!.str())
+			respond(embedManager.getEmbed(guild.id))
+		}
+	}
+
+	command("setfielddescription") {
+		expects(EmbedFieldId(), Sentence(1024))
+		execute {
+			embedManager.setFieldDescription(guild.id, arguments[0]!!.int(), arguments[1]!!.str())
+			respond(embedManager.getEmbed(guild.id))
+		}
+	}
+
+	command("removefield") {
 		expects(EmbedFieldId())
-	}
-
-	command("clearembedfield") {
-		expects(EmbedFieldId())
+		execute {
+			embedManager.removeField(guild.id, arguments[0]!!.int())
+			respond(embedManager.getEmbed(guild.id))
+		}
 	}
 }
 
