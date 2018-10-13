@@ -3,7 +3,7 @@
 
 Welcome to Taiga's documentation site. This site covers everything you need to know about Taiga and her codebase.
 
-![alt text](home_image.png "Taiga Aisaka")
+![alt text](img/home_image.png "Taiga Aisaka")
 
 ## Features
 * **Raid Control 👮**
