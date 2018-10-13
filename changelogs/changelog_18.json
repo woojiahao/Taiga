@@ -1,0 +1,30 @@
+{
+	"buildNumber": "4.4",
+	"buildTitle": "Embeds!!",
+	"changes": [
+		"Added a whole suite of embed related commands to create and use embeds with the bot",
+		"`anime` command now displays the anime's thumbnail if available",
+		"Database added with CASCADE ON DELETE constraint",
+		"Interactive embed callback now holds the selected index for easy referencing",
+		"Bug fix for the user activity logging"
+	],
+	"releaseDate": "13 October 2018",
+	"contributors": [
+		"@Chill#4048"
+	],
+	"commands": [
+		"addfield",
+		"clearembed",
+		"clearembeddescription",
+		"clearembedthumbnail",
+		"getembed",
+		"postembed",
+		"removefield",
+		"setembedcolor",
+		"setembeddescription",
+		"setembedthumbnail",
+		"setembedtitle",
+		"setfielddescription",
+		"setfieldtitle"
+	]
+}
