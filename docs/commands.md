@@ -9,6 +9,7 @@
 8. [Macro](commands.md?id=Macro)
 9. [Fun](commands.md?id=Fun)
 10. [Invite](commands.md?id=Invite)
+11. [Embed](commands.md?id=Embed)
 
 ### [Administration](administration_commands.md)
 |Name|Description|
@@ -111,3 +112,20 @@
 |[`addinvite`](invite_commands.md?id=addinvite)|Adds an invite to the whitelist, only the owner can add invites|
 |[`removeinvite`](invite_commands.md?id=removeinvite)|Removes an invite from the whitelist, only the owner can remove invites|
 |[`whitelist`](invite_commands.md?id=whitelist)|Displays all the whitelisted invites for the server|
+
+### [Embed](embed_commands.md)
+|Name|Description|
+|---|---|
+|[`postembed`](embed_commands.md?id=postembed)|Posts the current embed to a channel|
+|[`getembed`](embed_commands.md?id=getembed)|Displays the currently built embed|
+|[`clearembed`](embed_commands.md?id=clearembed)|Clears the currently built embed|
+|[`setembedcolor`](embed_commands.md?id=setembedcolor)|Sets the color of the embed|
+|[`setembedtitle`](embed_commands.md?id=setembedtitle)|Sets the title of the embed, title is limited to only 1024 characters long|
+|[`setembeddescription`](embed_commands.md?id=setembeddescription)|Sets the description of the embed, description is limited to only 1024 characters long|
+|[`setembedthumbnail`](embed_commands.md?id=setembedthumbnail)|Sets the thumbnail of the embed, the description must be an image url|
+|[`addfield`](embed_commands.md?id=addfield)|Adds an empty field to the embed|
+|[`setfieldtitle`](embed_commands.md?id=setfieldtitle)|Sets the title of a field, the title is limited to 1024 characters|
+|[`setfielddescription`](embed_commands.md?id=setfielddescription)|Sets the description of a field, the description is limited to 1024 characters|
+|[`removefield`](embed_commands.md?id=removefield)|Removes a field from the embed|
+|[`clearembeddescription`](embed_commands.md?id=clearembeddescription)|Clears the description of an embed|
+|[`clearembedthumbnail`](embed_commands.md?id=clearembedthumbnail)|Clears the thumbnail of an embed|

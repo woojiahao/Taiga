@@ -1,14 +1,27 @@
 # Recent Changes
-## Command Heaven
-Build **4.3** was released on **02 October 2018**
+## Embeds!!
+Build **4.4** was released on **13 October 2018**
 ### Changes
-1. `RegexArg` argument type was introduced for regular expression parsing
-2. `nuke` is now overloaded to take in a regular expression such that the nuke will only apply to messages that contain the regular expression
-3. Fixed the global flag issue, now global flags for each command is nullable so if it stays null, it will inherit from the set, else it will keep its state
+1. Added a whole suite of embed related commands to create and use embeds with the bot
+2. `anime` command now displays the anime's thumbnail if available
+3. Database added with CASCADE ON DELETE constraint
+4. Interactive embed callback now holds the selected index for easy referencing
+5. Bug fix for the user activity logging
 
 ### New Commands
-1. viewbotpermissions
-2. pin
+1. addfield
+2. clearembed
+3. clearembeddescription
+4. clearembedthumbnail
+5. getembed
+6. postembed
+7. removefield
+8. setembedcolor
+9. setembeddescription
+10. setembedthumbnail
+11. setembedtitle
+12. setfielddescription
+13. setfieldtitle
 
 ### Contributors
-* @Chil#4048
+* @Chill#4048

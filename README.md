@@ -48,6 +48,7 @@ More information about commands can be found on the [website](https://woojiahao.
 8. [Macro](https://github.com/woojiahao/Taiga#Macro)
 9. [Fun](https://github.com/woojiahao/Taiga#Fun)
 10. [Invite](https://github.com/woojiahao/Taiga#Invite)
+11. [Embed](https://github.com/woojiahao/Taiga#Embed)
 ### Administration
 |Name|Description|
 |---|---|
@@ -140,6 +141,22 @@ More information about commands can be found on the [website](https://woojiahao.
 |`addinvite`|Adds an invite to the whitelist, only the owner can add invites|
 |`removeinvite`|Removes an invite from the whitelist, only the owner can remove invites|
 |`whitelist`|Displays all the whitelisted invites for the server|
+### Embed
+|Name|Description|
+|---|---|
+|`postembed`|Posts the current embed to a channel|
+|`getembed`|Displays the currently built embed|
+|`clearembed`|Clears the currently built embed|
+|`setembedcolor`|Sets the color of the embed|
+|`setembedtitle`|Sets the title of the embed, title is limited to only 1024 characters long|
+|`setembeddescription`|Sets the description of the embed, description is limited to only 1024 characters long|
+|`setembedthumbnail`|Sets the thumbnail of the embed, the description must be an image url|
+|`addfield`|Adds an empty field to the embed|
+|`setfieldtitle`|Sets the title of a field, the title is limited to 1024 characters|
+|`setfielddescription`|Sets the description of a field, the description is limited to 1024 characters|
+|`removefield`|Removes a field from the embed|
+|`clearembeddescription`|Clears the description of an embed|
+|`clearembedthumbnail`|Clears the thumbnail of an embed|
 <!--blk-1-end-->
 
 ## Credits
