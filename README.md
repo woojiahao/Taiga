@@ -20,7 +20,7 @@
 
 	Taiga's watchful eye also catches unwanted Discord invites and deals with these ruffians accordingly.	
 
-* **Suggestions System**
+* **Suggestions System**	
 
 	Taiga has a built in [suggestion system](https://woojiahao.github.io/Taiga/#/suggestion) that allows your members
 	to provide feedback to you.
