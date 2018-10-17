@@ -15,6 +15,7 @@ import net.dv8tion.jda.core.JDA
 import net.dv8tion.jda.core.OnlineStatus
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.MessageEmbed
+import net.dv8tion.jda.core.entities.User
 
 fun changeLogEmbed(botName: String, buildVersion: String,
 				   changelogContents: String, buildTitle: String,
@@ -221,6 +222,13 @@ fun listCommandsEmbed(commandSets: List<CommandSet>, avatarUrl: String, serverPr
 					inline = false
 				}
 			}
+	}
+
+fun avatarEmbed(user: User) =
+	embed {
+		title = "${user.name} Avatar"
+		color = green
+		image = user.avatarUrl
 	}
 
 fun pingEmbed(latency: Long): MessageEmbed? {

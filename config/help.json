@@ -262,6 +262,12 @@
 			"description": "Pins some text to the channel",
 			"syntax": "pin { Content To Pin }",
 			"example": "pin Some resources: www.google.com"
+		},
+		{
+			"name": "avatar",
+			"description": "Displays the avatar of a user, if no arguments are given, it will display the avatar of the invoker",
+			"syntax": "avatar ({ User ID/Mention })",
+			"example": "avatar (@Chill#4048)"
 		}
 	],
 	"Role": [

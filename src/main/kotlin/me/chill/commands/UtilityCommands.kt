@@ -41,6 +41,7 @@ fun utilityCommands() = commands("Utility") {
 		}
 	}
 
+
 	command("source") {
 		execute {
 			respond(
@@ -52,6 +53,19 @@ fun utilityCommands() = commands("Utility") {
 					blue
 				)
 			)
+		}
+	}
+
+	command("avatar") {
+		expects(UserId())
+		execute {
+			respond(avatarEmbed(guild.getMemberById(arguments[0]!!.str()).user))
+		}
+	}
+
+	command("avatar") {
+		execute {
+			respond(avatarEmbed(invoker.user))
 		}
 	}
 
