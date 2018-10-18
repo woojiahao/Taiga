@@ -268,6 +268,18 @@
 			"description": "Displays the avatar of a user, if no arguments are given, it will display the avatar of the invoker",
 			"syntax": "avatar ({ User ID/Mention })",
 			"example": "avatar (@Chill#4048)"
+		},
+		{
+			"name": "upvote",
+			"description": "Brings up the links to go to upvote the bot",
+			"syntax": "upvote",
+			"example": "upvote"
+		},
+		{
+			"name": "userinfo",
+			"description": "Displays the information about a user, if no arguments are given, it will display the information of the invoker",
+			"syntax": "userinfo",
+			"example": "userinfo"
 		}
 	],
 	"Role": [

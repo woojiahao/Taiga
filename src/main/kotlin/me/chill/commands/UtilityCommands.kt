@@ -69,6 +69,30 @@ fun utilityCommands() = commands("Utility") {
 		}
 	}
 
+	command("upvote") {
+		execute {
+			respond(simpleEmbed(
+				"Upvote Me!",
+				"- [Discord Bot List](https://discordbots.org/bot/482340927709511682/vote)",
+				null,
+				blue
+			))
+		}
+	}
+
+	command("userinfo") {
+		expects(UserId())
+		execute {
+			respond(userInfoEmbed(guild.getMemberById(arguments[0]!!.str())))
+		}
+	}
+
+	command("userinfo") {
+		execute {
+			respond(userInfoEmbed(invoker))
+		}
+	}
+
 	command("invite") {
 		execute {
 			val inviteLink = jda.asBot().getInviteUrl(

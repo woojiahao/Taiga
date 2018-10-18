@@ -14,8 +14,10 @@ import me.chill.utility.printMember
 import net.dv8tion.jda.core.JDA
 import net.dv8tion.jda.core.OnlineStatus
 import net.dv8tion.jda.core.entities.Guild
+import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.entities.MessageEmbed
 import net.dv8tion.jda.core.entities.User
+import java.time.format.DateTimeFormatter
 
 fun changeLogEmbed(botName: String, buildVersion: String,
 				   changelogContents: String, buildTitle: String,
@@ -229,6 +231,49 @@ fun avatarEmbed(user: User) =
 		title = "${user.name} Avatar"
 		color = green
 		image = user.avatarUrl
+	}
+
+fun userInfoEmbed(member: Member) =
+	embed {
+		title = "User Information - ${member.effectiveName}"
+		thumbnail = member.user.avatarUrl
+		color = pink
+
+		field {
+			title = "Nickname"
+			description = member.nickname ?: member.effectiveName
+			inline = true
+		}
+
+		field {
+			title = "ID"
+			description = member.user.id
+			inline = true
+		}
+
+		field {
+			title = "Creation Date"
+			description = member.user.creationTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"))
+			inline = true
+		}
+
+		field {
+			title = "Join Date"
+			description = member.joinDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"))
+			inline = true
+		}
+
+		field {
+			title = "Status"
+			description = member.game?.toString() ?: "Nothing"
+			inline = true
+		}
+
+		field {
+			title = "Roles"
+			description = member.roles.joinToString(", ") { role -> role.name }
+			inline = true
+		}
 	}
 
 fun pingEmbed(latency: Long): MessageEmbed? {
