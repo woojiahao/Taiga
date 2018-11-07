@@ -6,90 +6,91 @@ import net.dv8tion.jda.core.entities.Message
 import net.dv8tion.jda.core.entities.MessageChannel
 
 class InteractiveEmbedManager {
-	private val interactiveEmbeds = mutableListOf<InteractiveEmbed>()
+  private val interactiveEmbeds = mutableListOf<InteractiveEmbed>()
 
-	private fun generatePagination(data: Array<String>): Pagination {
-		var counter = 1
-		val distribution = data.toList().chunked(10).associate { counter++ to it }
-		return Pagination(distribution.size, distribution)
-	}
-	private fun generateReactionList(pagination: Pagination): List<String> {
-		val reactionList = mutableListOf<String>()
-		if (pagination.hasMoreThanOnePage()) {
-			reactionList.add(InteractiveEmote.Previous.unicode)
-		}
+  private fun generatePagination(data: Array<String>): Pagination {
+    var counter = 1
+    val distribution = data.toList().chunked(10).associate { counter++ to it }
+    return Pagination(distribution.size, distribution)
+  }
 
-		pagination.getCurrentPageContent()?.let {
-			reactionList.addAll(InteractiveEmote.getUnicode(InteractiveEmote.numbering.subList(0, it.size)))
-		}
+  private fun generateReactionList(pagination: Pagination): List<String> {
+    val reactionList = mutableListOf<String>()
+    if (pagination.hasMoreThanOnePage()) {
+      reactionList.add(InteractiveEmote.Previous.unicode)
+    }
 
-		if (pagination.hasMoreThanOnePage()) {
-			reactionList.add(InteractiveEmote.Next.unicode)
-		}
+    pagination.getCurrentPageContent()?.let {
+      reactionList.addAll(InteractiveEmote.getUnicode(InteractiveEmote.numbering.subList(0, it.size)))
+    }
 
-		return reactionList
-	}
+    if (pagination.hasMoreThanOnePage()) {
+      reactionList.add(InteractiveEmote.Next.unicode)
+    }
 
-	fun send(
-		data: Array<String>,
-		channel: MessageChannel,
-		title: String,
-		description: String,
-		action: (Message, String, Int) -> Unit
-	) {
-		val pagination = generatePagination(data)
+    return reactionList
+  }
 
-		val message = channel.sendMessage(
-			reactionEmbed(
-				title,
-				formatContent(pagination),
-				description,
-				pagination
-			)
-		).complete()
+  fun send(
+    data: Array<String>,
+    channel: MessageChannel,
+    title: String,
+    description: String,
+    action: (Message, String, Int) -> Unit
+  ) {
+    val pagination = generatePagination(data)
 
-		populateReaction(message, pagination)
-		interactiveEmbeds.add(InteractiveEmbed(message, pagination, action))
-	}
+    val message = channel.sendMessage(
+      reactionEmbed(
+        title,
+        formatContent(pagination),
+        description,
+        pagination
+      )
+    ).complete()
 
-	fun formatContent(pagination: Pagination): String {
-		val content = pagination.getCurrentPageContent()?.let {
-			InteractiveEmote.getNumberingNames().zip(it).joinToString("\n\n") { entry -> ":${entry.first}: ${entry.second}" }
-		}
-		content ?: return "No content to be displayed"
+    populateReaction(message, pagination)
+    interactiveEmbeds.add(InteractiveEmbed(message, pagination, action))
+  }
 
-		return content
-	}
+  fun formatContent(pagination: Pagination): String {
+    val content = pagination.getCurrentPageContent()?.let {
+      InteractiveEmote.getNumberingNames().zip(it).joinToString("\n\n") { entry -> ":${entry.first}: ${entry.second}" }
+    }
+    content ?: return "No content to be displayed"
 
-	fun populateReaction(message: Message, pagination: Pagination) {
-		message.clearReactions().queue()
-		generateReactionList(pagination).forEach { message.addReaction(it).complete() }
-	}
+    return content
+  }
 
-	fun clearEmbed(id: String) = interactiveEmbeds.find { it.message.id == id }?.let {
-		interactiveEmbeds.remove(it)
-	}
+  fun populateReaction(message: Message, pagination: Pagination) {
+    message.clearReactions().queue()
+    generateReactionList(pagination).forEach { message.addReaction(it).complete() }
+  }
 
-	fun hasReaction(id: String, reactionName: String) = generateReactionList(getEmbed(id).pagination).contains(reactionName)
+  fun clearEmbed(id: String) = interactiveEmbeds.find { it.message.id == id }?.let {
+    interactiveEmbeds.remove(it)
+  }
 
-	fun hasEmbed(id: String) = interactiveEmbeds.any { it.message.id == id }
+  fun hasReaction(id: String, reactionName: String) = generateReactionList(getEmbed(id).pagination).contains(reactionName)
 
-	fun getEmbed(id: String) = interactiveEmbeds.first { it.message.id == id }
+  fun hasEmbed(id: String) = interactiveEmbeds.any { it.message.id == id }
+
+  fun getEmbed(id: String) = interactiveEmbeds.first { it.message.id == id }
 }
 
 private fun reactionEmbed(title: String, content: String, description: String, pagination: Pagination) =
-	embed {
-		this.title = title
-		color = green
-		this.description = description
+  embed {
+    this.title = title
+    color = green
+    this.description = description
 
-		field {
-			this.title = "Options:"
-			this.description = content
-		}
+    field {
+      this.title = "Options:"
+      this.description = content
+    }
 
-		footer {
-			iconUrl = null
-			message = pagination.toString()
-		}
-	}
+    footer {
+      iconUrl = null
+      message = pagination.toString()
+    }
+  }

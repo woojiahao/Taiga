@@ -6,13 +6,13 @@ import me.chill.embedManager
 import net.dv8tion.jda.core.entities.Guild
 
 class EmbedFieldId : Argument {
-	override fun check(guild: Guild, arg: String): ArgumentParseMap {
-		val fieldId = arg.toIntOrNull() ?: return ArgumentParseMap(false, "ID: **$arg** must be an integer")
+  override fun check(guild: Guild, arg: String): ArgumentParseMap {
+    val fieldId = arg.toIntOrNull() ?: return ArgumentParseMap(false, "ID: **$arg** must be an integer")
 
-		if (!embedManager.hasField(guild.id, fieldId)) {
-			return ArgumentParseMap(false, "ID: **$arg** does not exist in the embed")
-		}
+    if (!embedManager.hasField(guild.id, fieldId)) {
+      return ArgumentParseMap(false, "ID: **$arg** does not exist in the embed")
+    }
 
-		return ArgumentParseMap(true, parsedValue = arg)
-	}
+    return ArgumentParseMap(true, parsedValue = arg)
+  }
 }

@@ -16,147 +16,147 @@ import me.chill.settings.orange
 import me.chill.settings.red
 import me.chill.utility.findUser
 import me.chill.utility.simpleEmbed
-import me.chill.utility.successEmbed
 import me.chill.utility.str
+import me.chill.utility.successEmbed
 
 @CommandCategory
 fun suggestionCommands() = commands("Suggestion") {
-	command("poolinfo") {
-		execute {
-			if (TargetChannel.Suggestion.isDisabled(guild.id)) {
-				respond(suggestionDisabledEmbed(serverPrefix))
-				return@execute
-			}
-			respond(
-				simpleEmbed(
-					"${guild.name} Suggestion Pool",
-					"There are **${getPoolSize(guild.id)}** suggestion(s)",
-					null,
-					blue
-				)
-			)
-		}
-	}
+  command("poolinfo") {
+    execute {
+      if (TargetChannel.Suggestion.isDisabled(guild.id)) {
+        respond(suggestionDisabledEmbed(serverPrefix))
+        return@execute
+      }
+      respond(
+        simpleEmbed(
+          "${guild.name} Suggestion Pool",
+          "There are **${getPoolSize(guild.id)}** suggestion(s)",
+          null,
+          blue
+        )
+      )
+    }
+  }
 
-	command("pooltop") {
-		execute {
-			if (TargetChannel.Suggestion.isDisabled(guild.id)) {
-				respond(suggestionDisabledEmbed(serverPrefix))
-				return@execute
-			}
-			if (getPoolSize(guild.id) == 0) {
-				respond(
-					simpleEmbed(
-						"No Suggestion In Pool",
-						"There are no suggestions in the pool",
-						null,
-						blue
-					)
-				)
-			} else {
-				val latestSuggestion = getLatestSuggestionInPool(guild.id)
-				respond(suggestionInformationEmbed(jda.findUser(latestSuggestion.suggesterId), latestSuggestion))
-			}
-		}
-	}
+  command("pooltop") {
+    execute {
+      if (TargetChannel.Suggestion.isDisabled(guild.id)) {
+        respond(suggestionDisabledEmbed(serverPrefix))
+        return@execute
+      }
+      if (getPoolSize(guild.id) == 0) {
+        respond(
+          simpleEmbed(
+            "No Suggestion In Pool",
+            "There are no suggestions in the pool",
+            null,
+            blue
+          )
+        )
+      } else {
+        val latestSuggestion = getLatestSuggestionInPool(guild.id)
+        respond(suggestionInformationEmbed(jda.findUser(latestSuggestion.suggesterId), latestSuggestion))
+      }
+    }
+  }
 
-	command("suggest") {
-		expects(Sentence())
-		execute {
-			if (TargetChannel.Suggestion.isDisabled(guild.id)) {
-				respond(suggestionDisabledEmbed(serverPrefix))
-				return@execute
-			}
-			addSuggestionToPool(guild.id, invoker.user.id, arguments[0]!!.str())
-			respond(
-				successEmbed(
-					"Suggestion Added",
-					"Your suggestion has been added to the pool and will be subjected to review",
-					null
-				)
-			)
-		}
-	}
+  command("suggest") {
+    expects(Sentence())
+    execute {
+      if (TargetChannel.Suggestion.isDisabled(guild.id)) {
+        respond(suggestionDisabledEmbed(serverPrefix))
+        return@execute
+      }
+      addSuggestionToPool(guild.id, invoker.user.id, arguments[0]!!.str())
+      respond(
+        successEmbed(
+          "Suggestion Added",
+          "Your suggestion has been added to the pool and will be subjected to review",
+          null
+        )
+      )
+    }
+  }
 
-	command("pooldeny") {
-		execute {
-			if (TargetChannel.Suggestion.isDisabled(guild.id)) {
-				respond(suggestionDisabledEmbed(serverPrefix))
-				return@execute
-			}
-			val latestSuggestion = getLatestSuggestionInPool(guild.id)
-			denyLatestSuggestionInPool(guild.id)
-			respond("Suggestion Denied:")
-			respond(suggestionInformationEmbed(jda.findUser(latestSuggestion.suggesterId), latestSuggestion))
-		}
-	}
+  command("pooldeny") {
+    execute {
+      if (TargetChannel.Suggestion.isDisabled(guild.id)) {
+        respond(suggestionDisabledEmbed(serverPrefix))
+        return@execute
+      }
+      val latestSuggestion = getLatestSuggestionInPool(guild.id)
+      denyLatestSuggestionInPool(guild.id)
+      respond("Suggestion Denied:")
+      respond(suggestionInformationEmbed(jda.findUser(latestSuggestion.suggesterId), latestSuggestion))
+    }
+  }
 
-	command("poolaccept") {
-		execute {
-			if (TargetChannel.Suggestion.isDisabled(guild.id)) {
-				respond(suggestionDisabledEmbed(serverPrefix))
-				return@execute
-			}
-			val latestSuggestion = getLatestSuggestionInPool(guild.id)
+  command("poolaccept") {
+    execute {
+      if (TargetChannel.Suggestion.isDisabled(guild.id)) {
+        respond(suggestionDisabledEmbed(serverPrefix))
+        return@execute
+      }
+      val latestSuggestion = getLatestSuggestionInPool(guild.id)
 
-			val suggester = jda.findUser(latestSuggestion.suggesterId)
+      val suggester = jda.findUser(latestSuggestion.suggesterId)
 
-			respond("Suggestion Accepted:")
-			respond(suggestionInformationEmbed(suggester, latestSuggestion))
+      respond("Suggestion Accepted:")
+      respond(suggestionInformationEmbed(suggester, latestSuggestion))
 
-			val suggestionChannelId = TargetChannel.Suggestion.get(guild.id)
-			val suggestionChannel = guild.getTextChannelById(suggestionChannelId)
-			val messageAction = suggestionChannel.sendMessage(
-				publicSuggestionEmbed(
-					suggester.name,
-					suggester.avatarUrl,
-					latestSuggestion.suggestionDescription
-				)
-			)
-			val message = messageAction.complete()
-			val messageId = message.id
-			message.addReaction("\uD83D\uDC4D").complete()
-			message.addReaction("\uD83D\uDC4E").complete()
-			acceptLatestSuggestionInPool(guild.id, messageId)
-		}
-	}
+      val suggestionChannelId = TargetChannel.Suggestion.get(guild.id)
+      val suggestionChannel = guild.getTextChannelById(suggestionChannelId)
+      val messageAction = suggestionChannel.sendMessage(
+        publicSuggestionEmbed(
+          suggester.name,
+          suggester.avatarUrl,
+          latestSuggestion.suggestionDescription
+        )
+      )
+      val message = messageAction.complete()
+      val messageId = message.id
+      message.addReaction("\uD83D\uDC4D").complete()
+      message.addReaction("\uD83D\uDC4E").complete()
+      acceptLatestSuggestionInPool(guild.id, messageId)
+    }
+  }
 
-	command("respond") {
-		expects(
-			SuggestionId(),
-			Word(inclusion = arrayOf("Accepted", "Declined")),
-			Sentence()
-		)
-		execute {
-			if (TargetChannel.Suggestion.isDisabled(guild.id)) {
-				respond(suggestionDisabledEmbed(serverPrefix))
-				return@execute
-			}
-			val messageId = arguments[0]!!.str()
-			val status = arguments[1]!!.str()
+  command("respond") {
+    expects(
+      SuggestionId(),
+      Word(inclusion = arrayOf("Accepted", "Declined")),
+      Sentence()
+    )
+    execute {
+      if (TargetChannel.Suggestion.isDisabled(guild.id)) {
+        respond(suggestionDisabledEmbed(serverPrefix))
+        return@execute
+      }
+      val messageId = arguments[0]!!.str()
+      val status = arguments[1]!!.str()
 
-			val suggestionChannel = guild.getTextChannelById(TargetChannel.Suggestion.get(guild.id))
-			val message = suggestionChannel.getMessageById(messageId).complete()
-			val original = message.embeds[0]
-			val suggesterName = original.title.substring(original.title.lastIndexOf(" "))
+      val suggestionChannel = guild.getTextChannelById(TargetChannel.Suggestion.get(guild.id))
+      val message = suggestionChannel.getMessageById(messageId).complete()
+      val original = message.embeds[0]
+      val suggesterName = original.title.substring(original.title.lastIndexOf(" "))
 
-			respond("Suggestion Responded To:")
-			respond(original)
+      respond("Suggestion Responded To:")
+      respond(original)
 
-			message.editMessage(
-				publicSuggestionEmbed(
-					suggesterName,
-					original.thumbnail.url,
-					original.description,
-					when (status.toLowerCase()) {
-						"accepted" -> green
-						"declined" -> red
-						else -> orange
-					},
-					arguments[2]!!.str()
-				)
-			).queue()
-			clearSuggestion(guild.id, messageId)
-		}
-	}
+      message.editMessage(
+        publicSuggestionEmbed(
+          suggesterName,
+          original.thumbnail.url,
+          original.description,
+          when (status.toLowerCase()) {
+            "accepted" -> green
+            "declined" -> red
+            else -> orange
+          },
+          arguments[2]!!.str()
+        )
+      ).queue()
+      clearSuggestion(guild.id, messageId)
+    }
+  }
 }

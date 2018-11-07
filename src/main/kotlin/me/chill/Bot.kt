@@ -22,35 +22,35 @@ val raidManger = RaidManager()
 val interactiveEmbedManager = InteractiveEmbedManager()
 val embedManager = EmbedManager()
 fun main(args: Array<String>) {
-	setup()
+  setup()
 
-	val jda = JDABuilder(AccountType.BOT)
-		.setStatus(OnlineStatus.ONLINE)
-		.setToken(credentials!!.token)
-		.setGame(Game.playing("${credentials!!.defaultPrefix}help"))
-		.addEventListener(
-			OnJoinEvent(),
-			OnLeaveEvent(),
-			OnChannelCreationEvent(),
-			InputEvent(),
-			InteractiveEmbedEvent(),
-			OnUserActivityEvent()
-		)
-		.build()
-	credentials!!.botOwnerId = jda.asBot().applicationInfo.complete().owner.id
+  val jda = JDABuilder(AccountType.BOT)
+    .setStatus(OnlineStatus.ONLINE)
+    .setToken(credentials!!.token)
+    .setGame(Game.playing("${credentials!!.defaultPrefix}help"))
+    .addEventListener(
+      OnJoinEvent(),
+      OnLeaveEvent(),
+      OnChannelCreationEvent(),
+      InputEvent(),
+      InteractiveEmbedEvent(),
+      OnUserActivityEvent()
+    )
+    .build()
+  credentials!!.botOwnerId = jda.asBot().applicationInfo.complete().owner.id
 }
 
 private fun setup() {
-	credentials = if (isHerokuRunning()) {
-		Credentials(null)
-	} else {
-		val configurations = loadConfigurations() ?: return
-		Credentials(configurations)
-	}
+  credentials = if (isHerokuRunning()) {
+    Credentials(null)
+  } else {
+    val configurations = loadConfigurations() ?: return
+    Credentials(configurations)
+  }
 
-	setupDatabase(credentials!!.database!!)
-	CommandContainer.loadContainer()
-	commandInfo = loadHelp()
+  setupDatabase(credentials!!.database!!)
+  CommandContainer.loadContainer()
+  commandInfo = loadHelp()
 
-	println("Bot has loaded")
+  println("Bot has loaded")
 }

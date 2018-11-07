@@ -15,39 +15,39 @@ fun isInvite(message: String) = message.matches(inviteRegex)
 fun containsInvite(message: String) = message.contains(inviteRegex)
 
 fun extractInvite(message: String) =
-	inviteRegex.find(message)!!.value
+  inviteRegex.find(message)!!.value
 
 fun manageInviteSent(sender: Member, guild: Guild, channel: MessageChannel, message: Message) {
-	val senderId = sender.user.id
-	val guildId = guild.id
+  val senderId = sender.user.id
+  val guildId = guild.id
 
-	if (!hasUser(senderId, guildId)) addUser(senderId, guildId)
-	else incrementInviteCount(senderId, guildId)
+  if (!hasUser(senderId, guildId)) addUser(senderId, guildId)
+  else incrementInviteCount(senderId, guildId)
 
-	message.delete().complete()
-	channel.send("${sender.asMention} do not send invites")
-	guild.getTextChannelById(TargetChannel.Logging.get(guildId)).send(inviteCaughtEmbed(sender, guild, channel, message))
+  message.delete().complete()
+  channel.send("${sender.asMention} do not send invites")
+  guild.getTextChannelById(TargetChannel.Logging.get(guildId)).send(inviteCaughtEmbed(sender, guild, channel, message))
 
-	if (getUserCount(senderId, guildId) >= 5) {
-		guild.controller.ban(sender, 1, "Spamming invite links").complete()
-		removeUser(senderId, guildId)
-	}
+  if (getUserCount(senderId, guildId) >= 5) {
+    guild.controller.ban(sender, 1, "Spamming invite links").complete()
+    removeUser(senderId, guildId)
+  }
 }
 
 
 private fun inviteCaughtEmbed(member: Member, guild: Guild, channel: MessageChannel, message: Message) =
-	embed {
-		title = "Invite Sent"
-		description = "${printMember(member)} attempted to send an invite in ${printChannel(channel)}"
-		color = red
+  embed {
+    title = "Invite Sent"
+    description = "${printMember(member)} attempted to send an invite in ${printChannel(channel)}"
+    color = red
 
-		field {
-			title = "Message Containing Invite"
-			description = message.contentDisplay
-		}
+    field {
+      title = "Message Containing Invite"
+      description = message.contentDisplay
+    }
 
-		footer {
-			this.message = "${getUserCount(member.user.id, guild.id)}/5 Invites Sent"
-			iconUrl = null
-		}
-	}
+    footer {
+      this.message = "${getUserCount(member.user.id, guild.id)}/5 Invites Sent"
+      iconUrl = null
+    }
+  }

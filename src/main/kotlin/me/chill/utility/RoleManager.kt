@@ -8,16 +8,16 @@ import net.dv8tion.jda.core.entities.*
  * 	the command is invoked
  */
 fun assignRole(guild: Guild, channel: MessageChannel, roleId: String, targetId: String) {
-	val preCheckingResults = preChecking(guild, roleId, targetId)
-	preCheckingResults?.let {
-		channel.send(preCheckingResults)
-		return
-	}
-	val role = guild.getRoleById(roleId)
-	val member = guild.getMemberById(targetId)
+  val preCheckingResults = preChecking(guild, roleId, targetId)
+  preCheckingResults?.let {
+    channel.send(preCheckingResults)
+    return
+  }
+  val role = guild.getRoleById(roleId)
+  val member = guild.getMemberById(targetId)
 
-	guild.addRoleToUser(member, role)
-	channel.send(roleOperationSuccessEmbed("Successfully assigned role: **${role.name}** to ${printMember(member)}"))
+  guild.addRoleToUser(member, role)
+  channel.send(roleOperationSuccessEmbed("Successfully assigned role: **${role.name}** to ${printMember(member)}"))
 }
 
 /**
@@ -25,10 +25,10 @@ fun assignRole(guild: Guild, channel: MessageChannel, roleId: String, targetId: 
  * Assigns a role to a user
  */
 fun assignRole(guild: Guild, roleId: String, targetId: String) {
-	val preCheckingResults = preChecking(guild, roleId, targetId)
-	preCheckingResults?.let { return }
+  val preCheckingResults = preChecking(guild, roleId, targetId)
+  preCheckingResults?.let { return }
 
-	guild.addRoleToUser(guild.getMemberById(targetId), guild.getRoleById(roleId))
+  guild.addRoleToUser(guild.getMemberById(targetId), guild.getRoleById(roleId))
 }
 
 /**
@@ -37,17 +37,17 @@ fun assignRole(guild: Guild, roleId: String, targetId: String) {
  * the command is invoked
  */
 fun removeRole(guild: Guild, channel: MessageChannel, roleId: String, targetId: String) {
-	val preCheckingResults = preChecking(guild, roleId, targetId)
-	preCheckingResults?.let {
-		channel.send(preCheckingResults)
-		return
-	}
+  val preCheckingResults = preChecking(guild, roleId, targetId)
+  preCheckingResults?.let {
+    channel.send(preCheckingResults)
+    return
+  }
 
-	val role = guild.getRoleById(roleId)
-	val member = guild.getMemberById(targetId)
+  val role = guild.getRoleById(roleId)
+  val member = guild.getMemberById(targetId)
 
-	guild.removeRoleFromUser(member, role)
-	channel.send(roleOperationSuccessEmbed("Successfully removed role: **${role.name}** from ${printMember(member)}"))
+  guild.removeRoleFromUser(member, role)
+  channel.send(roleOperationSuccessEmbed("Successfully removed role: **${role.name}** from ${printMember(member)}"))
 }
 
 /**
@@ -55,10 +55,10 @@ fun removeRole(guild: Guild, channel: MessageChannel, roleId: String, targetId: 
  * Removes a role from a user
  */
 fun removeRole(guild: Guild, roleId: String, targetId: String) {
-	val preCheckingResults = preChecking(guild, roleId, targetId)
-	preCheckingResults?.let { return }
+  val preCheckingResults = preChecking(guild, roleId, targetId)
+  preCheckingResults?.let { return }
 
-	guild.removeRoleFromUser(guild.getMemberById(targetId), guild.getRoleById(roleId))
+  guild.removeRoleFromUser(guild.getMemberById(targetId), guild.getRoleById(roleId))
 }
 
 fun Guild.hasRole(roleName: String, ignoreCase: Boolean = true) = getRolesByName(roleName, ignoreCase).isNotEmpty()
@@ -79,11 +79,11 @@ fun Guild.addRoleToUser(member: Member, role: Role) = controller.addSingleRoleTo
 fun Guild.removeRoleFromUser(member: Member, role: Role) = controller.removeSingleRoleFromMember(member, role).queue()
 
 fun Guild.createRole(roleName: String) =
-	controller
-		.createRole()
-		.setName(roleName)
-		.setPermissions(emptyList())
-		.queue()
+  controller
+    .createRole()
+    .setName(roleName)
+    .setPermissions(emptyList())
+    .queue()
 
 /**
  * Performs checking to ensure that a role operation attempt is valid
@@ -91,17 +91,17 @@ fun Guild.createRole(roleName: String) =
  * 	If a message embed is present, the pre-checking failed, else, it passed
  */
 private fun preChecking(guild: Guild, roleId: String, targetId: String): MessageEmbed? {
-	val role = guild.getRoleById(roleId)
-	return when {
-		role == null -> roleOperationFailureEmbed("Role: **$roleId** does not exist in **${guild.name}**")
-		role.position >= guild.getRolesByName(guild.jda.selfUser.name, false)[0].position -> roleOperationFailureEmbed("Unable to assign role: **${role.name}** as it is higher level than me!")
-		guild.getMemberById(targetId) == null -> roleOperationFailureEmbed("Member: **$targetId** does not exist in **${guild.name}**")
-		else -> null
-	}
+  val role = guild.getRoleById(roleId)
+  return when {
+    role == null -> roleOperationFailureEmbed("Role: **$roleId** does not exist in **${guild.name}**")
+    role.position >= guild.getRolesByName(guild.jda.selfUser.name, false)[0].position -> roleOperationFailureEmbed("Unable to assign role: **${role.name}** as it is higher level than me!")
+    guild.getMemberById(targetId) == null -> roleOperationFailureEmbed("Member: **$targetId** does not exist in **${guild.name}**")
+    else -> null
+  }
 }
 
 private fun roleOperationSuccessEmbed(message: String) =
-	successEmbed("Role Operation Success!", message)
+  successEmbed("Role Operation Success!", message)
 
 private fun roleOperationFailureEmbed(message: String) =
-	failureEmbed("Role Operation Failed!", message)
+  failureEmbed("Role Operation Failed!", message)

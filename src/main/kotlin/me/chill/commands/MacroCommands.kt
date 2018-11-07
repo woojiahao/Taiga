@@ -11,72 +11,72 @@ import me.chill.embed.types.macroEditEmbed
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
 import me.chill.utility.failureEmbed
-import me.chill.utility.successEmbed
 import me.chill.utility.str
+import me.chill.utility.successEmbed
 
 @CommandCategory
 fun macroCommands() = commands("Macro") {
-	command("listmacros") {
-		execute {
-			val macroList = getMacroList(guild.id)
-			respond(
-				listMacrosEmbed(
-					guild.name,
-					macroList
-						.asSequence()
-						.sorted()
-						.joinToString(", "),
-					macroList.size
-				)
-			)
-		}
-	}
+  command("listmacros") {
+    execute {
+      val macroList = getMacroList(guild.id)
+      respond(
+        listMacrosEmbed(
+          guild.name,
+          macroList
+            .asSequence()
+            .sorted()
+            .joinToString(", "),
+          macroList.size
+        )
+      )
+    }
+  }
 
-	command("addmacro") {
-		expects(MacroName(), Sentence())
-		execute {
-			val macroName = arguments[0]!!.str()
-			val macroDescription = arguments[1]!!.str()
+  command("addmacro") {
+    expects(MacroName(), Sentence())
+    execute {
+      val macroName = arguments[0]!!.str()
+      val macroDescription = arguments[1]!!.str()
 
-			if (getMacroList(guild.id).size >= 50) {
-				respond(
-					failureEmbed(
-						"Add Macro Failed",
-						"You have reached the macro limit for the server"
-					)
-				)
-				return@execute
-			}
+      if (getMacroList(guild.id).size >= 50) {
+        respond(
+          failureEmbed(
+            "Add Macro Failed",
+            "You have reached the macro limit for the server"
+          )
+        )
+        return@execute
+      }
 
-			addMacro(guild.id, macroName, macroDescription)
-			respond(macroEditEmbed("Add Macro Success", guild.id, macroName, macroDescription))
-		}
-	}
+      addMacro(guild.id, macroName, macroDescription)
+      respond(macroEditEmbed("Add Macro Success", guild.id, macroName, macroDescription))
+    }
+  }
 
-	command("editmacro") {
-		expects(MacroName(true), Sentence())
-		execute {
-			val macroName = arguments[0]!!.str()
-			val macroDescription = arguments[1]!!.str()
+  command("editmacro") {
+    expects(MacroName(true), Sentence())
+    execute {
+      val macroName = arguments[0]!!.str()
+      val macroDescription = arguments[1]!!.str()
 
-			editMacro(guild.id, macroName, macroDescription)
-			respond(macroEditEmbed("Edit Macro Success", guild.id, macroName, macroDescription))
-		}
-	}
+      editMacro(guild.id, macroName, macroDescription)
+      respond(macroEditEmbed("Edit Macro Success", guild.id, macroName, macroDescription))
+    }
+  }
 
-	command("removemacro") {
-		expects(MacroName(true))
-		execute {
-			val macroName = arguments[0]!!.str()
+  command("removemacro") {
+    expects(MacroName(true))
+    execute {
+      val macroName = arguments[0]!!.str()
 
-			removeMacro(guild.id, macroName)
-			respond(
-				successEmbed(
-					"Remove Macro Success",
-					"Macro: **$macroName** as been removed",
-					null
-				)
-			)
-		}
-	}
+      removeMacro(guild.id, macroName)
+      respond(
+        successEmbed(
+          "Remove Macro Success",
+          "Macro: **$macroName** as been removed",
+          null
+        )
+      )
+    }
+  }
 }

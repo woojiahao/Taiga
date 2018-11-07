@@ -14,45 +14,45 @@ import net.dv8tion.jda.core.events.guild.member.GuildMemberLeaveEvent
 import net.dv8tion.jda.core.hooks.ListenerAdapter
 
 class OnLeaveEvent : ListenerAdapter() {
-	override fun onGuildMemberLeave(event: GuildMemberLeaveEvent?) {
-		event ?: throw ListenerEventException(
-			"On Member Leave",
-			"Event object was null during member leave"
-		)
+  override fun onGuildMemberLeave(event: GuildMemberLeaveEvent?) {
+    event ?: throw ListenerEventException(
+      "On Member Leave",
+      "Event object was null during member leave"
+    )
 
-		if (!event.guild.getMember(event.jda.selfUser).hasPermission(Permission.MESSAGE_WRITE)) return
+    if (!event.guild.getMember(event.jda.selfUser).hasPermission(Permission.MESSAGE_WRITE)) return
 
-		val serverId = event.guild.id
-		val member = event.member
+    val serverId = event.guild.id
+    val member = event.member
 
-		val loggingChannel = event.guild.getTextChannelById(TargetChannel.Logging.get(serverId))
-		if (!TargetChannel.Logging.isDisabled(serverId)) loggingChannel.send(memberLeaveEmbed(member))
-	}
+    val loggingChannel = event.guild.getTextChannelById(TargetChannel.Logging.get(serverId))
+    if (!TargetChannel.Logging.isDisabled(serverId)) loggingChannel.send(memberLeaveEmbed(member))
+  }
 
-	override fun onGuildLeave(event: GuildLeaveEvent?) {
-		event ?: throw ListenerEventException(
-			"On Bot Leave",
-			"Event object was null during bot leave"
-		)
+  override fun onGuildLeave(event: GuildLeaveEvent?) {
+    event ?: throw ListenerEventException(
+      "On Bot Leave",
+      "Event object was null during bot leave"
+    )
 
-		val serverId = event.guild.id
+    val serverId = event.guild.id
 
-		event.guild.jda.getTextChannelById("482338281946742786").send(
-			successEmbed(
-				"Server Leave",
-				"Left ${event.guild.name}::$serverId on ${getDateTime()}"
-			)
-		)
+    event.guild.jda.getTextChannelById("482338281946742786").send(
+      successEmbed(
+        "Server Leave",
+        "Left ${event.guild.name}::$serverId on ${getDateTime()}"
+      )
+    )
 
-		removeServerPreference(serverId)
-		clearPermissions(serverId)
-	}
+    removeServerPreference(serverId)
+    clearPermissions(serverId)
+  }
 }
 
 private fun memberLeaveEmbed(member: Member) =
-	embed {
-		title = "Member leave"
-		color = red
-		description = "${printMember(member)} left the server"
-		thumbnail = lost
-	}
+  embed {
+    title = "Member leave"
+    color = red
+    description = "${printMember(member)} left the server"
+    thumbnail = lost
+  }

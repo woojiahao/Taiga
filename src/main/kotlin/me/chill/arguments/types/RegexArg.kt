@@ -7,13 +7,13 @@ import java.util.regex.Pattern
 import java.util.regex.PatternSyntaxException
 
 class RegexArg : Argument {
-	override fun check(guild: Guild, arg: String): ArgumentParseMap {
-		try {
-			Pattern.compile(arg)
-		} catch (e: PatternSyntaxException) {
-			return ArgumentParseMap(false, "Regex expression: **$arg** is not valid")
-		}
+  override fun check(guild: Guild, arg: String): ArgumentParseMap {
+    try {
+      Pattern.compile(arg)
+    } catch (e: PatternSyntaxException) {
+      return ArgumentParseMap(false, "Regex expression: **$arg** is not valid")
+    }
 
-		return ArgumentParseMap(true, parsedValue = arg)
-	}
+    return ArgumentParseMap(true, parsedValue = arg)
+  }
 }

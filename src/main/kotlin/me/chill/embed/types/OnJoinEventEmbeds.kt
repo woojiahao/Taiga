@@ -7,13 +7,13 @@ import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.Member
 
 fun newMemberJoinEmbed(server: Guild, member: Member) =
-	embed {
-		title = "Member join"
-		color = green
-		field {
-			title = "Hi ${member.effectiveName}! Welcome to ${server.name}"
-			description = getWelcomeMessage(server.id)
-			inline = false
-		}
-		thumbnail = member.user.avatarUrl
-	}
+  embed {
+    title = "Member join"
+    color = green
+    field {
+      title = "Hi ${member.effectiveName}! Welcome to ${server.name}"
+      description = getWelcomeMessage(server.id)
+      inline = false
+    }
+    thumbnail = member.user.avatarUrl
+  }
