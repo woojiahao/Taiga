@@ -60,12 +60,12 @@ class OnJoinEvent : ListenerAdapter() {
     val serverId = event.guild.id
     val defaultChannelId = event.guild.defaultChannel!!.id
 
-    event.guild.jda.getTextChannelById("482338281946742786").send(
-      successEmbed(
-        "Server Join",
-        "Joined ${event.guild.name}::$serverId on ${getDateTime()}"
-      )
-    )
+//    event.guild.jda.getTextChannelById("482338281946742786").send(
+//      successEmbed(
+//        "Server Join",
+//        "Joined ${event.guild.name}::$serverId on ${getDateTime()}"
+//      )
+//    )
 
     addServerPreference(serverId, defaultChannelId)
     loadGlobalPermissions(event.guild)

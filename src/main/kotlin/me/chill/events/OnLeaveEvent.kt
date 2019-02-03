@@ -37,12 +37,12 @@ class OnLeaveEvent : ListenerAdapter() {
 
     val serverId = event.guild.id
 
-    event.guild.jda.getTextChannelById("482338281946742786").send(
-      successEmbed(
-        "Server Leave",
-        "Left ${event.guild.name}::$serverId on ${getDateTime()}"
-      )
-    )
+//    event.guild.jda.getTextChannelById("482338281946742786").send(
+//      successEmbed(
+//        "Server Leave",
+//        "Left ${event.guild.name}::$serverId on ${getDateTime()}"
+//      )
+//    )
 
     removeServerPreference(serverId)
     clearPermissions(serverId)
