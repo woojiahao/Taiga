@@ -3,7 +3,7 @@ package me.chill.framework
 import me.chill.arguments.Argument
 import me.chill.arguments.types.RegexArg
 import me.chill.arguments.types.Sentence
-import me.chill.credentials
+import me.chill.defaultPrefix
 import me.chill.exception.EndArgumentException
 import me.chill.framework.ContainerKey.*
 import me.chill.utility.send
@@ -36,7 +36,7 @@ class Command(val name: String, val category: String) {
 
   init {
     commandInformation[Jda] = null
-    commandInformation[ServerPrefix] = credentials!!.defaultPrefix!!
+    commandInformation[ServerPrefix] = defaultPrefix
     commandInformation[Server] = null
     commandInformation[Invoker] = null
     commandInformation[Channel] = null
