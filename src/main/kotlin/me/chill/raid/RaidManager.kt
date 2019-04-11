@@ -33,22 +33,20 @@ class RaidManager {
     raider.messageCount++
 
     if (raider.messageCount >= raidMessageLimit) {
-      if (guild.getMutedRole() == null) {
-        channel.send(
-          failureEmbed(
-            "Mute Failed",
-            "Unable to apply mute to user as the **muted** role does not exist, run `${getPrefix(guild.id)}setup`"
-          )
-        )
-        return
-      } else {
-        raiderCaught(guild, member, channel)
+      with(guild) {
+        getMutedRole()
+          ?.let { raiderCaught(this, member, channel) }
+            ?: channel.send(
+              failureEmbed(
+                "Mute Failed",
+                "Unable to apply mute to user as the **muted** role does not exist, run `${getPrefix(id)}setup`"
+              )
+            )
       }
     }
   }
 
   private fun raiderCaught(guild: Guild, member: Member, channel: MessageChannel) {
-
     try {
       guild.addRoleToUser(member, guild.getMutedRole()!!)
     } catch (e: Exception) {

@@ -8,8 +8,11 @@ class RaiderList(private val duration: Int) {
   fun hasRaider(userId: String) = raiders.any { it.userId == userId }
 
   fun addRaider(userId: String) {
-    val raider = Raider(userId, 1)
-    raiders.add(raider)
-    raider.startCountdown(duration) { raiders.remove(raider) }
+    with (Raider(userId, 1)) {
+      raiders += this
+      startCountdown(duration) {
+        raiders.remove(this)
+      }
+    }
   }
 }
