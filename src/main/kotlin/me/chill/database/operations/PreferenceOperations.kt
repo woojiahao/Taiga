@@ -68,9 +68,10 @@ fun removeServerPreference(serverId: String) {
   }
 }
 
-fun getPreference(serverId: String, column: Column<*>) =
+@Suppress("UNCHECKED_CAST")
+fun <T> getPreference(serverId: String, column: Column<*>): T =
   transaction {
-    Preference.select { Preference.serverId eq serverId }.first()[column]
+    Preference.select { Preference.serverId eq serverId }.first()[column] as T
   }
 
 fun updatePreferences(serverId: String, updateStatement: Preference.(UpdateStatement) -> Unit) {

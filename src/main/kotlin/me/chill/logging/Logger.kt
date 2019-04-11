@@ -11,13 +11,13 @@ import net.dv8tion.jda.api.entities.MessageChannel
 
 fun normalLog(command: Command) {
   val guild = command.guild
-  guild.getTextChannelById(TargetChannel.Logging.get(guild.id)).send(
+  guild.getTextChannelById(TargetChannel.LOGGING.get(guild.id)).send(
     normalLogEmbed(command.name, command.invoker, command.channel)
   )
 }
 
 fun macroLog(macroName: String, invoker: Member, channel: MessageChannel, guild: Guild) {
-  guild.getTextChannelById(TargetChannel.Logging.get(guild.id)).send(macroLogEmbed(macroName, invoker, channel))
+  guild.getTextChannelById(TargetChannel.LOGGING.get(guild.id)).send(macroLogEmbed(macroName, invoker, channel))
 }
 
 private fun macroLogEmbed(macroName: String, invoker: Member, channel: MessageChannel) =

@@ -23,11 +23,11 @@ class OnJoinEvent : ListenerAdapter() {
 
     val guild = event.guild
     val guildId = guild.id
-    val joinChannel = guild.getTextChannelById(TargetChannel.Join.get(guildId))
-    val loggingChannel = guild.getTextChannelById(TargetChannel.Logging.get(guildId))
+    val joinChannel = guild.getTextChannelById(TargetChannel.JOIN.get(guildId))
+    val loggingChannel = guild.getTextChannelById(TargetChannel.LOGGING.get(guildId))
     val member = event.member
 
-    if (!TargetChannel.Join.isDisabled(guildId)) joinChannel.send(newMemberJoinEmbed(guild, member))
+    if (!TargetChannel.JOIN.isDisabled(guildId)) joinChannel.send(newMemberJoinEmbed(guild, member))
 
     if (hasJoinRole(guildId)) assignRole(guild, getJoinRole(guildId)!!, member.user.id)
 

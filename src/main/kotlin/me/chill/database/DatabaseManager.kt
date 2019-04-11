@@ -11,8 +11,15 @@ fun setupDatabase(databaseUrl: String) {
 
   transaction {
     SchemaUtils.create(
-      Permission, Preference, UserRecord, Strike, Raider,
-      Suggestion, Macro, UserInvite, InviteWhitelist
+      Permission,
+      Preference,
+      UserRecord,
+      Strike,
+      Raider,
+      Suggestion,
+      Macro,
+      UserInvite,
+      InviteWhitelist
     )
   }
 }

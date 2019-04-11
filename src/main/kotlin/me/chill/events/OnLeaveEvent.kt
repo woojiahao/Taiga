@@ -27,8 +27,8 @@ class OnLeaveEvent : ListenerAdapter() {
     val serverId = event.guild.id
     val member = event.member
 
-    val loggingChannel = event.guild.getTextChannelById(TargetChannel.Logging.get(serverId))
-    if (!TargetChannel.Logging.isDisabled(serverId)) loggingChannel.send(memberLeaveEmbed(member))
+    val loggingChannel = event.guild.getTextChannelById(TargetChannel.LOGGING.get(serverId))
+    if (!TargetChannel.LOGGING.isDisabled(serverId)) loggingChannel.send(memberLeaveEmbed(member))
   }
 
   override fun onGuildLeave(event: GuildLeaveEvent?) {

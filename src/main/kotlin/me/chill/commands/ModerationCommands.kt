@@ -197,7 +197,7 @@ private fun strikeUser(
 
   val guildId = guild.id
   val target = guild.getMemberById(targetId)
-  val loggingChannel = guild.getTextChannelById(TargetChannel.Logging.get(guildId))
+  val loggingChannel = guild.getTextChannelById(TargetChannel.LOGGING.get(guildId))
 
   addStrike(guildId, targetId, strikeWeight, strikeReason, invoker.user.id)
   val strikeCount = getStrikeCount(guildId, targetId)
@@ -220,7 +220,7 @@ private fun muteUser(
   duration: Int = 1, timeMultiplier: TimeMultiplier? = null
 ) {
 
-  val loggingChannel = guild.getTextChannelById(TargetChannel.Logging.get(guild.id))
+  val loggingChannel = guild.getTextChannelById(TargetChannel.LOGGING.get(guild.id))
   val targetId = target.user.id
 
   if (!guild.hasRole("muted")) {

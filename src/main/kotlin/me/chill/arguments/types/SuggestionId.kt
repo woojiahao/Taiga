@@ -12,7 +12,7 @@ class SuggestionId : Argument {
       return ArgumentParseMap(false, "Suggestion ID: **$arg** is not found")
     }
 
-    val suggestionChannel = guild.getTextChannelById(TargetChannel.Suggestion.get(guild.id))
+    val suggestionChannel = guild.getTextChannelById(TargetChannel.SUGGESTION.get(guild.id))
     if (suggestionChannel.retrieveMessageById(arg) == null) {
       return ArgumentParseMap(false, "Unable to find suggestion ID: **$arg** in suggestions channel")
     }

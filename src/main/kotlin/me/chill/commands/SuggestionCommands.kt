@@ -23,7 +23,7 @@ import me.chill.utility.successEmbed
 fun suggestionCommands() = commands("Suggestion") {
   command("poolinfo") {
     execute {
-      if (TargetChannel.Suggestion.isDisabled(guild.id)) {
+      if (TargetChannel.SUGGESTION.isDisabled(guild.id)) {
         respond(suggestionDisabledEmbed(serverPrefix))
         return@execute
       }
@@ -40,7 +40,7 @@ fun suggestionCommands() = commands("Suggestion") {
 
   command("pooltop") {
     execute {
-      if (TargetChannel.Suggestion.isDisabled(guild.id)) {
+      if (TargetChannel.SUGGESTION.isDisabled(guild.id)) {
         respond(suggestionDisabledEmbed(serverPrefix))
         return@execute
       }
@@ -63,7 +63,7 @@ fun suggestionCommands() = commands("Suggestion") {
   command("suggest") {
     expects(Sentence())
     execute {
-      if (TargetChannel.Suggestion.isDisabled(guild.id)) {
+      if (TargetChannel.SUGGESTION.isDisabled(guild.id)) {
         respond(suggestionDisabledEmbed(serverPrefix))
         return@execute
       }
@@ -80,7 +80,7 @@ fun suggestionCommands() = commands("Suggestion") {
 
   command("pooldeny") {
     execute {
-      if (TargetChannel.Suggestion.isDisabled(guild.id)) {
+      if (TargetChannel.SUGGESTION.isDisabled(guild.id)) {
         respond(suggestionDisabledEmbed(serverPrefix))
         return@execute
       }
@@ -93,7 +93,7 @@ fun suggestionCommands() = commands("Suggestion") {
 
   command("poolaccept") {
     execute {
-      if (TargetChannel.Suggestion.isDisabled(guild.id)) {
+      if (TargetChannel.SUGGESTION.isDisabled(guild.id)) {
         respond(suggestionDisabledEmbed(serverPrefix))
         return@execute
       }
@@ -104,7 +104,7 @@ fun suggestionCommands() = commands("Suggestion") {
       respond("Suggestion Accepted:")
       respond(suggestionInformationEmbed(suggester, latestSuggestion))
 
-      val suggestionChannelId = TargetChannel.Suggestion.get(guild.id)
+      val suggestionChannelId = TargetChannel.SUGGESTION.get(guild.id)
       val suggestionChannel = guild.getTextChannelById(suggestionChannelId)
       val messageAction = suggestionChannel.sendMessage(
         publicSuggestionEmbed(
@@ -128,14 +128,14 @@ fun suggestionCommands() = commands("Suggestion") {
       Sentence()
     )
     execute {
-      if (TargetChannel.Suggestion.isDisabled(guild.id)) {
+      if (TargetChannel.SUGGESTION.isDisabled(guild.id)) {
         respond(suggestionDisabledEmbed(serverPrefix))
         return@execute
       }
       val messageId = arguments[0]!!.str()
       val status = arguments[1]!!.str()
 
-      val suggestionChannel = guild.getTextChannelById(TargetChannel.Suggestion.get(guild.id))
+      val suggestionChannel = guild.getTextChannelById(TargetChannel.SUGGESTION.get(guild.id))
       val message = suggestionChannel.retrieveMessageById(messageId).complete()
       val original = message.embeds[0]
       val suggesterName = original.title.substring(original.title.lastIndexOf(" "))

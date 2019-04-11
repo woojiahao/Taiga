@@ -59,7 +59,7 @@ private fun handleInput(event: MessageReceivedEvent?) {
   if (hasMacro(server.id, attemptedCommandMacro)) {
     if (commandParts.size == 1) {
       messageChannel.send(getMacro(server.id, attemptedCommandMacro))
-      if (!TargetChannel.Logging.isDisabled(server.id)) {
+      if (!TargetChannel.LOGGING.isDisabled(server.id)) {
         macroLog(attemptedCommandMacro, invoker, messageChannel, server)
       }
     }
@@ -115,7 +115,7 @@ private fun handleInput(event: MessageReceivedEvent?) {
     try {
       event.message.addReaction("\uD83D\uDC40").complete()
       selectedCommand.run(serverPrefix, event.jda, event.guild, event.member, messageChannel, arguments)
-      if (!TargetChannel.Logging.isDisabled(server.id)) normalLog(selectedCommand)
+      if (!TargetChannel.LOGGING.isDisabled(server.id)) normalLog(selectedCommand)
       if (silentInvoke) event.message.delete().complete()
     } catch (e: InsufficientPermissionException) {
       if (permissionIgnoreList.contains(e.permission)) return@Thread

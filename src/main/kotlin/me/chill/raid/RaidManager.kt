@@ -65,7 +65,7 @@ class RaidManager {
       )
     )
 
-    val loggingChannel = guild.getTextChannelById(TargetChannel.Logging.get(guild.id))
+    val loggingChannel = guild.getTextChannelById(TargetChannel.LOGGING.get(guild.id))
     loggingChannel.send(
       failureEmbed(
         "Raider Caught",
