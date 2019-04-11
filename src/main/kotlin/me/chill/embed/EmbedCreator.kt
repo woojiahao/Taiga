@@ -4,9 +4,9 @@ import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.MessageEmbed
 
 class EmbedCreator {
-  private val fields = mutableListOf<EmbedField>()
+  val fields = mutableListOf<EmbedField>()
 
-  private var footer: EmbedFooter? = null
+  var footer: EmbedFooter? = null
 
   var color: Int? = null
   var title: String? = null
@@ -15,10 +15,8 @@ class EmbedCreator {
   var description: String? = null
   var image: String? = null
 
-  fun field(create: EmbedField.() -> Unit) {
-    val embedField = EmbedField()
-    embedField.create()
-    fields.add(embedField)
+  inline fun field(create: EmbedField.() -> Unit) {
+    fields += EmbedField().apply(create)
   }
 
   fun getFieldQuantity() = fields.size
@@ -33,26 +31,22 @@ class EmbedCreator {
 
   fun removeField(fieldId: Int) = fields.removeAt(fieldId - 1)
 
-  fun footer(create: EmbedFooter.() -> Unit) {
-    val embedFooter = EmbedFooter()
-    embedFooter.create()
-    footer = embedFooter
+  inline fun footer(create: EmbedFooter.() -> Unit) {
+    footer = EmbedFooter().apply(create)
   }
 
-  fun build(): MessageEmbed? {
-    val builder = EmbedBuilder()
+  fun build(): MessageEmbed =
+    EmbedBuilder()
+      .apply {
+        color?.let { setColor(it) }
+        title?.let { setTitle(it) }
+        thumbnail?.let { setThumbnail(it) }
+        author?.let { setAuthor(it) }
+        description?.let { setDescription(it) }
+        image?.let { setImage(it) }
 
-    color?.let { builder.setColor(color!!) }
-    title?.let { builder.setTitle(title) }
-    thumbnail?.let { builder.setThumbnail(thumbnail) }
-    author?.let { builder.setAuthor(author) }
-    description?.let { builder.setDescription(description) }
-    image?.let { builder.setImage(image) }
+        footer?.let { setFooter(it.message, it.iconUrl) }
 
-    footer?.let { builder.setFooter(footer!!.message, footer!!.iconUrl) }
-
-    fields.forEach { builder.addField(it.title, it.description, it.inline) }
-
-    return builder.build()
-  }
+        this@EmbedCreator.fields.forEach { addField(it.title, it.description, it.inline) }
+      }.build()
 }

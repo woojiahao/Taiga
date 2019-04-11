@@ -2,13 +2,8 @@ package me.chill.utility
 
 import me.chill.embed.EmbedCreator
 import me.chill.settings.*
-import net.dv8tion.jda.api.entities.MessageEmbed
 
-inline fun embed(create: EmbedCreator.() -> Unit): MessageEmbed? {
-  val creator = EmbedCreator()
-  creator.create()
-  return creator.build()
-}
+inline fun embed(create: EmbedCreator.() -> Unit) = EmbedCreator().apply(create).build()
 
 fun simpleEmbed(title: String, description: String, thumbnail: String?, color: Int?) =
   embed {
