@@ -136,7 +136,7 @@ fun suggestionCommands() = commands("Suggestion") {
       val status = arguments[1]!!.str()
 
       val suggestionChannel = guild.getTextChannelById(TargetChannel.Suggestion.get(guild.id))
-      val message = suggestionChannel.getMessageById(messageId).complete()
+      val message = suggestionChannel.retrieveMessageById(messageId).complete()
       val original = message.embeds[0]
       val suggesterName = original.title.substring(original.title.lastIndexOf(" "))
 

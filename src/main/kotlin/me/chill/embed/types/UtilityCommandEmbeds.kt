@@ -3,20 +3,14 @@ package me.chill.embed.types
 import me.chill.framework.Command
 import me.chill.framework.CommandContainer
 import me.chill.framework.CommandSet
-import me.chill.json.help.argumentList
-import me.chill.json.help.description
-import me.chill.json.help.example
-import me.chill.json.help.syntax
 import me.chill.settings.*
-import me.chill.utility.embed
-import me.chill.utility.getDateTime
-import me.chill.utility.printMember
-import net.dv8tion.jda.core.JDA
-import net.dv8tion.jda.core.OnlineStatus
-import net.dv8tion.jda.core.entities.Guild
-import net.dv8tion.jda.core.entities.Member
-import net.dv8tion.jda.core.entities.MessageEmbed
-import net.dv8tion.jda.core.entities.User
+import me.chill.utility.*
+import net.dv8tion.jda.api.JDA
+import net.dv8tion.jda.api.OnlineStatus
+import net.dv8tion.jda.api.entities.Guild
+import net.dv8tion.jda.api.entities.Member
+import net.dv8tion.jda.api.entities.MessageEmbed
+import net.dv8tion.jda.api.entities.User
 import java.time.format.DateTimeFormatter
 
 fun changeLogEmbed(botName: String, buildVersion: String,
@@ -100,7 +94,7 @@ fun botInfoEmbed(jda: JDA) =
 
     field {
       title = "Ping"
-      description = "${jda.ping}ms"
+      description = "${jda.restPing}ms"
       inline = true
     }
 
@@ -253,19 +247,19 @@ fun userInfoEmbed(member: Member) =
 
     field {
       title = "Creation Date"
-      description = member.user.creationTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"))
+      description = member.user.timeCreated.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"))
       inline = true
     }
 
     field {
       title = "Join Date"
-      description = member.joinDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"))
+      description = member.timeJoined.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"))
       inline = true
     }
 
     field {
       title = "Status"
-      description = member.game?.toString() ?: "Nothing"
+      description = member.onlineStatus.toString()
       inline = true
     }
 

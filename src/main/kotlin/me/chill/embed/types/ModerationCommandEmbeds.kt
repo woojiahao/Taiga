@@ -11,10 +11,10 @@ import me.chill.settings.red
 import me.chill.utility.embed
 import me.chill.utility.findUser
 import me.chill.utility.printMember
-import net.dv8tion.jda.core.JDA
-import net.dv8tion.jda.core.entities.Guild
-import net.dv8tion.jda.core.entities.Member
-import net.dv8tion.jda.core.entities.User
+import net.dv8tion.jda.api.JDA
+import net.dv8tion.jda.api.entities.Guild
+import net.dv8tion.jda.api.entities.Member
+import net.dv8tion.jda.api.entities.User
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import java.time.format.DateTimeFormatter
@@ -26,7 +26,7 @@ fun historyEmbed(guild: Guild, user: User, jda: JDA, userInfractionRecord: UserI
     val joinDate = if (guild.getMember(user) == null) {
       "User is not on the server"
     } else {
-      guild.getMember(user).joinDate.format(dateTimeFormatter)
+      guild.getMember(user).timeJoined.format(dateTimeFormatter)
     }
 
     title = "${user.name}'s History"
@@ -39,7 +39,7 @@ fun historyEmbed(guild: Guild, user: User, jda: JDA, userInfractionRecord: UserI
         "${user.name}#${user.discriminator} has **${userInfractionRecord.getStrikes().size}** infraction(s)\n" +
         "Current Strike Count: **${getStrikeCount(guild.id, user.id)}/3**\n" +
         "Join Date: **$joinDate**\n" +
-        "Creation Date: **${user.creationTime.format(dateTimeFormatter)}**\n" +
+        "Creation Date: **${user.timeCreated.format(dateTimeFormatter)}**\n" +
         "Invites Sent: **${getUserCount(user.id, guild.id)}/5**"
     }
 

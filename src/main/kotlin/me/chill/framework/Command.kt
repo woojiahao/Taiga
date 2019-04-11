@@ -7,11 +7,11 @@ import me.chill.defaultPrefix
 import me.chill.exception.EndArgumentException
 import me.chill.framework.ContainerKey.*
 import me.chill.utility.send
-import net.dv8tion.jda.core.JDA
-import net.dv8tion.jda.core.entities.Guild
-import net.dv8tion.jda.core.entities.Member
-import net.dv8tion.jda.core.entities.MessageChannel
-import net.dv8tion.jda.core.entities.MessageEmbed
+import net.dv8tion.jda.api.JDA
+import net.dv8tion.jda.api.entities.Guild
+import net.dv8tion.jda.api.entities.Member
+import net.dv8tion.jda.api.entities.MessageChannel
+import net.dv8tion.jda.api.entities.MessageEmbed
 
 val endArgumentList = arrayOf<Class<*>>(
   Sentence::class.java,

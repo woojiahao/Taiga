@@ -5,11 +5,12 @@ import me.chill.framework.CommandContainer
 import me.chill.settings.green
 import me.chill.settings.yellow
 import me.chill.utility.embed
-import net.dv8tion.jda.core.entities.Guild
+import net.dv8tion.jda.api.entities.Guild
+import net.dv8tion.jda.api.Permission as JPermission
 
 data class Permission(val commandName: String, val permissionName: String)
 
-fun listBotPermissionsEmbed(permissions: List<net.dv8tion.jda.core.Permission>) =
+fun listBotPermissionsEmbed(permissions: List<JPermission>) =
   embed {
     title = "My Permissions"
     color = yellow

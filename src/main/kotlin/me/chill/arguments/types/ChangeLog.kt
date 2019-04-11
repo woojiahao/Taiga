@@ -2,7 +2,7 @@ package me.chill.arguments.types
 
 import me.chill.arguments.Argument
 import me.chill.arguments.ArgumentParseMap
-import net.dv8tion.jda.core.entities.Guild
+import net.dv8tion.jda.api.entities.Guild
 import java.io.File
 
 class ChangeLog : Argument {

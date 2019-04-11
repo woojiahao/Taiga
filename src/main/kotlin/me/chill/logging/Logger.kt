@@ -5,9 +5,9 @@ import me.chill.framework.Command
 import me.chill.settings.blue
 import me.chill.settings.pink
 import me.chill.utility.*
-import net.dv8tion.jda.core.entities.Guild
-import net.dv8tion.jda.core.entities.Member
-import net.dv8tion.jda.core.entities.MessageChannel
+import net.dv8tion.jda.api.entities.Guild
+import net.dv8tion.jda.api.entities.Member
+import net.dv8tion.jda.api.entities.MessageChannel
 
 fun normalLog(command: Command) {
   val guild = command.guild

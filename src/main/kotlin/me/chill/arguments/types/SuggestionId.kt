@@ -4,7 +4,7 @@ import me.chill.arguments.Argument
 import me.chill.arguments.ArgumentParseMap
 import me.chill.database.operations.hasSuggestion
 import me.chill.database.states.TargetChannel
-import net.dv8tion.jda.core.entities.Guild
+import net.dv8tion.jda.api.entities.Guild
 
 class SuggestionId : Argument {
   override fun check(guild: Guild, arg: String): ArgumentParseMap {
@@ -13,7 +13,7 @@ class SuggestionId : Argument {
     }
 
     val suggestionChannel = guild.getTextChannelById(TargetChannel.Suggestion.get(guild.id))
-    if (suggestionChannel.getMessageById(arg) == null) {
+    if (suggestionChannel.retrieveMessageById(arg) == null) {
       return ArgumentParseMap(false, "Unable to find suggestion ID: **$arg** in suggestions channel")
     }
 

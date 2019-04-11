@@ -20,7 +20,7 @@ import org.apache.commons.lang3.text.WordUtils
 @CommandCategory
 fun permissionCommands() = commands("Permission") {
   command("viewbotpermissions") {
-    execute { respond(listBotPermissionsEmbed(guild.getMember(jda.selfUser).permissions)) }
+    execute { respond(listBotPermissionsEmbed(guild.getMember(jda.selfUser).permissions.toList())) }
   }
 
   command("viewpermissions") { execute { respond(listPermissionsEmbed(guild)) } }

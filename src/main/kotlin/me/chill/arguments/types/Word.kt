@@ -2,7 +2,7 @@ package me.chill.arguments.types
 
 import me.chill.arguments.Argument
 import me.chill.arguments.ArgumentParseMap
-import net.dv8tion.jda.core.entities.Guild
+import net.dv8tion.jda.api.entities.Guild
 
 class Word(val inclusion: Array<String> = emptyArray(),
            val exclusion: Array<String> = emptyArray()) : Argument {

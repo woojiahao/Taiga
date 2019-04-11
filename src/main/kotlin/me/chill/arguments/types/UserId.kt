@@ -3,7 +3,7 @@ package me.chill.arguments.types
 import me.chill.arguments.Argument
 import me.chill.arguments.ArgumentParseMap
 import me.chill.utility.findUser
-import net.dv8tion.jda.core.entities.Guild
+import net.dv8tion.jda.api.entities.Guild
 
 class UserId(private val globalSearch: Boolean = false) : Argument {
   override fun check(guild: Guild, arg: String): ArgumentParseMap {

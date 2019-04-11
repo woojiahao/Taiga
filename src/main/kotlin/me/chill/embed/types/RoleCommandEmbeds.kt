@@ -2,8 +2,8 @@ package me.chill.embed.types
 
 import me.chill.settings.green
 import me.chill.utility.embed
-import net.dv8tion.jda.core.entities.Guild
-import net.dv8tion.jda.core.entities.Role
+import net.dv8tion.jda.api.entities.Guild
+import net.dv8tion.jda.api.entities.Role
 
 fun listRolesEmbed(guild: Guild, roles: List<Role>) =
   embed {

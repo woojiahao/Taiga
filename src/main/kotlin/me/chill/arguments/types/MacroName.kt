@@ -4,7 +4,7 @@ import me.chill.arguments.Argument
 import me.chill.arguments.ArgumentParseMap
 import me.chill.database.operations.hasMacro
 import me.chill.framework.CommandContainer
-import net.dv8tion.jda.core.entities.Guild
+import net.dv8tion.jda.api.entities.Guild
 
 class MacroName(private val isExisting: Boolean = false) : Argument {
   override fun check(guild: Guild, arg: String): ArgumentParseMap {

@@ -6,9 +6,9 @@ import me.chill.database.operations.getRaidMessageDuration
 import me.chill.database.operations.getRaidMessageLimit
 import me.chill.database.states.TargetChannel
 import me.chill.utility.*
-import net.dv8tion.jda.core.entities.Guild
-import net.dv8tion.jda.core.entities.Member
-import net.dv8tion.jda.core.entities.MessageChannel
+import net.dv8tion.jda.api.entities.Guild
+import net.dv8tion.jda.api.entities.Member
+import net.dv8tion.jda.api.entities.MessageChannel
 
 class RaidManager {
   private val raiders = mutableMapOf<String, RaiderList>()

@@ -9,11 +9,11 @@ import me.chill.settings.red
 import me.chill.utility.embed
 import me.chill.utility.printMember
 import me.chill.utility.send
-import net.dv8tion.jda.core.Permission
-import net.dv8tion.jda.core.entities.Member
-import net.dv8tion.jda.core.events.guild.GuildLeaveEvent
-import net.dv8tion.jda.core.events.guild.member.GuildMemberLeaveEvent
-import net.dv8tion.jda.core.hooks.ListenerAdapter
+import net.dv8tion.jda.api.Permission
+import net.dv8tion.jda.api.entities.Member
+import net.dv8tion.jda.api.events.guild.GuildLeaveEvent
+import net.dv8tion.jda.api.events.guild.member.GuildMemberLeaveEvent
+import net.dv8tion.jda.api.hooks.ListenerAdapter
 
 class OnLeaveEvent : ListenerAdapter() {
   override fun onGuildMemberLeave(event: GuildMemberLeaveEvent?) {

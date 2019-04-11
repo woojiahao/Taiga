@@ -10,11 +10,11 @@ import me.chill.framework.CommandCategory
 import me.chill.framework.commands
 import me.chill.settings.clap
 import me.chill.utility.*
-import net.dv8tion.jda.core.JDA
-import net.dv8tion.jda.core.Permission
-import net.dv8tion.jda.core.entities.Guild
-import net.dv8tion.jda.core.entities.Member
-import net.dv8tion.jda.core.entities.MessageEmbed
+import net.dv8tion.jda.api.JDA
+import net.dv8tion.jda.api.Permission
+import net.dv8tion.jda.api.entities.Guild
+import net.dv8tion.jda.api.entities.Member
+import net.dv8tion.jda.api.entities.MessageEmbed
 import org.apache.commons.lang3.text.WordUtils
 
 private enum class Preferences(val lowercase: String) {

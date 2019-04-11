@@ -1,8 +1,8 @@
 package me.chill.embed.types
 
 import me.chill.framework.Command
-import me.chill.json.help.findCommand
-import me.chill.json.help.syntax
+import me.chill.utility.findCommand
+import me.chill.utility.syntax
 import me.chill.settings.red
 import me.chill.settings.shock
 import me.chill.utility.embed

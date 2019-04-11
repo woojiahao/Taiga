@@ -5,8 +5,8 @@ import me.chill.embed.EmbedManager
 import me.chill.embed.interactive.InteractiveEmbedManager
 import me.chill.events.*
 import me.chill.framework.CommandContainer
-import me.chill.json.help.CommandInfo
-import me.chill.json.help.loadHelp
+import me.chill.utility.CommandInfo
+import me.chill.utility.loadHelp
 import me.chill.raid.RaidManager
 import net.dv8tion.jda.api.AccountType
 import net.dv8tion.jda.api.JDABuilder

@@ -2,8 +2,8 @@ package me.chill.events
 
 import me.chill.exception.ListenerEventException
 import me.chill.interactiveEmbedManager
-import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent
-import net.dv8tion.jda.core.hooks.ListenerAdapter
+import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent
+import net.dv8tion.jda.api.hooks.ListenerAdapter
 
 class InteractiveEmbedEvent : ListenerAdapter() {
   override fun onMessageReactionAdd(event: MessageReactionAddEvent?) {
