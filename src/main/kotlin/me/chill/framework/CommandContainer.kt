@@ -1,7 +1,10 @@
 package me.chill.framework
 
+import me.chill.arguments.Argument
 import me.chill.arguments.types.ArgumentMix
 import me.chill.exception.CommandException
+import me.chill.utility.commandErr
+import org.apache.commons.lang3.text.WordUtils
 import org.reflections.Reflections
 import org.reflections.scanners.MethodAnnotationsScanner
 
@@ -9,27 +12,31 @@ class CommandContainer private constructor() {
   companion object {
     val commandSets = mutableListOf<CommandSet>()
 
+    val commandList
+      get() = commandSets.map { it.commands }.flatten()
+
     fun loadContainer() {
-      val reflections = Reflections("me.chill.commands", MethodAnnotationsScanner())
-      reflections.getMethodsAnnotatedWith(CommandCategory::class.java).forEach { it.invoke(null) }
+      Reflections("me.chill.commands", MethodAnnotationsScanner()).also {
+        it.getMethodsAnnotatedWith(CommandCategory::class.java).forEach { cc -> cc.invoke(null) }
+      }
       checkCommands()
     }
 
-    fun hasCommand(command: String) = commandSets.stream().anyMatch { it.hasCommand(command) }
+    fun hasCommand(command: String) = commandSets.any { it.hasCommand(command) }
 
-    fun hasCategory(category: String) = commandSets.stream().anyMatch { it.categoryName == category }
+    fun hasCategory(category: String) = commandSets.any { it.categoryName == WordUtils.capitalize(category) }
 
-    fun getCommandSet(category: String) =
-      commandSets.stream().filter { it.categoryName == category }.toArray()[0]!! as CommandSet
+    fun getCommandSet(category: String) = commandSets.first { it.categoryName == category }
 
-    fun getCommand(command: String) = getCommandList().filter { it.name == command }.toTypedArray()
+    fun getCommand(command: String) = commandList.filter { it.name == command }
 
-    fun getCommandNames() = getCommandList().map { it.name }.toTypedArray().distinct()
+    fun getCommandNames() = commandList.map { it.name }.distinct()
 
     fun getGlobalCommands() =
-      getCommandList().asSequence().filter { it.getGlobal() == true }.map { it.name }.distinct().toList()
-
-    fun getCommandList() = commandSets.map { it.commands }.flatten()
+      commandList
+        .filter { it.getGlobal() == true }
+        .map { it.name }
+        .distinct()
   }
 }
 
@@ -49,38 +56,35 @@ inline fun commands(categoryName: String, create: CommandSet.() -> Unit) {
 }
 
 private fun checkCommands() {
-  CommandContainer.getCommandList().forEach {
+  CommandContainer.commandList.forEach {
     it.getAction() ?: throw CommandException(it.name, "All commands must implement an execute body")
 
-    if (!it.name[0].isLetterOrDigit()) {
-      throw CommandException(it.name, "Command name must start with a letter or digit")
+    commandErr(it.name, "Command name must start with letter or digit") { !it.name[0].isLetterOrDigit() }
+
+    // TODO: Properly handle category name checking
+    commandErr(it.name, "Command names should not be the same as a category name") {
+      WordUtils.capitalize(it.name) != it.category
     }
 
-    if (it.name == it.category.toLowerCase()) {
-      throw CommandException(
-        it.name,
-        "Command names should not be the same as a category name"
-      )
-    }
+    val isArgumentMixPredicate: (Argument) -> Boolean = { arg -> arg::class.java == ArgumentMix::class.java }
+    val hasArgumentMix = it.argumentTypes.any(isArgumentMixPredicate)
+    if (hasArgumentMix) {
+      commandErr(it.name, "Unable to create an ArgumentMix of the same argument type") {
+        val argMix = it.argumentTypes.first(isArgumentMixPredicate) as ArgumentMix
+        val uniqueArgumentsInMix = argMix.arguments.distinctBy { mix -> mix::class.java }
 
-    if (it.argumentTypes.any { arg -> arg.javaClass == ArgumentMix::class.java }) {
-      val argMix = it.argumentTypes.filter { arg -> arg.javaClass == ArgumentMix::class.java }[0] as ArgumentMix
-      if (argMix.arguments.distinctBy { mix -> mix.javaClass }.size != argMix.arguments.size) {
-        throw CommandException(
-          it.name,
-          "Unable to create an ArgumentMix of the same argument type"
-        )
+        uniqueArgumentsInMix.size != argMix.arguments.size
       }
     }
 
     val overloadedCommands = CommandContainer.getCommand(it.name)
     overloadedCommands.forEach { overloadedCommand ->
-      if (overloadedCommand != it) {
-        if (overloadedCommand.argumentTypes.size == it.argumentTypes.size) {
-          throw CommandException(
-            it.name,
-            "Unable to overload command with the same number of argument types: ${overloadedCommand.argumentTypes.size}"
-          )
+      with(overloadedCommand) {
+        commandErr(
+          it.name,
+          "Unable to overload command with the same number of argument types: ${argumentTypes.size}"
+        ) {
+          this != it && argumentTypes.size == it.argumentTypes.size
         }
       }
     }

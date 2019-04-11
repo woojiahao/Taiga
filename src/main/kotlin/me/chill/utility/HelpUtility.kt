@@ -3,7 +3,6 @@ package me.chill.utility
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import me.chill.commandInfo
-import me.chill.exception.CommandException
 import me.chill.framework.Command
 import me.chill.framework.CommandContainer
 import java.io.File
@@ -33,11 +32,11 @@ fun loadHelp(): List<CommandInfo> {
     }
   }
 
-  val loadedCommandNames = CommandContainer.getCommandList().map { it.name }
-  val commandNames = commandInfoList.map { info -> info.name }
+  val loadedCommandNames = CommandContainer.commandList.map { it.name }
+  val commandNames = commandInfoList.map { it.name }
   loadedCommandNames.forEach {
-    if (!commandNames.contains(it)) {
-      throw CommandException(it, "Command not have a help in help.json")
+    commandErr(it, "Command not have a help in help.json") {
+      !commandNames.contains(it)
     }
   }
 

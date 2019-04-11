@@ -9,21 +9,24 @@ import net.dv8tion.jda.api.entities.Guild
  */
 class ArgumentList(
   private val argumentType: Argument,
-  private val pipes: Char = ',',
+  private val pipe: Char = ',',
   private val limit: Int = -1
 ) : Argument {
   override fun check(guild: Guild, arg: String): ArgumentParseMap {
     val parsedValues = mutableListOf<String>()
 
-    if (limit != -1 && arg.split(pipes).size > limit) {
+    val args = arg.split(pipe)
+
+    if (limit != -1 && args.size > limit) {
       return ArgumentParseMap(false, "Cannot have more than **$limit** element(s) in the argument list")
     }
 
-    for (a in arg.split(pipes)) {
-      val individualCheckMap = argumentType.check(guild, a)
+    args.forEach {
+      val individualCheckMap = argumentType.check(guild, it)
       if (!individualCheckMap.status) return individualCheckMap
       parsedValues.add(individualCheckMap.parsedValue)
     }
-    return ArgumentParseMap(true, parsedValue = parsedValues.joinToString(pipes.toString()))
+    
+    return ArgumentParseMap(true, parsedValue = parsedValues.joinToString(pipe.toString()))
   }
 }

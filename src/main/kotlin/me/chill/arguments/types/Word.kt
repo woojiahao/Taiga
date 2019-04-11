@@ -4,8 +4,10 @@ import me.chill.arguments.Argument
 import me.chill.arguments.ArgumentParseMap
 import net.dv8tion.jda.api.entities.Guild
 
-class Word(val inclusion: Array<String> = emptyArray(),
-           val exclusion: Array<String> = emptyArray()) : Argument {
+class Word(
+  val inclusion: List<String> = emptyList(),
+  val exclusion: List<String> = emptyList()
+) : Argument {
   override fun check(guild: Guild, arg: String): ArgumentParseMap {
     if (arg.isEmpty()) {
       return ArgumentParseMap(false, "Word cannot be blank")

@@ -25,7 +25,8 @@ private enum class Preferences(val lowercase: String) {
   JoinRole("joinrole"), InviteExcluded("inviteexcluded");
 
   companion object {
-    fun getNames() = values().map { it.name.toLowerCase() }.toTypedArray()
+    val names
+      get() = values().map { it.name.toLowerCase() }
 
     fun match(attempt: String) = values().first { it.lowercase == attempt }
   }
@@ -34,7 +35,7 @@ private enum class Preferences(val lowercase: String) {
 @CommandCategory
 fun administrationCommands() = commands("Administration") {
   command("setchannel") {
-    expects(Word(TargetChannel.getNames()))
+    expects(Word(TargetChannel.names))
     execute {
       val type = TargetChannel.valueOf(WordUtils.capitalize(arguments[0]!!.str()))
       type.edit(guild.id, channel.id)
@@ -54,14 +55,14 @@ fun administrationCommands() = commands("Administration") {
         successEmbed(
           "Set-Up Completed",
           "Bot has been set up for **${guild.name}**\n" +
-            "Remember to move the `muted` role higher in order for it to take effect"
+              "Remember to move the `muted` role higher in order for it to take effect"
         )
       )
     }
   }
 
   command("disable") {
-    expects(Word(TargetChannel.getNames()))
+    expects(Word(TargetChannel.names))
     execute {
       val type = TargetChannel.valueOf(WordUtils.capitalize(arguments[0]!!.str()))
       type.disable(guild.id)
@@ -76,7 +77,7 @@ fun administrationCommands() = commands("Administration") {
   }
 
   command("enable") {
-    expects(Word(TargetChannel.getNames()))
+    expects(Word(TargetChannel.names))
     execute {
       val type = TargetChannel.valueOf(WordUtils.capitalize(arguments[0]!!.str()))
       type.enable(guild.id)
@@ -97,14 +98,14 @@ fun administrationCommands() = commands("Administration") {
   }
 
   command("get") {
-    expects(Word(Preferences.getNames()))
+    expects(Word(Preferences.names))
     execute {
       respond(displayPreference(Preferences.match(arguments[0]!!.str()), guild, invoker))
     }
   }
 
   command("set") {
-    expects(Word(Preferences.getNames()), Sentence())
+    expects(Word(Preferences.names), Sentence())
     execute {
       respond(setPreference(Preferences.match(arguments[0]!!.str()), arguments[1]!!.str(), guild, invoker, jda))
     }
@@ -123,7 +124,7 @@ private fun setPreference(preference: Preferences, input: String, guild: Guild, 
       cleanEmbed("${guild.name} Prefix Changed", "Prefix has been changed to **$input**")
     }
     Preferences.Multiplier -> {
-      val parseMap = Word(TimeMultiplier.getNames()).check(guild, input)
+      val parseMap = Word(TimeMultiplier.names).check(guild, input)
       if (!parseMap.status) {
         return failureEmbed("Unable to change multiplier", parseMap.errMsg)
       }
@@ -241,7 +242,7 @@ private fun displayPreference(preference: Preferences, guild: Guild, invoker: Me
       return cleanEmbed(
         "$targetName Channel",
         "Current ${targetName.toLowerCase()} channel is ${printChannel(guild.getTextChannelById(targetChannel.get(guild.id)))}\n" +
-          "${targetName}s are currently **${targetChannel.disableStatus(guild.id)}**"
+            "${targetName}s are currently **${targetChannel.disableStatus(guild.id)}**"
       )!!
     }
 

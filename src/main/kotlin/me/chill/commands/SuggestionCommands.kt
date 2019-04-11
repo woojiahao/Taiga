@@ -124,7 +124,7 @@ fun suggestionCommands() = commands("Suggestion") {
   command("respond") {
     expects(
       SuggestionId(),
-      Word(inclusion = arrayOf("Accepted", "Declined")),
+      Word(inclusion = listOf("Accepted", "Declined")),
       Sentence()
     )
     execute {

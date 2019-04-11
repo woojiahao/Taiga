@@ -25,7 +25,7 @@ fun generatePermissions(guild: Guild): Map<String, MutableList<Permission>> {
   val permissionMap = CommandContainer.commandSets.associate { it.categoryName to mutableListOf<Permission>() }
 
   CommandContainer
-    .getCommandList()
+    .commandList
     .asSequence()
     .distinctBy { it.name }
     .forEach {

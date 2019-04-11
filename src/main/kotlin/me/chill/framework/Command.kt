@@ -62,8 +62,12 @@ class Command(val name: String, val category: String) {
   fun getGlobal() = isGlobal
 
   fun run(
-    serverPrefix: String, jda: JDA, guild: Guild, invoker: Member,
-    messageChannel: MessageChannel, input: Array<String>?
+    serverPrefix: String,
+    jda: JDA,
+    guild: Guild,
+    invoker: Member,
+    messageChannel: MessageChannel,
+    input: List<String>?
   ) {
     commandInformation[Jda] = jda
     commandInformation[Server] = guild

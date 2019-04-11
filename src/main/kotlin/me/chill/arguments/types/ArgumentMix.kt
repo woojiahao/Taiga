@@ -11,12 +11,13 @@ import net.dv8tion.jda.api.entities.Guild
 class ArgumentMix(private val failureReason: String, vararg val arguments: Argument) : Argument {
   override fun check(guild: Guild, arg: String): ArgumentParseMap {
     var parseMap = ArgumentParseMap(false)
-    var hasMatch = false
-    for (argument in arguments) {
-      val temp = argument.check(guild, arg)
-      hasMatch = hasMatch || temp.status
-      parseMap = temp
-      if (hasMatch) break
+
+    arguments.forEach {
+      with(it.check(guild, arg)) {
+        val hasMatch = status
+        parseMap = this
+        if (hasMatch) return@forEach
+      }
     }
 
     if (!parseMap.status) return ArgumentParseMap(false, failureReason)

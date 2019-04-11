@@ -15,7 +15,7 @@ fun getMacroList(serverId: String) =
 fun getMacro(serverId: String, macroName: String) =
   transaction {
     Macro
-      .select { macroMatchCondition(serverId, macroName) }
+      .select { macroMatchCondition(serverId, macroName.toLowerCase()) }
       .first()[Macro.macroDescription]
   }
 
