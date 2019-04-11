@@ -7,17 +7,23 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 fun getMacroList(serverId: String) =
   transaction {
-    Macro.select { Macro.serverId eq serverId }.map { it[Macro.macroName] }
+    Macro
+      .select { Macro.serverId eq serverId }
+      .map { it[Macro.macroName] }
   }
 
 fun getMacro(serverId: String, macroName: String) =
   transaction {
-    Macro.select { macroMatchCondition(serverId, macroName) }.first()[Macro.macroDescription]
+    Macro
+      .select { macroMatchCondition(serverId, macroName) }
+      .first()[Macro.macroDescription]
   }
 
 fun hasMacro(serverId: String, macroName: String) =
   transaction {
-    Macro.select { macroMatchCondition(serverId, macroName) }.count() > 0
+    Macro
+      .select { macroMatchCondition(serverId, macroName) }
+      .count() > 0
   }
 
 fun addMacro(serverId: String, macroName: String, macroDescription: String) =

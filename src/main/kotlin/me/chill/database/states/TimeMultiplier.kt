@@ -7,13 +7,10 @@ enum class TimeMultiplier(val fullTerm: String, val multiplier: Long) {
   D("day", 86400000L);
 
   companion object {
-    fun getNames(): Array<String> {
-      val names = TimeMultiplier
-        .values()
-        .map { it.name.toLowerCase() }
-        .toMutableList()
-      names.addAll(TimeMultiplier.values().map { it.fullTerm })
-      return names.toTypedArray()
-    }
+    val names
+      get() = values().map { it.name.toLowerCase() }.toMutableList().apply {
+        val fullTerms = values().map { it.fullTerm }
+        addAll(fullTerms)
+      }
   }
 }

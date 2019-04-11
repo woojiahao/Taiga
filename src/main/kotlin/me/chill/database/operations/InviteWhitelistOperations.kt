@@ -18,21 +18,30 @@ fun addToWhitelist(serverId: String, inviteLink: String) =
 
 fun hasInviteInWhitelist(serverId: String, inviteLink: String) =
   transaction {
-    !InviteWhitelist.select { (InviteWhitelist.serverId eq serverId) and (InviteWhitelist.inviteLink eq inviteLink) }.empty()
+    !InviteWhitelist
+      .select {
+        (InviteWhitelist.serverId eq serverId) and (InviteWhitelist.inviteLink eq inviteLink)
+      }
+      .empty()
   }
 
 fun removeFromWhitelist(serverId: String, inviteLink: String) =
   transaction {
-    InviteWhitelist.deleteWhere { (InviteWhitelist.inviteLink eq inviteLink) and (InviteWhitelist.serverId eq serverId) }
+    InviteWhitelist
+      .deleteWhere {
+        (InviteWhitelist.inviteLink eq inviteLink) and (InviteWhitelist.serverId eq serverId)
+      }
   }
 
 fun getWhitelist(serverId: String) =
   transaction {
-    InviteWhitelist.select { InviteWhitelist.serverId eq serverId }.joinToString("\n") {
-      "- ${it[InviteWhitelist.inviteLink]}"
-    }
+    InviteWhitelist
+      .select { InviteWhitelist.serverId eq serverId }
+      .joinToString("\n") { "- ${it[InviteWhitelist.inviteLink]}" }
   }
 
-fun getInviteExcluded(serverId: String) = getPreference(serverId, Preference.inviteRoleExcluded) as String?
+fun getInviteExcluded(serverId: String) =
+  getPreference<String?>(serverId, Preference.inviteRoleExcluded)
 
-fun editInviteExcluded(serverId: String, roleId: String) = updatePreferences(serverId) { it[inviteRoleExcluded] = roleId }
+fun editInviteExcluded(serverId: String, roleId: String) =
+  updatePreferences(serverId) { it[inviteRoleExcluded] = roleId }

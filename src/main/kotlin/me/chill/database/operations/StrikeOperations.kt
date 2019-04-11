@@ -23,22 +23,22 @@ fun addStrike(serverId: String, targetId: String, strikeWeight: Int, strikeReaso
     UserRecord.insert {
       it[UserRecord.serverId] = serverId
       it[userId] = targetId
-      it[UserRecord.strikeId] = strikeId!!
+      it[UserRecord.strikeId] = strikeId
     }
   }
 }
 
 fun getStrikeCount(serverId: String, userId: String) =
   transaction {
-    UserRecord.join(
-      Strike,
-      JoinType.INNER,
-      additionalConstraint = { Strike.strikeId eq UserRecord.strikeId }
-    )
-      .select {
-        userRecordMatch(serverId, userId) and
-          (Strike.expiryDate greater DateTime.now())
-      }.map { it[Strike.strikeWeight] }.sum()
+    UserRecord
+      .join(
+        Strike,
+        JoinType.INNER,
+        additionalConstraint = { Strike.strikeId eq UserRecord.strikeId }
+      ).select {
+        userRecordMatch(serverId, userId) and (Strike.expiryDate greater DateTime.now())
+      }.map { it[Strike.strikeWeight] }
+      .sum()
   }
 
 
@@ -49,7 +49,8 @@ fun getHistory(serverId: String, userId: String): UserInfractionRecord {
       .join(
         Strike,
         JoinType.INNER,
-        additionalConstraint = { Strike.strikeId eq UserRecord.strikeId })
+        additionalConstraint = { Strike.strikeId eq UserRecord.strikeId }
+      )
       .slice(
         Strike.strikeId,
         Strike.strikeWeight,
@@ -103,4 +104,5 @@ fun userHasStrike(serverId: String, userId: String, strikeId: Int) =
       .empty()
   }
 
-private fun userRecordMatch(serverId: String, userId: String) = (UserRecord.userId eq userId) and (UserRecord.serverId eq serverId)
+private fun userRecordMatch(serverId: String, userId: String) =
+  (UserRecord.userId eq userId) and (UserRecord.serverId eq serverId)

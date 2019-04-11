@@ -6,10 +6,12 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 fun hasJoinRole(serverId: String) =
   transaction {
-    Preference.select { Preference.serverId eq serverId }.first()[Preference.onJoinRole] != null
+    Preference
+      .select { Preference.serverId eq serverId }
+      .first()[Preference.onJoinRole] != null
   }
 
-fun getJoinRole(serverId: String) = getPreference(serverId, Preference.onJoinRole) as String?
+fun getJoinRole(serverId: String) = getPreference<String?>(serverId, Preference.onJoinRole)
 
 fun removeJoinRole(serverId: String) = editJoinRole(serverId, null)
 

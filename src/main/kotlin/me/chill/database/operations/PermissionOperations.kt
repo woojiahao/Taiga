@@ -24,7 +24,6 @@ fun removePermission(commandName: String, serverId: String) {
 fun editPermission(commandName: String, serverId: String, roleId: String) {
   transaction {
     Permission.update({ selectKey(serverId, commandName) }) {
-
       it[permission] = roleId
     }
   }
@@ -36,6 +35,7 @@ fun hasPermission(commandName: String, serverId: String) =
   }
 
 
+// TODO: Why is this a mutable map
 fun viewPermissions(serverId: String) =
   transaction {
     Permission
@@ -62,7 +62,9 @@ fun clearPermissions(serverId: String) {
 
 fun getPermission(commandName: String, serverId: String) =
   transaction {
-    Permission.select { selectKey(serverId, commandName) }.first()[Permission.permission]
+    Permission
+      .select { selectKey(serverId, commandName) }
+      .first()[Permission.permission]
   }
 
 private fun selectKey(serverId: String, commandName: String) =

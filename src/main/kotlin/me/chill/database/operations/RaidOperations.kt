@@ -42,4 +42,5 @@ fun freeAll(serverId: String) {
   }
 }
 
-private fun raiderRecordMatch(serverId: String, userId: String) = (Raider.serverId eq serverId) and (Raider.userId eq userId)
+private fun raiderRecordMatch(serverId: String, userId: String) =
+  (Raider.serverId eq serverId) and (Raider.userId eq userId)

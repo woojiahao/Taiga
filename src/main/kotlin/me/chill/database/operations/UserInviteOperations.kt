@@ -22,9 +22,10 @@ fun hasUser(userId: String, serverId: String) =
 
 fun getUserCount(userId: String, serverId: String) =
   transaction {
-    val count = UserInvite.select { userMatch(userId, serverId) }
-    if (count.empty()) 0
-    else count.first()[UserInvite.invitesSent]
+    with(UserInvite.select { userMatch(userId, serverId) }) {
+      if (empty()) 0
+      else first()[UserInvite.invitesSent]
+    }
   }
 
 fun incrementInviteCount(userId: String, serverId: String) {
@@ -42,4 +43,5 @@ fun removeUser(userId: String, serverId: String) {
   }
 }
 
-private fun userMatch(userId: String, serverId: String) = (UserInvite.serverId eq serverId) and (UserInvite.userId eq userId)
+private fun userMatch(userId: String, serverId: String) =
+  (UserInvite.serverId eq serverId) and (UserInvite.userId eq userId)

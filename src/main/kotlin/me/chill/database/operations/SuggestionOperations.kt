@@ -10,7 +10,7 @@ fun getLatestSuggestionInPool(serverId: String) =
   transaction {
     val latestSuggestion = Suggestion
       .select { (Suggestion.serverId eq serverId) and Suggestion.messageId.isNull() }
-      .orderBy(Suggestion.suggestionDate, false)
+      .orderBy(Suggestion.suggestionDate, SortOrder.DESC)
       .first()
     UserSuggestion(
       serverId,
