@@ -1,6 +1,6 @@
 package me.chill.utility
 
-import me.chill.credentials
+import me.chill.botOwnerId
 import net.dv8tion.jda.core.JDA
 import net.dv8tion.jda.core.entities.*
 
@@ -29,7 +29,7 @@ fun MessageChannel.getMessageHistory(messagesToRetrieve: Int, filter: (Message) 
   MessageHistory(this).retrievePast(messagesToRetrieve).complete().filter { filter(it) }
 
 fun Member.hasPermission(guild: Guild, intendedRole: String?, vararg additionalExclusion: String): Boolean {
-  val userIsBotOwner = user.id == credentials!!.botOwnerId
+  val userIsBotOwner = user.id == botOwnerId
   if (isOwner || userIsBotOwner) return true
 
   intendedRole?.let {

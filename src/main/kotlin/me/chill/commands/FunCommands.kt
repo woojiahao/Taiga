@@ -7,12 +7,13 @@ import khttp.post
 import me.chill.arguments.types.EmoteName
 import me.chill.arguments.types.Sentence
 import me.chill.arguments.types.UserId
-import me.chill.credentials
 import me.chill.embed.types.animeInformationEmbed
 import me.chill.framework.CommandCategory
 import me.chill.framework.commands
 import me.chill.interactiveEmbedManager
+import me.chill.lyricsApiKey
 import me.chill.settings.green
+import me.chill.songNameApiKey
 import me.chill.utility.*
 import org.json.JSONObject
 import java.net.URLEncoder
@@ -105,7 +106,7 @@ fun funCommands() = commands("Fun") {
   command("lyrics") {
     expects(Sentence())
     execute {
-      if (credentials?.lyricsApiKey == null || credentials?.songNameApiKey == null) {
+      if (lyricsApiKey.isEmpty() || songNameApiKey.isEmpty()) {
         respond(failureEmbed(
           "No API Key Given",
           "`lyric` command needs an API key to search for the lyrics, let the bot owner know"
@@ -117,7 +118,7 @@ fun funCommands() = commands("Fun") {
       val songNameEndPoint = "http://ws.audioscrobbler.com/2.0/" +
         "?method=track.search" +
         "&track=${URLEncoder.encode(songName, "UTF-8")}" +
-        "&api_key=${credentials?.songNameApiKey}" +
+        "&api_key=$songNameApiKey" +
         "&format=json"
       val songMatches = songNameEndPoint.readAPI()
 
@@ -149,7 +150,7 @@ fun funCommands() = commands("Fun") {
           val lyricsEndPoint = "https://orion.apiseeds.com/api/music/lyric/" +
             "${matchingSong.artist}/" +
             "${matchingSong.songName}?" +
-            "apikey=${credentials?.lyricsApiKey}"
+            "apikey=$lyricsApiKey"
           val lyrics = lyricsEndPoint.strictReadAPI<JsonObject>()
           if (!lyrics.first || lyrics.second!!.has("error")) {
             respond(unknownErrorEmbed("lyrics"))

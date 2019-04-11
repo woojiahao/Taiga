@@ -1,8 +1,8 @@
 package me.chill.database.operations
 
-import me.chill.credentials
 import me.chill.database.Preference
 import me.chill.database.states.TimeMultiplier
+import me.chill.defaultPrefix
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.statements.UpdateStatement
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -34,7 +34,7 @@ fun addServerPreference(serverId: String, defaultChannelId: String) {
       it[Preference.serverId] = serverId
 
       // Prefix
-      it[prefix] = credentials!!.defaultPrefix!!
+      it[prefix] = defaultPrefix
 
       // Channel Assignment
       it[joinChannel] = defaultChannelId

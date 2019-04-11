@@ -6,7 +6,9 @@ import me.chill.database.states.TargetChannel
 import me.chill.exception.ListenerEventException
 import me.chill.settings.lost
 import me.chill.settings.red
-import me.chill.utility.*
+import me.chill.utility.embed
+import me.chill.utility.printMember
+import me.chill.utility.send
 import net.dv8tion.jda.core.Permission
 import net.dv8tion.jda.core.entities.Member
 import net.dv8tion.jda.core.events.guild.GuildLeaveEvent
