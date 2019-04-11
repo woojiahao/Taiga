@@ -7,7 +7,6 @@ import me.chill.exception.CommandException
 import me.chill.framework.Command
 import me.chill.framework.CommandContainer
 import java.io.File
-import java.io.FileReader
 
 data class ArgumentList(
   val name: String,
@@ -25,26 +24,27 @@ data class CommandInfo(
 
 fun loadHelp(): List<CommandInfo> {
   val gson = Gson()
-  val list = mutableListOf<CommandInfo>()
-  val commandInfoList = gson.fromJson<JsonObject>(FileReader(File("config/help.json")), JsonObject::class.java)
+  val commandInfoList = mutableListOf<CommandInfo>()
+  val helpJson = gson.read<JsonObject>(File("config/help.json").readText())
 
-  for (info in commandInfoList.entrySet()) {
-    val categoryName = info.key
-    info.value.asJsonArray.forEach {
-      val entry = gson.fromJson(it, CommandInfo::class.java)
-      entry.category = categoryName
-      list.add(entry)
+  helpJson.entrySet().forEach {
+    it.value.asJsonArray.forEach { command ->
+      commandInfoList += gson.read<CommandInfo>(command).apply { category = it.key }
     }
   }
-  CommandContainer.getCommandList().forEach {
-    if (!list.asSequence().map { info -> info.name }.contains(it.name)) {
-      throw CommandException(it.name, "Command not have a help in help.json")
+
+  val loadedCommandNames = CommandContainer.getCommandList().map { it.name }
+  val commandNames = commandInfoList.map { info -> info.name }
+  loadedCommandNames.forEach {
+    if (!commandNames.contains(it)) {
+      throw CommandException(it, "Command not have a help in help.json")
     }
   }
-  return list
+
+  return commandInfoList
 }
 
-fun findCommand(commandName: String) = commandInfo!!.first { it.name == commandName }
+fun findCommand(commandName: String) = commandInfo.first { it.name == commandName }
 
 val Command.syntax get() = "$serverPrefix${findCommand(name).syntax}"
 

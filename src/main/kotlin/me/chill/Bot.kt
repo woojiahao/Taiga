@@ -5,15 +5,14 @@ import me.chill.embed.EmbedManager
 import me.chill.embed.interactive.InteractiveEmbedManager
 import me.chill.events.*
 import me.chill.framework.CommandContainer
-import me.chill.utility.CommandInfo
-import me.chill.utility.loadHelp
 import me.chill.raid.RaidManager
+import me.chill.utility.loadHelp
 import net.dv8tion.jda.api.AccountType
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.OnlineStatus
 import net.dv8tion.jda.api.entities.Activity
 
-var commandInfo: List<CommandInfo>? = null
+var commandInfo = loadHelp()
 val raidManger = RaidManager()
 val interactiveEmbedManager = InteractiveEmbedManager()
 val embedManager = EmbedManager()
@@ -21,7 +20,6 @@ val embedManager = EmbedManager()
 fun main() {
   setupDatabase(databaseUrl)
   CommandContainer.loadContainer()
-  commandInfo = loadHelp()
 
   val jda = JDABuilder(AccountType.BOT)
     .apply {
