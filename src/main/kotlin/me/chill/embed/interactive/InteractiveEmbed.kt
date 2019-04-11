@@ -2,7 +2,7 @@ package me.chill.embed.interactive
 
 import me.chill.interactiveEmbedManager
 import me.chill.utility.embed
-import net.dv8tion.jda.core.entities.Message
+import net.dv8tion.jda.api.entities.Message
 
 data class InteractiveEmbed(
   val message: Message,

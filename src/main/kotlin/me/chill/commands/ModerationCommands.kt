@@ -1,6 +1,7 @@
 package me.chill.commands
 
 import me.chill.arguments.types.*
+import me.chill.arguments.types.ArgumentList
 import me.chill.database.operations.*
 import me.chill.database.states.TargetChannel
 import me.chill.database.states.TimeMultiplier
@@ -12,9 +13,9 @@ import me.chill.settings.cyan
 import me.chill.settings.noWay
 import me.chill.settings.orange
 import me.chill.utility.*
-import net.dv8tion.jda.core.entities.Guild
-import net.dv8tion.jda.core.entities.Member
-import net.dv8tion.jda.core.entities.MessageChannel
+import net.dv8tion.jda.api.entities.Guild
+import net.dv8tion.jda.api.entities.Member
+import net.dv8tion.jda.api.entities.MessageChannel
 import java.util.*
 import kotlin.concurrent.timerTask
 

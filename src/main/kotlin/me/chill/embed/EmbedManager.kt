@@ -1,6 +1,6 @@
 package me.chill.embed
 
-import net.dv8tion.jda.core.entities.MessageEmbed
+import net.dv8tion.jda.api.entities.MessageEmbed
 
 class EmbedManager {
   private val embeds = mutableMapOf<String, EmbedCreator>()

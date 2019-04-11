@@ -5,9 +5,9 @@ import me.chill.utility.failureEmbed
 import me.chill.utility.getRole
 import me.chill.utility.hasRole
 import me.chill.utility.send
-import net.dv8tion.jda.core.Permission
-import net.dv8tion.jda.core.events.channel.text.TextChannelCreateEvent
-import net.dv8tion.jda.core.hooks.ListenerAdapter
+import net.dv8tion.jda.api.Permission
+import net.dv8tion.jda.api.events.channel.text.TextChannelCreateEvent
+import net.dv8tion.jda.api.hooks.ListenerAdapter
 
 class OnChannelCreationEvent : ListenerAdapter() {
   override fun onTextChannelCreate(event: TextChannelCreateEvent?) {

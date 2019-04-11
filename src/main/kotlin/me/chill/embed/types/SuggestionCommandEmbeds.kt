@@ -5,7 +5,7 @@ import me.chill.settings.orange
 import me.chill.settings.red
 import me.chill.suggestion.UserSuggestion
 import me.chill.utility.embed
-import net.dv8tion.jda.core.entities.User
+import net.dv8tion.jda.api.entities.User
 import org.joda.time.format.DateTimeFormat
 
 

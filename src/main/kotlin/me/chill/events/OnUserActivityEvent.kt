@@ -6,8 +6,8 @@ import me.chill.settings.yellow
 import me.chill.utility.embed
 import me.chill.utility.hasMember
 import me.chill.utility.send
-import net.dv8tion.jda.core.events.user.update.UserUpdateNameEvent
-import net.dv8tion.jda.core.hooks.ListenerAdapter
+import net.dv8tion.jda.api.events.user.update.UserUpdateNameEvent
+import net.dv8tion.jda.api.hooks.ListenerAdapter
 
 class OnUserActivityEvent : ListenerAdapter() {
   override fun onUserUpdateName(event: UserUpdateNameEvent?) {

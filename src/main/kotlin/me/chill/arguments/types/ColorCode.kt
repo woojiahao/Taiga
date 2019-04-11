@@ -2,7 +2,7 @@ package me.chill.arguments.types
 
 import me.chill.arguments.Argument
 import me.chill.arguments.ArgumentParseMap
-import net.dv8tion.jda.core.entities.Guild
+import net.dv8tion.jda.api.entities.Guild
 
 class ColorCode : Argument {
   override fun check(guild: Guild, arg: String): ArgumentParseMap {

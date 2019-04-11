@@ -6,11 +6,11 @@ import me.chill.embed.types.newMemberJoinEmbed
 import me.chill.exception.ListenerEventException
 import me.chill.framework.CommandContainer
 import me.chill.utility.*
-import net.dv8tion.jda.core.Permission
-import net.dv8tion.jda.core.entities.Guild
-import net.dv8tion.jda.core.events.guild.GuildJoinEvent
-import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent
-import net.dv8tion.jda.core.hooks.ListenerAdapter
+import net.dv8tion.jda.api.Permission
+import net.dv8tion.jda.api.entities.Guild
+import net.dv8tion.jda.api.events.guild.GuildJoinEvent
+import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent
+import net.dv8tion.jda.api.hooks.ListenerAdapter
 
 class OnJoinEvent : ListenerAdapter() {
   override fun onGuildMemberJoin(event: GuildMemberJoinEvent?) {

@@ -5,7 +5,7 @@ import me.chill.database.states.TargetChannel
 import me.chill.settings.cyan
 import me.chill.utility.embed
 import me.chill.utility.printChannel
-import net.dv8tion.jda.core.entities.Guild
+import net.dv8tion.jda.api.entities.Guild
 
 fun preferenceEmbed(guild: Guild, preference: ServerPreference) =
   embed {

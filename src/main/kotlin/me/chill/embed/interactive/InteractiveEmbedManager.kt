@@ -2,8 +2,8 @@ package me.chill.embed.interactive
 
 import me.chill.settings.green
 import me.chill.utility.embed
-import net.dv8tion.jda.core.entities.Message
-import net.dv8tion.jda.core.entities.MessageChannel
+import net.dv8tion.jda.api.entities.Message
+import net.dv8tion.jda.api.entities.MessageChannel
 
 class InteractiveEmbedManager {
   private val interactiveEmbeds = mutableListOf<InteractiveEmbed>()

@@ -1,6 +1,6 @@
 package me.chill.utility
 
-import net.dv8tion.jda.core.entities.*
+import net.dv8tion.jda.api.entities.*
 
 /**
  * Checks that the role to assign and user to assign is valid before performing assignment

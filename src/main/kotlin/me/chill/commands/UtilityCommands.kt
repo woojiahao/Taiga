@@ -15,11 +15,11 @@ import me.chill.utility.failureEmbed
 import me.chill.utility.simpleEmbed
 import me.chill.utility.str
 import me.chill.utility.successEmbed
-import net.dv8tion.jda.core.Permission
 import org.jsoup.Jsoup
 import java.io.File
 import java.io.FileReader
 import java.net.URLEncoder
+import net.dv8tion.jda.api.Permission
 
 @CommandCategory
 fun utilityCommands() = commands("Utility") {
@@ -27,7 +27,7 @@ fun utilityCommands() = commands("Utility") {
   command("ping") {
     execute {
       val jda = jda
-      val latency = jda.ping
+      val latency = jda.gatewayPing
       respond(pingEmbed(latency))
     }
   }
@@ -95,7 +95,7 @@ fun utilityCommands() = commands("Utility") {
 
   command("invite") {
     execute {
-      val inviteLink = jda.asBot().getInviteUrl(
+      val inviteLink = jda.getInviteUrl(
         Permission.MANAGE_ROLES,
         Permission.MANAGE_CHANNEL,
         Permission.MESSAGE_MANAGE,

@@ -1,7 +1,7 @@
 package me.chill.embed
 
-import net.dv8tion.jda.core.EmbedBuilder
-import net.dv8tion.jda.core.entities.MessageEmbed
+import net.dv8tion.jda.api.EmbedBuilder
+import net.dv8tion.jda.api.entities.MessageEmbed
 
 class EmbedCreator {
   private val fields = mutableListOf<EmbedField>()
