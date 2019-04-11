@@ -15,12 +15,16 @@ enum class InteractiveEmote(val unicode: String, val number: Int) {
   Nine("9⃣", 9);
 
   companion object {
-    val numbering = values().filterNot { it == Next || it == Previous }
-    val navigationButtons = values().filter { it == Next || it == Previous }
+    val numbering
+      get() = values().filterNot { it == Next || it == Previous }
+
+    val navigationButtons
+      get() = values().filter { it == Next || it == Previous }
+
+    val numberingNames
+      get() = numbering.map { it.name.toLowerCase() }
 
     fun isSupportedReactionEmote(attempt: String) = values().any { it.unicode == attempt }
-
-    fun getNumberingNames() = numbering.map { it.name.toLowerCase() }.toTypedArray()
 
     fun getUnicode(list: List<InteractiveEmote>) = list.map { it.unicode }
 

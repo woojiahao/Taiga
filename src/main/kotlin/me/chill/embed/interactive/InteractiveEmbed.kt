@@ -12,8 +12,8 @@ data class InteractiveEmbed(
   fun optionSelected(option: String) {
     if (InteractiveEmote.isNumber(option)) {
       val selection = InteractiveEmote.getSelection(option).number
-      val data = pagination.getCurrentPageContent()?.get(selection)
-      val selectedIndex = ((pagination.getCurrentPage() - 1) * 10) + selection
+      val data = pagination.currentPageContent[selection]
+      val selectedIndex = ((pagination.currentPage - 1) * 10) + selection
       data?.let { action(message, it, selectedIndex) }
       message.clearReactions().complete()
       interactiveEmbedManager.clearEmbed(message.id)

@@ -141,7 +141,7 @@ fun funCommands() = commands("Fun") {
         }
 
         interactiveEmbedManager.send(
-          options.map { song -> song.toString() }.toTypedArray(),
+          options.map { song -> song.toString() },
           channel,
           "Lyric Search",
           "Song: **$songName** returned multiple results, select the one you wish to view"
@@ -263,7 +263,7 @@ fun funCommands() = commands("Fun") {
           name.asString
         }
         interactiveEmbedManager.send(
-          options.toTypedArray(),
+          options,
           channel,
           "Anime Search",
           "The search term: **$searchTerm** returned multiple results, select the one you wish to view"
