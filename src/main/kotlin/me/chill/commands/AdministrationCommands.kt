@@ -1,6 +1,8 @@
 package me.chill.commands
 
 import me.chill.arguments.types.*
+import me.chill.arguments.types.Prefix
+import me.chill.commands.Preferences.*
 import me.chill.database.operations.*
 import me.chill.database.states.TargetChannel
 import me.chill.database.states.TimeMultiplier
@@ -18,11 +20,18 @@ import net.dv8tion.jda.api.entities.MessageEmbed
 import org.apache.commons.lang3.text.WordUtils
 
 private enum class Preferences(val lowercase: String) {
-  Prefix("prefix"), Multiplier("multiplier"), Logging("logging"),
-  Join("join"), Suggestion("suggestion"), Useractivity("useractivity"),
-  MessageLimit("messagelimit"), MessageDuration("messageduration"),
-  RaidExcluded("raidexcluded"), WelcomeMessage("welcomemessage"),
-  JoinRole("joinrole"), InviteExcluded("inviteexcluded");
+  Prefix("prefix"),
+  Multiplier("multiplier"),
+  Logging("logging"),
+  Join("join"),
+  Suggestion("suggestion"),
+  Useractivity("useractivity"),
+  MessageLimit("messagelimit"),
+  MessageDuration("messageduration"),
+  RaidExcluded("raidexcluded"),
+  WelcomeMessage("welcomemessage"),
+  JoinRole("joinrole"),
+  InviteExcluded("inviteexcluded");
 
   companion object {
     val names
@@ -112,118 +121,121 @@ fun administrationCommands() = commands("Administration") {
   }
 }
 
-private fun setPreference(preference: Preferences, input: String, guild: Guild, invoker: Member, jda: JDA): MessageEmbed? {
-  return when (preference) {
-    Preferences.Prefix -> {
-      val parseMap = Prefix().check(guild, input)
-      if (!parseMap.status) {
-        return failureEmbed("Unable to change prefix", parseMap.errMsg)
-      }
-
-      setPrefix(input, guild.getMember(jda.selfUser), guild)
-      cleanEmbed("${guild.name} Prefix Changed", "Prefix has been changed to **$input**")
-    }
-    Preferences.Multiplier -> {
-      val parseMap = Word(TimeMultiplier.names).check(guild, input)
-      if (!parseMap.status) {
-        return failureEmbed("Unable to change multiplier", parseMap.errMsg)
-      }
-
-      setMultiplier(input, guild.id)
-      cleanEmbed("${guild.name} Multiplier Changed", "Multiplier has been changed to **$input**")
-    }
-    Preferences.Logging, Preferences.Join, Preferences.Suggestion, Preferences.Useractivity -> {
-      val type = TargetChannel.valueOf(WordUtils.capitalize(preference.lowercase))
-      val parseMap = ChannelId().check(guild, input)
-      if (!parseMap.status) {
-        return failureEmbed("Unable to set channel", parseMap.errMsg)
-      }
-
-      type.edit(guild.id, parseMap.parsedValue)
-      cleanEmbed(
-        "Channel Assigned",
-        "${type.name} channel has been assigned to <#${parseMap.parsedValue}> in **${guild.name}**"
-      )
+private fun setPreference(
+  preference: Preferences,
+  input: String,
+  guild: Guild,
+  invoker: Member,
+  jda: JDA
+) = when (preference) {
+  Preferences.Prefix -> {
+    val parseMap = Prefix().check(guild, input)
+    if (parseMap.isError) {
+      failureEmbed("Unable to change prefix", parseMap.message)
     }
 
-    Preferences.MessageLimit -> {
-      val parseMap = Integer(1).check(guild, input)
-      if (!parseMap.status) {
-        return failureEmbed("Unable to set raid message limit", parseMap.errMsg)
-      }
-
-      editRaidMessageLimit(guild.id, input.toInt())
-      cleanEmbed(
-        "Raid Message Limit",
-        "Raid message limit for **${guild.name}** has been set to **${input.toInt()}** messages"
-      )
+    setPrefix(input, guild.getMember(jda.selfUser), guild)
+    cleanEmbed("${guild.name} Prefix Changed", "Prefix has been changed to **$input**")
+  }
+  Multiplier -> {
+    val parseMap = Word(TimeMultiplier.names).check(guild, input)
+    if (parseMap.isError) {
+      failureEmbed("Unable to change multiplier", parseMap.message)
     }
 
-    Preferences.MessageDuration -> {
-      val parseMap = Integer(1).check(guild, input)
-      if (!parseMap.status) {
-        return failureEmbed("Unable to set raid message duration", parseMap.errMsg)
-      }
-
-      editRaidMessageDuration(guild.id, input.toInt())
-      cleanEmbed(
-        "Raid Message Duration",
-        "Raid message duration for **${guild.name}** has been set to **${input.toInt()}** seconds"
-      )
-    }
-    Preferences.RaidExcluded -> {
-      val parseMap = RoleId().check(guild, input)
-      if (!parseMap.status) {
-        return failureEmbed("Unable to set raid role excluded", parseMap.errMsg)
-      }
-
-      editRaidRoleExcluded(guild.id, parseMap.parsedValue)
-      cleanEmbed(
-        "Raid Role Excluded",
-        "**${guild.getRoleById(parseMap.parsedValue).name} and higher** will be excluded from the raid filter"
-      )
+    setMultiplier(input, guild.id)
+    cleanEmbed("${guild.name} Multiplier Changed", "Multiplier has been changed to **$input**")
+  }
+  Logging, Join, Suggestion, Useractivity -> {
+    val type = TargetChannel.valueOf(WordUtils.capitalize(preference.lowercase))
+    val parseMap = ChannelId().check(guild, input)
+    if (parseMap.isError) {
+      failureEmbed("Unable to set channel", parseMap.message)
     }
 
-    Preferences.WelcomeMessage -> {
-      editWelcomeMessage(guild.id, input)
-      newMemberJoinEmbed(guild, invoker)
-    }
-
-    Preferences.JoinRole -> {
-      val parseMap = RoleId().check(guild, input)
-      if (!parseMap.status) {
-        return failureEmbed("Unable to set member on join role", parseMap.errMsg)
-      }
-
-      val roleId = parseMap.parsedValue
-      if (roleId == guild.getRolesByName("@everyone", false)[0].id) {
-        return failureEmbed(
-          "Unable to set member on join role",
-          "You cannot assign that role to members on join!"
-        )
-      }
-
-      editJoinRole(guild.id, roleId)
-      cleanEmbed(
-        "Member On Join",
-        "New members will be assigned **${guild.getRoleById(roleId).name}** on join"
-      )
-    }
-
-    Preferences.InviteExcluded -> {
-      val parseMap = RoleId().check(guild, input)
-      if (!parseMap.status) {
-        return failureEmbed("Unable to set invite role excluded", parseMap.errMsg)
-      }
-
-      editInviteExcluded(guild.id, parseMap.parsedValue)
-      cleanEmbed(
-        "Invite Role Excluded",
-        "**${guild.getRoleById(parseMap.parsedValue).name} and higher** will be excluded from the invite filter"
-      )
-    }
+    type.edit(guild.id, parseMap.message)
+    cleanEmbed(
+      "Channel Assigned",
+      "${type.name} channel has been assigned to <#${parseMap.message}> in **${guild.name}**"
+    )
   }
 
+  MessageLimit -> {
+    val parseMap = Integer(1).check(guild, input)
+    if (parseMap.isError) {
+      failureEmbed("Unable to set raid message limit", parseMap.message)
+    }
+
+    editRaidMessageLimit(guild.id, input.toInt())
+    cleanEmbed(
+      "Raid Message Limit",
+      "Raid message limit for **${guild.name}** has been set to **${input.toInt()}** messages"
+    )
+  }
+
+  MessageDuration -> {
+    val parseMap = Integer(1).check(guild, input)
+    if (parseMap.isError) {
+      failureEmbed("Unable to set raid message duration", parseMap.message)
+    }
+
+    editRaidMessageDuration(guild.id, input.toInt())
+    cleanEmbed(
+      "Raid Message Duration",
+      "Raid message duration for **${guild.name}** has been set to **${input.toInt()}** seconds"
+    )
+  }
+  RaidExcluded -> {
+    val parseMap = RoleId().check(guild, input)
+    if (parseMap.isError) {
+      failureEmbed("Unable to set raid role excluded", parseMap.message)
+    }
+
+    editRaidRoleExcluded(guild.id, parseMap.message)
+    cleanEmbed(
+      "Raid Role Excluded",
+      "**${guild.getRoleById(parseMap.message).name} and higher** will be excluded from the raid filter"
+    )
+  }
+
+  WelcomeMessage -> {
+    editWelcomeMessage(guild.id, input)
+    newMemberJoinEmbed(guild, invoker)
+  }
+
+  JoinRole -> {
+    val parseMap = RoleId().check(guild, input)
+    if (parseMap.isError) {
+      failureEmbed("Unable to set member on join role", parseMap.message)
+    }
+
+    val roleId = parseMap.message
+    if (roleId == guild.getRolesByName("@everyone", false)[0].id) {
+      failureEmbed(
+        "Unable to set member on join role",
+        "You cannot assign that role to members on join!"
+      )
+    }
+
+    editJoinRole(guild.id, roleId)
+    cleanEmbed(
+      "Member On Join",
+      "New members will be assigned **${guild.getRoleById(roleId).name}** on join"
+    )
+  }
+
+  InviteExcluded -> {
+    val parseMap = RoleId().check(guild, input)
+    if (parseMap.isError) {
+      failureEmbed("Unable to set invite role excluded", parseMap.message)
+    }
+
+    editInviteExcluded(guild.id, parseMap.message)
+    cleanEmbed(
+      "Invite Role Excluded",
+      "**${guild.getRoleById(parseMap.message).name} and higher** will be excluded from the invite filter"
+    )
+  }
 }
 
 private fun displayPreference(preference: Preferences, guild: Guild, invoker: Member): MessageEmbed? {
@@ -231,11 +243,11 @@ private fun displayPreference(preference: Preferences, guild: Guild, invoker: Me
   val name = guild.name
   return when (preference) {
     Preferences.Prefix -> cleanEmbed("$name Prefix", "Current prefix is: **${getPrefix(id)}**")
-    Preferences.Multiplier ->
+    Multiplier ->
       cleanEmbed(
         "Time Multiplier",
         "Current time multiplier for **$name** is in **${getTimeMultiplier(id).fullTerm}s**")
-    Preferences.Logging, Preferences.Join, Preferences.Suggestion, Preferences.Useractivity -> {
+    Logging, Join, Suggestion, Useractivity -> {
       val targetChannel = TargetChannel.valueOf(WordUtils.capitalize(preference.lowercase))
       val targetName = targetChannel.name
 
@@ -246,11 +258,11 @@ private fun displayPreference(preference: Preferences, guild: Guild, invoker: Me
       )!!
     }
 
-    Preferences.MessageLimit -> cleanEmbed(
+    MessageLimit -> cleanEmbed(
       "Raid Message Limit",
       "The raid message limit for **$name** is **${getRaidMessageLimit(id)}** messages")
 
-    Preferences.MessageDuration -> cleanEmbed(
+    MessageDuration -> cleanEmbed(
       "Raid Message Duration",
       "The raid message duration for **$name** is **${getRaidMessageDuration(id)}** seconds")
 
