@@ -2,6 +2,8 @@ package me.chill.arguments.types
 
 import me.chill.arguments.Argument
 import me.chill.arguments.ArgumentParseMap
+import me.chill.arguments.ErrorParseMap
+import me.chill.arguments.createParseMap
 import net.dv8tion.jda.api.entities.Guild
 import java.io.File
 
@@ -18,9 +20,6 @@ class ChangeLog : Argument {
       }
       .contains(logNumber)
 
-    if (!hasChangelog)
-      return ErrorParseMap("Changelog: **$arg** does not exist")
-
-    return SuccessParseMap(parsedValue = arg)
+    return createParseMap(hasChangelog, arg, "Changelog: **$arg** does not exist")
   }
 }
