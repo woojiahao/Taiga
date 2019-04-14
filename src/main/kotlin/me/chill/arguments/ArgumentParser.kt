@@ -11,7 +11,7 @@ fun parseArguments(command: Command, guild: Guild, args: List<String>): ParseMap
     with(it.first.check(guild, it.second)) {
       parseMap.parsedValues += message
 
-      if (this is ErrorParseMap) {
+      if (isError) {
         parseMap.status = false
         parseMap.errMsg = message
         return parseMap
