@@ -11,20 +11,22 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter
 
 class OnChannelCreationEvent : ListenerAdapter() {
   override fun onTextChannelCreate(event: TextChannelCreateEvent?) {
-    event ?: throw ListenerEventException(
-      "On Channel Creation",
-      "Event object was null during channel creation"
-    )
-
-    if (!event.guild.hasRole("muted")) {
-      event.channel.send(
-        failureEmbed(
-          "Channel Override Failed",
-          "Unable to apply channel override for muted as role does not exist"
-        )
+    with(event) {
+      this ?: throw ListenerEventException(
+        "On Channel Creation",
+        "Event object was null during channel creation"
       )
-      return
+
+      if (!guild.hasRole("muted")) {
+        channel.send(
+          failureEmbed(
+            "Channel Override Failed",
+            "Unable to apply channel override for muted as role does not exist"
+          )
+        )
+        return
+      }
+      channel.createPermissionOverride(guild.getRole("muted")).setDeny(Permission.MESSAGE_WRITE).queue()
     }
-    event.channel.createPermissionOverride(event.guild.getRole("muted")).setDeny(Permission.MESSAGE_WRITE).queue()
   }
 }

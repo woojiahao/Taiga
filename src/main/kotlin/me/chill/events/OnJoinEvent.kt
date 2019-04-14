@@ -14,26 +14,24 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter
 
 class OnJoinEvent : ListenerAdapter() {
   override fun onGuildMemberJoin(event: GuildMemberJoinEvent?) {
-    event ?: throw ListenerEventException(
-      "On Member Join",
-      "Event object was null during member join"
-    )
+    with(event) {
+      this ?: throw ListenerEventException(
+        "On Member Join",
+        "Event object was null during member join"
+      )
 
-    if (!event.guild.getMember(event.jda.selfUser).hasPermission(Permission.MESSAGE_WRITE)) return
+      if (!guild.getMember(jda.selfUser).hasPermission(Permission.MESSAGE_WRITE)) return
 
-    val guild = event.guild
-    val guildId = guild.id
-    val joinChannel = guild.getTextChannelById(TargetChannel.JOIN.get(guildId))
-    val loggingChannel = guild.getTextChannelById(TargetChannel.LOGGING.get(guildId))
-    val member = event.member
+      val guildId = guild.id
+      val joinChannel = guild.getTextChannelById(TargetChannel.JOIN.get(guildId))
+      val loggingChannel = guild.getTextChannelById(TargetChannel.LOGGING.get(guildId))
 
-    if (!TargetChannel.JOIN.isDisabled(guildId)) joinChannel.send(newMemberJoinEmbed(guild, member))
+      if (!TargetChannel.JOIN.isDisabled(guildId)) joinChannel.send(newMemberJoinEmbed(guild, member))
 
-    if (hasJoinRole(guildId)) assignRole(guild, getJoinRole(guildId)!!, member.user.id)
+      if (hasJoinRole(guildId)) assignRole(guild, getJoinRole(guildId)!!, member.user.id)
 
-    if (hasRaider(guildId, member.user.id)) {
-      if (guild.getMutedRole() == null) {
-        loggingChannel.send(
+      if (hasRaider(guildId, member.user.id)) {
+        guild.getMutedRole() ?: loggingChannel.send(
           failureEmbed(
             "Mute Failed",
             "Unable to apply mute to user as the **muted** role does not exist, run `${getPrefix(guild.id)}setup`"
@@ -51,24 +49,20 @@ class OnJoinEvent : ListenerAdapter() {
     }
   }
 
+
   override fun onGuildJoin(event: GuildJoinEvent?) {
-    event ?: throw ListenerEventException(
-      "On Bot Join",
-      "Event object was null during bot join"
-    )
+    with(event) {
+      this ?: throw ListenerEventException(
+        "On Bot Join",
+        "Event object was null during bot join"
+      )
 
-    val serverId = event.guild.id
-    val defaultChannelId = event.guild.defaultChannel!!.id
+      val serverId = guild.id
+      val defaultChannelId = guild.defaultChannel!!.id
 
-//    event.guild.jda.getTextChannelById("482338281946742786").send(
-//      successEmbed(
-//        "Server Join",
-//        "Joined ${event.guild.name}::$serverId on ${getDateTime()}"
-//      )
-//    )
-
-    addServerPreference(serverId, defaultChannelId)
-    loadGlobalPermissions(event.guild)
+      addServerPreference(serverId, defaultChannelId)
+      loadGlobalPermissions(guild)
+    }
   }
 }
 

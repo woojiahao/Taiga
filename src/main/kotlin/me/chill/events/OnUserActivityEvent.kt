@@ -11,13 +11,16 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter
 
 class OnUserActivityEvent : ListenerAdapter() {
   override fun onUserUpdateName(event: UserUpdateNameEvent?) {
-    event ?: throw ListenerEventException("On User Update Name", "null event")
+    with(event) {
+      this ?: throw ListenerEventException("On User Update Name", "null event")
 
-    for (guild in event.jda.guilds.asSequence().filter { it.hasMember(event.user) }.filterNotNull().toList()) {
-      if (TargetChannel.USER_ACTIVITY.isDisabled(guild.id)) continue
-
-      val logging = guild.getTextChannelById(TargetChannel.USER_ACTIVITY.get(guild.id))
-      logging.send(changeNameEmbed(event.oldName, event.newName))
+      val userGuilds = jda.guilds.filter { it.hasMember(user) }.filterNotNull()
+      userGuilds.forEach {
+        if (!TargetChannel.USER_ACTIVITY.isDisabled(it.id)) {
+          val logging = it.getTextChannelById(TargetChannel.USER_ACTIVITY.get(it.id))
+          logging.send(changeNameEmbed(oldName, newName))
+        }
+      }
     }
   }
 }

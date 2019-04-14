@@ -7,16 +7,18 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter
 
 class InteractiveEmbedEvent : ListenerAdapter() {
   override fun onMessageReactionAdd(event: MessageReactionAddEvent?) {
-    event ?: throw ListenerEventException("On Message Reaction Add", "null event object")
+    with(event) {
+      this ?: throw ListenerEventException("On Message Reaction Add", "null event object")
 
-    val messageId = event.messageId
-    val emoteName = event.reactionEmote.name
+      val emoteName = reactionEmote.name
 
-    val hasEmbedSaved = interactiveEmbedManager.hasEmbed(messageId)
-    val addedValidEmote = hasEmbedSaved && interactiveEmbedManager.hasReaction(messageId, emoteName)
-    val botReacted = event.member.user.isBot
-    if (!hasEmbedSaved || !addedValidEmote || botReacted) return
+      val hasEmbedSaved = interactiveEmbedManager.hasEmbed(messageId)
+      val addedValidEmote = hasEmbedSaved && interactiveEmbedManager.hasReaction(messageId, emoteName)
+      val botReacted = member.user.isBot
+      if (!hasEmbedSaved || !addedValidEmote || botReacted) return
 
-    interactiveEmbedManager.getEmbed(messageId).optionSelected(emoteName)
+      interactiveEmbedManager.getEmbed(messageId).optionSelected(emoteName)
+
+    }
   }
 }

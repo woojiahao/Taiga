@@ -17,18 +17,19 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter
 
 class OnLeaveEvent : ListenerAdapter() {
   override fun onGuildMemberLeave(event: GuildMemberLeaveEvent?) {
-    event ?: throw ListenerEventException(
-      "On Member Leave",
-      "Event object was null during member leave"
-    )
+    with(event) {
+      this ?: throw ListenerEventException(
+        "On Member Leave",
+        "Event object was null during member leave"
+      )
 
-    if (!event.guild.getMember(event.jda.selfUser).hasPermission(Permission.MESSAGE_WRITE)) return
+      if (!guild.getMember(jda.selfUser).hasPermission(Permission.MESSAGE_WRITE)) return
 
-    val serverId = event.guild.id
-    val member = event.member
+      val serverId = guild.id
 
-    val loggingChannel = event.guild.getTextChannelById(TargetChannel.LOGGING.get(serverId))
-    if (!TargetChannel.LOGGING.isDisabled(serverId)) loggingChannel.send(memberLeaveEmbed(member))
+      val loggingChannel = guild.getTextChannelById(TargetChannel.LOGGING.get(serverId))
+      if (!TargetChannel.LOGGING.isDisabled(serverId)) loggingChannel.send(memberLeaveEmbed(member))
+    }
   }
 
   override fun onGuildLeave(event: GuildLeaveEvent?) {
@@ -38,13 +39,6 @@ class OnLeaveEvent : ListenerAdapter() {
     )
 
     val serverId = event.guild.id
-
-//    event.guild.jda.getTextChannelById("482338281946742786").send(
-//      successEmbed(
-//        "Server Leave",
-//        "Left ${event.guild.name}::$serverId on ${getDateTime()}"
-//      )
-//    )
 
     removeServerPreference(serverId)
     clearPermissions(serverId)
