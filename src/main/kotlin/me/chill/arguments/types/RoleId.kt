@@ -6,8 +6,8 @@ import net.dv8tion.jda.api.entities.Guild
 
 class RoleId : Argument {
   override fun check(guild: Guild, arg: String): ArgumentParseMap {
-    val rolesNoSpace = guild.roles.map { it.name.replace(Regex("\\s+"), "").toLowerCase() }
-    guild.roles.forEach(::println)
+    val spaceRegex = Regex("\\s+")
+    val rolesNoSpace = guild.roles.map { it.name.replace(spaceRegex, "").toLowerCase() }
     return when {
       rolesNoSpace.any { it == arg.toLowerCase() } ->
         ArgumentParseMap(true, parsedValue = guild.roles[rolesNoSpace.indexOf(arg.toLowerCase())].id)

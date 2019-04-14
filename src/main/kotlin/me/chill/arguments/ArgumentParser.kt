@@ -7,17 +7,15 @@ fun parseArguments(command: Command, guild: Guild, args: List<String>): ParseMap
   val expectedArgs = command.argumentTypes
   val parseMap = ParseMap()
 
-  for (pair in expectedArgs.zip(args)) {
-    val result = pair.first.check(guild, pair.second)
-    val status = result.status
-    val parsedValue = result.parsedValue
+  expectedArgs.zip(args).forEach {
+    with(it.first.check(guild, it.second)) {
+      parseMap.parsedValues.add(parsedValue)
 
-    parseMap.parsedValues.add(parsedValue)
-
-    if (!status) {
-      parseMap.status = status
-      parseMap.errMsg = result.errMsg
-      return parseMap
+      if (!status) {
+        parseMap.status = status
+        parseMap.errMsg = errMsg
+        return parseMap
+      }
     }
   }
 

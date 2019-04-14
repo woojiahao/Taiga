@@ -63,7 +63,7 @@ private fun checkCommands() {
 
     // TODO: Properly handle category name checking
     commandErr(it.name, "Command names should not be the same as a category name") {
-      WordUtils.capitalize(it.name) != it.category
+      WordUtils.capitalize(it.name) == it.category
     }
 
     val isArgumentMixPredicate: (Argument) -> Boolean = { arg -> arg::class.java == ArgumentMix::class.java }

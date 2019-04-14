@@ -8,12 +8,11 @@ import java.util.regex.PatternSyntaxException
 
 class RegexArg : Argument {
   override fun check(guild: Guild, arg: String): ArgumentParseMap {
-    try {
+    return try {
       Pattern.compile(arg)
+      ArgumentParseMap(true, parsedValue = arg)
     } catch (e: PatternSyntaxException) {
-      return ArgumentParseMap(false, "Regex expression: **$arg** is not valid")
+      ArgumentParseMap(false, "Regex expression: **$arg** is not valid")
     }
-
-    return ArgumentParseMap(true, parsedValue = arg)
   }
 }

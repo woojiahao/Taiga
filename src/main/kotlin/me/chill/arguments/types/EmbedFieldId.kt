@@ -9,10 +9,9 @@ class EmbedFieldId : Argument {
   override fun check(guild: Guild, arg: String): ArgumentParseMap {
     val fieldId = arg.toIntOrNull() ?: return ArgumentParseMap(false, "ID: **$arg** must be an integer")
 
-    if (!embedManager.hasField(guild.id, fieldId)) {
-      return ArgumentParseMap(false, "ID: **$arg** does not exist in the embed")
-    }
-
-    return ArgumentParseMap(true, parsedValue = arg)
+    return if (!embedManager.hasField(guild.id, fieldId))
+      ArgumentParseMap(false, "ID: **$arg** does not exist in the embed")
+    else
+      ArgumentParseMap(true, parsedValue = arg)
   }
 }

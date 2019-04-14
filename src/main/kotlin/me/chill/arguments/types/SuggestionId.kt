@@ -8,14 +8,12 @@ import net.dv8tion.jda.api.entities.Guild
 
 class SuggestionId : Argument {
   override fun check(guild: Guild, arg: String): ArgumentParseMap {
-    if (!hasSuggestion(guild.id, arg)) {
+    if (!hasSuggestion(guild.id, arg))
       return ArgumentParseMap(false, "Suggestion ID: **$arg** is not found")
-    }
 
     val suggestionChannel = guild.getTextChannelById(TargetChannel.SUGGESTION.get(guild.id))
-    if (suggestionChannel.retrieveMessageById(arg) == null) {
-      return ArgumentParseMap(false, "Unable to find suggestion ID: **$arg** in suggestions channel")
-    }
+    suggestionChannel.retrieveMessageById(arg)
+        ?: return ArgumentParseMap(false, "Unable to find suggestion ID: **$arg** in suggestions channel")
 
     return ArgumentParseMap(true, parsedValue = arg)
   }

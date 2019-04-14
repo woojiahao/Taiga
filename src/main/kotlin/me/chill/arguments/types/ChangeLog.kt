@@ -8,18 +8,18 @@ import java.io.File
 class ChangeLog : Argument {
   override fun check(guild: Guild, arg: String): ArgumentParseMap {
     val logNumber = arg.toIntOrNull()
-      ?: return ArgumentParseMap(false, "Changelogs are in numerical form, use an integer next time")
+        ?: return ArgumentParseMap(false, "Changelogs are in numerical form, use an integer next time")
 
     val hasChangelog = File("changelogs/")
       .listFiles()
-      .map { file ->
-        val fileName = file.name
+      .map {
+        val fileName = it.name
         fileName.substring(fileName.indexOf("_") + 1, fileName.lastIndexOf(".")).toInt()
       }
       .contains(logNumber)
-    if (!hasChangelog) {
+
+    if (!hasChangelog)
       return ArgumentParseMap(false, "Changelog: **$arg** does not exist")
-    }
 
     return ArgumentParseMap(true, parsedValue = arg)
   }

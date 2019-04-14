@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import khttp.post
+import me.chill.arguments.types.ArgumentMix
 import me.chill.arguments.types.EmoteName
 import me.chill.arguments.types.Sentence
 import me.chill.arguments.types.UserId

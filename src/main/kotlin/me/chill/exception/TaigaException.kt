@@ -6,7 +6,7 @@ open class TaigaException(map: Map<String, String>) : Exception(generateExceptio
       val content = data
         .map { "${it.key}: ${it.value}" }
         .joinToString("\n\t")
-      return "\n$content\n"
+      return "\n\t$content\n"
     }
   }
 }

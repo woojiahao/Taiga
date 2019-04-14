@@ -6,11 +6,13 @@ import net.dv8tion.jda.api.entities.Guild
 
 class ColorCode : Argument {
   override fun check(guild: Guild, arg: String): ArgumentParseMap {
-    val parsed = if (arg.startsWith("#")) arg.substring(1) else arg
-    val hexRegex = Regex("^[0-9A-F]{6}${'$'}")
+    val colorRegex = Regex("^(#|)([0-9A-F]{6})${'$'}")
 
-    if (!hexRegex.matches(parsed)) return ArgumentParseMap(false, "Hex color: **$arg** is invalid")
+    val invalidColorMap = ArgumentParseMap(false, "Hex color: **$arg** is invalid")
+    if (!colorRegex.matches(arg)) return invalidColorMap
 
-    return ArgumentParseMap(true, parsedValue = parsed.toInt(16).toString())
+    val colorCode = colorRegex.matchEntire(arg) ?: return invalidColorMap
+
+    return ArgumentParseMap(true, parsedValue = colorCode.groupValues[1].toInt(16).toString())
   }
 }

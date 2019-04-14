@@ -13,20 +13,20 @@ class ArgumentList(
   private val limit: Int = -1
 ) : Argument {
   override fun check(guild: Guild, arg: String): ArgumentParseMap {
-    val parsedValues = mutableListOf<String>()
-
     val args = arg.split(pipe)
 
     if (limit != -1 && args.size > limit) {
       return ArgumentParseMap(false, "Cannot have more than **$limit** element(s) in the argument list")
     }
 
-    args.forEach {
-      val individualCheckMap = argumentType.check(guild, it)
-      if (!individualCheckMap.status) return individualCheckMap
-      parsedValues.add(individualCheckMap.parsedValue)
-    }
-    
+    val individualChecks = args.map { argumentType.check(guild, it) }
+
+    val failingParse: (ArgumentParseMap) -> Boolean = { !it.status }
+    val hasFailingParse = individualChecks.any(failingParse)
+    if (hasFailingParse) return individualChecks.first(failingParse)
+
+    val parsedValues = individualChecks.map { it.parsedValue }
+
     return ArgumentParseMap(true, parsedValue = parsedValues.joinToString(pipe.toString()))
   }
 }
