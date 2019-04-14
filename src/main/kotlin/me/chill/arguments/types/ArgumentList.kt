@@ -2,6 +2,8 @@ package me.chill.arguments.types
 
 import me.chill.arguments.Argument
 import me.chill.arguments.ArgumentParseMap
+import me.chill.arguments.ErrorParseMap
+import me.chill.arguments.SuccessParseMap
 import net.dv8tion.jda.api.entities.Guild
 
 /**
@@ -16,17 +18,17 @@ class ArgumentList(
     val args = arg.split(pipe)
 
     if (limit != -1 && args.size > limit) {
-      return ArgumentParseMap(false, "Cannot have more than **$limit** element(s) in the argument list")
+      return ErrorParseMap("Cannot have more than **$limit** element(s) in the argument list")
     }
 
     val individualChecks = args.map { argumentType.check(guild, it) }
 
-    val failingParse: (ArgumentParseMap) -> Boolean = { !it.status }
+    val failingParse: (ArgumentParseMap) -> Boolean = { it is ErrorParseMap }
     val hasFailingParse = individualChecks.any(failingParse)
     if (hasFailingParse) return individualChecks.first(failingParse)
 
-    val parsedValues = individualChecks.map { it.parsedValue }
+    val parsedValues = individualChecks.map { it.message }
 
-    return ArgumentParseMap(true, parsedValue = parsedValues.joinToString(pipe.toString()))
+    return SuccessParseMap(parsedValues.joinToString(pipe.toString()))
   }
 }

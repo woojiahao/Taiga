@@ -155,7 +155,7 @@ error message to be displayed to the user to inform them of the reason why the a
 ```kotlin
 // Example taken from ChannelId
 if (toCheck.toLongOrNull() == null) {
-	return ArgumentParseMap(false, "ID: **$toCheck** is not valid")
+	return ErrorParseMap("ID: **$toCheck** is not valid")
 }
 ```
 
@@ -167,7 +167,7 @@ When returning a passing ArgumentParseMap, set the `status` property of the Argu
 // Example taken from ChannelId
 var toCheck = arg
 if (arg.startsWith("<#") && arg.endsWith(">")) toCheck = arg.substring(2, arg.length - 1)
-return ArgumentParseMap(true, parsedValue = toCheck)
+return SuccessParseMap(parsedValue = toCheck)
 ```
 
 ### Sample
@@ -182,11 +182,11 @@ class ChannelId : Argument {
 
 		return when {
 			toCheck.toLongOrNull() == null -> 
-				ArgumentParseMap(false, "ID: **$toCheck** is not valid")
+				ErrorParseMap("ID: **$toCheck** is not valid")
 			guild.getTextChannelById(toCheck) == null -> 
-				ArgumentParseMap(false, "Channel by the ID of **$toCheck** is not found")
+				ErrorParseMap("Channel by the ID of **$toCheck** is not found")
 			else -> 
-				ArgumentParseMap(true, parsedValue = toCheck)
+				SuccessParseMap(parsedValue = toCheck)
 		}
 	}
 }

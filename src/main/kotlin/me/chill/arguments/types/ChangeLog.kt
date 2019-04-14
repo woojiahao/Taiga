@@ -8,7 +8,7 @@ import java.io.File
 class ChangeLog : Argument {
   override fun check(guild: Guild, arg: String): ArgumentParseMap {
     val logNumber = arg.toIntOrNull()
-        ?: return ArgumentParseMap(false, "Changelogs are in numerical form, use an integer next time")
+        ?: return ErrorParseMap("Changelogs are in numerical form, use an integer next time")
 
     val hasChangelog = File("changelogs/")
       .listFiles()
@@ -19,8 +19,8 @@ class ChangeLog : Argument {
       .contains(logNumber)
 
     if (!hasChangelog)
-      return ArgumentParseMap(false, "Changelog: **$arg** does not exist")
+      return ErrorParseMap("Changelog: **$arg** does not exist")
 
-    return ArgumentParseMap(true, parsedValue = arg)
+    return SuccessParseMap(parsedValue = arg)
   }
 }

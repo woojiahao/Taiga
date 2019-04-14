@@ -2,6 +2,8 @@ package me.chill.arguments.types
 
 import me.chill.arguments.Argument
 import me.chill.arguments.ArgumentParseMap
+import me.chill.arguments.ErrorParseMap
+import me.chill.arguments.SuccessParseMap
 import net.dv8tion.jda.api.entities.Guild
 
 class Word(
@@ -10,7 +12,7 @@ class Word(
 ) : Argument {
   override fun check(guild: Guild, arg: String): ArgumentParseMap {
     if (arg.isEmpty())
-      return ArgumentParseMap(false, "Word cannot be blank")
+      return ErrorParseMap("Word cannot be blank")
 
     val lowerCase = arg.toLowerCase()
     with(inclusion) {
@@ -20,17 +22,17 @@ class Word(
           "Argument: **$arg** is not an included word",
           "Included words: ${joinToString(", ") { word -> "**$word**" }}"
         )
-        return ArgumentParseMap(false, errMsg.joinToString("\n"))
+        return ErrorParseMap(errMsg.joinToString("\n"))
       }
     }
 
     with(exclusion) {
       val withinExclusionList = isNotEmpty() && map { it.toLowerCase() }.contains(lowerCase)
       if (withinExclusionList) {
-        return ArgumentParseMap(false, "Argument: **$arg** cannot be used for this command")
+        return ErrorParseMap("Argument: **$arg** cannot be used for this command")
       }
     }
 
-    return ArgumentParseMap(true, parsedValue = lowerCase)
+    return SuccessParseMap(lowerCase)
   }
 }

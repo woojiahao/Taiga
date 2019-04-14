@@ -9,11 +9,11 @@ fun parseArguments(command: Command, guild: Guild, args: List<String>): ParseMap
 
   expectedArgs.zip(args).forEach {
     with(it.first.check(guild, it.second)) {
-      parseMap.parsedValues.add(parsedValue)
+      parseMap.parsedValues += message
 
-      if (!status) {
-        parseMap.status = status
-        parseMap.errMsg = errMsg
+      if (this is ErrorParseMap) {
+        parseMap.status = false
+        parseMap.errMsg = message
         return parseMap
       }
     }

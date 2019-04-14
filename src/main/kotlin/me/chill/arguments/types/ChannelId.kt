@@ -8,15 +8,15 @@ class ChannelId : Argument {
   override fun check(guild: Guild, arg: String): ArgumentParseMap {
     val channelIdRegex = Regex("<(#|)(\\d{10,})>")
 
-    val invalidIdMap = ArgumentParseMap(false, "ID: **$arg** is not valid")
+    val invalidIdMap = ErrorParseMap("ID: **$arg** is not valid")
 
     if (!channelIdRegex.matches(arg)) return invalidIdMap
 
     val matches = channelIdRegex.matchEntire(arg) ?: return invalidIdMap
     val channelId = matches.groupValues[1]
     guild.getTextChannelById(channelId)
-        ?: return ArgumentParseMap(false, "Channel by ID of **$channelId** is not found")
+        ?: return ErrorParseMap("Channel by ID of **$channelId** is not found")
 
-    return ArgumentParseMap(true, parsedValue = channelId)
+    return SuccessParseMap(parsedValue = channelId)
   }
 }
