@@ -34,7 +34,7 @@ class CommandContainer private constructor() {
 
     fun getGlobalCommands() =
       commandList
-        .filter { it.getGlobal() == true }
+        .filter { it.isGlobal == true }
         .map { it.name }
         .distinct()
   }
@@ -44,10 +44,10 @@ inline fun commands(categoryName: String, create: CommandSet.() -> Unit) {
   val set = CommandSet(categoryName)
   set.create()
   for (command in set.commands) {
-    if (command.getGlobal() == null) {
+    if (command.isGlobal == null) {
       command.setGlobal(set.getGlobal())
     } else {
-      command.getGlobal()?.let {
+      command.isGlobal?.let {
         command.setGlobal(it)
       }
     }
@@ -57,7 +57,7 @@ inline fun commands(categoryName: String, create: CommandSet.() -> Unit) {
 
 private fun checkCommands() {
   CommandContainer.commandList.forEach {
-    it.getAction() ?: throw CommandException(it.name, "All commands must implement an execute body")
+    it.action ?: throw CommandException(it.name, "All commands must implement an execute body")
 
     commandErr(it.name, "Command name must start with letter or digit") { !it.name[0].isLetterOrDigit() }
 

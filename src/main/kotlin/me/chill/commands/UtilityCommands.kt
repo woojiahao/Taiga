@@ -15,11 +15,11 @@ import me.chill.utility.failureEmbed
 import me.chill.utility.simpleEmbed
 import me.chill.utility.str
 import me.chill.utility.successEmbed
+import net.dv8tion.jda.api.Permission
 import org.jsoup.Jsoup
 import java.io.File
 import java.io.FileReader
 import java.net.URLEncoder
-import net.dv8tion.jda.api.Permission
 
 @CommandCategory
 fun utilityCommands() = commands("Utility") {
@@ -48,7 +48,7 @@ fun utilityCommands() = commands("Utility") {
         simpleEmbed(
           "Sources",
           "- [GitHub repository](https://github.com/woojiahao/Taiga)\n" +
-            "- [Website](https://woojiahao.github.io/Taiga)",
+              "- [Website](https://woojiahao.github.io/Taiga)",
           serve,
           blue
         )
@@ -111,7 +111,7 @@ fun utilityCommands() = commands("Utility") {
         simpleEmbed(
           "Invites",
           "- [Invite me to your server!]($inviteLink)\n" +
-            "- [Join my development server](https://discord.gg/xtDNfyw)",
+              "- [Join my development server](https://discord.gg/xtDNfyw)",
           fondling,
           blue
         )
@@ -122,7 +122,7 @@ fun utilityCommands() = commands("Utility") {
   command("help") {
     expects(ArgumentMix("Invalid Command/Category Name", CategoryName(), CommandName()))
     execute {
-      val attempt = arguments[0]!!.str()
+      val attempt = getArgument<String>(0)
       if (CommandContainer.hasCommand(attempt)) {
         respond(commandInfoEmbed(CommandContainer.getCommand(attempt)[0]))
       } else if (CommandContainer.hasCategory(attempt)) {

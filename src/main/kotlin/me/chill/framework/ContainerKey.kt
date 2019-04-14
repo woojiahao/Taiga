@@ -1,11 +1,11 @@
 package me.chill.framework
 
 enum class ContainerKey {
-  Jda,
-  Server,
-  Invoker,
-  Channel,
-  Input,
-  ArgumentTypes,
-  ServerPrefix
+  JDA,
+  SERVER,
+  INVOKER,
+  CHANNEL,
+  INPUT,
+  ARGUMENT_TYPE,
+  SERVER_PREFIX
 }

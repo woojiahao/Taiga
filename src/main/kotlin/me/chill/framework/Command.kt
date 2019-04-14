@@ -19,36 +19,50 @@ val endArgumentList = arrayOf<Class<*>>(
 )
 
 class Command(val name: String, val category: String) {
-  private var action: (Command.(Map<ContainerKey, Any?>) -> Unit)? = null
-  private val commandInformation: MutableMap<ContainerKey, Any?> = mutableMapOf()
-  private var isGlobal: Boolean? = null
+  private val commandInformation = mutableMapOf(
+    JDA to null,
+    SERVER_PREFIX to defaultPrefix,
+    SERVER to null,
+    INVOKER to null,
+    CHANNEL to null,
+    ARGUMENT_TYPE to emptyList<Argument>(),
+    INPUT to emptyList<String>()
+  )
 
-  val guild get() = commandInformation[Server] as Guild
-  val invoker get() = commandInformation[Invoker] as Member
-  val channel get() = commandInformation[Channel] as MessageChannel
-  val arguments get() = commandInformation[Input] as Array<*>
-  val jda get() = commandInformation[Jda] as JDA
-  val serverPrefix get() = commandInformation[ServerPrefix] as String
+  var action: (Command.(Map<ContainerKey, Any?>) -> Unit)? = null
+    private set
+
+  var isGlobal: Boolean? = null
+    private set
+
+  val guild
+    get() = commandInformation[SERVER] as Guild
+
+  val invoker
+    get() = commandInformation[INVOKER] as Member
+
+  val channel
+    get() = commandInformation[CHANNEL] as MessageChannel
+
+  val arguments
+    get() = commandInformation[INPUT] as List<*>
+
+  val jda
+    get() = commandInformation[JDA] as JDA
+
+  val serverPrefix
+    get() = commandInformation[SERVER_PREFIX] as String
 
   @Suppress("UNCHECKED_CAST")
-  val argumentTypes
-    get() = commandInformation[ArgumentTypes] as Array<Argument>
+  val argumentTypes: List<Argument>
+    get() = commandInformation[ARGUMENT_TYPE] as List<Argument>
 
-  init {
-    commandInformation[Jda] = null
-    commandInformation[ServerPrefix] = defaultPrefix
-    commandInformation[Server] = null
-    commandInformation[Invoker] = null
-    commandInformation[Channel] = null
-    commandInformation[ArgumentTypes] = emptyArray<Argument>()
-    commandInformation[Input] = emptyArray<String>()
-  }
-
+  @Suppress("UNCHECKED_CAST")
   fun expects(vararg args: Argument) {
     val endArgCheck = checkForEndArguments(*args)
     if (!endArgCheck.first) throw EndArgumentException(name, endArgCheck.second)
 
-    this.commandInformation[ArgumentTypes] = args
+    commandInformation[ARGUMENT_TYPE] = args.toList()
   }
 
   fun execute(func: Command.(Map<ContainerKey, Any?>) -> Unit) {
@@ -59,8 +73,6 @@ class Command(val name: String, val category: String) {
     this.isGlobal = isGlobal
   }
 
-  fun getGlobal() = isGlobal
-
   fun run(
     serverPrefix: String,
     jda: JDA,
@@ -69,41 +81,37 @@ class Command(val name: String, val category: String) {
     messageChannel: MessageChannel,
     input: List<String>?
   ) {
-    commandInformation[Jda] = jda
-    commandInformation[Server] = guild
-    commandInformation[ServerPrefix] = serverPrefix
-    commandInformation[Invoker] = invoker
-    commandInformation[Channel] = messageChannel
-    commandInformation[Input] = input
+    commandInformation[JDA] = jda
+    commandInformation[SERVER] = guild
+    commandInformation[SERVER_PREFIX] = serverPrefix
+    commandInformation[INVOKER] = invoker
+    commandInformation[CHANNEL] = messageChannel
+    commandInformation[INPUT] = input
 
-    action!!(commandInformation)
+    action?.invoke(this, commandInformation)
   }
-
-  fun getAction() = action
 
   fun respond(embed: MessageEmbed?) = channel.send(embed)
   fun respond(message: String) = channel.send(message)
 
+  @Suppress("UNCHECKED_CAST")
+  fun <T> getArgument(index: Int) = arguments[index] as T
+
   private fun checkForEndArguments(vararg args: Argument) =
     when {
-      args.any {
-        endArgumentList.contains(it.javaClass)
-      } && args.indexOf(
-        args.find {
-          endArgumentList.contains(it.javaClass)
-        }) != args.size - 1 -> Pair(false, "End arguments must be placed at the end of the argument list")
+      args.any { endArgumentList.contains(it::class.java) }
+          && args.indexOf(args.find { endArgumentList.contains(it::class.java) })
+          != args.size - 1 ->
+        Pair(false, "End arguments must be placed at the end of the argument list")
 
       args.indexOf(
-        args.find {
-          endArgumentList.contains(it.javaClass)
-        }) != args.lastIndexOf(
-        args.find {
-          endArgumentList.contains(it.javaClass)
-        }) -> Pair(false, "End arguments cannot be repeated")
+        args.find { endArgumentList.contains(it.javaClass) })
+          != args.lastIndexOf(args.find { endArgumentList.contains(it.javaClass) }
+      ) ->
+        Pair(false, "End arguments cannot be repeated")
 
-      args.filter {
-        endArgumentList.contains(it.javaClass)
-      }.size > 1 -> Pair(false, "Cannot have more than 1 end argument in a single argument list")
+      args.filter { endArgumentList.contains(it.javaClass) }.size > 1 ->
+        Pair(false, "Cannot have more than 1 end argument in a single argument list")
 
       else -> Pair(true, "")
     }
