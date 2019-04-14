@@ -11,9 +11,10 @@ import me.chill.framework.CommandContainer
 import me.chill.framework.endArgumentList
 import me.chill.logging.macroLog
 import me.chill.logging.normalLog
-import me.chill.raidManger
+import me.chill.raid.handleRaider
 import me.chill.settings.noWay
 import me.chill.utility.*
+import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Member
@@ -27,104 +28,122 @@ private val permissionIgnoreList = arrayOf(Permission.MESSAGE_WRITE, Permission.
 
 class InputEvent : ListenerAdapter() {
   override fun onMessageReceived(event: MessageReceivedEvent?) {
-    handleInput(event)
+    with(event) {
+      this ?: throw ListenerEventException("User Input", "event is null")
+
+      member ?: return
+      if (member.user.isBot) return
+
+      val message = message.contentRaw.trim()
+
+      handleRaider(member, guild, channel) ?: return
+
+      if (!handleInvite(message, member, guild, channel, this.message)) return
+
+      val guildPrefix = getPrefix(guild.id)
+      if (!message.startsWith(guildPrefix)) return
+
+      val (isSilentInvoke, commandParts) = extractCommandParts(message, guildPrefix)
+
+      handleCommandInvocation(
+        this.message,
+        guild,
+        member,
+        channel,
+        jda,
+        guildPrefix,
+        isSilentInvoke,
+        commandParts
+      )
+    }
   }
 }
 
-private fun handleInput(event: MessageReceivedEvent?) {
-  with(event) {
-    this ?: throw ListenerEventException("User Input", "event is null")
+private fun handleCommandInvocation(
+  originalMessage: Message,
+  guild: Guild,
+  member: Member,
+  channel: MessageChannel,
+  jda: JDA,
+  guildPrefix: String,
+  isSilentInvoke: Boolean,
+  commandParts: List<String>
+) {
+  val commandName = commandParts[0]
 
-    member ?: return
-    if (member.user.isBot) return
+  if (commandName.isBlank() || !commandName[0].isLetterOrDigit()) return
 
-    val message = message.contentRaw.trim()
+  if (hasMacro(guild.id, commandName)) {
+    channel.send(getMacro(guild.id, commandName))
+    if (!TargetChannel.LOGGING.isDisabled(guild.id))
+      macroLog(commandName, member, channel, guild)
+    return
+  }
 
-    val guildPrefix = getPrefix(guild.id)
+  if (!CommandContainer.hasCommand(commandName)) {
+    channel.send(
+      failureEmbed(
+        "Invalid Command/Macro",
+        "Command/Macro: **$commandName** does not exist"
+      )
+    )
+    return
+  }
 
-    handleRaider(member, guild, channel) ?: return
+  val commands = CommandContainer.getCommand(commandName)
 
-    if (!handleInvite(message, member, guild, channel, this.message)) return
+  if (!checkPermissions(commandName, guild, member)) {
+    channel.send(
+      failureEmbed(
+        "Insufficient Permission",
+        "You cannot invoke **$commandName**, nice try",
+        noWay
+      )
+    )
+    return
+  }
 
-    if (!message.startsWith(guildPrefix)) return
+  val selection = matchCommand(commands, commandParts)
+  if (selection == null) {
+    channel.send(
+      insufficientArgumentsEmbed(
+        guildPrefix,
+        commandName,
+        commands.map { it.argumentTypes.size }.sorted().toTypedArray()
+      )
+    )
+    return
+  }
 
-    val (isSilentInvoke, commandParts) = extractCommandParts(message, guildPrefix)
-    val attemptedCommandMacro = commandParts[0]
+  var (arguments, selectedCommand) = selection
 
-    if (attemptedCommandMacro.isBlank() || !attemptedCommandMacro[0].isLetterOrDigit()) return
-
-    if (hasMacro(guild.id, attemptedCommandMacro)) {
-      if (commandParts.size == 1) {
-        channel.send(getMacro(guild.id, attemptedCommandMacro))
-        if (!TargetChannel.LOGGING.isDisabled(guild.id))
-          macroLog(attemptedCommandMacro, member, channel, guild)
-      }
+  if (selectedCommand.argumentTypes.isNotEmpty()) {
+    val parseMap = parseArguments(selectedCommand, guild, arguments)
+    if (!parseMap.status) {
+      channel.send(invalidArgumentsEmbed(guildPrefix, selectedCommand, parseMap.errMsg))
       return
     }
 
-    if (!CommandContainer.hasCommand(attemptedCommandMacro)) {
-      channel.send(
-        failureEmbed(
-          "Invalid Command/Macro",
-          "Command/Macro: **$attemptedCommandMacro** does not exist"
-        )
+    arguments = parseMap.parsedValues
+  }
+
+  try {
+    originalMessage.addReaction("\uD83D\uDC40").complete()
+    selectedCommand.run(guildPrefix, jda, guild, member, channel, arguments)
+    if (!TargetChannel.LOGGING.isDisabled(guild.id))
+      normalLog(selectedCommand)
+
+    if (isSilentInvoke)
+      originalMessage.delete().complete()
+  } catch (e: InsufficientPermissionException) {
+    if (permissionIgnoreList.contains(e.permission)) return
+
+    channel.send(
+      failureEmbed(
+        "Failed to invoke command",
+        "You need to give me the permission to **${e.permission.getName()}** to use **$commandName**"
       )
-      return
-    }
-
-    val commands = CommandContainer.getCommand(attemptedCommandMacro)
-
-    if (!checkPermissions(attemptedCommandMacro, guild, member)) {
-      channel.send(
-        failureEmbed(
-          "Insufficient Permission", "You cannot invoke **$attemptedCommandMacro**, nice try", noWay
-        )
-      )
-      return
-    }
-
-    val selection = matchCommand(commands, commandParts)
-    if (selection == null) {
-      channel.send(
-        insufficientArgumentsEmbed(
-          guildPrefix,
-          attemptedCommandMacro,
-          commands.map { it.argumentTypes.size }.sorted().toTypedArray()
-        )
-      )
-      return
-    }
-
-    var (arguments, selectedCommand) = selection
-
-    if (selectedCommand.argumentTypes.isNotEmpty()) {
-      val parseMap = parseArguments(selectedCommand, guild, arguments)
-      if (!parseMap.status) {
-        channel.send(invalidArgumentsEmbed(guildPrefix, selectedCommand, parseMap.errMsg))
-        return
-      }
-
-      arguments = parseMap.parsedValues
-    }
-
-    try {
-      this.message.addReaction("\uD83D\uDC40").complete()
-      selectedCommand.run(guildPrefix, jda, guild, member, channel, arguments)
-      if (!TargetChannel.LOGGING.isDisabled(guild.id))
-        normalLog(selectedCommand)
-
-      if (isSilentInvoke)
-        this.message.delete().complete()
-    } catch (e: InsufficientPermissionException) {
-      if (permissionIgnoreList.contains(e.permission)) return
-
-      channel.send(
-        failureEmbed(
-          "Failed to invoke command",
-          "You need to give me the permission to **${e.permission.getName()}** to use **$attemptedCommandMacro**"
-        )
-      )
-    }
+    )
   }
 }
 
@@ -138,12 +157,12 @@ private fun matchCommand(
   commandList: List<Command>,
   commandParts: List<String>
 ): Pair<List<String>, Command>? {
-  for (command in commandList) {
-    val expectedArgSize = command.argumentTypes.size
-    val compiledArguments = formArguments(commandParts, command) ?: return null
+  commandList.forEach {
+    val expectedArgSize = it.argumentTypes.size
+    val compiledArguments = formArguments(commandParts, it) ?: return null
     if (compiledArguments.size != expectedArgSize) return null
 
-    return Pair(compiledArguments, command)
+    return Pair(compiledArguments, it)
   }
 
   return null
@@ -171,22 +190,11 @@ private fun handleInvite(
   return true
 }
 
-private fun handleRaider(invoker: Member, server: Guild, messageChannel: MessageChannel) =
-  when {
-    invoker.hasPermission(server, getRaidRoleExcluded(server.id), "Administrator", "Moderator") -> true
-    hasRaider(server.id, invoker.user.id) -> null
-    else -> {
-      raidManger.manageRaid(server, messageChannel, invoker)
-      false
-    }
-  }
-
 private fun checkPermissions(commandName: String, server: Guild, invoker: Member): Boolean {
-  val intendedPermission = if (hasPermission(commandName, server.id)) {
-    getPermission(commandName, server.id)
-  } else {
-    server.roles[0].id
-  }
+  val intendedPermission =
+    if (hasPermission(commandName, server.id)) getPermission(commandName, server.id)
+    else server.roles[0].id
+
   return invoker.hasPermission(server, intendedPermission)
 }
 

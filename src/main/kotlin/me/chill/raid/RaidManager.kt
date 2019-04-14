@@ -1,10 +1,8 @@
 package me.chill.raid
 
-import me.chill.database.operations.addRaider
-import me.chill.database.operations.getPrefix
-import me.chill.database.operations.getRaidMessageDuration
-import me.chill.database.operations.getRaidMessageLimit
+import me.chill.database.operations.*
 import me.chill.database.states.TargetChannel
+import me.chill.raidManger
 import me.chill.utility.*
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Member
@@ -82,3 +80,13 @@ class RaidManager {
 
   private fun hasRaider(serverId: String, userId: String) = raiders[serverId]!!.hasRaider(userId)
 }
+
+fun handleRaider(invoker: Member, server: Guild, messageChannel: MessageChannel) =
+  when {
+    invoker.hasPermission(server, getRaidRoleExcluded(server.id), "Administrator", "Moderator") -> true
+    hasRaider(server.id, invoker.user.id) -> null
+    else -> {
+      raidManger.manageRaid(server, messageChannel, invoker)
+      false
+    }
+  }
